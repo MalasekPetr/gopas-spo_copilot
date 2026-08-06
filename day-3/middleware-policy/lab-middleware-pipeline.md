@@ -1,12 +1,12 @@
 # Lab · Middleware pipeline — guardrail, který se vykoná
 
 > Modul: `middleware-policy` · Odhad: 75 min · Režim: **hands-on**
-> Jazyk: C# · Scénář: [`../../day-1/agents-sdk-core/scenario-support-agent.md`](../../day-1/agents-sdk-core/scenario-support-agent.md)
+> Jazyk: C# · Scénář: [`../../scenario-support-agent.md`](../../scenario-support-agent.md)
 
 ## Cíl
 
 Nahradit „obranu v promptu" **obranou v kódu** — a dokázat to pokusem o obejití, který
-včera v [`../../day-2/prompt-orchestration/`](../../day-2/prompt-orchestration/lab-prompt-anatomy.md)
+dnes ráno v [`../prompt-orchestration/`](../prompt-orchestration/lab-prompt-anatomy.md)
 uspěl.
 
 ## Předpoklady

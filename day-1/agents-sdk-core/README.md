@@ -2,7 +2,7 @@
 
 > Typ: povinný · Den: 1 · Odhad: **135 min** (60 výklad + 75 lab) · Publikum: **vývojáři / architekti**
 > Prostředí: viz [`../../environment.md`](../../environment.md) · Názvosloví: [`../../GLOSSARY.md`](../../GLOSSARY.md)
-> Nosná linka: [`scenario-support-agent.md`](scenario-support-agent.md)
+> Nosná linka: [`scenario-support-agent.md`](../../scenario-support-agent.md)
 
 ## Cíle
 - Rozumět **`AgentApplication`** jako vstupnímu bodu všech příchozích aktivit.
@@ -77,7 +77,7 @@ Viz [`lab-first-agent.md`](lab-first-agent.md). Referenční řešení v `soluti
 
 ## Nosná linka
 Support Asistent vzniká: scaffold → echo turn → **LLM turn s ošetřenou chybovou větví**.
-Čtyři testovací dotazy ze [`scenario-support-agent.md`](scenario-support-agent.md) se pouští
+Čtyři testovací dotazy ze [`scenario-support-agent.md`](../../scenario-support-agent.md) se pouští
 poprvé — zatím na ně agent odpovídá špatně, protože nemá knowledge. To je záměr.
 
 ## Zdroje (Microsoft)

@@ -1,9 +1,9 @@
-# Událostmi řízená orchestrace & hosting
+# Událostmi řízená orchestrace, hosting & publikace
 
-> Typ: povinný · Den: 4 · Odhad: **130 min** (60 výklad + 70 lab) · Publikum: **vývojáři / architekti**
+> Typ: povinný · Den: 4 · Odhad: **170 min** (75 výklad + 95 lab) · Publikum: **vývojáři / architekti**
 > Prostředí: viz [`../../environment.md`](../../environment.md) · Názvosloví: [`../../GLOSSARY.md`](../../GLOSSARY.md)
 
-Kde agent běží, když už neběží na notebooku.
+Kde agent běží, když už neběží na notebooku — a jak se odtud dostane k uživatelům do kanálů.
 
 ## Cíle
 - Vybrat hosting: **Azure Functions vs. Logic Apps vs. Durable Functions vs. Foundry
@@ -11,6 +11,8 @@ Kde agent běží, když už neběží na notebooku.
 - Rozumět řetězení volání modelu a nástrojů v dlouhých, stavových operacích.
 - Navrhnout **timeout a retry patterny** pro agenta, který je závislý na modelu a na API.
 - Vědět, co znamená **odolnost** u agenta (a proč „zkusím to znovu" není strategie).
+- Rozumět **manifestu custom engine agenta jako kontraktu** a publikovat hostovaného
+  agenta do **Teams / Microsoft 365 Copilotu** — včetně verzování a rollbacku.
 
 ## Výklad
 
@@ -59,6 +61,32 @@ flowchart TD
   A[placeholder] --> B[placeholder]
 ```
 
+### Manifest custom engine agenta jako kontrakt
+
+<!-- TODO: co v manifestu je: identita, popis, schopnosti, akce, ikony, opravneni.
+     Nosna pointa: manifest je to, co schvaluje admin. Kod nevidi -- vidi manifest.
+     Manifest se MUSI shodovat s tim, co agent skutecne dela (akce z D2). -->
+
+### Kanály a jejich rozdíly
+
+<!-- TODO: M365 Copilot, Teams, web, e-mail — co kanal umi (Adaptive Cards, prilohy,
+     autentizace) a co ne. Jeden agent, ale ne stejny zazitek.
+     Azure Bot Service = uz JEN registrace kanalu, ne hostingova vrstva --
+     katalogova osnova to ramuje postaru (viz GLOSSARY). -->
+
+### Publikace a verzování
+
+<!-- TODO: app package -> publikace do org katalogu -> admin schvaleni -> kanaly.
+     Publikace dava smysl az TADY: agent uz ma verejny endpoint z hostingu.
+     Verzovani: co znamena zvysit verzi pro nasazene uzivatele, kdy je nutne nove
+     schvaleni, jak se dela rollback. Vazba na lifecycle (D5). -->
+
+```mermaid
+%% TODO: diagram -- manifest -> app package -> publikace -> schvaleni -> kanaly
+flowchart LR
+  A[placeholder] --> B[placeholder]
+```
+
 ## Klíčové rozlišení
 - **Functions** (krátké, event-driven) vs. **Durable** (dlouhé, stavové) vs. **Logic Apps**
   (integrace, málo kódu) vs. **Foundry Agent Service** (hostovaný agent).
@@ -66,20 +94,28 @@ flowchart TD
   (persistence a hosting).
 - **Timeout modelu** vs. **timeout nástroje** vs. **timeout turnu** — tři různé limity.
 - **Retry** (transientní chyba) vs. **idempotence** (co když retry projde dvakrát).
+- **Manifest** (co admin schvaluje a vidí) vs. **kód** (co agent skutečně dělá) — a proč
+  se to musí shodovat.
+- **Azure Bot Service** = registrace kanálu, **ne** hosting — nosná vrstva je Agents SDK
+  a hosting výše.
+- **Verze manifestu** vs. **verze kódu** — mohou se rozejít, a to je problém.
+- Publikace **do org katalogu** vs. **do store** — jiný proces, jiné schvalování.
 
 ## Naše prostředí
 
 **Instruktorské demo** — vyžaduje Azure subscription, kterou studenti pod baseline
 `spdemo.online` + PAYG nemají (viz matice v [`../../environment.md`](../../environment.md)).
 Studentská část je **návrhová + lokální**: timeout a idempotence se implementují a testují
-lokálně, bez Azure.
+lokálně, bez Azure. Publikace do kanálu: dle admin schvalování — když to v bloku nestihne,
+jede jako demo z předpřipraveného stavu (viz [`instructor-notes.md`](instructor-notes.md)).
 
 ## Lab
 Viz [`lab-hosting-and-resilience.md`](lab-hosting-and-resilience.md).
 
 ## Nosná linka
-Support Asistent získává **explicitní timeouty na všech třech úrovních** a **idempotentní
-`CreateTicket`**. Student navíc rozhodne a odůvodní, kam by agenta nasadil — vstup do capstonu.
+Support Asistent získává **explicitní timeouty na všech třech úrovních**, **idempotentní
+`CreateTicket`** — a poprvé opouští notebook: **manifest, verzi a publikaci do kanálu**.
+Student navíc rozhodne a odůvodní, kam by agenta nasadil — vstup do capstonu.
 
 ## Zdroje (Microsoft)
 - [Azure Functions — overview](https://learn.microsoft.com/en-us/azure/azure-functions/functions-overview)
@@ -87,9 +123,11 @@ Support Asistent získává **explicitní timeouty na všech třech úrovních**
 - [Logic Apps — overview](https://learn.microsoft.com/en-us/azure/logic-apps/logic-apps-overview)
 - [Foundry Agent Service](https://azure.microsoft.com/en-us/products/ai-foundry/agent-service)
 - [Build and run agents at scale with Microsoft Foundry](https://devblogs.microsoft.com/foundry/agent-service-build2026/)
+- [Azure Bot Service — manage channels](https://learn.microsoft.com/en-us/azure/bot-service/bot-service-manage-channels)
 
 ## Stav produktu / delta
 
 > [!WARNING] Ověřit k datu běhu — stav k 2026-08.
 > Rozsah publikace **Foundry agentů do Microsoft 365 Copilotu a Teams** (GA 06/2026)
 > a hostingové plány Functions se mění. Ceny neuvádět bez ověření na aktuálním pricing page.
+> U publikace ověřit aktuální podobu **app package** a proces admin schválení v org katalogu.

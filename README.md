@@ -26,7 +26,7 @@ renderovatelné přímo na GitHubu. 5 dní, pro-code kurz (C# primárně, TypeSc
 
 Kurz není 16 nesouvisejících přednášek — celý týden se buduje **jeden agent**. Scénář a jeho
 postupné rozšiřování je v
-[`day-1/agents-sdk-core/scenario-support-agent.md`](day-1/agents-sdk-core/scenario-support-agent.md).
+[`scenario-support-agent.md`](scenario-support-agent.md).
 
 ## Struktura
 

@@ -69,7 +69,7 @@ flowchart LR
      Planovani deprecaci: sledovat oznameni, mit alternativu, mit test. -->
 
 > [!IMPORTANT] Nosná pointa bloku
-> **Golden set z [`../../day-4/evaluation-quality/`](../../day-4/evaluation-quality/) je to,
+> **Golden set z [`../../day-5/evaluation-quality/`](../../day-5/evaluation-quality/) je to,
 > co dělá výměnu modelu bezpečnou.** Bez něj je každá výměna modelu (a každá optimalizace
 > nákladů) hazard. To je důvod, proč evaluace v tomto kurzu předchází optimalizaci.
 

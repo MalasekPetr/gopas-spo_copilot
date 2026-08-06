@@ -1,7 +1,7 @@
 # Lab · Toolchain a první scaffold
 
 > Modul: `onboarding` · Odhad: 45 min · Režim: **hands-on**
-> Jazyk: C# · Scénář: [`../agents-sdk-core/scenario-support-agent.md`](../agents-sdk-core/scenario-support-agent.md)
+> Jazyk: C# · Scénář: [`../../scenario-support-agent.md`](../../scenario-support-agent.md)
 
 ## Cíl
 

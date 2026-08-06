@@ -26,7 +26,7 @@ Referenční údaje o prostředí, na které se odkazují laby.
 > [!WARNING] Rozhodnout minimálně 2 týdny před během.
 > **Copilot Credits neplatí volání modelu z vlastního kódu.** Business Basic + PAYG dává
 > Copilot zážitky a deklarativní agenty, ale **nedává inference endpoint** pro custom engine
-> agenta postaveného na Agents SDK. Bez rozhodnutí níže nelze hands-on odjet **8 z 16 modulů**:
+> agenta postaveného na Agents SDK. Bez rozhodnutí níže nelze hands-on odjet **8 z 21 modulů**:
 > `agents-sdk-core`, `prompt-orchestration`, `agent-framework`, `middleware-policy`,
 > `event-driven-hosting`, `evaluation-quality`, `security-risk`, `perf-cost-lifecycle`.
 
@@ -50,24 +50,30 @@ Co který modul reálně potřebuje pod baseline `spdemo.online` + PAYG:
 |---|---|---|---|---|
 | `day-1/onboarding` | ano | — | — | hands-on |
 | `day-1/agent-landscape` | — | — | — | hands-on (rozhodovací lab, bez kódu) |
+| `day-1/no-code-showcase` | ano + **Copilot Studio / agent builder licence** | — | — | **instruktorské demo** |
 | `day-1/agents-sdk-core` | — | **ano** | — | hands-on (Agents Playground, bez tenantu) |
+| `day-2/declarative-agents` | ano | — | — | hands-on (deklarativní agent na PAYG) |
 | `day-2/knowledge-grounding` | ano | ano | — | hands-on |
 | `day-2/actions-graph` | ano | ano | — | hands-on |
-| `day-2/prompt-orchestration` | — | **ano** | — | hands-on |
+| `day-2/data-hygiene` | ano (+ **SAM licence** pro reporty) | — | — | **instruktorské demo** + checklist |
 | `day-2/opt-custom-retrieval` | — | ano | **ano** | **instruktorské demo** |
+| `day-3/prompt-orchestration` | — | **ano** | — | hands-on |
 | `day-3/agent-framework` | — | **ano** | — | hands-on |
 | `day-3/middleware-policy` | — | **ano** | — | hands-on |
-| `day-3/manifest-channels` | ano | — | — | hands-on (deklarativní agent na PAYG) |
-| `day-4/event-driven-hosting` | — | ano | **ano** | **instruktorské demo** |
+| `day-3/spfx-copilot-apps` | ano (deploy dle rolloutu) | — | — | **instruktorské demo** (preview) |
+| `day-4/event-driven-hosting` | ano (publikace) | ano | **ano** | **instruktorské demo** (rezilience lokálně hands-on) |
+| `day-4/marketplace-agents` | — (Partner Center instruktora) | — | — | **instruktorské demo** + checklist |
 | `day-4/agent-365-governance` | ano | — | ano + **Agent 365 licence** | **instruktorské demo** |
-| `day-4/evaluation-quality` | — | **ano** | — | hands-on (lokální golden set) |
+| `day-4/orchestry-governance` | — (Orchestry trial dle dostupnosti) | — | — | **instruktorské demo** / výklad |
+| `day-5/evaluation-quality` | — | **ano** | — | hands-on (lokální golden set) |
 | `day-5/security-risk` | — | **ano** | — | hands-on |
 | `day-5/perf-cost-lifecycle` | — | **ano** | — | hands-on |
 | `day-5/capstone` | — | — | — | hands-on (design dokument) |
 
-Tři bloky jsou pod touto baseline **instruktorské demo**. Pokud se Azure subscription
-pro studenty objeví, upgradují se na hands-on **bez zásahu do struktury kurzu** — jen se
-změní režim v labu.
+Devět bloků je pod touto baseline **instruktorské demo** (showcase/srovnávací formáty
+mají vždy studentský deliverable — checklist nebo tabulku — nezávislý na licencích).
+Pokud se Azure subscription pro studenty objeví, hands-on kandidáti se upgradují
+**bez zásahu do struktury kurzu** — jen se změní režim v labu.
 
 > [!NOTE] Business Basic nemá desktop Office — ale to kurzu nevadí. Pro-code práce běží
 > ve VS Code a Agents Playground lokálně; tenant se používá pro knowledge, Graph a publikaci

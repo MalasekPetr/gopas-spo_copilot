@@ -40,9 +40,10 @@ jen popsal to, co mu vyšlo v labu. Je to nejlepší diagnostický nástroj cel�
 
 ## Vazby
 
-- Zpět: **všechno**. Konkrétně: `agent-landscape` (cesta tvorby), `knowledge-grounding`
+- Zpět: **všechno**. Konkrétně: `agent-landscape` + `no-code-showcase` (cesta tvorby),
+  `declarative-agents` (deklarativní vs. custom engine), `knowledge-grounding`
   a `opt-custom-retrieval` (retrieval), `agent-framework` (multi-agent ano/ne),
-  `manifest-channels` (verzování), `event-driven-hosting` (hosting),
+  `event-driven-hosting` (hosting, verzování, publikace),
   `agent-365-governance` (instrumentace, argumentace pro zákazníka),
   `evaluation-quality` (KPI matice, prahy), `security-risk` (model hrozby),
   `perf-cost-lifecycle` (nákladový model, rollback).

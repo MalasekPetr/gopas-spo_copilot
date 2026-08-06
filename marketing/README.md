@@ -13,3 +13,10 @@ Tři jazykové mutace: [`cs.md`](cs.md) (gopas.cz), [`en.md`](en.md) (gopas.eu),
 >
 > **Web musí být přepsaný před prvním během kurzu**, jinak se prodává jiný obsah, než
 > se učí. Delta tabulka („co se mění a proč") je v každé jazykové mutaci.
+
+> [!WARNING] Návrh osnovy v cs/en/sk je NEAKTUÁLNÍ (stav před 2026-08-06)
+> Kurz prošel restrukturalizací: nové moduly `no-code-showcase`, `declarative-agents`,
+> `data-hygiene`, `spfx-copilot-apps`, `marketplace-agents`, `orchestry-governance`;
+> `manifest-channels` rozpuštěn; přesuny mezi dny. **Zdroj pravdy je [`../agenda.md`](../agenda.md).**
+> Jazykové mutace přepsat po dokončení lektorského průchodu kurzem — do té doby je
+> nepoužívat pro web.

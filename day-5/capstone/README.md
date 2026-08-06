@@ -52,10 +52,21 @@ flowchart TB
 >
 > Ověřit k datu běhu na [Exam and assessment lab retirement](https://learn.microsoft.com/en-us/credentials/support/retired-certification-exams).
 
+Celou aktuální certifikační mapu ukázat na oficiálním
+[Microsoft Certification Posteru (PDF)](https://arch-center.azureedge.net/Credentials/Certification-Poster_en-us.pdf) —
+studenti si odnášejí odkaz; projít větev AI/agentních certifikací a nejnovější AI kurzy
+v oficiálním kurikulu.
+
+> [!WARNING] Ověřit k datu běhu
+> Poster se vydává v nových edicích — před během ověřit, že URL vede na aktuální verzi,
+> a projít, které AI zkoušky a kurzy od minulého běhu přibyly nebo se přejmenovaly.
+
 ### Další kroky — témata
 
 <!-- TODO: multi-agent vzory do hloubky, MCP a vlastni konektory, Foundry Agent Service,
-     Agent 365 governance z pohledu IT, A2A. Odkaz na navazujici kurzy GOPAS, pokud existuji. -->
+     Agent 365 governance z pohledu IT, A2A, SharePoint Copilot Apps po GA.
+     Odkaz na navazujici kurzy GOPAS: SPFx kurzy (most pres spfx-copilot-apps)
+     a dalsi AI kurzy dle aktualniho katalogu. -->
 
 ## Klíčové rozlišení
 - **Technická metrika** (pass rate, latence) vs. **business KPI** (náklad na dotaz, vyřešeno

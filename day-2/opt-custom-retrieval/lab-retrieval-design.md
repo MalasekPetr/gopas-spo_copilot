@@ -1,7 +1,7 @@
 # Lab · Návrh vlastního retrievalu — a jeho cenovka
 
 > Modul: `opt-custom-retrieval` · Odhad: 45 min · Režim: **instruktorské demo + návrhová část studentů**
-> Scénář: [`../../day-1/agents-sdk-core/scenario-support-agent.md`](../../day-1/agents-sdk-core/scenario-support-agent.md)
+> Scénář: [`../../scenario-support-agent.md`](../../scenario-support-agent.md)
 
 ## Cíl
 

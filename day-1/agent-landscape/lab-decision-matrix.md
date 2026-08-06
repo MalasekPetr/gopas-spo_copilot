@@ -1,7 +1,7 @@
 # Lab · Rozhodovací matice — tři zadání, tři různé odpovědi
 
 > Modul: `agent-landscape` · Odhad: 50 min · Režim: **hands-on** (návrhový lab, bez kódu)
-> Scénář: [`../agents-sdk-core/scenario-support-agent.md`](../agents-sdk-core/scenario-support-agent.md)
+> Scénář: [`../../scenario-support-agent.md`](../../scenario-support-agent.md)
 
 ## Cíl
 

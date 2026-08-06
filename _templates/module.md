@@ -26,7 +26,7 @@ flowchart LR
 Viz [`lab-<slug>.md`](lab-<slug>.md).
 
 ## Nosná linka
-<co agent ze scénáře v tomto modulu získal — viz `day-1/agents-sdk-core/scenario-support-agent.md`>
+<co agent ze scénáře v tomto modulu získal — viz `scenario-support-agent.md`>
 
 ## Zdroje (Microsoft)
 - [<název stránky>](https://learn.microsoft.com/...)

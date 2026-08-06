@@ -26,7 +26,7 @@
   konfigurační volbu. Je to lifecycle závazek; naváže `perf-cost-lifecycle` (governance
   výměn modelů).
 - Chunking po N znacích rozseká tabulky a postupy. Nechat je to navrhnout a pak porovnat.
-- Nezabíhat do evaluace relevance — metriky jsou [`../../day-4/evaluation-quality/`](../../day-4/evaluation-quality/).
+- Nezabíhat do evaluace relevance — metriky jsou [`../../day-5/evaluation-quality/`](../../day-5/evaluation-quality/).
 
 ## Vazby
 

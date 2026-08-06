@@ -28,7 +28,7 @@
   (a naopak). Nechat je narazit v labu, pak vysvětlit.
 - Někdo uloží klíč do `appsettings.json`. Druhá příležitost té lekce (první byla v onboardingu)
   — tady už s `git status` u tabule.
-- Nezabíhat do promptového ladění — to je [`../../day-2/prompt-orchestration/`](../../day-2/prompt-orchestration/).
+- Nezabíhat do promptového ladění — to je [`../../day-3/prompt-orchestration/`](../../day-3/prompt-orchestration/).
   Systémový prompt tady záměrně minimální.
 
 ## Vazby

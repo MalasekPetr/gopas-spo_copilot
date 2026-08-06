@@ -1,7 +1,7 @@
 # Lab · Capstone blueprint a prezentace
 
 > Modul: `capstone` · Odhad: **elastický 60–120 min** · Režim: **hands-on** (design dokument)
-> Scénář: [`../../day-1/agents-sdk-core/scenario-support-agent.md`](../../day-1/agents-sdk-core/scenario-support-agent.md)
+> Scénář: [`../../scenario-support-agent.md`](../../scenario-support-agent.md)
 
 ## Cíl
 
@@ -47,7 +47,8 @@ zadání z praxe studenta — a obhájit ho před skupinou.
 
 ### Část F — další kroky (10 min)
 
-11. <!-- TODO: certifikacni cesta: AI-103 a AI-200 (NE retirovane AI-102/AZ-204) -->
+11. <!-- TODO: certifikacni cesta: AI-103 a AI-200 (NE retirovane AI-102/AZ-204);
+      ukazat Certification Poster PDF a nejnovejsi AI kurzy v kurikulu -->
 12. <!-- TODO: kazdy student si zapise jednu vec, kterou udela do 14 dnu -->
 
 ## Ověření

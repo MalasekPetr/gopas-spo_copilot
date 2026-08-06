@@ -2,7 +2,8 @@
 
 ## Timing
 
-- ~65 min výklad + 70 min lab.
+- ~55 min výklad + 65 min lab. Deklarativní knowledge (manifest) už studenti mají
+  z `declarative-agents` — tady se nevrací, jen srovnává; to výklad zkracuje.
 - Část D labu (rozhodovací reflexe) je krátká, ale nevynechávat — je to vstup do
   `opt-custom-retrieval` i do capstonu.
 
@@ -28,13 +29,14 @@
 - Otázka „proč nedělat vlastní vektorové úložiště, když mám Azure AI Search" padne skoro
   vždy. Odpověď není „nedělej", ale **cenovka**: vlastní ACL model, refresh, ladění relevance,
   a odpovědnost za to, že agent neukáže, co nemá. To je celý `opt-custom-retrieval`.
-- Nezabíhat do prompt ladění „aby nehalucinoval" — to je [`../prompt-orchestration/`](../prompt-orchestration/)
+- Nezabíhat do prompt ladění „aby nehalucinoval" — to je [`../prompt-orchestration/`](../../day-3/prompt-orchestration/)
   a pořádně až [`../../day-3/middleware-policy/`](../../day-3/middleware-policy/).
 
 ## Vazby
 
 - Zpět: agent z `agents-sdk-core` (volá model, má ošetřené chyby).
+- Zpět též: `declarative-agents` (knowledge deklarativně v manifestu — ráno; teď to samé
+  kódem, srovnání se nabízí samo).
 - Dopředu: `actions-graph` (MCP jako nástroj, hranice oprávnění), `opt-custom-retrieval`
-  (kdy si retrieval dělat sám), `manifest-channels` (knowledge deklarativně v manifestu —
-  srovnání s tím, co student udělal kódem), `security-risk` (obsah v knowledge zdroji
+  (kdy si retrieval dělat sám), `security-risk` (obsah v knowledge zdroji
   jako vektor prompt injection — dotaz 4 se sem vrací).

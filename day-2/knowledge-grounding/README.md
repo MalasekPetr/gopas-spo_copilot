@@ -1,6 +1,6 @@
 # Grounding: Copilot connectors, semantic index, MCP
 
-> Typ: povinný · Den: 2 · Odhad: **135 min** (65 výklad + 70 lab) · Publikum: **vývojáři / architekti**
+> Typ: povinný · Den: 2 · Odhad: **120 min** (55 výklad + 65 lab) · Publikum: **vývojáři / architekti**
 > Prostředí: viz [`../../environment.md`](../../environment.md) · Názvosloví: [`../../GLOSSARY.md`](../../GLOSSARY.md)
 
 Kde agent bere data — a hlavně **kdy si retrieval nemá dělat sám**.
@@ -68,7 +68,7 @@ Viz [`lab-grounding-runbooks.md`](lab-grounding-runbooks.md).
 
 ## Nosná linka
 Support Asistent přestává vymýšlet: dotazy 1 a 2 ze
-[`../../day-1/agents-sdk-core/scenario-support-agent.md`](../../day-1/agents-sdk-core/scenario-support-agent.md)
+[`../../scenario-support-agent.md`](../../scenario-support-agent.md)
 už odpovídá **z runbooku, s citací**. Dotaz 4 zatím odmítá jen slabě (promptem) — to se
 zpevní v [`../../day-3/middleware-policy/`](../../day-3/middleware-policy/).
 

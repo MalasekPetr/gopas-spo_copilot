@@ -2,8 +2,9 @@
 
 ## Timing
 
-- ~90 min výklad + 50 min lab. Nejdiskutovanější blok kurzu — počítat s tím, že diskuse
-  o Copilot Studiu sežere 15 min nad plán.
+- ~60 min výklad + 45 min lab. Nejdiskutovanější blok kurzu — ale diskusi o Copilot Studiu
+  teď odkládej do `no-code-showcase`, který jede hned potom a má ji v zadání. Výklad se
+  proti původní verzi zkrátil: živou materializaci osy převzal showcase.
 - Při skluzu z onboardingu: lab zkrátit na část A + diskuse (viz fallback v labu).
 
 ## Go/no-go — otestovat před během
@@ -42,8 +43,9 @@
 ## Vazby
 
 - Zpět: toolchain z `onboarding`.
-- Dopředu: rozhodnutí „custom engine" se realizuje v `agents-sdk-core`; deklarativního agenta
-  student postaví v `manifest-channels` (D3), aby srovnání nezůstalo teoretické;
+- Dopředu: osa se materializuje hned v `no-code-showcase` (agent builder + Copilot Studio
+  naživo); rozhodnutí „custom engine" se realizuje v `agents-sdk-core`; deklarativního
+  agenta student postaví v `declarative-agents` (D2), aby srovnání nezůstalo teoretické;
   governance vrstva mapy se otevře v `agent-365-governance` (D4).
 - Nit rozhodování: tenhle blok → `knowledge-grounding` (kdy retrieval nedělat sám) →
   `agent-framework` (kdy multi-agent) → `event-driven-hosting` (kde to běží).

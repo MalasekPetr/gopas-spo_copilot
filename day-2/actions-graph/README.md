@@ -67,7 +67,7 @@ Viz [`lab-actions-and-graph.md`](lab-actions-and-graph.md). Referenční řešen
 
 ## Nosná linka
 Support Asistent získává dvě akce: čtení z Graphu a `CreateTicket` s validací.
-Dotaz 3 ze [`../../day-1/agents-sdk-core/scenario-support-agent.md`](../../day-1/agents-sdk-core/scenario-support-agent.md)
+Dotaz 3 ze [`../../scenario-support-agent.md`](../../scenario-support-agent.md)
 poprvé vede k **eskalaci místo výmluvy**. Dotaz 4 se stává zajímavějším: agent teď má
 přístup k datům, která nesmí prozradit.
 

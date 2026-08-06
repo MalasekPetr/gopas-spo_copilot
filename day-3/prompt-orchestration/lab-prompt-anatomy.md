@@ -1,7 +1,7 @@
 # Lab · Systémový prompt jako kontrakt + tool-call loop
 
 > Modul: `prompt-orchestration` · Odhad: 60 min · Režim: **hands-on**
-> Jazyk: C# · Scénář: [`../../day-1/agents-sdk-core/scenario-support-agent.md`](../../day-1/agents-sdk-core/scenario-support-agent.md)
+> Jazyk: C# · Scénář: [`../../scenario-support-agent.md`](../../scenario-support-agent.md)
 
 ## Cíl
 
@@ -10,7 +10,7 @@ Napsat systémový prompt, který drží scope a definuje eskalaci — a **dolo�
 
 ## Předpoklady
 
-- Agent z [`../actions-graph/`](../actions-graph/lab-actions-and-graph.md) má knowledge i akce.
+- Agent z [`../actions-graph/`](../../day-2/actions-graph/lab-actions-and-graph.md) má knowledge i akce.
 - Model endpoint funkční.
 
 ## Kroky

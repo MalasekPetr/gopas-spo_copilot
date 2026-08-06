@@ -50,7 +50,7 @@ Tenhle kurz je pro-code, což mění offboarding i přípravu:
 ## Demo data
 
 `New-SupportAgentData.ps1` vytváří podklad nosného scénáře
-([`../day-1/agents-sdk-core/scenario-support-agent.md`](../day-1/agents-sdk-core/scenario-support-agent.md)):
+([`../scenario-support-agent.md`](../scenario-support-agent.md)):
 knihovnu `Runbooky` se čtyřmi postupy a HR list. **Výhradně fiktivní data.**
 
 > [!IMPORTANT] Nikdy reálná data

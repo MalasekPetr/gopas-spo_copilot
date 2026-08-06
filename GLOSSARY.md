@@ -101,11 +101,13 @@ Nejdůležitější rozlišení pro modul o ingestion strategii. Katalogová osn
 | Zkratka | Význam | Kde v kurzu |
 |---|---|---|
 | **MCP** (Model Context Protocol) | standard pro připojení nástrojů a dat k modelu; first-class v Agents Toolkitu; nese federated konektory | `knowledge-grounding`, `actions-graph` |
+| **MCP Apps** | rozšíření MCP o interaktivní UX komponenty; v M365 implementované jako **SharePoint Copilot Apps** (SPFx, tenant-hosted, Public Preview) | `spfx-copilot-apps` |
 | **A2A** (Agent-to-Agent) | komunikace mezi agenty | `agent-framework` |
 
 > [!WARNING] Ověřit k datu běhu
 > A2A i MCP se vyvíjejí rychleji než dokumentace. Ověřit aktuální podporu v Agents SDK
-> a Toolkitu před během.
+> a Toolkitu před během. **SharePoint Copilot Apps** jsou Public Preview (SPFx 1.24,
+> 2026-07) — i pracovní název se může změnit.
 
 ## Agent 365, Entra Agent ID a governance
 
@@ -131,6 +133,11 @@ Nejdůležitější rozlišení pro modul o ingestion strategii. Katalogová osn
 
 **Dva control plany, nezaměňovat**: **Foundry Control Plane** (infrastruktura a agenti v Azure)
 vs. **Agent 365** (agenti napříč původem, z pohledu IT/security v M365). Sync mezi nimi existuje.
+
+**Third-party alternativa**: **Orchestry** (orchestry.com) — governance vrstva nad M365
+od třetí strany; nemá pod kontrolou Entra Agent ID (identita zůstává first-party doména).
+Jediné non-Microsoft téma kurzu, srovnávací blok [`day-4/orchestry-governance/`](day-4/orchestry-governance/) —
+rozsah agent governance ověřovat u vendora před během.
 
 ## Licence, kredity a inference — tři různé peněženky
 

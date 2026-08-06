@@ -1,6 +1,6 @@
 # Mapa cest tvorby agentů & rozhodovací osa
 
-> Typ: povinný · Den: 1 · Odhad: **140 min** (90 výklad + 50 lab) · Publikum: **vývojáři / architekti**
+> Typ: povinný · Den: 1 · Odhad: **105 min** (60 výklad + 45 lab) · Publikum: **vývojáři / architekti**
 > Prostředí: viz [`../../environment.md`](../../environment.md) · Názvosloví: [`../../GLOSSARY.md`](../../GLOSSARY.md)
 
 Blok, za který zákazník platí nejvíc. Odpovídá na otázku, se kterou studenti reálně přicházejí:
@@ -68,16 +68,17 @@ flowchart TD
 
 ## Naše prostředí
 
-Hands-on, bez kódu a bez tenantu — rozhodovací lab. Doporučená volba se v dalších dnech
-staví reálně (custom engine přes Agents SDK), ale deklarativního agenta si student postaví
-také, v [`../../day-3/manifest-channels/`](../../day-3/manifest-channels/).
+Hands-on, bez kódu a bez tenantu — rozhodovací lab. Hned po něm osu materializuje živý
+showcase ([`../no-code-showcase/`](../no-code-showcase/)). Doporučená volba se v dalších
+dnech staví reálně (custom engine přes Agents SDK) a deklarativního agenta si student
+postaví také, v [`../../day-2/declarative-agents/`](../../day-2/declarative-agents/).
 
 ## Lab
 Viz [`lab-decision-matrix.md`](lab-decision-matrix.md).
 
 ## Nosná linka
 Student odůvodní, proč Support Asistent ze
-[`../agents-sdk-core/scenario-support-agent.md`](../agents-sdk-core/scenario-support-agent.md)
+[`../../scenario-support-agent.md`](../../scenario-support-agent.md)
 musí být **custom engine agent** — body 3–5 zadání (akce, hranice oprávnění, auditovatelnost)
 deklarativní agent sám neuzavře.
 

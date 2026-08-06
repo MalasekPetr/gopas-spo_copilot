@@ -48,7 +48,7 @@ Viz [`lab-toolchain-scaffold.md`](lab-toolchain-scaffold.md).
 
 ## Nosná linka
 Student má prázdný, ale funkční projekt a rozumí zadání
-[`../agents-sdk-core/scenario-support-agent.md`](../agents-sdk-core/scenario-support-agent.md).
+[`../../scenario-support-agent.md`](../../scenario-support-agent.md).
 
 ## Zdroje (Microsoft)
 - [Microsoft 365 Agents Toolkit — overview](https://learn.microsoft.com/en-us/microsoftteams/platform/toolkit/overview-agents-toolkit)

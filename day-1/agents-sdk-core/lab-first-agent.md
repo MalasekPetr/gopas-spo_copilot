@@ -1,7 +1,7 @@
 # Lab · První agent — AgentApplication, turn, LLM a chybová větev
 
 > Modul: `agents-sdk-core` · Odhad: 75 min · Režim: **hands-on**
-> Jazyk: C# (parity úryvek TS v README) · Scénář: [`scenario-support-agent.md`](scenario-support-agent.md)
+> Jazyk: C# (parity úryvek TS v README) · Scénář: [`scenario-support-agent.md`](../../scenario-support-agent.md)
 
 ## Cíl
 

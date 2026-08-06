@@ -54,7 +54,7 @@ flowchart LR
 
 > [!IMPORTANT] Prompt vs. middleware
 > Instrukce v promptu je **doporučení pro model**. Middleware je **kód, který se vykoná**.
-> Studenti si to ověřili v [`../../day-2/prompt-orchestration/`](../../day-2/prompt-orchestration/)
+> Studenti si to ověřili v [`../../day-3/prompt-orchestration/`](../../day-3/prompt-orchestration/)
 > (část D labu) — tady se to napravuje.
 
 ## Klíčové rozlišení
@@ -71,7 +71,7 @@ flowchart LR
 
 Hands-on, bez tenantu — potřebuje **model endpoint**. Middleware se testuje i offline
 (unit testy nad pipeline bez volání modelu) — to je záměr, naváže
-[`../../day-4/evaluation-quality/`](../../day-4/evaluation-quality/).
+[`../../day-5/evaluation-quality/`](../../day-5/evaluation-quality/).
 
 ## Lab
 Viz [`lab-middleware-pipeline.md`](lab-middleware-pipeline.md). Referenční řešení v `solution/`.
@@ -79,7 +79,7 @@ Viz [`lab-middleware-pipeline.md`](lab-middleware-pipeline.md). Referenční ře
 ## Nosná linka
 Support Asistent dostává middleware, který pokrývá **oba** agenty z
 [`../agent-framework/`](../agent-framework/). Dotaz 4 ze
-[`../../day-1/agents-sdk-core/scenario-support-agent.md`](../../day-1/agents-sdk-core/scenario-support-agent.md)
+[`../../scenario-support-agent.md`](../../scenario-support-agent.md)
 už není odmítnutý promptem, ale **kódem** — a student to umí dokázat i proti pokusu o obejití.
 
 ## Zdroje (Microsoft)

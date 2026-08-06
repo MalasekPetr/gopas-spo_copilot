@@ -1,7 +1,7 @@
 # Lab · XPIA proti vlastnímu agentovi — a oprava scope
 
 > Modul: `security-risk` · Odhad: 75 min · Režim: **hands-on**
-> Jazyk: C# · Scénář: [`../../day-1/agents-sdk-core/scenario-support-agent.md`](../../day-1/agents-sdk-core/scenario-support-agent.md)
+> Jazyk: C# · Scénář: [`../../scenario-support-agent.md`](../../scenario-support-agent.md)
 
 ## Cíl
 
@@ -14,7 +14,7 @@ ne — a opravit to **minimalizací scope**, ne lepším promptem.
 
 ## Předpoklady
 
-- Agent z [`../../day-4/evaluation-quality/`](../../day-4/evaluation-quality/lab-golden-set.md)
+- Agent z [`../../day-5/evaluation-quality/`](../../day-5/evaluation-quality/lab-golden-set.md)
   (s golden setem, middleware, telemetrií).
 - **Lokální kopie runbooků**, kterou lze editovat.
 

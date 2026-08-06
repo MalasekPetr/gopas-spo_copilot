@@ -1,7 +1,7 @@
 # Lab · Triage + resolver — a co to stálo
 
 > Modul: `agent-framework` · Odhad: 75 min · Režim: **hands-on**
-> Jazyk: C# · Scénář: [`../../day-1/agents-sdk-core/scenario-support-agent.md`](../../day-1/agents-sdk-core/scenario-support-agent.md)
+> Jazyk: C# · Scénář: [`../../scenario-support-agent.md`](../../scenario-support-agent.md)
 
 ## Cíl
 
@@ -10,7 +10,7 @@ Deliverable není „funguje to", ale rozhodnutí, jestli si to v produkci zaslo
 
 ## Předpoklady
 
-- Agent z [`../../day-2/prompt-orchestration/`](../../day-2/prompt-orchestration/lab-prompt-anatomy.md)
+- Agent z [`../../day-3/prompt-orchestration/`](../../day-3/prompt-orchestration/lab-prompt-anatomy.md)
   s knowledge, akcemi a systémovým promptem.
 - Zapsaná baseline čtyř testovacích dotazů (latence + kvalita) z předchozích labů.
 

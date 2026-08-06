@@ -1,7 +1,7 @@
 # Lab · <Název labu>
 
 > Modul: <slug> · Odhad: <min> · Režim: hands-on | instruktorské demo | simulace
-> Jazyk: C# (parity úryvek TS, kde je) · Scénář: [`../../day-1/agents-sdk-core/scenario-support-agent.md`](../../day-1/agents-sdk-core/scenario-support-agent.md)
+> Jazyk: C# (parity úryvek TS, kde je) · Scénář: [`../../scenario-support-agent.md`](../../scenario-support-agent.md)
 
 ## Cíl
 

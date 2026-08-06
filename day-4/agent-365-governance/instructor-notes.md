@@ -47,7 +47,7 @@ tu kritiku ale zaslouží. Tohle je ta věta, za kterou lidé platí kurzovní c
 
 - Zpět: `middleware-policy` (logování z pipeline je vstup telemetrie),
   `actions-graph` (Entra Agent ID a hranice oprávnění), `event-driven-hosting`
-  (hostovaný agent potřebuje identitu), `manifest-channels` (publikovaný agent).
+  (hostovaný a publikovaný agent potřebuje identitu).
 - Dopředu: `evaluation-quality` (bez telemetrie se evaluace dělá naslepo — přímá návaznost,
   jede hned po tomhle bloku), `security-risk` (auditní stopa jako detekce),
   `perf-cost-lifecycle` (telemetrie jako vstup nákladové optimalizace),

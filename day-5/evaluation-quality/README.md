@@ -75,7 +75,7 @@ Viz [`lab-golden-set.md`](lab-golden-set.md). Referenční řešení v `solution
 
 ## Nosná linka
 Support Asistent získává **golden set a regresní běh**. Baseline ze
-[`../../day-2/prompt-orchestration/`](../../day-2/prompt-orchestration/) a měření z
+[`../../day-3/prompt-orchestration/`](../../day-3/prompt-orchestration/) a měření z
 [`../../day-3/agent-framework/`](../../day-3/agent-framework/) se konečně spojují do jedné
 tabulky — student vidí celý týden jako křivku, ne jako sérii pokusů.
 

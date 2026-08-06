@@ -1,7 +1,7 @@
 # Lab · Golden set a regresní běh
 
 > Modul: `evaluation-quality` · Odhad: 75 min · Režim: **hands-on**
-> Jazyk: C# · Scénář: [`../../day-1/agents-sdk-core/scenario-support-agent.md`](../../day-1/agents-sdk-core/scenario-support-agent.md)
+> Jazyk: C# · Scénář: [`../../scenario-support-agent.md`](../../scenario-support-agent.md)
 
 ## Cíl
 
@@ -10,7 +10,7 @@ změřitelně vyrostl — a který zachytí, kdyby ho příští změna zhoršil
 
 ## Předpoklady
 
-- Agent z [`../agent-365-governance/`](../agent-365-governance/lab-instrument-agent.md)
+- Agent z [`../agent-365-governance/`](../../day-4/agent-365-governance/lab-instrument-agent.md)
   (s telemetrií).
 - Zapsané baseline z D2 (`prompt-orchestration`, část A) a měření z D3 (`agent-framework`, část A/D).
 

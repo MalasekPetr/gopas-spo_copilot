@@ -41,7 +41,7 @@
 - Zpět: `evaluation-quality` (golden set je předpoklad — nejsilnější vazba v kurzu),
   `agent-framework` (naměřená cena multi-agentu), `prompt-orchestration` (kontext = tokeny;
   výměna modelu rozbíjí prompty), `event-driven-hosting` (náklady v nečinnosti, cold start),
-  `manifest-channels` (verzování, rollback), `security-risk` (zúžený scope má nákladový dopad;
+  `event-driven-hosting` (verzování, rollback, publikace), `security-risk` (zúžený scope má nákladový dopad;
   cache bez ACL je bezpečnostní chyba), `opt-custom-retrieval` (reindex při změně embedding
   modelu jako lifecycle událost — pokud modul jel).
 - Dopředu: `capstone` (nákladový model, lifecycle plán a KPI patří do blueprintu).

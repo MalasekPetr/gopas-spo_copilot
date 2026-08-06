@@ -1,7 +1,7 @@
 # Lab · Snížit náklady bez ztráty kvality + promotion
 
 > Modul: `perf-cost-lifecycle` · Odhad: **elastický 45–70 min** · Režim: **hands-on**
-> Jazyk: C# · Scénář: [`../../day-1/agents-sdk-core/scenario-support-agent.md`](../../day-1/agents-sdk-core/scenario-support-agent.md)
+> Jazyk: C# · Scénář: [`../../scenario-support-agent.md`](../../scenario-support-agent.md)
 
 ## Cíl
 
@@ -11,7 +11,7 @@ navrhnout promotion dev → test s rollback plánem.
 ## Předpoklady
 
 - Agent z [`../security-risk/`](../security-risk/lab-injection-and-scope.md).
-- **Golden set a naměřené hodnoty** z [`../../day-4/evaluation-quality/`](../../day-4/evaluation-quality/lab-golden-set.md)
+- **Golden set a naměřené hodnoty** z [`../../day-5/evaluation-quality/`](../../day-5/evaluation-quality/lab-golden-set.md)
   — bez nich nelze rozlišit optimalizaci od degradace.
 
 ## Kroky

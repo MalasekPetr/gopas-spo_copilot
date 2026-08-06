@@ -1,6 +1,6 @@
 # Lab · Srovnání cest — co naklikáš a co už ne
 
-> Modul: `no-code-showcase` · Odhad: 20 min · Režim: **instruktorské demo + srovnání**
+> Modul: `no-code-showcase` · Odhad: 20 min · Režim: **hands-on (agent builder na PAYG) + instruktorské demo (Studio)**
 > Jazyk: — (bez kódu) · Scénář: [`../../scenario-support-agent.md`](../../scenario-support-agent.md)
 
 ## Cíl
@@ -15,21 +15,26 @@ custom engine) a schopnost říct u konkrétního zadání, **která příčka s
 
 ## Kroky
 
-### Část A — pozorování při demu
+### Část A — agent builder hands-on (PAYG)
 
-1. <!-- TODO: behem dema si student znaci: cas stavby, kde instruktor narazil,
+1. <!-- TODO: student si sam nakliknuti builder agenta na zadani ze scenare
+     (instructions + knowledge); zmeri cas stavby a pusti ctyri testovaci dotazy -->
+
+### Část A2 — Copilot Studio demo (instruktor)
+
+2. <!-- TODO: behem dema si student znaci: cas stavby, kde instruktor narazil,
      ktere z ctyr testovacich dotazu agent zvladl -->
 
 ### Část B — srovnávací tabulka
 
-2. <!-- TODO: tabulka: hosting / model a penezenka / knowledge / akce s validaci /
+3. <!-- TODO: tabulka: hosting / model a penezenka / knowledge / akce s validaci /
      middleware a guardraily / ALM a verzovani / governance (Agent 365) / strop -->
-3. <!-- TODO: k tabulce doplnit sloupce "deklarativni agent (D2)" a "custom engine (D1-D5)"
+4. <!-- TODO: k tabulce doplnit sloupce "deklarativni agent (D2)" a "custom engine (D1-D5)"
      zatim jako hypotezu -- studenti si je behem tydne overi a opravi -->
 
 ### Část C — rozhodnutí
 
-4. <!-- TODO: tri mini-zadani (jine nez scenar); student ke kazdemu prirkne pricku osy
+5. <!-- TODO: tri mini-zadani (jine nez scenar); student ke kazdemu prirkne pricku osy
      a jednu vetu proc. Spravna odpoved u aspon jednoho JE no-code/low-code. -->
 
 ## Ověření
@@ -40,9 +45,9 @@ custom engine) a schopnost říct u konkrétního zadání, **která příčka s
 
 ## Fallback
 
-- **Tenant nemá Copilot Studio / agent builder licenci**: dema jedou z nahrávky nebo
-  screenshotů instruktora; tabulka i část C fungují beze změny — vedou se o schopnostech,
-  ne o klikání.
+- **Agent builder na PAYG nefunguje** (licenční hranice se změnila): část A jede jako
+  instruktorské demo; **Copilot Studio bez licence/trialu**: z nahrávky nebo screenshotů.
+  Tabulka i část C fungují beze změny — vedou se o schopnostech, ne o klikání.
 - Nestíhá se: část C se zadá jako večerní úloha; tabulka je povinný deliverable.
 
 ## Zdroje (Microsoft)

@@ -33,6 +33,11 @@ Bodů 1–2 dosáhne i deklarativní agent. Body 3–5 jsou důvod, proč tenhle
 | Zaměstnanci (list) | `/sites/hr-demo` | seed skript |
 | Mock ticket API | lokálně | součást `solution/` v [`day-2/actions-graph/`](day-2/actions-graph/) |
 
+> [!NOTE] Název webu `/sites/hr-demo` je záměrný
+> Web se sdílí se seed skripty kurzu GOC224 (reuse provisioning artefaktů) — proto HR
+> název, i když scénář je IT support. Nepřejmenovávat; list Zaměstnanci navíc potřebuje
+> testovací dotaz 4.
+
 ## Jak agent roste
 
 | Den | Modul | Přírůstek |

@@ -60,9 +60,15 @@ flowchart LR
 
 ## Naše prostředí
 
-Režim: **instruktorské demo** (agent builder vyžaduje M365 Copilot licenci, Studio vyžaduje
-vlastní licenci/trial — viz go/no-go v [`instructor-notes.md`](instructor-notes.md)).
-Studenti si tabulku rozdílů vyplňují sami; hands-on jen pokud tenant licence má.
+Studenti mají **PAYG (Copilot Credits)** — ty kryjí i **Copilot agent builder**, takže
+část A je studentský **hands-on** (každý si builder agenta zkusí sám). **Copilot Studio**
+zůstává instruktorské demo (vlastní licence/trial — viz go/no-go
+v [`instructor-notes.md`](instructor-notes.md)).
+
+> [!WARNING] Ověřit k datu běhu
+> Pokrytí agent builderu Copilot Credits (PAYG) bez M365 Copilot licence ověřit před
+> během — licenční hranice PAYG se mění (viz [`../../GLOSSARY.md`](../../GLOSSARY.md),
+> tři peněženky).
 
 ## Lab
 

@@ -50,7 +50,7 @@ Co který modul reálně potřebuje pod baseline `spdemo.online` + PAYG:
 |---|---|---|---|---|
 | `day-1/onboarding` | ano | — | — | hands-on |
 | `day-1/agent-landscape` | — | — | — | hands-on (rozhodovací lab, bez kódu) |
-| `day-1/no-code-showcase` | ano + **Copilot Studio / agent builder licence** | — | — | **instruktorské demo** |
+| `day-1/no-code-showcase` | ano (agent builder na PAYG; Studio = licence/trial instruktora) | — | — | hands-on (builder) + **demo** (Studio) |
 | `day-1/agents-sdk-core` | — | **ano** | — | hands-on (Agents Playground, bez tenantu) |
 | `day-2/declarative-agents` | ano | — | — | hands-on (deklarativní agent na PAYG) |
 | `day-2/knowledge-grounding` | ano | ano | — | hands-on |

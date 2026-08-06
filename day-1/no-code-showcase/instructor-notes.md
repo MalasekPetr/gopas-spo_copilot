@@ -8,8 +8,9 @@
 
 ## Go/no-go — otestovat před během
 
-- **Licence**: agent builder vyžaduje M365 Copilot licenci; Copilot Studio vlastní
-  licenci/trial. Ověřit, co v demo tenantu reálně je — jinak jet z nahrávky (fallback labu).
+- **Licence**: studenti mají PAYG (Copilot Credits) — kryje agent builder, takže část A
+  jede hands-on; **ověřit studentským účtem den předem** (licenční hranice PAYG se mění).
+  Copilot Studio vlastní licence/trial — jinak Studio část z nahrávky (fallback labu).
 - Obě dema **naskriptovat a projet den předem** — UI obou nástrojů se mění po měsících.
 - Studio agent na zadání ze scénáře postavit dopředu a mít ho v tenantu jako zálohu,
   kdyby živé klikání selhalo.

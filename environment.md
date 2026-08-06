@@ -55,7 +55,7 @@ Co který modul reálně potřebuje pod baseline `spdemo.online` + PAYG:
 | `day-2/declarative-agents` | ano | — | — | hands-on (deklarativní agent na PAYG) |
 | `day-2/knowledge-grounding` | ano | ano | — | hands-on |
 | `day-2/actions-graph` | ano | ano | — | hands-on |
-| `day-2/data-hygiene` | ano (+ **SAM licence** pro reporty) | — | — | **instruktorské demo** + checklist |
+| `day-2/data-hygiene` | ano (SAM v tenantu funguje) | — | — | **instruktorské demo** živě + checklist |
 | `day-2/opt-custom-retrieval` | — | ano | **ano** | **instruktorské demo** |
 | `day-3/prompt-orchestration` | — | **ano** | — | hands-on |
 | `day-3/agent-framework` | — | **ano** | — | hands-on |

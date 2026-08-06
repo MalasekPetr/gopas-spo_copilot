@@ -13,7 +13,10 @@
   jako primární variantu, ne jako fallback.
 - Mock ticket API v `solution/` musí běžet na čistém stroji (port, .NET verze).
 - Připravit app-only konfiguraci pro část D **dopředu** — improvizovat app registraci
-  před 20 lidmi se nedělá.
+  před 20 lidmi se nedělá. App-only credentials se studentům **rozdávají** (rozhodnutí
+  autora 2026-08-06; demo tenant, jen fiktivní data): secret s krátkou platností,
+  **po kurzu rotovat/zneplatnit** a app registraci uklidit. Ověření labu drží, že po
+  části D je app-only režim vypnutý.
 - Ověřit aktuální stav **Entra Agent ID**: dostává agent v tomto scénáři Agent ID automaticky,
   nebo se registruje ručně? Mění to formulaci ve výkladu.
 

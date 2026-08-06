@@ -9,8 +9,12 @@
 
 ## Go/no-go — otestovat před během
 
-- Knihovna `Runbooky` na `/sites/hr-demo` naplněná a **zaindexovaná**. Index není okamžitý —
-  seed spustit minimálně den předem, jinak část A labu selže a vypadá to jako chyba studenta.
+- **Re-verify: Copilot Retrieval API na PAYG studentským účtem.** Empiricky ověřeno
+  2026-08-06, ale PAYG consumption je **preview** — podmínky, ceny i dostupnost se mohou
+  změnit bez oznámení. Když nefunguje, jet fallback labu (Graph Search API).
+- Knihovna `Runbooky` na `/sites/hr-demo` naplněná a **zaindexovaná**. Seed běží **večer
+  dne 1** (declarative-agents ji potřebuje hned ráno D2) — index není okamžitý, později
+  už je pozdě a selhání vypadá jako chyba studenta.
 - Ověřit, že student (Business Basic, ne admin) knihovnu vidí a že search vrací výsledky
   pod jeho identitou.
 - Ověřit aktuální seznam **default federated konektorů** a jestli už jdou stavět custom —

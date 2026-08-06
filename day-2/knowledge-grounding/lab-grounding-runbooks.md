@@ -20,9 +20,11 @@ Support Asistent odpovídá **z runbooků, s citací zdroje** — a když odpov�
 1. <!-- TODO: overit v M365, ze obsah knihovny Runbooky je dohledatelny (search) -->
 2. <!-- TODO: ukazat, ze vysledky respektuji permissions studenta — zaklad ACL trimmingu -->
 
-### Část B — zapojit knowledge
+### Část B — zapojit knowledge (Copilot Retrieval API)
 
-3. <!-- TODO: pripojit SharePoint knowledge (knihovna Runbooky) do agenta -->
+3. <!-- TODO: pripojit SharePoint knowledge (knihovna Runbooky) do agenta pres
+     Copilot Retrieval API (PAYG): dotaz -> text chunky ze semantic indexu -> kontext
+     modelu. Opravneni Files.Read.All + Sites.Read.All. -->
 4. <!-- TODO: pridat do odpovedi CITACI zdroje — bez citace neni grounding overitelny -->
 
 ### Část C — chování při neznámé odpovědi
@@ -46,6 +48,10 @@ Support Asistent odpovídá **z runbooků, s citací zdroje** — a když odpov�
 
 ## Fallback
 
+- **Retrieval API na PAYG nefunguje** (je to preview, může se změnit): část B jede přes
+  **Graph Search API** — funguje pod Business Basic, ale bez semantic indexu (jen
+  lexikální search + ACL trimming). Rozdíl explicitně pojmenovat: přesně tohle je hodnota,
+  o kterou bez Copilot licence/PAYG přicházíš.
 - Knihovna nedostupná / index ještě neproběhl: instruktor poskytne lokální kopii runbooků
   jako soubory a grounding se udělá nad nimi. Rozdíl (žádné ACL trimming, žádný refresh)
   se pojmenuje — je to samo o sobě dobrý teaching point.
@@ -53,5 +59,6 @@ Support Asistent odpovídá **z runbooků, s citací zdroje** — a když odpov�
 
 ## Zdroje (Microsoft)
 
+- [Microsoft 365 Copilot Retrieval API — overview](https://learn.microsoft.com/en-us/microsoft-365/copilot/extensibility/api/ai-services/retrieval/overview)
 - [Copilot connectors overview](https://learn.microsoft.com/en-us/microsoft-365/copilot/connectors/overview)
 - [Federated connectors overview](https://learn.microsoft.com/en-us/microsoft-365/copilot/connectors/federated-connectors-overview)

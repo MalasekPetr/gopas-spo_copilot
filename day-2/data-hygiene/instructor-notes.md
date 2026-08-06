@@ -9,8 +9,8 @@
 
 ## Go/no-go — otestovat před během
 
-- Ověřit **licenci SharePoint Advanced Management** v demo tenantu; bez ní připravit
-  screenshoty reportů z jiného prostředí.
+- **SAM v `spdemo.online` funguje** (potvrzeno 2026-08-06) — přesto před během ověřit,
+  že reporty jedou a licence nevypršela; screenshoty mít jako zálohu.
 - Připravit v tenantu **jeden záměrně přesdílený web** (demo oversharingu) — a po kurzu
   ho uklidit.
 - Ověřit aktuální stav **Restricted Content Discovery** (názvosloví i rozsah se mění).

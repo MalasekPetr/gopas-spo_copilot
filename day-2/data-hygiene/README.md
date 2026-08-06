@@ -62,9 +62,9 @@ flowchart LR
 
 ## Naše prostředí
 
-Instruktorské demo + mini-audit na `spdemo.online` (SAM reporty dle dostupné licence —
-viz go/no-go). Studenti si odnášejí checklist; plný SAM hands-on vyžaduje licenci,
-kterou baseline tenant mít nemusí.
+Instruktorské demo + mini-audit na `spdemo.online` — **SharePoint Advanced Management
+v tenantu funguje** (potvrzeno 2026-08-06), reporty se ukazují živě, ne ze screenshotů.
+Studenti si odnášejí checklist.
 
 ## Lab
 

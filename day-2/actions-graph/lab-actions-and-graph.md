@@ -39,9 +39,10 @@ data, na která volající nemá právo.
 
 ### Část D — app-only jako protipříklad
 
-10. <!-- TODO: instruktor ukaze (nebo student prepne v konfiguraci) app-only rezim
-      a stejny dotaz z casti C — agent najednou vidi vse. Pojmenovat, proc je to
-      nejcastejsi zdroj exfiltrace. NEnechavat zapnute. -->
+10. <!-- TODO: student prepne v konfiguraci na app-only credentials (rozdava instruktor,
+      jen pro tento krok) a stejny dotaz z casti C — agent najednou vidi vse. Pojmenovat,
+      proc je to nejcastejsi zdroj exfiltrace. NEnechavat zapnute; po casti D zpet na
+      delegated. -->
 
 ## Ověření
 

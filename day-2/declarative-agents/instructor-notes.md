@@ -12,8 +12,9 @@
   Empiricky funguje (potvrzeno 2026-07-17 na jiném běhu), ale **Microsoft to takto
   nedokumentuje** — může se změnit bez oznámení. Otestovat studentským účtem, ne svým.
   Když nefunguje, jet fallback z labu (A–B lokálně, C–D jako demo).
-- **Knihovna `Runbooky` musí být v tenantu PŘED tímto blokem** — provisioning skript
-  pustit ráno, ne až v knowledge-grounding bloku, který následuje.
+- **Knihovna `Runbooky` musí být v tenantu PŘED tímto blokem** — seed skript se pouští
+  **večer dne 1** (rozhodnutí autora 2026-08-06): index není okamžitý a ranní seed by
+  nemusel stihnout zaindexovat.
 - Ověřit **aktuální verzi manifest schématu** a dostupné capabilities — sekce
   Capabilities ve výkladu se enumeruje proti schématu, ne z paměti. Mění se po měsících.
 - Ověřit názvy šablon v Toolkitu (mění se) a scaffoldnout deklarativního agenta den předem.

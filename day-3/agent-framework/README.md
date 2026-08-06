@@ -86,6 +86,7 @@ Support Asistent se rozděluje na **triage** (klasifikuje dotaz, rozhoduje o ces
 získal — a **co tím zaplatil** (latence, tokeny, horší debug).
 
 ## Zdroje (Microsoft)
+- [Microsoft Agent Framework — overview](https://learn.microsoft.com/en-us/agent-framework/overview/) (agents vs. workflows, nástupce SK + AutoGen)
 - [Use Semantic Kernel and Agent Framework in Agents SDK](https://learn.microsoft.com/en-us/microsoft-365/agents-sdk/using-semantic-kernel-agent-framework)
 - [What is the Microsoft 365 Agents SDK](https://learn.microsoft.com/en-us/microsoft-365/agents-sdk/agents-sdk-overview)
 - [Microsoft 365 multi-agent workflow with Microsoft Agent Framework](https://techcommunity.microsoft.com/blog/appsonazureblog/microsoft-365-multi-agent-workflow-with-microsoft-agent-framework/4514164)

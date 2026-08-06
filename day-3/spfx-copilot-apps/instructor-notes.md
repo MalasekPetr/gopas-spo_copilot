@@ -2,18 +2,22 @@
 
 ## Timing
 
-- ~35 min (25 demo-výklad + 10 diskuse). Závěr dne 3 — lehký, vizuální blok po náročném
-  middleware labu; funguje jako odměna.
-- Nemá vlastní lab — nepouštět studenty do scaffoldu, preview toolchain u 20 strojů
-  je časová past. Odkázat na PnP samples jako samostudium.
+- ~60 min (20 výklad + 40 lab). Závěr dne 3 — vizuální hands-on po náročném middleware
+  labu; funguje jako odměna. Hands-on se studenty je rozhodnutí autora (2026-08-06) —
+  klíčová vazba na SPFx kurzy, publikum tu ožije.
+- Deploy (část C) zůstává instruktorské demo — admin krok, ne studentský.
 
 ## Go/no-go — otestovat před během
 
+- **Preview generator (`@next`) se instaluje v onboardingu dne 1**, ne až tady —
+  instalace u 20 strojů uprostřed dne 3 je časová past. Přidat do onboarding checklistu
+  a ověřit verzi den předem (preview se mění bez ohlášení).
 - **Ověřit aktuální stav preview/GA** na release notes — nejrychleji se měnící blok kurzu.
   Zkontrolovat: verze SPFx, stav rolloutu, jestli platí „bez Copilot licence pro build".
 - Demo App postavit a projet **den předem** (Copilot Workbench lokálně + deploy
   do tenantu, pokud rollout dorazil).
-- Mít zálohu: video z MS dokumentace, kdyby deploy nefungoval.
+- Mít zálohu: video z MS dokumentace, kdyby deploy nefungoval; vlastní běžící projekt
+  na promítání pro studenty, kterým preview toolchain selže.
 
 ## Tripwires
 
@@ -23,8 +27,10 @@
   a routing řeší platforma, komponenta žije v tenantu.
 - Publikum s SPFx zkušeností (GOC223/224 absolventi) tu ožije — nenechat blok přerůst
   v SPFx kurz; vazba na web party je jedna věta, ne kapitola.
-- Duplicate tool names (známý preview bug) — když demo v tenantu koliduje, je to ono;
-  zmínit jen když nastane.
+- Duplicate tool names (známý preview bug) — když App v tenantu koliduje s jinou
+  (u 20 studentů reálné!), je to ono; pojmenování App per student (`user.NN`) do zadání.
+- Preview toolchain selže u části studentů — počítat s tím, párovat je; neztratit
+  20 minut debugováním jednoho stroje.
 
 ## Vazby
 

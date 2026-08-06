@@ -1,6 +1,6 @@
 # Middleware & enforcement politik
 
-> Typ: povinný · Den: 3 · Odhad: **135 min** (60 výklad + 75 lab) · Publikum: **vývojáři / architekti**
+> Typ: povinný · Den: 3 · Odhad: **150 min** (60 výklad + 90 lab) · Publikum: **vývojáři / architekti**
 > Prostředí: viz [`../../environment.md`](../../environment.md) · Názvosloví: [`../../GLOSSARY.md`](../../GLOSSARY.md)
 
 Blok, kde se Responsible AI přestává povídat a začíná se **psát**.

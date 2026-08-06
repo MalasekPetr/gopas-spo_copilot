@@ -51,7 +51,7 @@ Bodů 1–2 dosáhne i deklarativní agent. Body 3–5 jsou důvod, proč tenhle
 | 3 | [`day-3/prompt-orchestration/`](day-3/prompt-orchestration/) | systémový prompt, tool-call loop, „neznám" chování |
 | 3 | [`day-3/agent-framework/`](day-3/agent-framework/) | rozdělení na **triage** + **resolver** agenta |
 | 3 | [`day-3/middleware-policy/`](day-3/middleware-policy/) | redakční middleware, filtrování výstupů |
-| 3 | [`day-3/spfx-copilot-apps/`](day-3/spfx-copilot-apps/) | vize: eskalace (dotaz 3) jako interaktivní karta v Copilot canvasu |
+| 3 | [`day-3/spfx-copilot-apps/`](day-3/spfx-copilot-apps/) | první vlastní Copilot App (scaffold + Workbench); vize: eskalace (dotaz 3) jako interaktivní karta |
 | 4 | [`day-4/event-driven-hosting/`](day-4/event-driven-hosting/) | hosting, timeout a retry chování; manifest, verzování, **publikace do Teams / M365 Copilotu** |
 | 4 | [`day-4/marketplace-agents/`](day-4/marketplace-agents/) | rozhodnutí store ANO/NE s odůvodněním — do roadmapy |
 | 4 | [`day-4/agent-365-governance/`](day-4/agent-365-governance/) | **instrumentace do Agent 365**, Entra Agent ID |

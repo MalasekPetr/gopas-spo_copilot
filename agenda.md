@@ -51,7 +51,7 @@ AI témata jsou vedlejší koleje, ne jádro.
 > **volitelný** blok 5 — rozhodnutí, ne výchozí stav; zároveň **hlavní kompresní ventil dne**
 > (leaf node, nic na něm nezávisí).
 
-## Den 3 — Prompt, multi-agent a politiky (~6,9 h)
+## Den 3 — Prompt, multi-agent a politiky (~7,6 h ⚠ přetéká)
 
 | # | Blok | Slug | Typ |
 |---|---|---|---|
@@ -62,8 +62,12 @@ AI témata jsou vedlejší koleje, ne jádro.
 
 > [!NOTE] Blok 2 je největší doplněk proti publikované osnově (Agent Framework tam chybí
 > úplně). Blok 3 slučuje Responsible AI guardrails s middleware pipeline — v pro-code kurzu
-> je to jedna věc, ne dvě: guardrail je kód v pipeline, ne slide. Blok 4 je krátký vizuální
-> závěr dne a **most k SPFx kurzům**: SPFx komponenty v Copilot canvasu (MCP Apps model).
+> je to jedna věc, ne dvě: guardrail je kód v pipeline, ne slide (lab +15 min, část C
+> volitelná). Blok 4 je **hands-on** závěr dne a most k SPFx kurzům: SPFx komponenty
+> v Copilot canvasu (MCP Apps model), každý student si scaffoldne vlastní Copilot App.
+
+> [!WARNING] Den 3 = 455 min (~7,6 h) — přetéká o ~1 h, čeká na rozhodnutí autora
+> (co ustoupí: zkrácení bloků 1–2, přesun mezi dny, nebo `opt-` režim některého bloku).
 
 ## Den 4 — Hosting, publikace, Marketplace a governance (~6,4 h)
 

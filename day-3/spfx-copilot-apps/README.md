@@ -1,6 +1,6 @@
 # SharePoint Copilot Apps — interaktivní UX v Copilot canvasu (Public Preview)
 
-> Typ: povinný · Den: 3 · Odhad: **35 min** (25 demo-výklad + 10 diskuse) · Publikum: **vývojáři / architekti**
+> Typ: povinný · Den: 3 · Odhad: **60 min** (20 výklad + 40 lab) · Publikum: **vývojáři / architekti**
 > Prostředí: viz [`../../environment.md`](../../environment.md) · Názvosloví: [`../../GLOSSARY.md`](../../GLOSSARY.md)
 
 Agent celý den tvaruje **text**. SharePoint Copilot Apps (SPFx 1.24, Public Preview) jsou
@@ -57,20 +57,23 @@ flowchart LR
 
 ## Naše prostředí
 
-**Instruktorské demo** (25 min) — lokální běh v Copilot Workbench nevyžaduje Copilot
-licenci (stav preview), deploy do `spdemo.online` dle stavu rolloutu. Studentský hands-on
-až po GA — blok je showcase s odkazem na samostudium (PnP samples).
+**Hands-on** (rozhodnutí autora 2026-08-06 — klíčová vazba na SPFx kurzy): studenti si
+scaffoldnou a rozběhnou vlastní Copilot App lokálně v **Copilot Workbench** — v preview
+to nevyžaduje Copilot licenci. Deploy do `spdemo.online` dělá instruktor jako demo (dle
+stavu rolloutu). Preview generator (`@next`) se instaluje **už v onboardingu dne 1**,
+ne až tady — viz go/no-go v [`instructor-notes.md`](instructor-notes.md).
 
 ## Lab
 
-Bez samostatného labu — demo + diskuse. Samostudium:
+Viz [`lab-first-copilot-app.md`](lab-first-copilot-app.md). Samostudium navíc:
 [GitHub — spfx-copilot-apps samples](https://github.com/pnp/spfx-copilot-apps).
 
 ## Nosná linka
 
 Support Asistent dnes dostal middleware — a tady je vidět, **kam jeho výstup může
 dorůst**: eskalace z dotazu 3 ([`../../scenario-support-agent.md`](../../scenario-support-agent.md))
-jako interaktivní schvalovací karta místo textu. V kurzu jen jako vize, ne implementace.
+jako interaktivní schvalovací karta místo textu. Student si první Copilot App postaví
+sám; napojení na vlastního agenta zůstává jako roadmapa do capstonu.
 
 ## Zdroje (Microsoft)
 

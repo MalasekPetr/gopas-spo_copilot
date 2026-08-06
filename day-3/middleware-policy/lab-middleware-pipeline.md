@@ -27,7 +27,11 @@ uspěl.
 4. <!-- TODO: klasifikace mimo-scope dotazu a odmitnuti PRED volanim modelu
      (nejlevnejsi obrana — zmerit, kolik tokenu to usetri) -->
 
-### Část C — post-processing
+### Část C — post-processing *(volitelná při plném tempu)*
+
+> [!NOTE] Část C je bonus, ne podmínka úspěchu
+> Jádro labu jsou části A, B a D. Kdo části C nestihne, dodělá je jako samostudium —
+> a neodchází s pocitem selhání.
 
 5. <!-- TODO: vynuceni citace: odpoved bez podkladu v runbooku se ZABLOKUJE, ne prepise -->
 6. <!-- TODO: vystupni redakce pred odeslanim uzivateli -->

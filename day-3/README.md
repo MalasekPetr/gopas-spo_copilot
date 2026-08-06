@@ -16,8 +16,12 @@ Jak se skládá prompt a systémová orchestrace vlastního modelu, orchestrace 
 > Responsible AI guardraily s middleware pipeline záměrně: v pro-code kurzu je guardrail
 > **kód v pipeline**, ne slide o zodpovědné AI.
 
-Reálná zátěž ~6,9 h (110 + 135 + 135 + 35 min) — nad kalibračním stropem; blok 4 je
-vědomě kompaktní vizuální závěr dne (showcase bez labu, most k SPFx kurzům) a při skluzu
-se zkracuje první. Agent z nosné linky dnes dostane systémový prompt s měřenou baseline,
-rozdělí se na dva (triage + resolver) a dostane redakční middleware — a student uvidí,
-kam jeho výstup může dorůst v Copilot canvasu.
+> [!WARNING] Den 3 je po navýšeních na ~7,6 h — přetéká, čeká na rozhodnutí autora
+> 110 + 135 + 150 + 60 min = 455 min. Middleware lab dostal +15 min a blok 4 je nově
+> **hands-on** (60 min, most k SPFx kurzům — každý student si scaffoldne vlastní Copilot
+> App). Den se do reálné dotace (~6,25–6,5 h) nevejde; co ustoupí, rozhodne autor —
+> viz CLAUDE.md, otevřená otázka hustoty.
+
+Agent z nosné linky dnes dostane systémový prompt s měřenou baseline, rozdělí se na dva
+(triage + resolver) a dostane redakční middleware — a student si scaffoldne první vlastní
+Copilot App.

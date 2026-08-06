@@ -2,9 +2,10 @@
 
 ## Timing
 
-- ~60 min výklad + 75 min lab.
+- ~60 min výklad + 90 min lab (navýšeno z 75 — rozhodnutí autora 2026-08-06; lab je
+  nejnabušenější v kurzu).
 - Část D labu je **pointa celého bloku** (a jedna z pointa celého kurzu). Když čas tlačí,
-  obětovat část C, ne D.
+  obětovat část C, ne D — část C je v labu explicitně označená jako volitelná.
 
 ## Go/no-go — otestovat před během
 

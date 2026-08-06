@@ -20,7 +20,7 @@
      neni no-code builder. -->
 
 ```mermaid
-%% TODO: diagram — cesta zpravy: kanal -> adapter -> AgentApplication -> handler -> odpoved
+%% TODO: diagram -- cesta zpravy: kanal -> adapter -> AgentApplication -> handler -> odpoved
 flowchart LR
   A[placeholder] --> B[placeholder]
 ```
@@ -38,7 +38,7 @@ flowchart LR
      to je konfiguracni rozhodnuti, ne detail. -->
 
 ```mermaid
-%% TODO: diagram — zivotni cyklus turnu a rozsahy stavu
+%% TODO: diagram -- zivotni cyklus turnu a rozsahy stavu
 sequenceDiagram
   participant P as placeholder
   P->>P: placeholder

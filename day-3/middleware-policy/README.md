@@ -25,7 +25,7 @@ Blok, kde se Responsible AI přestává povídat a začíná se **psát**.
      Pipeline musi pokryt VSECHNY agenty z D3 multi-agent, ne jen jednoho. -->
 
 ```mermaid
-%% TODO: diagram — pipeline: vstup -> pre (redakce, klasifikace) -> orchestrace -> post (filtr, citace) -> vystup
+%% TODO: diagram -- pipeline: vstup -> pre (redakce, klasifikace) -> orchestrace -> post (filtr, citace) -> vystup
 flowchart LR
   A[placeholder] --> B[placeholder]
 ```

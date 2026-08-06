@@ -51,7 +51,7 @@ Deliverable není „funguje to", ale rozhodnutí, jestli si to v produkci zaslo
 
 ## Fallback
 
-- Nestíhá se: části A, B a D1 (měření) stačí jako deliverable — student vidí zapojení
+- Nestíhá se: části A, B a krok 8 (měření) stačí jako deliverable — student vidí zapojení
   Frameworku a cenu orchestrace. Část C se dodělá jako samostudium proti `solution/`.
 - Nestabilní model endpoint: multi-agent je na něm nejcitlivější. Snížit počet dotazů
   ze čtyř na dva a měření provést jednou, ne opakovaně.

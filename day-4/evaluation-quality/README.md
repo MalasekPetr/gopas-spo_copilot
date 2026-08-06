@@ -19,7 +19,7 @@ Jak dokázat, že je agent dobrý — a že ho poslední změna nezhoršila.
      jeden pruchod nic nedokazuje. Navaznost na baseline z D2 prompt-orchestration. -->
 
 ```mermaid
-%% TODO: diagram — golden set -> beh -> metriky -> porovnani s baseline -> rozhodnuti o vydani
+%% TODO: diagram -- golden set -> beh -> metriky -> porovnani s baseline -> rozhodnuti o vydani
 flowchart LR
   A[placeholder] --> B[placeholder]
 ```

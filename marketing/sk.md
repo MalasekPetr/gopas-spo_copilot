@@ -7,14 +7,14 @@
 ## Delta — čo sa mení proti aktuálne živej stránke a prečo
 
 > [!NOTE] Pre editora
-> Táto sekcia **nie je** obsah stránky. Je to odôvodnenie zmien pre schvaľovacie kolečko.
+> Táto sekcia **nie je** obsah stránky. Je to odôvodnenie zmien pre schvaľovacie kolo.
 
 | Aktuálne na webe | Novo | Dôvod |
 |---|---|---|
 | „Ďalšie kroky: **AI-102, AZ-204**" | **AI-103, AI-200** | Obe skúšky sú retirované: AI-102 k 2026-06-30, AZ-204 k 2026-07-31. Odporúčať ich je vecná chyba. |
 | „**Graph** konektory & obohatenie metadátami" | „**Copilot connectors** — synced a federated (MCP)" | Microsoft produkt premenoval a rozdelil na dva typy s odlišnou architektúrou. |
 | „Kanály a adaptéry **Azure Bot Service**" | „Kanály, aktivity a turny v Agents SDK" | Rola Bot Service sa zúžila na registráciu kanála; nosná vrstva je Agents SDK. |
-| „Vektorizácia & RAG design" ako povinný blok | presunuté do **voliteľného** bloku | V Microsoft 365 robí retrieval semantic index; vlastná vektorizácia je architektonické rozhodnutie, nie výchozí stav. |
+| „Vektorizácia & RAG design" ako povinný blok | presunuté do **voliteľného** bloku | V Microsoft 365 robí retrieval semantic index; vlastná vektorizácia je architektonické rozhodnutie, nie východiskový stav. |
 | „Sanitizácia výstupov a **watermarking**" | „**Prompt injection / XPIA**, prevencia exfiltrácie" | Watermarking textových odpovedí agenta nemá robustný obranný prínos; injection cez obsah je reálny a aktuálny model hrozby. |
 | „Responsible AI & governance" ako samostatný blok | zlúčené do **Middleware & enforcement politík** + **Agent 365 a governance** | V pro-code kurze je guardrail kód v pipeline, nie samostatná prednáška. Compliance patrí ku governance vrstve. |
 | — (chýba) | **Microsoft Agent Framework** (nástupca Semantic Kernel + AutoGen), multi-agent, A2A | Vrstva, ktorú pro-code tím nad Agents SDK reálne používa. |
@@ -30,7 +30,7 @@ zostáva 5 dní.
 `microsoft-365-agents-sdk-copilot-extensions-a-agent-365_spo_copilot`
 
 > [!NOTE] Pre editora
-> Nový slug. Nastaviť **301 redirect** zo stávajúceho
+> Nový slug. Nastaviť **301 redirect** z existujúceho
 > `microsoft-365-agents-sdk-a-copilot-extensions_spo_copilot`.
 
 ## Titulok kurzu
@@ -62,7 +62,7 @@ interným security tímom. Kód sa píše v **C#**, s TypeScript ukážkami pre 
 - Solution architekti a AI engineers
 - Vývojári Microsoft 365 rozširujúci Copilota
 - Technologickí konzultanti navrhujúci podnikové AI integrácie
-- Platformoví inženýri zabezpečujúci bezpečné zavedenie AI
+- Platformoví inžinieri zabezpečujúci bezpečné zavedenie AI
 
 ## Predpoklady
 
@@ -100,7 +100,7 @@ interným security tímom. Kód sa píše v **C#**, s TypeScript ukážkami pre 
   a OneDrive obsahu, synced vs. federated konektory, obohatenie metadátami, vynútenie oprávnení.
 - **Action handlers & integrácia s Microsoft Graph** — smerovanie akcií, validácia parametrov,
   hranice oprávnení (delegated vs. app-only), Entra Agent ID, MCP ako nástroj.
-- **Prompt & systémová orchestrácia** — system/user/tool zprávy, few-shot, reťazenie promptov,
+- **Prompt & systémová orchestrácia** — system/user/tool správy, few-shot, reťazenie promptov,
   tool-call loop, evaluačné heuristiky.
 
 > Voliteľne podľa času skupiny: **Vlastný retrieval** — chunking, embeddings, hybridný
@@ -142,9 +142,9 @@ interným security tímom. Kód sa píše v **C#**, s TypeScript ukážkami pre 
 jeho nasadenia: architektúra, rozhodnutia vrátane odôvodnenia, model hrozby a obranné vrstvy,
 KPI a evaluačná matica, nákladový model a rollback plán.
 
-## Pred publikáciou — kontrolný seznam pre editora
+## Pred publikáciou — kontrolný zoznam pre editora
 
-- [ ] Nastaviť **301 redirect** zo stávajúceho `microsoft-365-agents-sdk-a-copilot-extensions_spo_copilot`
+- [ ] Nastaviť **301 redirect** z existujúceho `microsoft-365-agents-sdk-a-copilot-extensions_spo_copilot`
       na nové URL uvedené vyššie.
 - [ ] Doplniť cenu kurzu (obchodné oddelenie GOPAS).
 - [ ] **Odstrániť zo stránky zmienky o AI-102 a AZ-204** — obe skúšky sú retirované.

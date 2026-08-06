@@ -21,7 +21,7 @@ security týmu i zákazníkovi.
      rozhodnuti a jejich odůvodneni. Vsechno uz student ma — tohle je konsolidace. -->
 
 ```mermaid
-%% TODO: diagram — referencni architektura na konci tydne (vsechny vrstvy pohromade)
+%% TODO: diagram -- referencni architektura na konci tydne (vsechny vrstvy pohromade)
 flowchart TB
   A[placeholder] --> B[placeholder]
 ```

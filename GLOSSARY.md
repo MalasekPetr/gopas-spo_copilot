@@ -13,7 +13,7 @@ odkazují sem.
 | Používat | Dřívější názvy | Poznámka |
 |---|---|---|
 | **Microsoft 365 Copilot connectors** | Microsoft Graph connectors | Přejmenováno. Backend API se **stále** jmenuje Microsoft Graph connectors API. |
-| **Microsoft Foundry** | Azure AI Foundry → Azure AI Studio | Přejmenováno na Ignite 2025. |
+| **Microsoft Foundry** | Azure AI Studio → Azure AI Foundry | Přejmenováno na Ignite 2025. |
 | **Microsoft 365 Agents Toolkit** | Teams Toolkit | Nástupce; rozsah je širší než Teams. |
 | **Microsoft 365 Agents Playground** | Teams App Test Tool | Lokální debug **bez tenantu, tunelu a registrace bota**. |
 | **Microsoft Agent Framework** | Semantic Kernel + AutoGen | Sloučení obou; použitelný **uvnitř** Agents SDK. |
@@ -82,8 +82,9 @@ Nejdůležitější rozlišení pro modul o ingestion strategii. Katalogová osn
 | Zápis | ne | ne (read-only) |
 | Konfigurace | tenant (admin) nebo personal (uživatel) | admin povolí, uživatel se autentizuje |
 
-Vlastní (custom) konektor jde postavit **jen jako synced** — přes Agents Toolkit nebo Graph
-connectors API. Federated konektory jsou k datu psaní jen ty od Microsoftu.
+> [!WARNING] Ověřit k datu běhu — stav k 2026-08
+> Vlastní (custom) konektor jde postavit **jen jako synced** — přes Agents Toolkit nebo Graph
+> connectors API. Federated konektory jsou k datu psaní jen ty od Microsoftu.
 
 ## Retrieval — kdy si ho dělat sám
 
@@ -109,7 +110,10 @@ connectors API. Federated konektory jsou k datu psaní jen ty od Microsoftu.
 ## Agent 365, Entra Agent ID a governance
 
 > [!WARNING] Ověřit k datu běhu — stav k 2026-08.
-> **Agent 365**: GA **2026-05-01**, standalone licence **$15/user/měs** (nebo v E7).
+> **Agent 365**: GA **2026-05-01**
+> ([oznámení GA](https://www.microsoft.com/en-us/security/blog/2026/05/01/microsoft-agent-365-now-generally-available-expands-capabilities-and-integrations/)),
+> standalone licence **$15/user/měs** (nebo v E7,
+> [Microsoft licensing FAQ](https://www.microsoft.com/licensing/faqs/122)).
 > Licencuje se **uživatel**, ne agent.
 
 - Každý agent dostává **Microsoft Entra Agent ID** — identita, lifecycle, řízení přístupu.

@@ -22,7 +22,7 @@
      Agent Framework = orchestrace, workflows, multi-agent. Bezi UVNITR SDK aplikace. -->
 
 ```mermaid
-%% TODO: diagram — Agents SDK jako obal, Agent Framework jako orchestrace vevnitr
+%% TODO: diagram -- Agents SDK jako obal, Agent Framework jako orchestrace vevnitr
 flowchart TB
   A[placeholder] --> B[placeholder]
 ```
@@ -49,7 +49,7 @@ flowchart TB
      jak se to debuguje. -->
 
 ```mermaid
-%% TODO: diagram — triage agent -> resolver agent (handoff), s eskalaci
+%% TODO: diagram -- triage agent -> resolver agent (handoff), s eskalaci
 sequenceDiagram
   participant P as placeholder
   P->>P: placeholder

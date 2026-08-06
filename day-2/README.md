@@ -16,5 +16,6 @@ s korektními hranicemi oprávnění, a jak se skládá prompt a systémová orc
 > Proto je [`opt-custom-retrieval`](opt-custom-retrieval/) **volitelný** a je zároveň
 > **hlavní kompresní ventil dne** — leaf node, nic povinného na něm nezávisí.
 
-Reálná zátěž ~6,25 h bez volitelného bloku (135 + 135 + 110 min). Agent z nosné linky dnes
-získá knowledge nad knihovnou `Runbooky` a dvě akce (Graph + mock ticket API).
+Reálná zátěž ~6,3 h bez volitelného bloku (135 + 135 + 110 min = 6 h 20 min). Agent z nosné
+linky dnes získá knowledge nad knihovnou `Runbooky`, dvě akce (Graph + mock ticket API)
+a systémový prompt s měřenou baseline.

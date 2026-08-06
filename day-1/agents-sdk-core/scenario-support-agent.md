@@ -52,7 +52,7 @@ Bodů 1–2 dosáhne i deklarativní agent. Body 3–5 jsou důvod, proč tenhle
 | 5 | [`../../day-5/capstone/`](../../day-5/capstone/) | prezentace celku, KPI a evaluační matice |
 
 ```mermaid
-%% TODO: diagram — cilova architektura Support Asistenta na konci tydne
+%% TODO: diagram -- cilova architektura Support Asistenta na konci tydne
 flowchart LR
   U[Uzivatel<br/>Teams / M365 Copilot] --> A[AgentApplication]
   A --> MW[Middleware<br/>redakce, filtry]

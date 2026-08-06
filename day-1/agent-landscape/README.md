@@ -19,7 +19,7 @@ Blok, za který zákazník platí nejvíc. Odpovídá na otázku, se kterou stud
 <!-- TODO: M365 Copilot jako pracovni plocha; orchestrator; semantic index; Work IQ -->
 
 ```mermaid
-%% TODO: diagram — vrstvy stacku: kanaly / orchestrace / SDK / runtime / control plane
+%% TODO: diagram -- vrstvy stacku: kanaly / orchestrace / SDK / runtime / control plane
 flowchart TB
   A[placeholder] --> B[placeholder]
 ```
@@ -40,7 +40,7 @@ flowchart TB
      source control a CI/CD? externi kanaly? kdo to bude udrzovat? jaky je governance model? -->
 
 ```mermaid
-%% TODO: diagram — rozhodovaci strom volby cesty
+%% TODO: diagram -- rozhodovaci strom volby cesty
 flowchart TD
   A[placeholder] --> B[placeholder]
 ```

@@ -11,7 +11,7 @@ Jediný zdroj pravdy o pořadí modulů. Složky jsou slugy; pořadí drží tat
 > před prvním během**. Mapování „publikovaný blok → modul" je tam v delta tabulce.
 
 > [!WARNING] Timing — publikovaná čísla jsou nominální
-> Web slibuje 2 h + 13×2,5 h + 2,5 h ≈ **36,5 h / 5 dní ≈ 7,3 h/den**. To je nad reálně
+> Web slibuje 2 h + 13×2,5 h + 2,5 h = **37 h / 5 dní = 7,4 h/den**. To je nad reálně
 > udržitelnou hustotou (kalibrace autora z jiných běhů: nejhustší den ~6,25 h). Reálná zátěž
 > níže je **~6–6,5 h/den**; publikovaná čísla ber jako marketingová. Skutečné timingy žijí
 > v `instructor-notes.md` jednotlivých modulů.
@@ -28,7 +28,7 @@ Jediný zdroj pravdy o pořadí modulů. Složky jsou slugy; pořadí drží tat
 > nejvíc: kdy deklarativní agent, kdy custom engine, kdy Copilot Studio, kdy Foundry — a proč.
 > Blok 3 končí prvním běžícím agentem v Agents Playgroundu (bez tenantu, bez tunelu).
 
-## Den 2 — Znalosti, akce a prompt (~6,25 h)
+## Den 2 — Znalosti, akce a prompt (~6,3 h)
 
 | # | Blok | Slug | Typ |
 |---|---|---|---|

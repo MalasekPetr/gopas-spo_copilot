@@ -65,7 +65,7 @@ Pořadí modulů v běhu drží **`agenda.md`** — je to jediný zdroj pravdy o
 - Placeholder v kostře:
 
 ```mermaid
-%% TODO: diagram — <co má znázornit>
+%% TODO: diagram -- <co má znázornit>
 flowchart LR
   A[placeholder] --> B[placeholder]
 ```

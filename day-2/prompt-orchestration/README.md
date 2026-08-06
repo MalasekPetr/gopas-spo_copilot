@@ -17,7 +17,7 @@
      Co do systemove zpravy NEpatri: tajemstvi, ACL rozhodnuti, velka data. -->
 
 ```mermaid
-%% TODO: diagram — skladba kontextu jednoho volani: system + historie + tool vysledky + user
+%% TODO: diagram -- skladba kontextu jednoho volani: system + historie + tool vysledky + user
 flowchart TB
   A[placeholder] --> B[placeholder]
 ```
@@ -38,7 +38,7 @@ flowchart TB
      tool zprava -> dalsi tah. Zastavovaci podminky, max iteraci, co kdyz nastroj selze. -->
 
 ```mermaid
-%% TODO: diagram — tool-call loop se zastavovaci podminkou
+%% TODO: diagram -- tool-call loop se zastavovaci podminkou
 flowchart LR
   A[placeholder] --> B[placeholder]
 ```

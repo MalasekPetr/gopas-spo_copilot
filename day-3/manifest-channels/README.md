@@ -20,7 +20,7 @@ Manifest jako **verzovaný kontrakt** agenta — a publikace do víc kanálů z 
      Nosna pointa: manifest je to, co schvaluje admin. Kod nevidi — vidi manifest. -->
 
 ```mermaid
-%% TODO: diagram — manifest -> app package -> publikace -> schvaleni -> kanaly
+%% TODO: diagram -- manifest -> app package -> publikace -> schvaleni -> kanaly
 flowchart LR
   A[placeholder] --> B[placeholder]
 ```

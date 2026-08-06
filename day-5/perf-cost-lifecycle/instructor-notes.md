@@ -2,7 +2,7 @@
 
 ## Timing
 
-- **Elastický blok, 2–2,5 h.** Druhý kompresní ventil kurzu (po `opt-custom-retrieval`).
+- **Elastický blok, 95–120 min.** Druhý kompresní ventil kurzu (po `opt-custom-retrieval`).
 - Při zkrácení: výklad + části A–C labu (měřím, optimalizuji, dokazuji). Lifecycle části
   (D, E) u tabule jako společný návrh — výstupem je jednostránkový plán do capstonu.
 - Nechat dost času na capstone po tomhle bloku; studenti odcházejí dřív a capstone je

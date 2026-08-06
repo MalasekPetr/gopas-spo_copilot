@@ -20,7 +20,7 @@ Co agent stojí, jak to snížit, a jak ho dostat z dev do prod a zpátky, když
      Nejcastejsi zdroj plytvani: rostouci historie a knowledge bez limitu. -->
 
 ```mermaid
-%% TODO: diagram — skladba nakladu jednoho turnu a kde se da usporit
+%% TODO: diagram -- skladba nakladu jednoho turnu a kde se da usporit
 flowchart LR
   A[placeholder] --> B[placeholder]
 ```
@@ -51,7 +51,7 @@ flowchart LR
      telemetrie), co zustava (manifest, kod). Konfigurace, ne branch. -->
 
 ```mermaid
-%% TODO: diagram — promotion pipeline s golden set gate
+%% TODO: diagram -- promotion pipeline s golden set gate
 flowchart LR
   A[placeholder] --> B[placeholder]
 ```

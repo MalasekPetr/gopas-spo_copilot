@@ -19,7 +19,7 @@ Kde agent bere data — a hlavně **kdy si retrieval nemá dělat sám**.
      ACL a jejich vynuceni; obohaceni metadaty. -->
 
 ```mermaid
-%% TODO: diagram — synced (crawl -> Graph index -> semantic index) vs federated (MCP -> live fetch)
+%% TODO: diagram -- synced (crawl -> Graph index -> semantic index) vs federated (MCP -> live fetch)
 flowchart LR
   A[placeholder] --> B[placeholder]
 ```

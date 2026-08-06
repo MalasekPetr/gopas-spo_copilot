@@ -27,7 +27,7 @@
      Shadow AI. -->
 
 ```mermaid
-%% TODO: diagram — agenti z ruznych zdroju (Copilot Studio / Foundry / pro-code) -> Agent 365 registry
+%% TODO: diagram -- agenti z ruznych zdroju (Copilot Studio / Foundry / pro-code) -> Agent 365 registry
 flowchart LR
   A[placeholder] --> B[placeholder]
 ```
@@ -51,7 +51,7 @@ flowchart LR
      Agent Framework, Agents SDK a dalsi pro-code volby. -->
 
 ```mermaid
-%% TODO: diagram — muj agent: middleware telemetrie -> Agent 365 SDK -> registry + observability
+%% TODO: diagram -- muj agent: middleware telemetrie -> Agent 365 SDK -> registry + observability
 flowchart LR
   A[placeholder] --> B[placeholder]
 ```
@@ -100,6 +100,8 @@ argument, který student odnese k zákazníkovi.
 - [Governing agent identities — Entra ID Governance](https://learn.microsoft.com/en-us/entra/id-governance/agent-id-governance-overview)
 - [Microsoft Agent 365 integration with Foundry](https://learn.microsoft.com/en-us/azure/foundry/agents/concepts/agent-365-integration)
 - [Agent identity concepts in Microsoft Foundry](https://learn.microsoft.com/en-us/azure/foundry/agents/concepts/agent-identity)
+- [Microsoft Agent 365 GA — oznámení](https://www.microsoft.com/en-us/security/blog/2026/05/01/microsoft-agent-365-now-generally-available-expands-capabilities-and-integrations/) (GA datum, licencování)
+- [Microsoft licensing FAQ — Agent 365](https://www.microsoft.com/licensing/faqs/122) (cena, prerekvizity licence)
 
 ## Stav produktu / delta
 

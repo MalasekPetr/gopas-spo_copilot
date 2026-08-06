@@ -20,7 +20,7 @@ Agent přestává jen mluvit a začíná něco dělat. Tím se otevírá celá g
      Kde konci SDK a zacina tvoje logika. -->
 
 ```mermaid
-%% TODO: diagram — tool-call: model navrhne akci -> validace parametru -> provedeni -> vysledek do turnu
+%% TODO: diagram -- tool-call: model navrhne akci -> validace parametru -> provedeni -> vysledek do turnu
 sequenceDiagram
   participant P as placeholder
   P->>P: placeholder

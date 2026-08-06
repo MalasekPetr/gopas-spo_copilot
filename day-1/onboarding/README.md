@@ -18,7 +18,7 @@
 <!-- TODO: role kazdeho nastroje; Toolkit = scaffolding + publikace, Playground = lokalni test bez tenantu -->
 
 ```mermaid
-%% TODO: diagram — toolchain a co ceho se dotyka (lokalni vs tenant vs Azure)
+%% TODO: diagram -- toolchain a co ceho se dotyka (lokalni vs tenant vs Azure)
 flowchart LR
   A[placeholder] --> B[placeholder]
 ```

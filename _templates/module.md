@@ -11,7 +11,7 @@
 <text; produktové názvy proti GLOSSARY.md>
 
 ```mermaid
-%% TODO: diagram — <co má znázornit>
+%% TODO: diagram -- <co má znázornit>
 flowchart LR
   A[placeholder] --> B[placeholder]
 ```

@@ -26,7 +26,7 @@
      a semantic index staci. -->
 
 ```mermaid
-%% TODO: diagram — dve cesty: semantic index vs vlastni pipeline (a co u kazde delas SAM)
+%% TODO: diagram -- dve cesty: semantic index vs vlastni pipeline (a co u kazde delas SAM)
 flowchart LR
   A[placeholder] --> B[placeholder]
 ```

@@ -20,7 +20,7 @@ Kde agent běží, když už neběží na notebooku.
      stav mezi turny, dlouhotrvajici operace, naklady v necinnosti. -->
 
 ```mermaid
-%% TODO: diagram — kanal -> endpoint agenta -> orchestrace -> model / nastroje / stav
+%% TODO: diagram -- kanal -> endpoint agenta -> orchestrace -> model / nastroje / stav
 flowchart LR
   A[placeholder] --> B[placeholder]
 ```
@@ -54,7 +54,7 @@ flowchart LR
      Idempotence akci: CreateTicket dvakrat = dva tikety? -->
 
 ```mermaid
-%% TODO: diagram — timeout/retry rozhodovaci strom vcetne idempotence
+%% TODO: diagram -- timeout/retry rozhodovaci strom vcetne idempotence
 flowchart TD
   A[placeholder] --> B[placeholder]
 ```

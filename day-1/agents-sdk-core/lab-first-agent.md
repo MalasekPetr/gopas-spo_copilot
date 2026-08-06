@@ -36,7 +36,8 @@ zbytek týdne.
 
 8. <!-- TODO: nastavit timeout na volani modelu a overit chovani -->
 9. <!-- TODO: odebrat/rozbit klic a overit, ze agent odpovi uzivateli smysluplne, ne stack tracem -->
-10. <!-- TODO: rozlisit transientni (retry) vs permanentni (nelogovat jako throttling) chybu -->
+10. <!-- TODO: rozlisit transientni (throttling/timeout -> retry s backoff) vs permanentni
+      (401/403/404 -> neretryovat, srozumitelna odpoved uzivateli) chybu -->
 
 ## Ověření
 

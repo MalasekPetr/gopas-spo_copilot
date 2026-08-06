@@ -20,7 +20,7 @@
      zaklade VOLA NASTROJE s vlastnimi opravnenimi. Confused deputy problem. -->
 
 ```mermaid
-%% TODO: diagram — vektory: uzivatelsky dotaz, obsah knowledge, vysledek nastroje, historie
+%% TODO: diagram -- vektory: uzivatelsky dotaz, obsah knowledge, vysledek nastroje, historie
 flowchart LR
   A[placeholder] --> B[placeholder]
 ```

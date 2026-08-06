@@ -54,8 +54,13 @@ flowchart LR
 
 ### Nástroje
 
-<!-- TODO: Foundry evaluations (evaluatory, batch behy, srovnani verzi),
-     OpenTelemetry (trace pres turn, spans pres nastroje) — navaznost na telemetrii z D4 governance. -->
+<!-- TODO: PRIMARNI nastroj labu = Microsoft.Extensions.AI.Evaluation (.NET knihovna:
+     quality + agent-quality evaluatory jako IntentResolution/TaskAdherence, reporting,
+     dotnet CLI) — jede lokalne v C#, bez Foundry. Foundry evaluations (evaluatory,
+     batch behy, srovnani verzi) jako reporting/demo vrstva nad tim.
+     OpenTelemetry (trace pres turn, spans pres nastroje) — navaznost na telemetrii
+     z D4 governance. Citovana evaluate-sdk stranka je Python — pro C# kurz je nosna
+     .NET knihovna, ne Python SDK. -->
 
 ## Klíčové rozlišení
 - **Deterministické testy** (middleware, validace — musí projít vždy) vs. **nedeterministické
@@ -80,8 +85,10 @@ Support Asistent získává **golden set a regresní běh**. Baseline ze
 tabulky — student vidí celý týden jako křivku, ne jako sérii pokusů.
 
 ## Zdroje (Microsoft)
+- [Microsoft.Extensions.AI.Evaluation — libraries](https://learn.microsoft.com/en-us/dotnet/ai/evaluation/libraries) (primární C# nástroj labu)
+- [Exploring agent quality and NLP evaluators — .NET Blog](https://devblogs.microsoft.com/dotnet/exploring-agent-quality-and-nlp-evaluators/)
 - [Evaluation of generative AI applications — Microsoft Foundry](https://learn.microsoft.com/en-us/azure/ai-foundry/concepts/evaluation-approach-gen-ai)
-- [Evaluate your AI application — Microsoft Foundry](https://learn.microsoft.com/en-us/azure/ai-foundry/how-to/develop/evaluate-sdk)
+- [Evaluate your AI application — Microsoft Foundry](https://learn.microsoft.com/en-us/azure/ai-foundry/how-to/develop/evaluate-sdk) (Python SDK — jen pro srovnání)
 - [Observability in generative AI — Microsoft Foundry](https://learn.microsoft.com/en-us/azure/ai-foundry/concepts/observability)
 - [Microsoft Agent 365 SDK — overview](https://learn.microsoft.com/en-us/microsoft-agent-365/developer/agent-365-sdk)
 

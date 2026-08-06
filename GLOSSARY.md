@@ -170,10 +170,14 @@ rozsah agent governance ověřovat u vendora před během.
 V tomto kurzu: **C# primárně**, TypeScript parity úryvky, Python jen zmínkou — viz
 [`CONVENTIONS.md`](CONVENTIONS.md).
 
-## Hosting a orchestrace mimo agenta
+## Hosting — endpoint agenta a orchestrace okolo
+
+Dvě různé otázky: kde běží **vždy dostupný HTTP endpoint agenta** (ASP.NET Core aplikace)
+a kde běží **orchestrace okolo něj**.
 
 | Volba | Kdy |
 |---|---|
+| **App Service / Azure Container Apps** | **endpoint samotného agenta** — výchozí odpověď pro Agents SDK |
 | **Azure Functions** | krátké event-driven zpracování, consumption billing |
 | **Azure Logic Apps** | integrace bez kódu, konektorová krajina |
 | **Durable Functions** | dlouhé stavové orchestrace, fan-out/fan-in |

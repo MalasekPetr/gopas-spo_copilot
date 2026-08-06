@@ -31,8 +31,9 @@ změřitelně vyrostl — a který zachytí, kdyby ho příští změna zhoršil
 
 ### Část C — evaluace odpovědí (s modelem)
 
-6. <!-- TODO: pustit golden set proti agentovi a zaznamenat: pass rate, groundedness,
-     spravnost volby nastroje, latenci, tokeny -->
+6. <!-- TODO: pustit golden set proti agentovi pres Microsoft.Extensions.AI.Evaluation
+     (C#, lokalne) a zaznamenat: pass rate, groundedness, spravnost volby nastroje,
+     latenci, tokeny -->
 7. <!-- TODO: opakovat 3x a podivat se na rozptyl — nedeterminismus je merítelny -->
 8. <!-- TODO: nastavit prahy pro rozhodnuti o vydani (co je "dost dobre") -->
 

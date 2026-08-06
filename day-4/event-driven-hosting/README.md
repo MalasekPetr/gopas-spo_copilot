@@ -6,8 +6,9 @@
 Kde agent běží, když už neběží na notebooku — a jak se odtud dostane k uživatelům do kanálů.
 
 ## Cíle
-- Vybrat hosting: **Azure Functions vs. Logic Apps vs. Durable Functions vs. Foundry
-  Agent Service** — a rozhodnutí odůvodnit.
+- Rozlišit **dvě různé otázky**: kde běží **endpoint agenta** (App Service / Azure
+  Container Apps — je to ASP.NET Core aplikace) a kde běží **orchestrace okolo něj**
+  (Functions / Durable / Logic Apps / Foundry Agent Service) — a rozhodnutí odůvodnit.
 - Rozumět řetězení volání modelu a nástrojů v dlouhých, stavových operacích.
 - Navrhnout **timeout a retry patterny** pro agenta, který je závislý na modelu a na API.
 - Vědět, co znamená **odolnost** u agenta (a proč „zkusím to znovu" není strategie).
@@ -27,13 +28,16 @@ flowchart LR
   A[placeholder] --> B[placeholder]
 ```
 
-### Čtyři volby
+### Dvě otázky, pět voleb
 
-<!-- TODO: rozhodovaci tabulka.
+<!-- TODO: NEJDRIV oddelit osu: (1) endpoint agenta = vzdy bezici ASP.NET Core app ->
+     vychozi odpoved App Service nebo Azure Container Apps (na consumption Functions
+     je atypicky); (2) orchestrace OKOLO agenta -> rozhodovaci tabulka:
      Functions: kratke, event-driven, consumption, cold start.
      Logic Apps: integrace bez kodu, konektory, malo kodu = malo kontroly.
      Durable: dlouhe stavove orchestrace, fan-out/fan-in, persistence stavu.
-     Foundry Agent Service: hostovany agent, publikovatelny do M365 Copilotu a Teams. -->
+     Foundry Agent Service: hostovany agent (resi OBOJI), publikovatelny do M365
+     Copilotu a Teams. -->
 
 ### Foundry Agent Service — hostovaná varianta
 
@@ -47,7 +51,10 @@ flowchart LR
 ### Řetězení volání modelu a nástrojů
 
 <!-- TODO: kdy operace prestane byt jeden turn (dlouhe zpracovani, cekani na cloveka,
-     davkove ulohy). Vzory: potvrzeni uzivateli hned + prace na pozadi + notifikace. -->
+     davkove ulohy). Vzory: potvrzeni uzivateli hned + prace na pozadi + notifikace.
+     Vzor potrebuje DURABLE FRONTU — pojmenovat explicitne: Azure Service Bus /
+     Storage Queues / Durable jako implicitni fronta. Bez fronty to neni event-driven,
+     ale fire-and-forget. -->
 
 ### Timeout a retry patterny
 
@@ -88,8 +95,10 @@ flowchart LR
 ```
 
 ## Klíčové rozlišení
+- **Endpoint agenta** (vždy běžící ASP.NET Core app → App Service / Azure Container Apps)
+  vs. **orchestrace okolo agenta** — dvě otázky, ne jedna; katalogová osnova je směšuje.
 - **Functions** (krátké, event-driven) vs. **Durable** (dlouhé, stavové) vs. **Logic Apps**
-  (integrace, málo kódu) vs. **Foundry Agent Service** (hostovaný agent).
+  (integrace, málo kódu) vs. **Foundry Agent Service** (hostovaný agent — řeší obojí).
 - **Workflow v Agent Frameworku** (orchestrace v procesu, viz D3) vs. **Durable orchestrace**
   (persistence a hosting).
 - **Timeout modelu** vs. **timeout nástroje** vs. **timeout turnu** — tři různé limity.
@@ -118,6 +127,8 @@ Support Asistent získává **explicitní timeouty na všech třech úrovních**
 Student navíc rozhodne a odůvodní, kam by agenta nasadil — vstup do capstonu.
 
 ## Zdroje (Microsoft)
+- [Azure App Service — overview](https://learn.microsoft.com/en-us/azure/app-service/overview)
+- [Azure Container Apps — overview](https://learn.microsoft.com/en-us/azure/container-apps/overview)
 - [Azure Functions — overview](https://learn.microsoft.com/en-us/azure/azure-functions/functions-overview)
 - [Durable Functions — overview](https://learn.microsoft.com/en-us/azure/azure-functions/durable/durable-functions-overview)
 - [Logic Apps — overview](https://learn.microsoft.com/en-us/azure/logic-apps/logic-apps-overview)

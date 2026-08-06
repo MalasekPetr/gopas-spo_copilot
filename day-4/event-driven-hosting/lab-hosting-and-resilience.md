@@ -19,7 +19,8 @@ s manifestem a verzí.
 
 ### Část A — demo hostingu (instruktor)
 
-1. <!-- TODO: nasadit agenta na Azure Functions, ukazat cold start a jeho dopad na prvni odpoved -->
+1. <!-- TODO: nasadit ENDPOINT agenta (App Service / Container Apps — ASP.NET Core app);
+      pro srovnani ukazat cold start consumption Functions a jeho dopad na prvni odpoved -->
 2. <!-- TODO: ukazat Durable orchestraci na dlouhe uloze (fan-out pres vic runbooku) -->
 3. <!-- TODO: ukazat Foundry Agent Service jako hostovanou alternativu a publikaci do M365 Copilotu -->
 

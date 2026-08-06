@@ -1,0 +1,25 @@
+# Claude working context — local only
+CLAUDE.md
+.claude/
+
+# Vygenerovane credentials a lokalni vystupy — NIKDY necommitovat (public repo)
+/scripts/student-credentials.csv
+/scripts/*.local.*
+*.local.*
+
+# Model endpointy a klice — NIKDY necommitovat
+.env
+.env.*
+appsettings.Development.json
+appsettings.Local.json
+**/.localConfigs
+**/.localConfigs.*
+env/.env.*.user
+
+# .NET build vystupy (solution/*.cs referencni reseni)
+bin/
+obj/
+*.user
+
+# Node (TypeScript parity ukazky)
+node_modules/

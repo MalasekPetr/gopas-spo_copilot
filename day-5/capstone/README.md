@@ -48,14 +48,19 @@ flowchart TB
 > | Místo | Nově | Zaměření |
 > |---|---|---|
 > | AI-102 | **AI-103** | Azure AI Apps and Agents Developer Associate — generativní a agentní architektury |
-> | AZ-204 | **AI-200** | Cloud Developer — kód a observability |
+> | AZ-204 | **AI-200** | Azure AI Cloud Developer Associate — kód a observability |
 >
 > Ověřit k datu běhu na [Exam and assessment lab retirement](https://learn.microsoft.com/en-us/credentials/support/retired-certification-exams).
+> Názvy ověřeny proti Certification Posteru (2026-08).
 
 Celou aktuální certifikační mapu ukázat na oficiálním
 [Microsoft Certification Posteru (PDF)](https://arch-center.azureedge.net/Credentials/Certification-Poster_en-us.pdf) —
-studenti si odnášejí odkaz; projít větev AI/agentních certifikací a nejnovější AI kurzy
-v oficiálním kurikulu.
+studenti si odnášejí odkaz. Z agentní větve zmínit i navazující cesty:
+
+<!-- TODO: AI-500 Multi-Agent AI Solutions Expert (Beta) -- expert nadstavba presne
+     nad multi-agent obsahem D3; GH-600 GitHub Agentic AI Developer (New);
+     AB-900 M365 Copilot and Agent Administration Fundamentals (pro byznys/admin
+     kolegy studentu). Vse overit k datu behu -- beta/new statusy se meni. -->
 
 > [!WARNING] Ověřit k datu běhu
 > Poster se vydává v nových edicích — před během ověřit, že URL vede na aktuální verzi,

@@ -53,7 +53,7 @@ stopou. A vědět, co by chybělo, kdyby se instrumentace vynechala.
 
 ## Fallback
 
-- **Bez Agent 365 licence** (pravděpodobný stav): části A a C7/C8 jsou demo ze snímků
+- **Bez Agent 365 licence** (záloha — lektorská licence je zajištěna): části A a C7/C8 jsou demo ze snímků
   obrazovky instruktorského běhu. Části B, C6 (proti mocku), D jsou na licenci **nezávislé**
   a nesou hlavní hodnotu labu — telemetrie a argumentace.
 - Agent 365 SDK API se změnilo: část C6 se odjede proti mocku podle `solution/`,

@@ -19,7 +19,7 @@ odkazují sem.
 | **Microsoft Agent Framework** | Semantic Kernel + AutoGen | Sloučení obou; použitelný **uvnitř** Agents SDK. |
 | **Microsoft Entra Agent ID** | (nový) | Identita agenta jako first-class objekt v Entra. |
 | **AI-103** | AI-102 (retired **2026-06-30**) | Azure AI Apps and Agents Developer Associate. |
-| **AI-200** | AZ-204 (retired **2026-07-31**) | Cloud Developer; větší akcent na kód a observability. |
+| **AI-200** | AZ-204 (retired **2026-07-31**) | **Azure AI Cloud Developer Associate**; větší akcent na kód a observability. Název ověřen proti Certification Posteru (2026-08). |
 
 > [!IMPORTANT] Brand vs. URL
 > Microsoft dokumentace **Microsoft Foundry** stále žije pod `learn.microsoft.com/azure/foundry/`

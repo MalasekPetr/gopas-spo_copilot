@@ -80,10 +80,11 @@ flowchart LR
 
 ## Naše prostředí
 
-**Instruktorské demo** — Agent 365 vyžaduje licenci ($15/user/měs), kterou baseline
-`spdemo.online` + PAYG nemá (viz [`../../environment.md`](../../environment.md)).
-Studentská část je **implementační**: instrumentační kód a telemetrie se napíšou a otestují
-lokálně proti mocku; registry se vidí na demu.
+**Instruktorské demo s živou licencí** — Agent 365 licence je zajištěna **pro lektora**
+(rozhodnuto 2026-08-07; $15/user/měs, viz [`../../environment.md`](../../environment.md)) —
+registry a observability se ukazují živě, ne ze screenshotů. Studenti licenci nemají:
+studentská část je **implementační** — instrumentační kód a telemetrie se napíšou
+a otestují lokálně proti mocku; registrace naostro se vidí na lektorském demu.
 
 ## Lab
 Viz [`lab-instrument-agent.md`](lab-instrument-agent.md).

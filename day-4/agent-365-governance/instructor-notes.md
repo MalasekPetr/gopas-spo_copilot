@@ -12,9 +12,9 @@
 - **Agent 365 SDK / CLI je mladý povrch (GA produktu 2026-05-01) — API se mění.**
   Přebuildovat `solution/` a projít CLI příkazy **před každým během**, ne jednou.
   Tenhle blok je z celého kurzu nejcitlivější na verze.
-- Rozhodnout, jestli je k dispozici **Agent 365 licence** pro demo. Když ne, připravit
-  snímky obrazovky registry a observability z vlastního tenantu — bez vizuálu blok
-  ztrácí polovinu účinku.
+- **Agent 365 licence pro lektora je rozhodnutá** (2026-08-07) — před během ověřit, že
+  je aktivní (vč. prerekvizit) a demo registry/observability projet den předem. Snímky
+  obrazovky mít jako zálohu — bez vizuálu blok ztrácí polovinu účinku.
 - Ověřit, co se do registry registruje **automaticky** (Copilot Studio, Foundry) vs.
   explicitně — to je nosná pointa a musí být přesná.
 - Ověřit cenu ($15/user/měs) a jestli je stále standalone i v E7.

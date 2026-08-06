@@ -112,8 +112,9 @@ Zajišťuje `day-1/onboarding`. Bez tohoto nic dalšího nepojede:
 
 - [ ] **Model endpoint** — varianta A nebo B, včetně budget capu.
 - [ ] **GitHub Copilot seaty** pro studenty (mimo M365 licenční tok, zajistit dopředu).
-- [ ] **Agent 365 licence** pro demo v `agent-365-governance` ($15/user/měs) — bez ní je
-      z bloku výklad + screenshoty.
+- [x] **Agent 365 licence** — rozhodnuto (2026-08-07): **1× licence jen pro lektora**
+      ($15/user/měs, ověřit prerekvizity). Demo v `agent-365-governance` jede živě
+      z lektorského účtu; studenti instrumentují proti mocku (Fáze 2 artefakt).
 - [ ] Ověřit, že **provisioning deklarativního agenta** na PAYG bez Copilot licence stále
       funguje (empiricky potvrzeno 2026-07-17 na jiném běhu; Microsoft to takto nedokumentuje).
 - [ ] Demo data pro nosný scénář nasazená (viz [`scripts/`](scripts/)).

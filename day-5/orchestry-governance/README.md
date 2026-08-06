@@ -1,6 +1,6 @@
 # Orchestry — third-party alternativa governance
 
-> Typ: povinný · Den: 4 · Odhad: **35 min** (25 výklad + 10 srovnání) · Publikum: **vývojáři / architekti**
+> Typ: povinný · Den: 5 · Odhad: **35 min** (25 výklad + 10 srovnání) · Publikum: **vývojáři / architekti**
 > Prostředí: viz [`../../environment.md`](../../environment.md) · Názvosloví: [`../../GLOSSARY.md`](../../GLOSSARY.md)
 
 Agent 365 není jediná odpověď na governance otázku. **Orchestry** je third-party
@@ -61,9 +61,8 @@ flowchart LR
 
 ## Naše prostředí
 
-**Instruktorské demo / výklad** — Orchestry vyžaduje vlastní tenant instalaci a licenci;
-pod baseline `spdemo.online` se neukazuje živě, pokud instruktor nemá trial. Srovnávací
-tabulka funguje i bez živého produktu.
+**Instruktorské demo s živým produktem** — instruktor má **Orchestry trial** (potvrzeno
+2026-08-07). Srovnávací tabulka funguje i bez živého produktu, kdyby trial vypršel.
 
 ## Lab
 
@@ -72,7 +71,7 @@ a je deliverable do capstonu.
 
 ## Nosná linka
 
-Support Asistent je od minulého bloku instrumentovaný do Agent 365. Tenhle blok přidává
+Support Asistent je od závěru dne 4 instrumentovaný do Agent 365. Tenhle blok přidává
 otázku do capstone architektury: **stačí first-party governance, nebo zákazník potřebuje
 třetí stranu — a proč?**
 

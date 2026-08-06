@@ -60,11 +60,11 @@ Co který modul reálně potřebuje pod baseline `spdemo.online` + PAYG:
 | `day-3/prompt-orchestration` | — | **ano** | — | hands-on |
 | `day-3/agent-framework` | — | **ano** | — | hands-on |
 | `day-3/middleware-policy` | — | **ano** | — | hands-on |
-| `day-3/spfx-copilot-apps` | — (lokálně Workbench; deploy = demo instruktora) | — | — | hands-on (preview toolchain) |
+| `day-4/spfx-copilot-apps` | — (lokálně Workbench; deploy = demo instruktora) | — | — | hands-on (preview toolchain) |
 | `day-4/event-driven-hosting` | ano (publikace) | ano | **ano** | **instruktorské demo** (rezilience lokálně hands-on) |
 | `day-4/marketplace-agents` | — (Partner Center instruktora) | — | — | **instruktorské demo** + checklist |
 | `day-4/agent-365-governance` | ano | — | ano + **Agent 365 licence** | **instruktorské demo** |
-| `day-4/orchestry-governance` | — (Orchestry trial dle dostupnosti) | — | — | **instruktorské demo** / výklad |
+| `day-5/orchestry-governance` | — (Orchestry trial potvrzen) | — | — | **instruktorské demo** živě |
 | `day-5/evaluation-quality` | — | **ano** | — | hands-on (lokální golden set) |
 | `day-5/security-risk` | — | **ano** | — | hands-on |
 | `day-5/perf-cost-lifecycle` | — | **ano** | — | hands-on |

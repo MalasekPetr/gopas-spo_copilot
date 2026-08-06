@@ -2,17 +2,18 @@
 
 ## Timing
 
-- ~35 min (25 výklad + 10 společná srovnávací tabulka). Závěr dne 4, hned po
-  `agent-365-governance` — srovnání je čerstvé.
+- ~35 min (25 výklad + 10 společná srovnávací tabulka). **Opener dne 5** — navazuje na
+  `agent-365-governance` ze závěru dne 4, dokud je srovnání čerstvé; zároveň lehký
+  rozjezd posledního dne.
 - Nenafukovat — blok je srovnávací rámec, ne kurz Orchestry.
 
 ## Go/no-go — otestovat před během
 
+- **Orchestry trial je k dispozici** (potvrzeno autorem 2026-08-07) — projet demo den
+  předem a ověřit, že trial nevypršel; záloha: screenshoty + tabulka.
 - **Ověřit aktuální rozsah agent governance u Orchestry** (vendor docs / release notes) —
   jediný blok kurzu, kde go/no-go zdroj není Microsoft. Srovnávací tabulku aktualizovat
   proti aktuálnímu stavu obou produktů.
-- Pokud je k dispozici trial/demo tenant s Orchestry, projet den předem; jinak jet
-  ze screenshotů nebo jen s tabulkou.
 - Ověřit licenční model vendora (mění se) — neuvádět ceny z paměti.
 
 ## Tripwires
@@ -27,7 +28,7 @@
 
 ## Vazby
 
-- Zpět: `agent-365-governance` (bezprostředně předchozí blok — baseline srovnání),
+- Zpět: `agent-365-governance` (závěr dne 4 — baseline srovnání),
   `no-code-showcase` (D1 — auto-registrace Studio agentů; kam sahá first-party pohodlí).
 - Dopředu: `capstone` (first-party vs. third-party rozhodnutí patří do architektury),
-  `perf-cost-lifecycle` (D5 — licenční náklady governance vrstvy v nákladovém modelu).
+  `perf-cost-lifecycle` (dnes — licenční náklady governance vrstvy v nákladovém modelu).

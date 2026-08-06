@@ -136,7 +136,7 @@ vs. **Agent 365** (agenti napříč původem, z pohledu IT/security v M365). Syn
 
 **Third-party alternativa**: **Orchestry** (orchestry.com) — governance vrstva nad M365
 od třetí strany; nemá pod kontrolou Entra Agent ID (identita zůstává first-party doména).
-Jediné non-Microsoft téma kurzu, srovnávací blok [`day-4/orchestry-governance/`](day-4/orchestry-governance/) —
+Jediné non-Microsoft téma kurzu, srovnávací blok [`day-5/orchestry-governance/`](day-5/orchestry-governance/) —
 rozsah agent governance ověřovat u vendora před během.
 
 ## Licence, kredity a inference — tři různé peněženky

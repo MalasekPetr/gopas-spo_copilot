@@ -51,56 +51,54 @@ AI témata jsou vedlejší koleje, ne jádro.
 > **volitelný** blok 5 — rozhodnutí, ne výchozí stav; zároveň **hlavní kompresní ventil dne**
 > (leaf node, nic na něm nezávisí).
 
-## Den 3 — Prompt, multi-agent a politiky (~7,6 h ⚠ přetéká)
+## Den 3 — Prompt, multi-agent a politiky (~6,6 h)
 
 | # | Blok | Slug | Typ |
 |---|---|---|---|
 | 1 | Prompt & systémová orchestrace | `day-3/prompt-orchestration` | P |
 | 2 | Microsoft Agent Framework, workflows & multi-agent (A2A) | `day-3/agent-framework` | P |
 | 3 | Middleware & enforcement politik | `day-3/middleware-policy` | P |
-| 4 | SharePoint Copilot Apps — interaktivní UX v Copilot canvasu *(Public Preview)* | `day-3/spfx-copilot-apps` | P |
 
 > [!NOTE] Blok 2 je největší doplněk proti publikované osnově (Agent Framework tam chybí
 > úplně). Blok 3 slučuje Responsible AI guardrails s middleware pipeline — v pro-code kurzu
-> je to jedna věc, ne dvě: guardrail je kód v pipeline, ne slide (lab +15 min, část C
-> volitelná). Blok 4 je **hands-on** závěr dne a most k SPFx kurzům: SPFx komponenty
-> v Copilot canvasu (MCP Apps model), každý student si scaffoldne vlastní Copilot App.
+> je to jedna věc, ne dvě: guardrail je kód v pipeline, ne slide (lab 90 min, část C
+> volitelná při plném tempu).
 
-> [!WARNING] Den 3 = 455 min (~7,6 h) — přetéká o ~1 h, čeká na rozhodnutí autora
-> (co ustoupí: zkrácení bloků 1–2, přesun mezi dny, nebo `opt-` režim některého bloku).
-
-## Den 4 — Hosting, publikace, Marketplace a governance (~6,4 h)
+## Den 4 — Copilot Apps, hosting, Marketplace a governance (~6,8 h)
 
 | # | Blok | Slug | Typ |
 |---|---|---|---|
-| 1 | Událostmi řízená orchestrace, hosting & publikace | `day-4/event-driven-hosting` | P |
-| 2 | Agenti v Marketplace — podmínky publikace | `day-4/marketplace-agents` | P |
-| 3 | Agent 365, Entra Agent ID & instrumentace pro-code agenta | `day-4/agent-365-governance` | P |
-| 4 | Orchestry — third-party alternativa governance | `day-4/orchestry-governance` | P |
+| 1 | SharePoint Copilot Apps — interaktivní UX v Copilot canvasu *(Public Preview)* | `day-4/spfx-copilot-apps` | P |
+| 2 | Událostmi řízená orchestrace, hosting & publikace | `day-4/event-driven-hosting` | P |
+| 3 | Agenti v Marketplace — podmínky publikace | `day-4/marketplace-agents` | P |
+| 4 | Agent 365, Entra Agent ID & instrumentace pro-code agenta | `day-4/agent-365-governance` | P |
 
-> [!NOTE] Narativ dne: **agent opouští notebook** — hosting → org katalog → Marketplace
-> (case study Normiqa Navigator) → governance (Agent 365) → third-party alternativa.
-> Blok 3 je pro-code diferenciátor celého kurzu: Copilot Studio agenti se do Agent 365
-> registrují automaticky, **pro-code agenti se musí explicitně instrumentovat**.
+> [!NOTE] Blok 1 je vizuální hands-on rozjezd dne a **most k SPFx kurzům** (MCP Apps
+> model, každý student si scaffoldne vlastní Copilot App). Pak narativ **agent opouští
+> notebook**: hosting → org katalog → Marketplace (case study Normiqa Navigator) →
+> governance. Blok 4 je pro-code diferenciátor celého kurzu: Copilot Studio agenti se
+> do Agent 365 registrují automaticky, **pro-code agenti se musí explicitně
+> instrumentovat**.
 
-> [!WARNING] Hustota dnů 2 a 3 (~6,9 h) je nad kalibračním stropem (~6,25 h)
-> Nové bloky (hygiena, SPFx Copilot Apps, Marketplace, Orchestry) jsou vědomě kompaktní
-> showcase formáty (35–50 min) na koncích dnů — při skluzu se zkracují první, před
-> kompresními ventily níže. Reálné timingy doladit po prvním běhu.
-
-## Den 5 — Kvalita, bezpečnost, náklady a capstone (~6 h)
+## Den 5 — Governance alternativa, kvalita, bezpečnost a capstone (~6,5 h s ventily)
 
 | # | Blok | Slug | Typ |
 |---|---|---|---|
-| 1 | Evaluace & kvalita | `day-5/evaluation-quality` | P |
-| 2 | Bezpečnost & řízení rizik (exfiltrace, prompt injection) | `day-5/security-risk` | P |
-| 3 | Výkon, náklady & lifecycle *(elastický blok)* | `day-5/perf-cost-lifecycle` | P |
-| 4 | Capstone architektura & roadmapa *(elastický 60–120 min)* | `day-5/capstone` | P |
+| 1 | Orchestry — third-party alternativa governance | `day-5/orchestry-governance` | P |
+| 2 | Evaluace & kvalita | `day-5/evaluation-quality` | P |
+| 3 | Bezpečnost & řízení rizik (exfiltrace, prompt injection) | `day-5/security-risk` | P |
+| 4 | Výkon, náklady & lifecycle *(elastický blok)* | `day-5/perf-cost-lifecycle` | P |
+| 5 | Capstone architektura & roadmapa *(elastický 60–120 min)* | `day-5/capstone` | P |
 
-> [!NOTE] Blok 1 navazuje na governance telemetrii ze dne 4 — bez ní se evaluace dělá
-> naslepo. Studenti občas odcházejí o 1–2 h dřív; bloky 3 i 4 jsou elastické: při zkrácení
-> se capstone prezentace mění na pair-share a jádro (end-to-end architektura + evaluační
+> [!NOTE] Blok 1 navazuje na Agent 365 ze závěru dne 4 (third-party srovnání, dokud je
+> čerstvé). Blok 2 staví na governance telemetrii — bez ní se evaluace dělá naslepo.
+> Studenti občas odcházejí o 1–2 h dřív; bloky 4 i 5 jsou elastické: při zkrácení se
+> capstone prezentace mění na pair-share a jádro (end-to-end architektura + evaluační
 > matice + rollback plán) zůstává vždy.
+
+> [!WARNING] Hustota dnů 2 (~6,9 h) a 4 (~6,8 h) je nad kalibračním stropem (~6,25 h)
+> Kompaktní bloky na okrajích dnů (data-hygiene, marketplace) se při skluzu zkracují
+> první, před kompresními ventily níže. Reálné timingy doladit po prvním běhu.
 
 ## Kompresní ventily — v tomto pořadí
 

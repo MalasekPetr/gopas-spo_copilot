@@ -1,9 +1,9 @@
 # SharePoint Copilot Apps — interaktivní UX v Copilot canvasu (Public Preview)
 
-> Typ: povinný · Den: 3 · Odhad: **60 min** (20 výklad + 40 lab) · Publikum: **vývojáři / architekti**
+> Typ: povinný · Den: 4 · Odhad: **60 min** (20 výklad + 40 lab) · Publikum: **vývojáři / architekti**
 > Prostředí: viz [`../../environment.md`](../../environment.md) · Názvosloví: [`../../GLOSSARY.md`](../../GLOSSARY.md)
 
-Agent celý den tvaruje **text**. SharePoint Copilot Apps (SPFx 1.24, Public Preview) jsou
+Agent celý včerejšek tvaroval **text**. SharePoint Copilot Apps (SPFx 1.24, Public Preview) jsou
 odpověď na otázku „a co když má odpověď být graf, formulář nebo schválení?" — SPFx
 komponenty renderované **přímo v Copilot canvasu**, postavené na **MCP Apps** modelu,
 hostované automaticky v tenantu. Pro SPFx vývojáře je to nejkratší cesta do světa agentů.
@@ -70,7 +70,7 @@ Viz [`lab-first-copilot-app.md`](lab-first-copilot-app.md). Samostudium navíc:
 
 ## Nosná linka
 
-Support Asistent dnes dostal middleware — a tady je vidět, **kam jeho výstup může
+Support Asistent včera dostal middleware — a tady je vidět, **kam jeho výstup může
 dorůst**: eskalace z dotazu 3 ([`../../scenario-support-agent.md`](../../scenario-support-agent.md))
 jako interaktivní schvalovací karta místo textu. Student si první Copilot App postaví
 sám; napojení na vlastního agenta zůstává jako roadmapa do capstonu.

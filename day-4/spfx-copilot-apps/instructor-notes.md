@@ -2,9 +2,9 @@
 
 ## Timing
 
-- ~60 min (20 výklad + 40 lab). Závěr dne 3 — vizuální hands-on po náročném middleware
-  labu; funguje jako odměna. Hands-on se studenty je rozhodnutí autora (2026-08-06) —
-  klíčová vazba na SPFx kurzy, publikum tu ožije.
+- ~60 min (20 výklad + 40 lab). **Opener dne 4** — vizuální hands-on rozjezd po
+  nejhustším dni; nastartuje energii před instruktorskými demy zbytku dne. Hands-on
+  se studenty je rozhodnutí autora (2026-08-06) — klíčová vazba na SPFx kurzy.
 - Deploy (část C) zůstává instruktorské demo — admin krok, ne studentský.
 
 ## Go/no-go — otestovat před během
@@ -34,9 +34,10 @@
 
 ## Vazby
 
-- Zpět: `middleware-policy` (politiky platí i pro UX výstup), `actions-graph` +
+- Zpět: `middleware-policy` (D3, včera — politiky platí i pro UX výstup), `actions-graph` +
   `knowledge-grounding` (MCP nit — Apps implementují MCP Apps model).
-- Dopředu: `marketplace-agents` (D4 — store distribuce Apps zatím nepodporovaná,
-  srovnat s distribucí agentů), `capstone` (interaktivní UX jako roadmapa položka).
+- Dopředu: `marketplace-agents` (dnes odpoledne — store distribuce Apps zatím
+  nepodporovaná, srovnat s distribucí agentů), `capstone` (interaktivní UX jako
+  roadmapa položka).
 - Mimo kurz: GOPAS SPFx kurzy — tenhle blok je most; absolventům SPO_COPILOT dává
   důvod na ně navázat (a naopak).

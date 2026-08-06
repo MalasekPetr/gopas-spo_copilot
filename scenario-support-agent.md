@@ -51,11 +51,11 @@ Bodů 1–2 dosáhne i deklarativní agent. Body 3–5 jsou důvod, proč tenhle
 | 3 | [`day-3/prompt-orchestration/`](day-3/prompt-orchestration/) | systémový prompt, tool-call loop, „neznám" chování |
 | 3 | [`day-3/agent-framework/`](day-3/agent-framework/) | rozdělení na **triage** + **resolver** agenta |
 | 3 | [`day-3/middleware-policy/`](day-3/middleware-policy/) | redakční middleware, filtrování výstupů |
-| 3 | [`day-3/spfx-copilot-apps/`](day-3/spfx-copilot-apps/) | první vlastní Copilot App (scaffold + Workbench); vize: eskalace (dotaz 3) jako interaktivní karta |
+| 4 | [`day-4/spfx-copilot-apps/`](day-4/spfx-copilot-apps/) | první vlastní Copilot App (scaffold + Workbench); vize: eskalace (dotaz 3) jako interaktivní karta |
 | 4 | [`day-4/event-driven-hosting/`](day-4/event-driven-hosting/) | hosting, timeout a retry chování; manifest, verzování, **publikace do Teams / M365 Copilotu** |
 | 4 | [`day-4/marketplace-agents/`](day-4/marketplace-agents/) | rozhodnutí store ANO/NE s odůvodněním — do roadmapy |
 | 4 | [`day-4/agent-365-governance/`](day-4/agent-365-governance/) | **instrumentace do Agent 365**, Entra Agent ID |
-| 4 | [`day-4/orchestry-governance/`](day-4/orchestry-governance/) | rozhodnutí first-party vs. third-party governance — do architektury |
+| 5 | [`day-5/orchestry-governance/`](day-5/orchestry-governance/) | rozhodnutí first-party vs. third-party governance — do architektury |
 | 5 | [`day-5/evaluation-quality/`](day-5/evaluation-quality/) | golden set + regresní běh |
 | 5 | [`day-5/security-risk/`](day-5/security-risk/) | prompt injection přes obsah runbooku — a obrana |
 | 5 | [`day-5/perf-cost-lifecycle/`](day-5/perf-cost-lifecycle/) | cache, token budget, promotion dev → test |

@@ -2,10 +2,10 @@
 
 ## Timing
 
-- ~50 min výklad + 65 min lab. **Závěr dne 1** (prohozeno s `agents-sdk-core`, rozhodnutí
-  prvního běhu 2026-08-24 — blok nezávisí na model endpointu, o kterém se rozhoduje večer
-  D1). Uzavírá rozhodovací den: žebřík no-code → low-code → deklarativní celý v jednom dni,
-  změřený strop jako cliffhanger na custom engine ráno D2.
+- ~40 min výklad + 60 min lab. **Opener dne 2** — přesunut z D1, kde se nevešel
+  (přetečení prvního běhu 2026-08-24). Studenti jsou čerství, lab je rychlý a vidí výsledek
+  v M365 Copilotu; to je nejlepší energie na začátek dne. Změřený strop je cliffhanger
+  na `agents-sdk-core`, který jede hned potom.
 - Část D labu (strop) je hodnotové jádro celého bloku. Nezkracovat na úkor částí A–C.
 
 ## Go/no-go — KLÍČOVÉ, otestovat před během

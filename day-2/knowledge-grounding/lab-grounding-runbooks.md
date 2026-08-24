@@ -17,26 +17,44 @@ Support Asistent odpovídá **z runbooků, s citací zdroje** — a když odpov�
 
 ### Část A — co je v indexu
 
-1. <!-- TODO: overit v M365, ze obsah knihovny Runbooky je dohledatelny (search) -->
-2. <!-- TODO: ukazat, ze vysledky respektuji permissions studenta — zaklad ACL trimmingu -->
+1. Přihlas se do Microsoftu 365 účtem `user.NN@spdemo.online` a vyhledej **frázi z těla
+   runbooku** (ne název souboru) — např. formulaci o access denied při uploadu. Ověř, že se
+   vrací obsah dokumentu z knihovny `Runbooky`. Když se nevrací nic, index ještě neproběhl —
+   nahlas to instruktorovi **teď**, ne až selže agent.
+2. Zkus najít dokument, na který **nemáš** oprávnění (instruktor jeden takový ukáže).
+   Zaznamenej výsledek. Tohle je ACL trimming: retrieval nikdy nevrátí víc, než smí volající —
+   a je to jediný důvod, proč se agent nad tenantem vůbec smí pustit mezi uživatele.
 
 ### Část B — zapojit knowledge (Copilot Retrieval API)
 
-3. <!-- TODO: pripojit SharePoint knowledge (knihovna Runbooky) do agenta pres
-     Copilot Retrieval API (PAYG): dotaz -> text chunky ze semantic indexu -> kontext
-     modelu. Opravneni Files.Read.All + Sites.Read.All. -->
-4. <!-- TODO: pridat do odpovedi CITACI zdroje — bez citace neni grounding overitelny -->
+3. Zapoj do turnu grounding krok **před** voláním modelu: zavolej **Copilot Retrieval API**
+   pod delegated identitou (oprávnění `Files.Read.All` + `Sites.Read.All`), jako dotaz pošli
+   otázku uživatele a zdroj omez na web `/sites/hr-demo`. Vrácené text chunky vlož do kontextu
+   modelu **jako tool/kontextovou zprávu — ne do systémového promptu**. Volání ošetři jako
+   každé jiné síťové: timeout, `AbortSignal`, rozlišení transientní a permanentní chyby.
+4. Nes si u každého chunku **název dokumentu a odkaz** a nech agenta vypsat citace pod
+   odpovědí. Ověř na dotazu 1, že odkaz vede na skutečný runbook, ze kterého odpověď vznikla.
+   Bez ověřitelné citace nemáš grounding, jen důvěryhodně znějící text.
 
 ### Část C — chování při neznámé odpovědi
 
-5. <!-- TODO: pustit ctyri testovaci dotazy; dotaz 1 a 2 maji odpovedet z runbooku -->
-6. <!-- TODO: dotaz 4 (mimo scope) — agent ma odmitnout; zaznamenat, jak silne odmitl -->
-7. <!-- TODO: zkusit dotaz, na ktery runbook odpoved NEMA — overit, ze agent nehalucinuje -->
+5. Pusť **čtyři testovací dotazy** ze scénáře a zapiš odpovědi do tabulky vedle výsledků
+   včerejšího deklarativního agenta. Dotazy 1 a 2 musí odpovědět obsahem z runbooku **s citací**.
+6. U dotazu 4 („Kolik bere kolega Novák?") zaznamenej nejen **že** agent odmítl, ale **jak
+   silně** a **proč**: odmítl kvůli instrukci v promptu, nebo jen proto, že retrieval nic
+   nevrátil? To jsou dvě různě pevné obrany — rozdíl si poznamenej, zpevňuje se až middlewarem.
+7. Polož dotaz na téma, které v runboocích **není** (např. „jak zažádat o firemní telefon").
+   Ověř, že agent řekne, že to neví, místo aby si postup vymyslel. Když halucinuje, zapiš
+   přesné znění — opravovat se to bude promptem v
+   [`../../day-3/prompt-orchestration/`](../../day-3/prompt-orchestration/).
 
 ### Část D — rozhodovací reflexe
 
-8. <!-- TODO: kde by tady mel smysl federated konektor misto synced? A kde vlastni vektorizace?
-     Zapsat jednou vetou — vstup do opt-custom-retrieval a do capstonu. -->
+8. Zapiš **jednu větu ke každé** z obou otázek: (a) kde by v tomhle zadání dával smysl
+   **federated** konektor místo synced — a proč (nápověda: ticketing, živá data, ACL v cizím
+   systému); (b) kdy by tady byla na místě **vlastní vektorizace** — a co by konkrétně stála
+   (ACL model, refresh, ladění relevance). Obě věty jsou vstup do
+   [`../opt-custom-retrieval/`](../opt-custom-retrieval/) i do capstonu.
 
 ## Ověření
 

@@ -19,21 +19,54 @@ Vlastní Copilot App běžící lokálně v **Copilot Workbench** — a zážite
 
 ### Část A — scaffold
 
-1. <!-- TODO: scaffoldnout Copilot App; volba sablony (Minimal / No framework / React) --
-     doporucit Minimal pro pochopeni modelu, React pro ty, kdo chteji vizual -->
-2. <!-- TODO: projit strukturu projektu a pojmenovat, co je stejne jako u web partu
-     (packaging, tooling) a co je nove (metadata aktivace, MCP Apps model) -->
+1. Scaffoldni Copilot App preview generatorem a vyber šablonu:
+
+   ```powershell
+   yo @microsoft/sharepoint
+   ```
+
+   **Minimal** doporučeně — je na ní nejlépe vidět, jak se komponenta aktivuje.
+   **React** zvol, jen když chceš rovnou vizuál. Komponentu pojmenuj **svým účtem**
+   (`user.NN`) — v preview kolidují stejně pojmenované Apps napříč studenty.
+2. Projdi strukturu projektu a **pojmenuj nahlas dvě skupiny**:
+   - **co znáš z web partů beze změny** — `config/`, `src/`, `gulpfile.js`, `package.json`,
+     `tsconfig.json`, buildovací pipeline;
+   - **co je nové** — metadata, kterými se komponenta aktivuje (kdy a čím ji Copilot
+     vyvolá), a fakt, že komponentu volá **agent**, ne autor stránky.
+
+   Zapiš si to — kontrolní otázka v `Ověření` je přesně tahle.
 
 ### Část B — běh v Copilot Workbench
 
-3. <!-- TODO: spustit lokalne v Copilot Workbench; overit inner-loop (zmena -> reload) -->
-4. <!-- TODO: upravit komponentu na mini-scenar: karta eskalace tiketu (dotaz 3 ze
-     scenare) -- staticka data, zadne napojeni na agenta -->
+3. Spusť dev server a otevři komponentu v **Copilot Workbench**:
+
+   ```powershell
+   gulp serve
+   ```
+
+   Ověř **inner loop**: změň viditelný text v komponentě, ulož, reloadni Workbench a
+   potvrď, že změna je vidět. Dokud tenhle cyklus nefunguje, dál nepokračuj — zbytek
+   labu na něm stojí.
+4. Přestav komponentu na mini-scénář: **karta eskalace tiketu** (dotaz 3 ze scénáře —
+   „Tiskárna netiskne a runbook nepomohl."). Karta zobrazí předmět, prioritu, žadatele
+   a tlačítko *Eskalovat*. Data drž **statická, natvrdo v komponentě** — žádné napojení
+   na agenta ani na mock ticket API; to je roadmapa do capstonu, ne dnešní lab.
+   Po každé úpravě reloadni Workbench.
 
 ### Část C — deploy (instruktorské demo)
 
-5. <!-- TODO: instruktor nasadi App do spdemo.online a ukaze ji zivou v Copilot canvasu;
-     pojmenovat, co student uvidi po GA / rolloutu -->
+5. Sleduj, jak instruktor zabalí App (`gulp bundle --ship` → `gulp package-solution --ship`)
+   a nasadí `.sppkg` do App Catalogu `spdemo.online`, a jak se komponenta objeví **živě
+   v Copilot canvasu**. Zapiš si tři věci, které v lokálním Workbenchi nevidíš:
+   - **kdo App vyvolá** — rozhoduje orchestrátor podle metadat aktivace, ne uživatel;
+   - **kde komponenta běží** — v tenantu, takže data z karty tenant neopouštějí;
+   - **co zatím nejde** — renderuje se jen v Copilot canvasu a **store distribuce není
+     v preview podporovaná** (srovnání s distribucí agentů je dnes odpoledne
+     v [`../marketplace-agents/`](../marketplace-agents/)).
+
+> [!NOTE] Poznámka pro lektora
+> Rozsah kroku 5 závisí na stavu rolloutu v tenantu — ověřit den předem. Když deploy
+> nedorazil, jede se video z MS dokumentace (viz Fallback a [`instructor-notes.md`](instructor-notes.md)).
 
 ## Ověření
 

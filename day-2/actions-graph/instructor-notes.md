@@ -2,9 +2,10 @@
 
 ## Timing
 
-- ~60 min výklad + 75 min lab.
+- ~45 min výklad + 60 min lab. **Blok 2 dne 3.**
 - Část D (app-only protipříklad) je jen ~10 min a je to **nejsilnější moment labu**.
-  Když čas tlačí, udělat ji jako demo, ale nevynechávat.
+  Po zkrácení jede jako demo — ale **nevynechávat**, je to předehra ke scope minimalizaci
+  v `middleware-policy` (D4).
 
 ## Go/no-go — KLÍČOVÉ, otestovat před během
 

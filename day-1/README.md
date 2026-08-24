@@ -1,30 +1,33 @@
-# Den 1 — Mapa stacku, no-code/low-code a deklarativní maximum
+# Den 1 — Mapa stacku a no-code/low-code
 
 Dopoledne onboarding a toolchain, pak rozhodovací vrstva (za tu zákazník platí nejvíc)
-a její živá materializace v no-code/low-code showcase, odpoledne deklarativní cesta
-až po přesně pojmenovaný strop.
+a její živá materializace v no-code/low-code showcase.
 
 | Pořadí | Blok | Slug | Typ |
 |---|---|---|---|
 | 1 | Onboarding, prostředí & toolchain | [`onboarding`](onboarding/) | P |
 | 2 | Mapa cest tvorby agentů & rozhodovací osa | [`agent-landscape`](agent-landscape/) | P |
 | 3 | No-code a low-code cesty — showcase | [`no-code-showcase`](no-code-showcase/) | P |
-| 4 | Deklarativní agenti & Agents Toolkit — maximum bez serverového kódu | [`declarative-agents`](../day-2/declarative-agents/) | P |
+| — | Základy promptování a agentní anatomie | [`opt-prompting-fundamentals`](opt-prompting-fundamentals/) | V |
 
 > [!NOTE] Rozhodovací vrstva **před** kódem. Blok 2 odpovídá na otázku, se kterou studenti
 > reálně přicházejí od zákazníků — kdy deklarativní agent, kdy custom engine, kdy Copilot
 > Studio, kdy Foundry. Blok 3 ji materializuje: agent builder a Copilot Studio naživo,
-> na zadání ze scénáře. Blok 4 dokončí žebřík — deklarativní Support Asistent v1
-> provisionovaný do M365 Copilotu a jeho **změřený strop** (dotazy 1–2 projdou, 3 a 4 ne).
-> Ten strop je cliffhanger: odpovědí je custom engine, který se staví ráno D2. Celý den
-> jede bez model endpointu — rozhodnutí o něm padá večer dne 1.
+> na zadání ze scénáře. Celý den jede **bez model endpointu** (jen tenant + PAYG).
 
-Reálná zátěž ~6,0 h (90 + 105 + 50 + 115 min). Nejnepředvídatelnější je blok 1 — toolchain
-u 20 strojů (VS Code, Agents Toolkit, Node.js, přihlášení do M365). Když přeteče, blok 2
-se dá zkrátit na výklad + společnou diskusi bez rozhodovacího labu; blok 3 jede z nahrávky.
+Reálná zátěž **245 min** (90 + 105 + 50). Nejnepředvídatelnější je blok 1 — toolchain
+u 20 strojů (VS Code, Agents Toolkit, Node.js, přihlášení do M365).
 
-> [!WARNING] Polední prerekvizity bloku 4 (přesun z D2)
-> Knihovna `Runbooky` musí být v tenantu **nejpozději v poledne** (indexace není okamžitá),
-> provisioning deklarativního agenta na PAYG re-verifikovaný studentským účtem a referenční
-> scaffold připravený. Viz go/no-go v
-> [`declarative-agents/instructor-notes.md`](../day-2/declarative-agents/instructor-notes.md).
+> [!IMPORTANT] Co se skutečně stalo v prvním běhu (2026-08-24)
+> Plánované byly čtyři bloky (360 min), odučily se tři (245 min) a naplnily celý den.
+> **`declarative-agents` se přesunul na start dne 2.** Z toho vznikl časový etalon,
+> podle kterého jsou přeplánované dny 2–5 — viz [`../agenda.md`](../agenda.md).
+
+## Materiál k samostudiu
+
+- [`opt-prompting-fundamentals`](opt-prompting-fundamentals/) — anatomie promptu,
+  orchestrator a **vrstvy instrukcí**. Tabulka vrstev je vytažená do
+  [`../day-2/declarative-agents/`](../day-2/declarative-agents/), kde se píší Agent Instructions.
+- [`agent-landscape/comparison-agent-paths.md`](agent-landscape/comparison-agent-paths.md) —
+  rozdílová matice čtyř cest tvorby **včetně SharePoint agentů**, po jednotlivých
+  schopnostech. Detailnější než tabulka pěti cest ve výkladu; dát studentům jako referenci.

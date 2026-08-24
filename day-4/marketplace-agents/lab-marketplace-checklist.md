@@ -16,12 +16,23 @@ interním agentem a store-ready agentem.
 
 ## Kroky
 
-1. <!-- TODO: student projde podminky z vykladu a ke kazde napise stav Support Asistenta:
-     splneno / chybi / nedava smysl pro interniho agenta -->
-2. <!-- TODO: oznacit 3 nejdrazsi chybejici polozky (typicky: privacy policy + terms,
-     support proces, produkcni hosting s SLA) -->
-3. <!-- TODO: rozhodnuti s oduvodnenim: dava store distribuce pro tenhle typ agenta
-     vubec smysl? (Spravna odpoved u interniho support agenta je NE -- a umet rict proc.) -->
+1. Projdi podmínky z výkladu položku po položce (účet vydavatele, balíček a manifest,
+   listing, právní dokumenty, zpracování dat, podpora, technické chování) a ke každé zapiš
+   stav Support Asistenta jedním ze tří slov: **splněno** / **chybí** / **nedává smysl pro
+   interního agenta**. Třetí možnost je stejně platná jako první dvě — ale musí mít
+   odůvodnění, ne jen odškrtnutí.
+2. Označ **3 nejdražší chybějící položky**. „Drahé" znamená pracnost plus trvalý závazek,
+   ne technickou obtížnost. Typicky: privacy policy a terms na veřejné URL (včetně
+   právního review), dokumentovaný support proces s reakční dobou, produkční hosting se
+   závazkem dostupnosti a aktualizacemi. U každé z těch tří dopiš odhad pracnosti ve dnech
+   a **kdo v týmu ji vlastní** — položka bez vlastníka není naplánovaná.
+3. Zapiš rozhodnutí: dává store distribuce pro tenhle typ agenta smysl? Dvě věty
+   odůvodnění. Kontrola: u interního support agenta je odpověď **NE** — agent je vázaný na
+   runbooky a ticketing jednoho zákazníka, v cizím tenantu nemá o co se opřít, a store
+   cesta by přidala právní a provozní závazky bez nového publika. Dopiš i inverzi: **co by
+   se v produktu muselo změnit, aby bylo ANO** (konfigurovatelný zdroj znalostí per
+   zákazník, konektor na ticketing místo napevno mockovaného API, multi-tenant auth
+   a onboarding). To je věta do capstone roadmapy.
 
 ## Ověření
 

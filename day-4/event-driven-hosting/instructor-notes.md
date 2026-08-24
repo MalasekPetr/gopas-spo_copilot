@@ -2,9 +2,11 @@
 
 ## Timing
 
-- ~75 min výklad + 95 min lab.
-- Části B a C (timeouty, idempotence) jsou hodnotové jádro a **nezávisí na Azure** —
-  chránit je časově před demem v části A.
+- **60 min, instruktorské demo** (zkráceno ze 170 při rekalibraci 2026-08-24). **Opener
+  dne 5.** Osa hostingu (App Service / Container Apps / Functions / Logic Apps / Foundry)
+  jde do samostudia — studenti stejně nemají Azure subscription.
+- Živě zůstávají **timeouty a idempotence**: hodnotové jádro, **nezávisí na Azure** a je
+  to jediná část, kterou si studenti odnesou do vlastního kódu. Chránit je časově.
 - Část E (publikace) až na konec — potřebuje hostovanou instanci z části A; při skluzu
   se krok 12 (publish) mění na demo, kroky 11 a 13 zůstávají.
 

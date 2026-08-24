@@ -1,11 +1,15 @@
-# Instructor notes — Middleware & enforcement politik
+# Instructor notes — Bezpečnost & middleware (sloučený blok)
 
 ## Timing
 
-- ~60 min výklad + 90 min lab (navýšeno z 75 — rozhodnutí autora 2026-08-06; lab je
-  nejnabušenější v kurzu).
-- Část D labu je **pointa celého bloku** (a jedna z pointa celého kurzu). Když čas tlačí,
-  obětovat část C, ne D — část C je v labu explicitně označená jako volitelná.
+- **150 min: 50 výklad + 100 lab.** Sloučeno ze `middleware-policy` (150) a `security-risk`
+  (130) — rozhodnutí prvního běhu 2026-08-24 po rekalibraci timingu. Úspora 80 min vznikla
+  tím, že obrana se staví **jednou**, ne dvakrát.
+- **Dramaturgie: útok první.** Část A labu (injection přes obsah runbooku) musí uspět —
+  z toho žije zbytek bloku. Bez fungujícího útoku je middleware jen cvičení.
+- Když čas tlačí: zkrátit útoky na **jeden** (ne obranu) a obětovat část C (post-processing
+  je v labu značená jako volitelná). Části s pipeline a scope jsou nedotknutelné.
+- Blok je nejdelší v týdnu — jet dopoledne, ne po obědě.
 
 ## Go/no-go — otestovat před během
 
@@ -18,9 +22,12 @@
   podobu labu z „postav si pipeline" na „použij tuhle".
 - Ověřit aktuální kategorie a konfiguraci content filtrů na platformě (co je default,
   co se ladí). Neuvádět z hlavy.
-- Vyzkoušet, že pokus o obejití z D2 na aktuálním modelu **skutečně uspěje** — jinak část D
-  ztratí dramaturgii. Když model odolá sám, připravit silnější pokus (injection přes obsah
-  runbooku, ne přes uživatelský dotaz).
+- **KLÍČOVÉ: ověřit, že injection útok na aktuálním modelu skutečně funguje.** Modely se
+  proti známým vzorům průběžně zpevňují a lab bez fungujícího útoku ztrácí smysl. Připravit
+  dvě varianty (injection přes obsah runbooku a přes výsledek nástroje), aby bylo z čeho brát.
+- Připravit **lokální kopii runbooku s injection payloadem**. Do knihovny `Runbooky`
+  v tenantu se injection nevkládá — nikdy.
+- Ověřit aktuální stav platformních obran (prompt shields, spotlighting) — co je default.
 - Přebuildovat `solution/`.
 
 ## Tripwires
@@ -39,13 +46,22 @@
 - Nezabíhat do auditu a compliance evidence — to je [`../../day-4/agent-365-governance/`](../../day-4/agent-365-governance/).
   Tady je enforcement, tam je dohledatelnost.
 
+- **XPIA se plete s prompt injection.** Držet ostře: u injection je útočníkem uživatel,
+  u XPIA **autor obsahu** a uživatel je oběť. Druhé je nebezpečnější a je to reálný model
+  hrozby pro agenty nad firemním obsahem.
+- **Scope jako poslední krok, ne první.** Studenti chtějí opravovat prompt. Pořadí bloku je
+  záměrné: prompt padne → middleware drží → ale skutečná hranice je oprávnění.
+
 ## Vazby
 
 - Zpět: `prompt-orchestration` část D (obejití uspělo — tady se napravuje),
-  `actions-graph` (validace vstupu do akce = druhá polovina téže obrany),
+  `actions-graph` (validace vstupu do akce = druhá polovina téže obrany; app-only
+  protipříklad je předehra ke scope minimalizaci),
   `agent-framework` (pipeline musí pokrýt oba agenty).
-- Dopředu: `agent-365-governance` (telemetrie z části A je vstup do instrumentace),
-  `evaluation-quality` (unit test z části D10 je předstupeň golden setu),
-  `security-risk` (D5 útočí na tuhle pipeline injection přes obsah knowledge zdroje —
-  a část obran padne, což je záměr).
-- Governance nit: `actions-graph` → **tady** → `agent-365-governance` → `security-risk`.
+- Dopředu: `agent-365-governance` (telemetrie z části A je vstup do instrumentace;
+  auditní stopa je to, co nahrazuje watermarking),
+  `evaluation-quality` (unit testy nad pipeline jsou předstupeň golden setu).
+- Governance nit: `actions-graph` → **tady** → `agent-365-governance`.
+- Původní samostatný modul: [`../../day-5/security-risk/`](../../day-5/security-risk/)
+  (stub s mapou, kam co skončilo; `lab-injection-and-scope.md` tam zůstává jako podklad
+  útoků a scope cvičení).

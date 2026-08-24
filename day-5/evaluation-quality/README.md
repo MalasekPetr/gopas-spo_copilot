@@ -1,6 +1,6 @@
 # Evaluace & kvalita
 
-> Typ: povinný · Den: 4 · Odhad: **130 min** (55 výklad + 75 lab) · Publikum: **vývojáři / architekti**
+> Typ: povinný · Den: 5 · Odhad: **80 min** (35 výklad + 45 lab) · Publikum: **vývojáři / architekti**
 > Prostředí: viz [`../../environment.md`](../../environment.md) · Názvosloví: [`../../GLOSSARY.md`](../../GLOSSARY.md)
 
 Jak dokázat, že je agent dobrý — a že ho poslední změna nezhoršila.
@@ -15,53 +15,131 @@ Jak dokázat, že je agent dobrý — a že ho poslední změna nezhoršila.
 
 ### Proč intuice nestačí
 
-<!-- TODO: "zkusil jsem to a je to lepsi" je nemeritelne. LLM je nedeterministicky —
-     jeden pruchod nic nedokazuje. Navaznost na baseline z D2 prompt-orchestration. -->
+- **„Zkusil jsem to a je to lepší" není měření** — je to dojem z jednoho průchodu
+  nedeterministickým systémem.
+- LLM vrací při stejném vstupu různé výstupy. Jeden běh nedokazuje zlepšení ani zhoršení,
+  dva taky ne. Měří se **rozdělení**, ne jeden vzorek — proto v labu tři běhy a rozptyl.
+- Bez golden setu je změna promptu **refaktoring bez testů**: opravíš jednu formulaci
+  a nevíš, co jsi rozbil jinde. U kódu by to nikdo z téhle místnosti neudělal.
+- Baseline z D3 (`prompt-orchestration`, část A) je zárodek: čtyři testovací dotazy se
+  zapsaným výsledkem. Golden set je ta samá myšlenka dotažená do počtu případů,
+  do opakování a do prahů.
+- Otázka, na kterou blok odpovídá, je provozní: **na základě čeho vydáš novou verzi
+  agenta?** „Vypadalo to dobře" je odpověď, kterou u zákazníka nepoužiješ dvakrát.
 
 ```mermaid
-%% TODO: diagram -- golden set -> beh -> metriky -> porovnani s baseline -> rozhodnuti o vydani
 flowchart LR
-  A[placeholder] --> B[placeholder]
+  GS[Golden set<br/>pripady + ocekavane chovani] --> RUN[Beh proti agentovi<br/>3x se stejnym vstupem]
+  RUN --> M[Metriky<br/>pass rate, groundedness,<br/>volba nastroje, latence, tokeny]
+  M --> CMP{Porovnani<br/>s baseline a s prahy}
+  CMP -->|nad prahem| REL[Vydat verzi]
+  CMP -->|pod prahem| FIX[Opravit<br/>ktera vrstva chybila?]
+  FIX --> RUN
+  CMP -->|sporne pripady| HIL[Revize clovekem]
+  HIL --> CMP
 ```
 
 ### Co se u agenta vůbec měří
 
-<!-- TODO: spravnost odpovedi, groundedness (odpoved ma podklad), citace, spravnost volby
-     nastroje, spravnost parametru, odmitnuti kdyz ma odmitnout, latence, naklady.
-     KLICOVE: u multi-agenta je treba vedet, KTERA vrstva chybila (triage vs resolver). -->
+| Co se měří | Otázka | Odkud to vezmeš |
+|---|---|---|
+| **Správnost odpovědi** | odpověděl to, co měl? | rubrika + posouzení (člověk nebo LLM-as-judge) |
+| **Groundedness** | má odpověď podklad ve zdroji? | porovnání odpovědi s citovaným úryvkem |
+| **Citace** | odkázal na správný runbook? | kontrola ID/URL zdroje proti očekávanému |
+| **Volba nástroje** | zavolal `CreateTicket`, když měl — a nezavolal, když neměl? | trace turnu (telemetrie z D4) |
+| **Správnost parametrů** | priorita a žadatel validní a odvozené z identity? | deterministický test, bez modelu |
+| **Odmítnutí** | odmítl dotaz 4 místo odhadu? | negativní případy v golden setu |
+| **Latence** | jak dlouho uživatel čekal | telemetrie, **p50/p95** — ne průměr |
+| **Náklady** | tokeny na dotaz včetně tool-call kol | telemetrie |
+
+- **U multi-agenta nestačí verdikt „odpověděl špatně".** Musíš vědět, **která vrstva
+  chybila**: špatně směroval triage, nebo špatně odpověděl resolver nad správným zdrojem?
+  Bez toho opravuješ náhodnou vrstvu.
+- Prakticky to znamená měřit i mezikroky — rozhodnutí triage, seznam volaných nástrojů,
+  verdikt middleware. Trace z telemetrie D4 je přesně ten vstup; proto jede tenhle blok
+  hned po governance.
 
 ### Kvalitativní vs. kvantitativní
 
-<!-- TODO: kvantitativni: pass rate na golden setu, groundedness skore, latence, tokeny.
-     Kvalitativni: revize cloveka, uzivatelska zpetna vazba, tonalita, uzitecnost.
-     Ani jedno samo nestaci. -->
+- **Kvantitativní**: pass rate na golden setu, groundedness skóre, podíl správné volby
+  nástroje, latence p95, tokeny na dotaz. Rychlé, opakovatelné, dají se dát do CI a spojit
+  s prahem.
+- **Kvalitativní**: revize člověkem nad vzorkem, uživatelská zpětná vazba (palec),
+  tonalita, užitečnost — kategorie „technicky správné, ale uživateli to nepomohlo".
+- **Ani jedno samo nestačí.** Čísla neuvidí, že agent odpovídá správně a nesnesitelně;
+  revize člověkem neuškáluje a nezachytí regresi v pátek večer.
+- Rozumný poměr: kvantitativní běh na **každou změnu**, kvalitativní revize na **vzorek
+  před vydáním** a pak na produkčních dotazech po vydání.
 
 ### Golden set
 
-<!-- TODO: jak se sklada: realne dotazy, edge cases, negativni pripady (musi odmitnout),
-     pripady s podkladem i bez. Kolik je dost. Kdo ho udrzuje. Jak stari. -->
+- **Z čeho se skládá** — pět tříd, každá musí být zastoupená:
+  - reálné dotazy (nejlepší zdroj je provoz nebo helpdesk, ne fantazie vývojáře),
+  - **případy bez podkladu** — odpověď v `Runbookách` není, agent musí přiznat neznalost,
+  - **negativní případy** — musí odmítnout (dotaz 4 a jeho varianty),
+  - akční případy — musí zavolat nástroj se správnými parametry (dotaz 3),
+  - edge cases — nejednoznačné nebo neúplné zadání, dvě možné příčiny, chybějící hláška.
+- **Kolik je dost**: v labu 12; v praxi řádově desítky až nízké stovky na doménu.
+  Kritérium ale není počet, ale **pokrytí tříd chování** — při pěti případech skáče pass
+  rate o dvacet procent kvůli jedinému případu a číslo přestane něco znamenat.
+- **Očekávání se zapisuje jako chování, ne jako text.** „Odpoví z runbooku RB-002 s citací
+  a nabídne eskalaci" je testovatelné; přesná formulace odpovědi ne — na té by test padal
+  při každé změně modelu.
+- **Kdo ho udržuje**: tým, který agenta vlastní. Každý produkční incident přidává případ.
+  Golden set bez vlastníka zestárne a začne měřit svět, který už neplatí.
+- **Stárnutí je reálné**: mění se runbooky, model i očekávání. Případy se **revidují**,
+  nejen přidávají — případ, který se stal nesprávným, je horší než žádný, protože nutí
+  tým opravovat správně fungujícího agenta.
 
 ### Regresní testy
 
-<!-- TODO: co se testuje BEZ modelu (middleware, validace parametru — determinismus)
-     a co s modelem (nedeterminismus -> tolerance, opakovani, prahy).
-     Navaznost na unit test z D3 middleware-policy. -->
+- **Bez modelu (deterministické)**: middleware politiky, validace parametrů akcí, whitelist
+  cílů, redakce PII, klasifikace mimo-scope. Vstup dovnitř, očekávaný verdikt ven. Musí
+  projít **100 %, bez tolerance**, běží v CI za sekundy a zadarmo. Základ je unit test nad
+  pipeline z D3 (`middleware-policy`).
+- **S modelem (nedeterministické)**: odpovědi, groundedness, volba nástroje. Tady platí
+  prahy, opakování a rozptyl — ne rovnost.
+- **Nemíchat je do jednoho běhu s jednou tolerancí.** Deterministický test s 90% prahem
+  přestane hlásit, že middleware zmizel; nedeterministická evaluace s požadavkem 100 %
+  bude věčně červená a přestanete ji číst. Obojí končí stejně: nikdo se na výsledek nedívá.
+- Praktické rozdělení: deterministická sada na **každý commit**, evaluační běh na PR
+  do release větve nebo v noci — je pomalý a stojí tokeny.
 
 ### Human-in-the-loop
 
-<!-- TODO: kde clovek musi zustat: eskalace s dopadem, prvni nasazeni, sporne pripady.
-     Jak se to navrhuje, aby to nebyla brzda. -->
+- **Kde člověk musí zůstat**: u akcí s dopadem mimo agenta (eskalace, která někomu vytvoří
+  práci; cokoli, co mění data), při prvním nasazení pro novou skupinu uživatelů, u sporných
+  případů z evaluace (judge si není jistý, skóre těsně u prahu) a na vzorku běžného provozu.
+- **Jak to navrhnout, aby to nebyla brzda**: člověk schvaluje **třídy** akcí, ne každou
+  odpověď; schválení je asynchronní (agent odpoví hned, akce čeká) a má definované výchozí
+  chování při nečinnosti; podíl kontrolovaných případů se snižuje podle **naměřených dat**,
+  ne podle pocitu.
+- Dva anti-vzory: „všechno projde přes člověka" (agent přestane šetřit čas a projekt se
+  zabije sám) a „už je to dobré, člověka vypneme" bez měření, které to podepře.
 
 ### Nástroje
 
-<!-- TODO: PRIMARNI nastroj labu = rucne psany TS golden-set runner (smycka pres pripady
-     + LLM-as-judge + prahy) — didakticky pruhledny, zadna knihovna mezi studentem
-     a mechanismem. First-party alternativy zminit jednim slidem: Microsoft.Extensions.AI.Evaluation
-     (.NET-only — evaluatory IntentResolution/TaskAdherence, reporting, dotnet CLI; JS
-     ekvivalent neexistuje, dalsi misto kde volba jazyka zuzuje stack) a Foundry
-     evaluations (evaluatory, batch behy, srovnani verzi) jako cloud vrstva.
-     OpenTelemetry (trace pres turn, spans pres nastroje) — navaznost na telemetrii
-     z D4 governance. Citovana evaluate-sdk stranka je Python — jen pro srovnani. -->
+- **Primární nástroj labu: ručně psaný TS runner.** Smyčka přes případy → zavolej agenta →
+  posbírej odpověď, trace a metriky → **LLM-as-judge** s rubrikou odvozenou z očekávaného
+  chování → agregace a prahy. Je to malý soubor a **žádná knihovna mezi studentem
+  a mechanismem** — pointa je, že evaluace není magie, ale test s tolerancí.
+- **Poznámka k LLM-as-judge**: judge je taky model a má vlastní chybovost. Proto rubrika
+  s jasnými kritérii („cituje RB-002 ano/ne"), ne „ohodnoť 1–10", a kalibrace proti
+  několika ručně posouzeným případům.
+- **Microsoft.Extensions.AI.Evaluation** — first-party evaluační knihovna, **.NET-only**:
+  evaluatory kvality agenta (mj. `IntentResolution`, `TaskAdherence`), reporting a napojení
+  na `dotnet` CLI a CI. **JS/TS ekvivalent neexistuje** — další místo, kde volba jazyka
+  zužuje stack (stejně jako Agent Framework v D3). V kurzu jen zmínka jedním slidem.
+- **Foundry evaluations** — cloudová vrstva: built-in evaluatory, dávkové běhy nad
+  datasetem, srovnání verzí a historie v portálu. Dává smysl, když evaluace přestane být
+  skript a stane se procesem. Ověřit, jestli umí evaluovat i agenta hostovaného **mimo**
+  Foundry — na tom stojí použitelnost.
+- **OpenTelemetry** — trace přes celý turn, spans přes jednotlivá volání nástrojů a modelu.
+  Přímá návaznost na telemetrii z D4 governance: co jsi tam poslal jako události, tady
+  čteš jako důkaz, **která vrstva chybila**. Semantic conventions pro AI agenty se stále
+  vyvíjejí — ověřit k datu běhu.
+- Citovaná stránka `evaluate-sdk` je **Python** SDK — v materiálech jen pro srovnání,
+  ne pro lab.
 
 ## Klíčové rozlišení
 - **Deterministické testy** (middleware, validace — musí projít vždy) vs. **nedeterministické

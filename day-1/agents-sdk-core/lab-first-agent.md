@@ -18,26 +18,39 @@ zbytek týdne.
 
 ### Část A — anatomie projektu
 
-1. <!-- TODO: najit AgentApplication, registraci handleru, konfiguraci pres AgentApplicationOptions -->
-2. <!-- TODO: pojmenovat, co je aktivita a co turn; ukazat, kde se turn zacina a konci -->
+1. Ve scaffoldu najdi tři místa a pojmenuj je nahlas: kde se vytváří `AgentApplication`,
+   kde se **registruje handler** na příchozí zprávu, a kde se předává konfigurace
+   (`AgentApplicationOptions`). Nic zatím neměň.
+2. Zapiš si vlastními slovy rozdíl mezi **aktivitou** a **turnem** — a v kódu ukaž,
+   kde turn začíná a kde končí. Tohle je otázka, kterou dostaneš u zákazníka.
 
 ### Část B — stav
 
-3. <!-- TODO: pridat citac zprav do TurnState (conversation scope) a overit ho v Playgroundu -->
-4. <!-- TODO: rozmyslet, co do stavu NEpatri (tajemstvi, velka data, PII) -->
+3. Přidej do `TurnState` **čítač zpráv** v `conversation` scope. Ověř v Playgroundu, že
+   roste napříč zprávami jedné konverzace — a že se nová konverzace počítá od nuly.
+4. Zapiš tři věci, které do stavu **nepatří**: tajemství (klíče, tokeny), velká data
+   (celé dokumenty místo odkazu) a PII bez důvodu. Ke každé napiš, kam patří místo toho.
 
 ### Část C — volání modelu
 
-5. <!-- TODO: zapojit model endpoint z konfigurace (ne natvrdo) -->
-6. <!-- TODO: systemovy prompt Support Asistenta — minimalni verze, doladi se v prompt-orchestration -->
-7. <!-- TODO: poslat ctyri testovaci dotazy ze scenare; zaznamenat, jak agent odpovida BEZ knowledge -->
+5. Zapoj model endpoint **z konfigurace** (`.env` / user secrets — nikdy natvrdo).
+   Než půjdeš dál, spusť `git status` a ověř, že klíč není v trackovaném souboru.
+6. Napiš **minimální systémový prompt** Support Asistenta: role (IT support), scope
+   (runbooky), pravidlo odmítnutí mimo scope. Víc ne — ladit se bude v
+   [`../../day-3/prompt-orchestration/`](../../day-3/prompt-orchestration/).
+7. Pošli čtyři testovací dotazy ze scénáře a **zaznamenej odpovědi**. Agent zatím nemá
+   knowledge, takže dotazy 1–2 odpoví špatně nebo si vymyslí — to je záměr a je to
+   baseline, proti které budeš celý týden měřit.
 
 ### Část D — chybové větve (nepřeskakovat)
 
-8. <!-- TODO: nastavit timeout na volani modelu a overit chovani -->
-9. <!-- TODO: odebrat/rozbit klic a overit, ze agent odpovi uzivateli smysluplne, ne stack tracem -->
-10. <!-- TODO: rozlisit transientni (throttling/timeout -> retry s backoff) vs permanentni
-      (401/403/404 -> neretryovat, srozumitelna odpoved uzivateli) chybu -->
+8. Nastav **timeout** na volání modelu a ověř chování: co udělá agent, když model
+   neodpoví včas? Zkrať timeout na nesmyslně malou hodnotu, ať to uvidíš.
+9. Rozbij klíč (nebo ho odeber) a ověř, že uživatel dostane **srozumitelnou větu**,
+   ne stack trace a ne prázdnou bublinu.
+10. Rozliš v kódu **transientní** chybu (throttling, timeout → retry s exponenciálním
+    backoffem a stropem) od **permanentní** (401/403/404 → neretryovat, rovnou
+    srozumitelná odpověď). Ověř obě větve.
 
 ## Ověření
 

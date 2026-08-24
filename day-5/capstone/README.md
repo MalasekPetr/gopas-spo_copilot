@@ -16,28 +16,85 @@ security týmu i zákazníkovi.
 
 ### Z čeho se blueprint skládá
 
-<!-- TODO: architektura (kanaly, orchestrace, knowledge, akce, hosting, identita, telemetrie),
-     model hrozby a obranne vrstvy, nakladovy model, lifecycle a rollback, KPI matice,
-     rozhodnuti a jejich odůvodneni. Vsechno uz student ma — tohle je konsolidace. -->
+| Část blueprintu | Co obsahuje | Odkud to student má |
+|---|---|---|
+| **Architektura** | kanály, `AgentApplication`, middleware, orchestrace (triage + resolver), knowledge, akce, hosting, identita, telemetrie | laby D2–D5 |
+| **Model hrozby a obranné vrstvy** | XPIA přes obsah, exfiltrace přes app-only, scope agenta; co je v promptu a co v kódu | D3 `middleware-policy` |
+| **Nákladový model** | tokeny na dotaz, tři peněženky (licence / kredity / inference), náklady hostingu v nečinnosti | D4 hosting + naměřené tokeny z evaluace |
+| **Lifecycle a rollback** | verze manifestu vs. verze kódu, publikace a schválení, promotion dev → test, rollback | D4 `event-driven-hosting` |
+| **KPI a evaluační matice** | technické metriky s prahy + business KPI, a jak se měří | D5 `evaluation-quality` |
+| **Rozhodnutí s odůvodněním** | osm rozhodnutí týdne, každé s důvodem a s tím, co by ho změnilo | celý týden |
+
+- **Nic z toho se dnes nevymýšlí.** Všechny podklady student má — capstone je konsolidace
+  a obhajoba, ne stavba. Kdo dnes začne kódovat, nestihne to jediné, co má hodnotu.
+- Rozsah: **jedna, maximálně dvě strany**. Blueprint, který nikdo nepřečte, není blueprint.
+- Formát je záměrně ten, který se dá poslat zákazníkovi nebo internímu security týmu —
+  ne prezentace o kurzu.
 
 ```mermaid
-%% TODO: diagram -- referencni architektura na konci tydne (vsechny vrstvy pohromade)
 flowchart TB
-  A[placeholder] --> B[placeholder]
+  subgraph CH[Kanaly]
+    direction LR
+    T[Teams] --- MC[M365 Copilot]
+  end
+  subgraph RT[Runtime agenta - vlastni hosting]
+    direction TB
+    AA[AgentApplication<br/>Agents SDK] --> MW[Middleware pipeline<br/>PII, scope, XPIA, citace]
+    MW --> OR[Orchestrace<br/>triage + resolver]
+  end
+  subgraph DATA[Znalosti a akce]
+    direction LR
+    KB[Runbooky<br/>SharePoint + semantic index]
+    AC[CreateTicket<br/>validace parametru, idempotence]
+    GR[Microsoft Graph<br/>delegated]
+  end
+  subgraph GOV[Identita a governance]
+    direction LR
+    AID[Entra Agent ID] --- A365[Agent 365<br/>registry + observability]
+  end
+  MOD[Model endpoint<br/>Azure inference]
+  EVAL[Golden set + regresni beh<br/>prahy pro vydani]
+  CH --> AA
+  OR --> KB
+  OR --> AC
+  OR --> GR
+  OR --> MOD
+  RT --> GOV
+  EVAL -. meri a pousti pred vydanim .-> RT
 ```
 
 ### KPI a evaluační matice
 
-<!-- TODO: rozdil mezi technickou metrikou (pass rate, groundedness, latence, tokeny)
-     a business KPI (vyresene dotazy bez cloveka, cas do odpovedi, naklad na dotaz,
-     spokojenost). Bez business KPI projekt neprojde u sponzora. -->
+- **Technická metrika měří agenta**: pass rate na golden setu, groundedness, správnost
+  volby nástroje, latence p95, tokeny na dotaz, chybovost akcí. Zdroj: evaluační běh
+  a telemetrie.
+- **Business KPI měří přínos**: podíl dotazů vyřešených **bez člověka**, čas do odpovědi
+  proti dnešnímu supportu, náklad na vyřešený dotaz, objem eskalací, spokojenost uživatelů.
+- **Bez business KPI projekt neprojde u sponzora.** Sponzor nekupuje groundedness 0,92 —
+  kupuje „třetina opakovaných dotazů se vyřeší bez technika, za tolik a tolik měsíčně".
+  Tohle je věta, kterou si mají studenti odnést doslova.
+- Převodní pravidlo: ke každé technické metrice napiš, **jaké business číslo ovlivňuje**.
+  Metrika, u které to nedokážeš, do matice nepatří.
+- Ke každému KPI patří **jak a odkud se měří** (které pole telemetrie, který běh, která
+  statistika helpdesku) a **práh**: kdy vydat, kdy opravit, kdy zastavit.
 
 ### Rozhodnutí, která musí být v dokumentu
 
-<!-- TODO: checklist rozhodnuti z celeho tydne, kazde s odůvodnenim:
-     cesta tvorby (D1), retrieval vlastni ano/ne (D2), multi-agent ano/ne (D3),
-     hosting (D4), instrumentace do Agent 365 (D4), prahy pro promotion (D4/D5),
-     obranne vrstvy (D5), nakladovy strop (D5). -->
+| # | Rozhodnutí | Odkud | Kompromis, který se váží |
+|---|---|---|---|
+| 1 | **Cesta tvorby** — deklarativní / Copilot Studio / custom engine / Foundry | D1 `agent-landscape`, D2 `declarative-agents` | rychlost a governance zdarma vs. kontrola nad akcemi a auditem |
+| 2 | **Vlastní retrieval ano/ne** | D2 grounding | relevance na míru vs. vlastní ACL model, refresh a údržba |
+| 3 | **Multi-agent ano/ne** | D3 `agent-framework` | čistší role a lepší diagnostika vs. latence a tokeny navíc |
+| 4 | **Hosting** — endpoint i orchestrace okolo něj | D4 `event-driven-hosting` | vlastnictví a kontrola vs. provoz a náklady v nečinnosti |
+| 5 | **Instrumentace do Agent 365** | D4 `agent-365-governance` | práce navíc vs. agent, kterého IT pustí do produkce |
+| 6 | **Prahy pro promotion** dev → test → prod | D4 / D5 | přísné prahy brzdí vydávání, volné pustí regresi |
+| 7 | **Obranné vrstvy** — co v promptu, co v kódu, co ve scope | D3 `middleware-policy` | pohodlí vs. vynutitelnost |
+| 8 | **Nákladový strop** — tokeny na dotaz, měsíční strop, co se stane při jeho dosažení | D5 | kvalita odpovědi vs. cena |
+
+- U každého rozhodnutí **jedna věta odůvodnění** a **jedna věta „co by ho změnilo"**.
+  Druhá věta je test, jestli šlo o rozhodnutí, nebo jen o zápis toho, co vyšlo v labu.
+- **Rozhodnutí bez zamítnuté alternativy není rozhodnutí.** Zapsat i to, co jste nevybrali
+  a proč — přesně na to se ptá zákazník, který má nabídku od konkurence.
 
 ### Další kroky — certifikace
 
@@ -57,10 +114,16 @@ Celou aktuální certifikační mapu ukázat na oficiálním
 [Microsoft Certification Posteru (PDF)](https://arch-center.azureedge.net/Credentials/Certification-Poster_en-us.pdf) —
 studenti si odnášejí odkaz. Z agentní větve zmínit i navazující cesty:
 
-<!-- TODO: AI-500 Multi-Agent AI Solutions Expert (Beta) -- expert nadstavba presne
-     nad multi-agent obsahem D3; GH-600 GitHub Agentic AI Developer (New);
-     AB-900 M365 Copilot and Agent Administration Fundamentals (pro byznys/admin
-     kolegy studentu). Vse overit k datu behu -- beta/new statusy se meni. -->
+- **AI-500 — Multi-Agent AI Solutions Expert** (k datu psaní **Beta**): expertní nadstavba
+  přesně nad multi-agent obsahem D3 (`agent-framework`). Nejbližší pokračování pro toto
+  publikum.
+- **GH-600 — GitHub Agentic AI Developer** (k datu psaní **New**): agentní vývoj na straně
+  GitHubu — dává smysl týmům, které už jedou GitHub Copilot a Actions.
+- **AB-900 — Microsoft 365 Copilot and Agent Administration Fundamentals**: pro byznys
+  a admin kolegy studentů. Společný jazyk pro rozhovor o governance a licencích, který
+  studenti v tomto kurzu právě získali.
+- Statusy **Beta / New** i názvy **ověřit k datu běhu** — beta zkoušky se přesouvají,
+  přejmenovávají a někdy nedojedou do GA.
 
 > [!WARNING] Ověřit k datu běhu
 > Poster se vydává v nových edicích — před během ověřit, že URL vede na aktuální verzi,
@@ -68,10 +131,21 @@ studenti si odnášejí odkaz. Z agentní větve zmínit i navazující cesty:
 
 ### Další kroky — témata
 
-<!-- TODO: multi-agent vzory do hloubky, MCP a vlastni konektory, Foundry Agent Service,
-     Agent 365 governance z pohledu IT, A2A, SharePoint Copilot Apps po GA.
-     Odkaz na navazujici kurzy GOPAS: SPFx kurzy (most pres spfx-copilot-apps)
-     a dalsi AI kurzy dle aktualniho katalogu. -->
+- **Multi-agent vzory do hloubky** — handoff, supervizor, paralelní zpracování a **A2A**
+  mezi agenty různých vlastníků; tam, kde tento kurz skončil u dvojice triage + resolver.
+- **MCP a vlastní konektory** — synced vs. federated, vlastní MCP server nad interním
+  systémem.
+- **Foundry Agent Service** — hostovaný agent a publikační pipeline do Microsoft 365
+  Copilotu a Teams.
+- **Agent 365 z pohledu IT** — access reviews, lifecycle politiky, owner attestation;
+  druhá strana toho, co jsme dělali z pohledu vývojáře.
+- **SharePoint Copilot Apps po GA** — dnes Public Preview; sledovat, co se změní
+  v manifestu a v hostingu.
+- **Samostudijní moduly přímo v tomto repu**: vlastní retrieval, marketplace, výkon
+  a náklady, third-party governance — přehled v [`../../self-study.md`](../../self-study.md).
+- **Navazující kurzy GOPAS**: SPFx kurzy (most vede přes
+  [`../../day-4/spfx-copilot-apps/`](../../day-4/spfx-copilot-apps/)) a další AI kurzy —
+  konkrétní kódy ověřit v aktuálním katalogu k datu běhu.
 
 ## Klíčové rozlišení
 - **Technická metrika** (pass rate, latence) vs. **business KPI** (náklad na dotaz, vyřešeno

@@ -19,36 +19,69 @@ s manifestem a verzí.
 
 ### Část A — demo hostingu (instruktor)
 
-1. <!-- TODO: nasadit ENDPOINT agenta (App Service / Container Apps — Node.js app);
-      pro srovnani ukazat cold start consumption Functions a jeho dopad na prvni odpoved -->
-2. <!-- TODO: ukazat Durable orchestraci na dlouhe uloze (fan-out pres vic runbooku) -->
-3. <!-- TODO: ukazat Foundry Agent Service jako hostovanou alternativu a publikaci do M365 Copilotu -->
+1. Nasaď **endpoint agenta** do App Service (nebo Azure Container Apps) — je to obyčejná
+   Node.js aplikace, deploy nevyžaduje žádnou změnu kódu agenta. Pusť proti nasazené
+   instanci čtyři testovací dotazy. Pro srovnání ukaž tentýž endpoint na **consumption
+   Functions**: změř první odpověď po nečinnosti (cold start) a hned poté druhou. Rozdíl
+   je přesně to, co uživatel v chatu vnímá jako „agent je pomalý".
+2. Ukaž **Durable orchestraci** na dlouhé úloze: fan-out přes několik runbooků současně,
+   fan-in do jedné odpovědi. Ukaž persistovaný stav orchestrace — restart hosta ji
+   nezabije. Pojmenuj rozdíl proti workflow v Agent Frameworku (D3): tam žije orchestrace
+   v procesu, tady v úložišti.
+3. Ukaž **Foundry Agent Service** jako hostovanou alternativu — agenta, kterého nehostuješ
+   ty — a jeho publikaci do Microsoft 365 Copilotu. Vedle toho vyslov obojí: co tím
+   zákazník získá (jedna governed pipeline, žádný provoz) a co ztratí (vlastnictví
+   hostingu, vazba na Azure).
 
 ### Část B — tři timeouty (studenti, lokálně)
 
-4. <!-- TODO: nastavit timeout na volani modelu -->
-5. <!-- TODO: nastavit timeout na volani nastroje (CreateTicket) — jina hodnota, jiny dopad -->
-6. <!-- TODO: nastavit timeout na cely turn a overit, co uvidi uzivatel pri jeho vyprseni -->
+4. Nastav explicitní **timeout na volání modelu** — přes `AbortSignal` propagovaný do
+   klienta, ne globálním nastavením knihovny. Vyvolej vypršení uměle (dočasně sniž hodnotu
+   na stovky ms) a zaznamenej, co se stane s turnem a co se objeví v logu.
+5. Nastav **timeout na volání nástroje** `CreateTicket`. Zvol **jinou hodnotu** než
+   u modelu a napiš jednou větou proč — zápisová akce má jiný dopad selhání než pomalá
+   odpověď. Ověř, že vypršení nezůstane jen v logu, ale dojde až do odpovědi uživateli.
+6. Nastav **timeout na celý turn** jako obálku nad tool-call smyčkou. Ověř, co uživatel
+   vidí, když vyprší: musí přijít smysluplná degradovaná odpověď, ne prázdná zpráva ani
+   výjimka. Zkontroluj, že oba vnitřní timeouty jsou kratší než turnový — jinak turn
+   spadne dřív, než se stihne vrátit chyba z nástroje.
 
 ### Část C — idempotence (studenti, lokálně)
 
-7. <!-- TODO: zavolat CreateTicket dvakrat se stejnym vstupem — vzniknou dva tikety? -->
-8. <!-- TODO: pridat idempotency key a overit, ze druhe volani nevytvori duplikat -->
-9. <!-- TODO: overit chovani pri retry po timeoutu (nejcastejsi zdroj duplikatu v praxi) -->
+7. Zavolej `CreateTicket` **dvakrát se stejným vstupem** (dotaz 3 ze scénáře) a zkontroluj
+   v mock API, kolik tiketů vzniklo. Zapiš výsledek — tohle je chyba, kterou budeš
+   v dalších dvou krocích opravovat.
+8. Přidej do žádosti **idempotency key** — deterministicky odvozený z ID konverzace, ID
+   turnu a obsahu žádosti, **ne** `Math.random()`. V mock API podle něj deduplikuj: druhé
+   volání vrátí původní tiket a nezaloží nový. Ověř opakováním kroku 7.
+9. Simuluj reálnou cestu ke duplikátu: nech volání `CreateTicket` proběhnout, ale odpověď
+   zahoď timeoutem a nech retry politiku poslat druhý pokus. Ověř, že s klíčem vznikne
+   jeden tiket a bez klíče dva. Zapiš závěr jednou větou — retry bez idempotence není
+   odolnost, ale zdvojení práce.
 
 ### Část D — rozhodnutí o hostingu
 
-10. <!-- TODO: vybrat hosting pro Support Asistenta a odůvodnit: provoz, naklady v necinnosti,
-      dlouhe operace, kdo to spravuje, jak se to nasazuje. Vstup do capstonu. -->
+10. Vyber hosting pro Support Asistenta a zapiš rozhodnutí s **minimálně třemi kritérii**
+    z této sady: provoz (kdo drží pohotovost), náklady v nečinnosti, dlouhé operace
+    (potřebuje frontu nebo Durable?), kdo to spravuje (vývojový vs. platformní tým), jak
+    se to nasazuje (CI/CD, prostředí). Rozhodni zvlášť obě otázky — **endpoint agenta**
+    a **orchestraci okolo něj**. Ke každému kritériu připiš, **co by rozhodnutí změnilo**;
+    tahle věta jde beze změny do capstonu.
 
 ### Část E — manifest, publikace a verzování
 
-11. <!-- TODO: projit manifest projektu: identita, popis, schopnosti, ikony, opravneni;
-      overit, ze manifest odpovida tomu, co agent SKUTECNE dela (akce z D2) -->
-12. <!-- TODO: publikovat hostovaneho agenta do kanalu (Teams / M365 Copilot dle
-      dostupnosti a admin schvaleni) -->
-13. <!-- TODO: zvysit verzi a projit, co to znamena pro nasazene uzivatele a jak by se
-      delal rollback -->
+11. Projdi manifest projektu položku po položce: identita a verze, popis, deklarované
+    schopnosti a akce, ikony, oprávnění, kanály. Porovnej seznam **deklarovaných** akcí
+    s tím, co agent po D2 a D3 **skutečně** umí (`CreateTicket`, čtení z Graphu). Rozdíl
+    oprav a zapiš, který směr rozdílu je horší — agent, který umí víc, než deklaruje.
+12. Sestav app package a **publikuj** hostovaného agenta do kanálu (Teams / Microsoft 365
+    Copilot podle dostupnosti). Projdi cestu ke schválení adminem a zaznamenej, co admin
+    ve schvalovacím kroku vidí: **manifest, ne kód**. Když schválení v bloku nedoběhne,
+    jede krok jako demo z předpřipraveného stavu.
+13. Zvyš verzi v manifestu, publikuj znovu a popiš tři věci: co se stane už nasazeným
+    uživatelům, kdy je potřeba **nové schválení** (změna oprávnění nebo akcí) a jak by
+    vypadal **rollback** — předchozí package i předchozí build endpointu. Doplň, jak
+    poznáš, že se verze manifestu a verze kódu rozešly.
 
 ## Ověření
 

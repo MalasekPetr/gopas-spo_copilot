@@ -2,7 +2,9 @@
 
 ## Timing
 
-- ~60 min výklad + 70 min lab.
+- ~40 min výklad + 45 min lab, **včetně 10 min srovnání s Orchestry** (modul
+  `orchestry-governance` byl vyřazen do samostudia — jeho srovnávací tabulka se sem složila).
+  **Blok 2 dne 5.**
 - **Nejdůležitější blok kurzu z hlediska diferenciace.** Když se má něco jiného obětovat,
   ne tenhle.
 - Části B a D nesou hodnotu i bez licence — chránit je časově.

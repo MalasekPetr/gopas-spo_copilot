@@ -1,21 +1,28 @@
-# Den 3 — Prompt, multi-agent a politiky
+# Den 3 — Znalosti, akce a prompt
 
-Jak se skládá prompt a systémová orchestrace vlastního modelu, orchestrace nad Agents SDK
-(Microsoft Agent Framework) a guardraily jako kód v middleware pipeline.
+Kde agent bere data (a kdy si retrieval nemá dělat sám), jak dělá akce nad Microsoft
+Graphem s korektními hranicemi oprávnění, a jak se skládá systémový prompt vlastního modelu.
 
 | Pořadí | Blok | Slug | Typ |
 |---|---|---|---|
-| 1 | Prompt & systémová orchestrace | [`prompt-orchestration`](prompt-orchestration/) | P |
-| 2 | Microsoft Agent Framework, workflows & multi-agent (A2A) | [`agent-framework`](agent-framework/) | P |
-| 3 | Middleware & enforcement politik | [`middleware-policy`](middleware-policy/) | P |
+| 1 | Grounding: Copilot connectors, semantic index, MCP | [`knowledge-grounding`](../day-2/knowledge-grounding/) | P |
+| 2 | Action handlers & integrace s Microsoft Graph | [`actions-graph`](../day-2/actions-graph/) | P |
+| 3 | Prompt & systémová orchestrace | [`prompt-orchestration`](prompt-orchestration/) | P |
 
-> [!NOTE] Blok 1 je protějšek deklarativních instructions ze dne 1 — tady je model,
-> system prompt i tool-call loop poprvé plně v rukou studenta. Blok 2 je největší doplněk
-> proti publikované katalogové osnově (Agent Framework tam chybí úplně). Blok 3 slučuje
-> Responsible AI guardraily s middleware pipeline záměrně: v pro-code kurzu je guardrail
-> **kód v pipeline**, ne slide o zodpovědné AI — lab má 90 min a část C je volitelná
-> při plném tempu.
+> [!NOTE] Blok 1 učí nosné rozlišení **synced vs. federated (MCP)** konektorů a hlavně
+> *kdy retrieval nedělat sám*: semantic index dělá relevanci i vynucení permissions za tebe.
+> Navazuje na hygienu ze závěru D2. Blok 2 je pointa custom engine cesty — akce s validací,
+> na kterou deklarativní agent nedosáhl; část D (app-only protipříklad) jede jako demo,
+> ale **nevynechávat**, je to nejsilnější moment labu. Blok 3 je protějšek deklarativních
+> instructions z D2: model, system prompt i tool-call loop poprvé plně v rukou studenta.
 
-Reálná zátěž ~6,6 h (110 + 135 + 150 min). Agent z nosné linky dnes dostane systémový
-prompt s měřenou baseline, rozdělí se na dva (triage + resolver) a dostane redakční
-middleware.
+Reálná zátěž **290 min** (100 + 105 + 85). Baseline čtyř testovacích dotazů z bloku 3 se
+používá po každém dalším přírůstku — studenti si ji musí uložit.
+
+> [!TIP] Kompresní ventil dne
+> Při skluzu zkrátit část C labu `prompt-orchestration`, pak výklad na 60 min. Část A
+> (baseline) **netolerovat vynechat** — bez ní nefunguje ani `evaluation-quality` (D5).
+
+Nosná linka dnes získá knowledge nad knihovnou `Runbooky`, dvě akce (Graph + mock ticket
+API) a systémový prompt s měřenou baseline. Pokus o obejití promptu na konci bloku 3
+**uspěje** — a to je záměr; napraví se to až middlewarem v D4.

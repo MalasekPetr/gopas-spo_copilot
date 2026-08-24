@@ -22,27 +22,96 @@ kurzu — ne slide, ale skutečný listing se skutečnou validační historií.
 
 ### Dvě distribuce, dva světy
 
-<!-- TODO: org katalog (admin schvaluje, interni uzivatele) vs Marketplace/Agent Store
-     (Microsoft validuje, kdokoli). Monetizace zminit, nezabihat. -->
+Východisko je stejné — **app package** (manifest, ikony, popis). Od něj se cesty rozcházejí
+ve všem podstatném:
+
+| Hledisko | Org katalog | Marketplace / Agent Store |
+|---|---|---|
+| **Kdo schvaluje** | tenant admin zákazníka | validace Microsoftu, pak ještě admin zákazníka |
+| **Publikum** | uživatelé jednoho tenantu | kdokoli, kdo si agenta najde |
+| **Kam se předkládá** | admin centrum tenantu | Partner Center jako nabídka (offer) |
+| **Doba do dostupnosti** | dny — jak rychle se domluvíš s IT | kola review; plánovat s rezervou |
+| **Co musí existovat navíc** | prakticky nic | ověřený vydavatel, privacy policy, terms of use, support proces |
+| **Provoz agenta** | ve tvém tenantu, tvá data | v **cizím** tenantu, cizí data, cizí konfigurace |
+| **Monetizace** | není | přes komerční marketplace (transakční nabídky, private offers) |
+
+- **Nejsou to dvě tlačítka nad stejným balíčkem.** Balíček je společný, ale všechno okolo —
+  identita vydavatele, právní dokumenty, podpora, reakce na incidenty, kompatibilita
+  s libovolným tenantem — je u store cesty samostatná práce s trvalým závazkem.
+- **Nejtvrdší rozdíl je „cizí tenant".** Agent, který funguje u tebe, se ve store spoléhá
+  na to, že u zákazníka existují stejné zdroje dat, oprávnění a konfigurace. To u interního
+  agenta nikdo neřeší, protože se to nikdy nestane.
+- **Tenant admin má poslední slovo i u store aplikací** — může je globálně blokovat nebo
+  povolovat. Publikace do store negarantuje instalovatelnost u zákazníka.
+- **Monetizace** je vlastní téma (transakční nabídky, private offers, billing přes
+  Microsoft). Zmiňujeme, že existuje — rozhodnutí „store ANO/NE" se v praxi láme dřív,
+  na podpoře a závazku údržby. Podmínky ověřovat v Partner Center dokumentaci.
 
 ```mermaid
-%% TODO: diagram -- app package -> org katalog (admin) vs Partner Center -> validace -> store
 flowchart LR
-  A[placeholder] --> B[placeholder]
+  P[app package<br/>manifest + ikony + popis] --> V{distribucni cesta}
+  V -->|interni| AC[admin centrum tenantu]
+  AC --> SCH[schvaleni adminem]
+  SCH --> UT[uzivatele tenantu]
+  V -->|verejna| PC[Partner Center<br/>overeny vydavatel]
+  PC --> VAL[validace Microsoftu<br/>manifest, popis, privacy,<br/>terms, support, chovani]
+  VAL -->|vraceno k oprave| PC
+  VAL -->|schvaleno| ST[Marketplace / Agent Store]
+  ST --> AZ[admin zakaznika<br/>povoli nebo zablokuje]
+  AZ --> UZ[uzivatele zakaznika]
 ```
 
 ### Podmínky, které musí být splněny
 
-<!-- TODO: enumerovat proti aktualni dokumentaci: Partner Center ucet a jeho overeni,
-     validacni politiky pro agenty (manifest, popis schopnosti, ikony, privacy policy,
-     terms of use, support kontakt), technicke pozadavky (auth, chybove stavy).
-     NEVYMYSLET z pameti -- overit na learn pred behem. -->
+Struktura požadavků je stabilní, **konkrétní položky nikoli** — enumerovat proti aktuálním
+validation guidelines a publish dokumentaci (odkazy níže), ne z paměti.
+
+| Oblast | Co se prokazuje | Kde se to nejčastěji láme |
+|---|---|---|
+| **Účet vydavatele** | Partner Center účet, ověřená identita organizace, publisher profil konzistentní s doménou v listingu | ověření trvá a nejde urychlit na poslední chvíli |
+| **Balíček a manifest** | validní schéma, verze, jednoznačné ID, ikony v požadovaných formátech a rozměrech | ikony a lokalizované varianty |
+| **Listing** | co agent dělá, pro koho, srozumitelně; screenshoty; kategorie | popis slibuje víc, než agent v cizím tenantu udělá |
+| **Právní dokumenty** | privacy policy a terms of use na veřejné, trvalé URL | odkaz vede na intranet nebo 404 |
+| **Zpracování dat** | jaká data agent zpracovává, kam tečou, co ukládá mimo tenant zákazníka | nejtvrdší otázka pro custom engine agenty — data opouštějí tenant, protože je zpracovává tvůj hosting |
+| **Podpora** | kontakt a dokumentovaný support proces | závazek reagovat, který nikdo v týmu nevlastní |
+| **Technické chování** | funkční auth flow **při první instalaci v cizím tenantu**, korektní chybové stavy, žádné natvrdo zadané tenant-specific hodnoty | consent flow otestovaný jen ve vlastním tenantu |
+
+- **Custom engine agent přidává endpoint**, který validace prověřuje jako součást aplikace:
+  dostupnost, chování při chybě, autentizaci. Deklarativní agent tuhle plochu nemá — je to
+  jen manifest.
+- **Validace kontroluje soulad, ne kvalitu.** Ověřuje, že agent dělá to, co listing tvrdí,
+  a že splňuje politiky. Neposoudí, jestli je užitečný — to je tvoje riziko.
+- Pravidlo pro plánování: požadavky mimo kód (ověření vydavatele, právní dokumenty, support
+  proces) mají **delší dodací lhůtu** než samotný agent. Pokud se řeší až po dokončení
+  vývoje, čeká se na ně.
 
 ### Case study — Normiqa Navigator
 
-<!-- TODO: instruktorske demo: listing v AppSource/Agent Store, co validace chtela,
-     kolik kol review, jak dlouho trvalo, co bylo zamitnuto a proc. Autenticky material
-     autora -- data z Partner Center ukazovat bez citlivych udaju (trzby, zakaznici). -->
+**Normiqa Navigator** je publikovaný agent autora kurzu — reálný listing s reálnou
+validační historií. Case study se prochází v tomto pořadí:
+
+1. **Živý listing** — co zákazník vidí: název, popis schopností, screenshoty, kategorie,
+   odkazy na privacy policy a podporu. Porovnat s tabulkou podmínek výše: každá položka
+   listingu odpovídá nějakému požadavku.
+2. **Cesta od balíčku k listingu** — offer v Partner Center, předložení, validace,
+   vrácení k opravě, opětovné předložení, publikace.
+3. **Co validace vracela** — konkrétní připomínky a jak se opravily. Tohle je nejcennější
+   část: ukazuje, co se v dokumentaci nedočtete, protože je to formulované jako požadavek,
+   ne jako typická chyba.
+4. **Co to stálo mimo kód** — právní dokumenty, support kontakt, údržba listingu při každé
+   aktualizaci agenta.
+
+**Co si odnést i bez živého dema:**
+
+- Review je **iterace**, ne jednorázová brána — plánovat s rezervou na kolo oprav
+  a nedávat si závazný termín na den publikace.
+- Práce po publikaci nekončí: každá změna schopností agenta znamená aktualizaci listingu
+  a další kolo validace.
+- Většina toho, co proces zdrží, není kód — jsou to dokumenty, ověření a popisy.
+
+> [!NOTE] Vendor-neutralita
+> Case study je ilustrace **procesu**, ne produktová prezentace. Co se ukazuje, je Partner
+> Center a validační kolotoč — ne funkce produktu.
 
 ## Klíčové rozlišení
 

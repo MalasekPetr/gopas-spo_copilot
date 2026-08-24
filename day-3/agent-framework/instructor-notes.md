@@ -2,8 +2,9 @@
 
 ## Timing
 
-- ~60 min výklad + 75 min lab. **Blok 2 dne 3** (po `prompt-orchestration`) — jet ještě
-  dopoledne, dokud jsou svěží; nejtěžší látka dne.
+- ~45 min výklad + 55 min lab. **Blok 2 dne 4** (po `spfx-copilot-apps`) — jet dopoledne,
+  dokud jsou svěží. Zkráceno při rekalibraci; Framework je stejně demo (JS SDK neexistuje),
+  takže škrt jde do výkladu, ne do labu.
 - Část D labu (měření ceny) **nevynechávat**. Bez ní si studenti odnesou „multi-agent je
   lepší", což je špatná lekce.
 

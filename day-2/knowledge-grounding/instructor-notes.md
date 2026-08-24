@@ -2,8 +2,9 @@
 
 ## Timing
 
-- ~55 min výklad + 65 min lab. Deklarativní knowledge (manifest) už studenti mají
-  z `declarative-agents` — tady se nevrací, jen srovnává; to výklad zkracuje.
+- ~45 min výklad + 55 min lab. **Opener dne 3.** Deklarativní knowledge (manifest) už
+  studenti mají z `declarative-agents` (včera ráno) — tady se nevrací, jen srovnává;
+  to výklad zkracuje.
 - Část D labu (rozhodovací reflexe) je krátká, ale nevynechávat — je to vstup do
   `opt-custom-retrieval` i do capstonu.
 

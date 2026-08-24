@@ -61,13 +61,23 @@ flowchart TB
 | Cesta | Kdo ji vlastní | Co potřebuje | Kde běží | Governance |
 |---|---|---|---|---|
 | **Copilot agent builder** | koncový uživatel / business | M365 Copilot nebo PAYG | uvnitř M365 Copilotu | omezené sdílení, bez ALM |
+| **SharePoint agent** | **vlastník obsahu** — bez opuštění webu | Copilot licence (tvorba), PAYG (použití) | u webu; žije s ním i jeho oprávněními | RCD / Restricted SharePoint Search, SAM reporty |
 | **Copilot Studio** | business / citizen dev + IT | Studio licenci, Copilot Credits | Power Platform | PPAC, DLP, Managed Environments; **auto-registrace do Agent 365** |
-| **Agents SDK (custom engine)** | vývojový tým | model endpoint, hosting, CI/CD | tvoje infrastruktura (App Service, Container Apps…) | tvoje práce: instrumentace do Agent 365 (D4) |
+| **Agents SDK (custom engine)** | vývojový tým | model endpoint, hosting, CI/CD | tvoje infrastruktura (App Service, Container Apps…) | tvoje práce: instrumentace do Agent 365 |
 | **Agent Framework** | vývojový tým | běží **uvnitř** SDK aplikace | tam, kde SDK aplikace | dtto custom engine; jen C#/Python |
 | **Foundry Agent Service** | vývojový tým / platform tým | Azure subscription | PaaS v Azure | Foundry Control Plane + Entra Agent ID |
 
-- Agent builder a Studio jsi viděl/uvidíš naživo v dalším bloku; deklarativní agent
-  (Toolkit) je šestá příčka mezi Studiem a custom enginem — stavíš ho dnes odpoledne.
+- **SharePoint agent** je pro tohle publikum nejbližší cesta: vzniká jedním klikem nad
+  knihovnou, kterou už spravujete. Strop je ale tvrdý — Q&A nad obsahem, žádné akce,
+  jeden list a nic jiného.
+- Deklarativní agent (Toolkit) je příčka mezi Studiem a custom enginem — stavíte ho
+  ráno druhého dne.
+
+> [!TIP] Podrobná rozdílová matice
+> [`comparison-agent-paths.md`](comparison-agent-paths.md) srovnává agent builder,
+> Copilot Studio, Agents Toolkit a SharePoint agenty po jednotlivých schopnostech
+> (listy, konektory, akce, ALM, publikace, licence) a říká, co má která cesta
+> **exkluzivně**. Tam patří i odpověď na „kam až dosáhne SharePoint agent".
 
 ### Rozhodovací osa
 

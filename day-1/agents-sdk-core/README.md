@@ -1,6 +1,6 @@
 # Agents SDK — jádro: AgentApplication, aktivity, turny
 
-> Typ: povinný · Den: 1 · Odhad: **135 min** (60 výklad + 75 lab) · Publikum: **vývojáři / architekti**
+> Typ: povinný · Den: 2 · Odhad: **115 min** (50 výklad + 65 lab) · Publikum: **vývojáři / architekti**
 > Prostředí: viz [`../../environment.md`](../../environment.md) · Názvosloví: [`../../GLOSSARY.md`](../../GLOSSARY.md)
 > Nosná linka: [`scenario-support-agent.md`](../../scenario-support-agent.md)
 
@@ -15,39 +15,76 @@
 
 ### Co Agents SDK dělá a co nedělá
 
-<!-- TODO: SDK = plumbing mezi kanalem a tvou logikou: prijem zprav, stav, routing eventu,
-     autentizace, transport. Je AI-agnosticke by design. Neni model, neni orchestrator,
-     neni no-code builder. -->
+- **Dělá plumbing mezi kanálem a tvojí logikou**: příjem zpráv, správu stavu, routing
+  událostí, autentizaci a transport. Je to vrstva, kterou bys jinak psal sám a nudil se u ní.
+- **Je AI-agnostické by design.** SDK neví, jestli za ním je model, `if`, nebo databáze.
+- **Není model**, **není orchestrátor**, **není no-code builder.** Microsoft to říká
+  explicitně a studenti to skoro vždy čekají jinak. Otázka „kde nastavím, aby agent použil
+  nástroj" nemá v SDK odpověď — to je orchestrace (D4).
+- Praktický důsledek: dnešní agent bude fungovat, i když z něj model odpojíš. Odpoví hloupě,
+  ale odpoví — a to je správně navržená hranice.
 
 ```mermaid
-%% TODO: diagram -- cesta zpravy: kanal -> adapter -> AgentApplication -> handler -> odpoved
 flowchart LR
-  A[placeholder] --> B[placeholder]
+  K[kanal<br/>Playground / Teams / M365 Copilot] --> AD[adapter<br/>transport + autentizace]
+  AD --> AA[AgentApplication<br/>routing aktivit]
+  AA --> H[tvuj handler<br/>logika + volani modelu]
+  H --> ST[(TurnState<br/>turn / conversation / user)]
+  H --> R[odpoved zpet do kanalu]
 ```
 
 ### AgentApplication a handlery
 
-<!-- TODO: AgentApplication jako entry point. Typy prichozich aktivit: zprava uzivatele,
-     conversation lifecycle event, interakce s Adaptive Card, OAuth callback.
-     Registrace handleru, routing. -->
+- `AgentApplication` je **jediný vstupní bod** všech příchozích aktivit. Neregistruješ
+  endpointy, registruješ **handlery na typy aktivit**.
+- Typy příchozích aktivit, se kterými se reálně potkáš:
+  - **zpráva uživatele** — to, co si studenti představí jako jediný případ,
+  - **conversation lifecycle** — uživatel přidán do konverzace, agent přidán do týmu
+    (tady se dělá uvítací zpráva),
+  - **interakce s Adaptive Card** — uživatel klikl na tlačítko v kartě, ne napsal text,
+  - **OAuth callback** — návrat z přihlašovacího toku.
+- Routing je deklarativní: řekneš „na tenhle typ aktivity zavolej tenhle handler".
+  Co handler dělá uvnitř, SDK nezajímá.
+- Zapamatovatelně: **SDK doručí aktivitu do handleru. Tím jeho práce končí.**
 
 ### Turn a TurnState
 
-<!-- TODO: turn = zpracovani jedne aktivity od prijmu po odpoved.
-     TurnState: rozsah turn / conversation / user. Kde se stav ulozi (storage) a proc
-     to je konfiguracni rozhodnuti, ne detail. -->
+- **Turn = zpracování jedné aktivity** od příjmu po odpověď. Není to konverzace ani
+  session — je to jeden průchod.
+- `TurnState` má tři rozsahy a jejich volba je **návrhové rozhodnutí, ne detail**:
+  - **turn** — žije jeden průchod (mezivýsledky, příznaky pro tenhle běh),
+  - **conversation** — žije napříč turny téže konverzace (historie, kontext, počitadla),
+  - **user** — žije napříč konverzacemi téhož uživatele (preference).
+- Kam se stav ukládá (paměť, blob, databáze) je **konfigurace**, ne kód aplikace.
+  V Playgroundu jede paměťové úložiště; v produkci ne — restart by smazal konverzace.
+- Nejčastější chyba: dát do `user` scope věc, která patří do `conversation` (a naopak).
+  V labu na to narazíte sami, pak to pojmenujeme.
 
 ```mermaid
-%% TODO: diagram -- zivotni cyklus turnu a rozsahy stavu
 sequenceDiagram
-  participant P as placeholder
-  P->>P: placeholder
+  participant U as Uzivatel
+  participant AA as AgentApplication
+  participant H as Handler
+  participant S as TurnState
+  U->>AA: aktivita (zprava)
+  AA->>S: nacti stav (conversation + user)
+  AA->>H: routing na handler
+  H->>S: zapis do turn scope
+  H->>U: odpoved
+  AA->>S: uloz stav
+  Note over S: turn scope zanika<br/>conversation a user zustavaji
 ```
 
 ### Kanály a adaptéry — stav 2026
 
-<!-- TODO: multi-channel: M365 Copilot, Teams, web chat, e-mail, SMS. Kde je dnes role
-     Azure Bot Service (registrace kanalu, channel adaptace) a kde uz neni. -->
+- Agents SDK je **multi-channel**: M365 Copilot, Teams, web chat, e-mail, SMS a další.
+  Tentýž handler obslouží víc kanálů — liší se adaptér, ne logika.
+- **Role Azure Bot Service se zúžila** na registraci kanálu a channel adaptaci. Není to
+  nosná architektonická vrstva, jak ji staví starší dokumentace i katalogová osnova.
+- Praktický důsledek pro dnešek: **Agents Playground žádnou registraci nepotřebuje.**
+  Bot registrace a tunel jsou téma až u publikace (D5).
+- Kanál určuje, co jde poslat: Adaptive Cards, přílohy, streamování odpovědi — to se
+  liší a je to rozhodnutí pro návrh UX, ne detail transportu.
 
 > [!IMPORTANT] Názvosloví
 > Starší dokumentace i katalogová osnova staví **Azure Bot Service** jako nosnou vrstvu.
@@ -55,9 +92,23 @@ sequenceDiagram
 
 ### První volání modelu — a jeho chybové větve
 
-<!-- TODO: zapojeni model endpointu. POVINNE ukazat i: timeout, transientni vs permanentni
-     chyba, retry s backoff, a co agent odpovi uzivateli kdyz model neodpovi.
-     Toto je nosny pedagogicky bod kurzu — ne demo-ware. -->
+Model endpoint se zapojuje **z konfigurace, nikdy natvrdo** (klíč v `.env` / user secrets,
+viz [`../../environment.md`](../../environment.md)). Volání modelu je ale síťové volání
+cizí služby — a tady začíná rozdíl mezi kurzem a tutoriálem z internetu:
+
+- **Timeout je povinný.** Bez něj agent čeká, dokud nevyprší trpělivost uživatele.
+  Nastav ho explicitně, ne implicitně.
+- **Rozliš transientní a permanentní chybu.** Throttling a timeout jsou transientní —
+  retry s exponenciálním backoffem dává smysl. Špatný klíč, neexistující deployment nebo
+  odmítnutý obsah jsou permanentní — retry jen pálí čas a tokeny.
+- **Retry má strop.** Nekonečné opakování je nejdražší způsob, jak selhat.
+- **Co uživatel uvidí, když model neodpoví?** Ne stack trace, ne prázdná bublina. Věta,
+  která říká, že se nepovedlo a co dělat dál. Tohle je součást produktu, ne ošetření chyby.
+
+> [!IMPORTANT] Proč je chybová větev v prvním bloku o kódu
+> Je to nosný pedagogický bod celého kurzu: agent je **distribuovaný systém**, ne skript.
+> Kdo se to nenaučí tady, staví demo-ware. Chybové větve z dnešního labu se vracejí
+> v hostingu (D5, timeout patterny) a v evaluaci (D5, měření selhání).
 
 ## Klíčové rozlišení
 - **Aktivita** (jedna událost) vs. **turn** (její zpracování) vs. **konverzace** (série turnů).

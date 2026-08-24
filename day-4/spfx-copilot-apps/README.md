@@ -22,27 +22,80 @@ hostované automaticky v tenantu. Pro SPFx vývojáře je to nejkratší cesta d
 
 ### Co to je a proč teď
 
-<!-- TODO: demo naskriptovat: hotova Copilot App (graf/formular) v Copilot canvasu.
-     Pointa: agent muze vratit interaktivni UX misto textu; MCP Apps model, ale hosting
-     a routing resi platforma (tenant-hosted -- data zustavaji v tenantu). -->
+- **Copilot App = SPFx komponenta renderovaná přímo v Copilot canvasu.** Odpověď agenta
+  přestává být odstavec textu a stává se z ní graf, formulář nebo schvalovací karta,
+  se kterou uživatel pracuje bez opuštění konverzace.
+- **Model je MCP Apps** — rozšíření MCP o interaktivní UX komponenty. Agent neposílá HTML;
+  vrátí odkaz na komponentu a data, canvas ji vyrenderuje.
+- **Hosting a routing řeší platforma.** Žádný App Service, žádná registrace bota, žádné
+  CORS. Komponenta se nasazuje jako každý SPFx balíček do App Catalogu a **žije v M365
+  tenantu** — data z ní tenant neopouštějí.
+- **Proč zrovna teď**: celý dosavadní kurz tvaroval text — prompt, grounding, citace,
+  redakce. Tohle je první místo, kde má výstup agenta **tvar**, a zároveň první místo,
+  kde SPFx dovednosti publika platí beze zbytku.
+
+> [!NOTE] Instruktorské demo
+> Hotová Copilot App (graf nad daty nebo formulář) živě v Copilot canvasu — jeden pohled,
+> žádný kód. Pointa demonstrace: tohle vrátil agent místo textu, a přitom komponenta běží
+> v tenantu.
 
 ```mermaid
-%% TODO: diagram -- agent (text) vs agent + Copilot App (interaktivni UX v canvasu)
 flowchart LR
-  A[placeholder] --> B[placeholder]
+  U[dotaz uzivatele] --> AG[agent<br/>logika a orchestrace]
+  AG -->|dosud| TXT[textova odpoved<br/>+ citace]
+  AG -->|s Copilot App| APP[SPFx komponenta<br/>MCP Apps]
+  APP --> UX[graf / formular /<br/>schvalovaci karta<br/>v Copilot canvasu]
+  APP -. hosting a routing .-> T[M365 tenant<br/>data zustavaji uvnitr]
 ```
 
 ### Developer loop — SPFx, jak ho znáte
 
-<!-- TODO: scaffold pres @microsoft/generator-sharepoint@next, sablony Minimal /
-     No framework / React; Copilot Workbench jako lokalni test prostredi;
-     stejny packaging a projektova struktura jako web party. -->
+- **Scaffold** preview generatorem — instaluje se v onboardingu dne 1, ne až tady:
+
+  ```powershell
+  npm ls -g @microsoft/generator-sharepoint   # overit, ze je nainstalovana @next verze
+  yo @microsoft/sharepoint
+  ```
+
+- **Tři šablony**, výběr je pedagogické rozhodnutí:
+  - **Minimal** — holý model bez šumu; nejlépe je na ní vidět, jak se komponenta aktivuje.
+  - **No framework** — přímo DOM API, žádná runtime závislost.
+  - **React** — pro toho, kdo chce rovnou vizuál a React ze SPFx už zná.
+- **Copilot Workbench** = lokální testovací prostředí, obdoba SharePoint Workbenche.
+  Dev server se spouští stejným `gulp serve` loopem jako u web partů; inner loop je
+  změna → uložení → reload. Konkrétní URL Workbenche ověřit proti release notes (preview).
+- **Packaging beze změny**: `gulp bundle --ship` → `gulp package-solution --ship` → `.sppkg`
+  do App Catalogu.
+
+| Vrstva | Web part | Copilot App |
+|---|---|---|
+| Scaffold | SPFx generator | **tentýž** generator, jiná šablona |
+| Jazyk a tooling | TypeScript, gulp, npm | **totéž** |
+| Projektová struktura | `config/`, `src/`, `gulpfile.js` | **totéž** |
+| Lokální test | SharePoint Workbench | **Copilot Workbench** |
+| Packaging a nasazení | `.sppkg` → App Catalog | **totéž** |
+| Kde se renderuje | stránka webu | **Copilot canvas** |
+| Kdo komponentu vyvolá | autor stránky | **agent / orchestrátor** |
+
+- Poslední dva řádky tabulky jsou celý rozdíl. Zbytek je SPFx, jak ho publikum zná —
+  a proto je tenhle blok nejkratší cesta SPFx vývojáře do světa agentů.
 
 ### Kde to sedí na ose kurzu
 
-<!-- TODO: Copilot Apps NEJSOU dalsi druh agenta -- jsou UX vrstva nad konverzaci.
-     Vazba na MCP nit (D2 konektory, akce) a na middleware (D3 -- co agent smi
-     vratit, plati i pro UX vystup). -->
+- **Copilot Apps nejsou další druh agenta.** Na rozhodovací ose z
+  [`../../day-1/agent-landscape/`](../../day-1/agent-landscape/) pro ně není příčka —
+  nesoutěží s deklarativním agentem ani s custom enginem. Jsou vrstva **nad** konverzací:
+  agent zůstává tam, kde byl, jen dostane obrazovku.
+- **MCP nit kurzu tady vrcholí**: federated konektory přes MCP
+  ([`../../day-2/knowledge-grounding/`](../../day-2/knowledge-grounding/)) → MCP nástroj
+  vs. vlastní action handler ([`../../day-2/actions-graph/`](../../day-2/actions-graph/))
+  → **MCP Apps** = tentýž protokol rozšířený o UX komponenty.
+- **Middleware z [`../../day-3/middleware-policy/`](../../day-3/middleware-policy/) platí
+  i pro UX výstup.** Co agent nesmí říct textem, nesmí ani vykreslit do karty. Filtry se
+  aplikují na **data, která do komponenty vstupují** — ne na to, co z ní vypadne.
+- **App nepřidává vlastní autorizaci.** Data v kartě vidí ten, komu je agent poslal;
+  hranicí zůstává scope agenta a oprávnění uživatele. Komponenta je poslední místo,
+  kde je vhodné řešit, kdo co smí vidět.
 
 ## Klíčové rozlišení
 

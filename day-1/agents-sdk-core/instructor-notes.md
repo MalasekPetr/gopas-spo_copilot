@@ -2,9 +2,9 @@
 
 ## Timing
 
-- ~60 min výklad + 75 min lab. **Opener dne 2** (prohozeno s `declarative-agents`,
-  rozhodnutí prvního běhu 2026-08-24). Lab je delší než výklad záměrně — je to první kód
-  týdne a studenti potřebují prostor; ráno na něj mají nejvíc energie.
+- ~50 min výklad + 65 min lab. **Blok 2 dne 2**, hned po `declarative-agents` — je to
+  odpověď na jeho strop, tak tím otevřít. Lab je delší než výklad záměrně: je to první kód
+  týdne a studenti potřebují prostor.
 - Část D labu (chybové větve) **nezkracovat**. Je to nosný rozdíl mezi tímto kurzem
   a tutoriálem z internetu.
 

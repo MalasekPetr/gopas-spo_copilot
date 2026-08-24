@@ -1,6 +1,6 @@
 # Action handlers & integrace s Microsoft Graph
 
-> Typ: povinný · Den: 2 · Odhad: **135 min** (60 výklad + 75 lab) · Publikum: **vývojáři / architekti**
+> Typ: povinný · Den: 3 · Odhad: **105 min** (45 výklad + 60 lab) · Publikum: **vývojáři / architekti**
 > Prostředí: viz [`../../environment.md`](../../environment.md) · Názvosloví: [`../../GLOSSARY.md`](../../GLOSSARY.md)
 
 Agent přestává jen mluvit a začíná něco dělat. Tím se otevírá celá governance otázka.
@@ -16,37 +16,128 @@ Agent přestává jen mluvit a začíná něco dělat. Tím se otevírá celá g
 
 ### Směrování akcí
 
-<!-- TODO: registrace action handleru, routing, Adaptive Card akce jako aktivita.
-     Kde konci SDK a zacina tvoje logika. -->
+- V `AgentApplication` registruješ **handlery na aktivity**. Akce agenta není zvláštní
+  konstrukce — je to další handler s routingem podle typu aktivity a jejího obsahu.
+- **Tři cesty, kterými se akce spustí**:
+  1. **model ji navrhne** v tool-call loopu (mechanika v [`../../day-3/prompt-orchestration/`](../../day-3/prompt-orchestration/)),
+  2. **uživatel klikne v Adaptive Card** — přijde to jako **aktivita**, ne jako text od
+     uživatele (podle typu akce karty jako zpráva s `value`, nebo jako `invoke`; ověřit proti
+     aktuální verzi SDK),
+  3. **tvoje deterministická větev** v kódu — nejjistější cesta, když se nesmí spolehnout
+     na model.
+- **Kde končí SDK**: doručí aktivitu, dá ti stav (`TurnState`) a odešle odpověď.
+  **Autorizaci, validaci, volání API, retry ani audit nedělá.** To všechno je tvůj kód —
+  a přesně za tohle si zákazník platí custom engine agenta.
+- Handler drž tenký a v tomhle pořadí: **parse → autorizace → validace → volání služby →
+  mapování výsledku do odpovědi**. HTTP klient a business logika patří mimo handler
+  (testovatelnost, později evaluace v D5).
+- **Každý handler končí odpovědí do turnu — i chybovou.** Neuzavřený turn znamená uživatele,
+  který kouká na „agent přemýšlí" a pak nic.
 
 ```mermaid
-%% TODO: diagram -- tool-call: model navrhne akci -> validace parametru -> provedeni -> vysledek do turnu
 sequenceDiagram
-  participant P as placeholder
-  P->>P: placeholder
+  participant U as Uzivatel
+  participant A as AgentApplication
+  participant M as Model
+  participant T as Nastroj (Graph / mock ticket API)
+  U->>A: dotaz
+  A->>M: system + historie + popisy nastroju
+  M-->>A: navrh volani CreateTicket(args)
+  Note over A: autorizace volajiciho<br/>validace args: whitelist, typy, delky
+  alt args nevalidni
+    A-->>M: tool zprava: chyba validace
+    M-->>A: oprava nebo doptani uzivatele
+  else args validni
+    A->>T: volani pod delegated identitou
+    T-->>A: vysledek nebo chyba (429 / 403 / 404)
+    A-->>M: tool zprava: vysledek
+    M-->>A: finalni odpoved
+  end
+  A-->>U: odpoved + auditni zaznam akce
 ```
 
 ### Validace parametrů — proč je to bezpečnostní téma
 
-<!-- TODO: model navrhuje parametry; nikdy jim neverit. Whitelist, typy, rozsahy,
-     autorizace na urovni akce (ne jen na urovni agenta). Priklad: CreateTicket
-     s prioritou a zadatelem — kdo smi zaloziti tiket za koho. -->
+- **Model parametry navrhuje — tím se nevalidují.** Návrh vzniká z textu, a ten text může být
+  cizí: obsah runbooku, jméno souboru, e-mail. Prompt injection míří přesně sem
+  ([`../../day-5/security-risk/`](../../day-5/security-risk/)). Nejde o to, že „model lže" —
+  model je jen kanál.
+- **Whitelist, ne blacklist**: `priority` je enum `P1 | P2 | P3`, ne „cokoliv, co vypadá jako
+  priorita".
+- **Typy, rozsahy, povinnost**: minimální a maximální délka popisu, prázdný řetězec není
+  hodnota, chybějící povinné pole je zamítnutí — ne dosazení defaultu.
+- **Autorizace patří na úroveň akce, ne agenta.** To, že agent smí volat ticket API,
+  neznamená, že **tenhle uživatel** smí založit tiket za někoho jiného. Dvě různé otázky,
+  dvě různá místa v kódu.
+- Příklad `CreateTicket(priority, description, requester)` z našeho scénáře:
+
+| Parametr | Odkud | Validace |
+|---|---|---|
+| `priority` | návrh modelu | whitelist `P1` / `P2` / `P3`, jinak chyba zpět modelu |
+| `description` | návrh modelu | neprázdný, omezená délka, bez markupu dál do API |
+| `requester` | **identita volajícího** (`TurnContext`) | model ho **nenavrhuje vůbec** |
+
+- **Pravidlo: co si model nesmí vybrat, nedávej mu do schématu nástroje.** `requester` v popisu
+  nástroje být nemá — pak není co ošetřovat.
+- Chyba validace **není výjimka do logu**. Vrací se **jako tool zpráva zpět modelu**, aby se
+  agent uměl doptat uživatele („jakou prioritu má tiket mít?").
 
 ### Hranice oprávnění
 
-<!-- TODO: delegated (jmenem uzivatele, dedi jeho permissions) vs app-only (jmenem aplikace,
-     vidi vse). Nosna pointa: app-only je pohodlne a je to nejcastejsi zdroj exfiltrace
-     u agentu. Least privilege, per-akce scope. -->
+| | **Delegated** | **App-only** |
+|---|---|---|
+| Jménem koho | přihlášeného uživatele | aplikace |
+| Co vidí | přesně to, co uživatel | co má aplikace nagrantováno — typicky celý tenant |
+| ACL trimming | zdarma, ze zdroje | **žádný** — musíš ho napsat sám |
+| Audit ukazuje | uživatele i agenta | jen aplikaci |
+| Kdy je nutné | běžný chat s uživatelem | žádný uživatel v kontextu (job, webhook, proaktivní zpráva) |
+
+- **Nosná pointa: app-only je pohodlné — a je to nejčastější zdroj exfiltrace u agentů.**
+  Žádný consent flow, „prostě to funguje". A agent pak ochotně přečte a **shrne** to, co
+  uživatel nikdy vidět neměl. Shrnutí je horší než únik souboru: nese se dál jako text bez
+  klasifikace.
+- **Least privilege po akcích, ne jeden všemocný set.** Čtení runbooků není důvod mít přístup
+  k mailboxům. Scope se přidává k akci, ne k agentovi.
+- Když app-only opravdu potřebuješ, **musí autorizaci nahradit tvůj kód**: explicitně,
+  na úrovni akce, s auditní stopou kdo a proč. To je architektonické rozhodnutí s podpisem,
+  ne položka v konfiguraci.
+- Věta pro zákazníka: **„Agent nesmí vidět víc než člověk, který se ptá."** Když to v návrhu
+  neplatí, musí být zapsané proč.
 
 ### Entra Agent ID
 
-<!-- TODO: agent jako identita, ne jen jako app registrace. Co to meni pro audit a lifecycle.
-     Detail governance -> day-4/agent-365-governance. -->
+- Agent přestává být „app registrace, kterou kdysi udělal někdo z týmu" a stává se
+  **identitou v Entra**: má vlastníka, lifecycle, přiřazená oprávnění a je vidět v seznamu
+  jako objekt sám o sobě.
+- **Co to mění pro audit**: v logu je vidět, **který agent** akci provedl — ne jen „nějaká
+  aplikace". V delegated toku jsou v každém volání **dvě identity** (uživatel a agent) a audit
+  má ukázat obě.
+- **Co to mění pro lifecycle**: access reviews, attestace vlastníka a lifecycle politiky jdou
+  aplikovat i na agenty. Odchod vlastníka je detekovatelný, osiřelý agent dohledatelný.
+- Praktický důsledek pro tenhle modul: identita agenta je oddělená od identity uživatele —
+  autorizaci akce nesmíš stavět na tom, že „agent má oprávnění".
+- Detail governance a instrumentace: [`../../day-4/agent-365-governance/`](../../day-4/agent-365-governance/).
+  Tady stačí vědět, že to existuje — a že dodatečné dohánění identity u nasazeného agenta je
+  drahé.
 
 ### MCP jako nástroj
 
-<!-- TODO: MCP tool vs vlastni action handler: kdo drzi kontrakt, kdo drzi auth,
-     co se da a neda auditovat. Kdy pouzit co. -->
+| | **MCP tool** | **Vlastní action handler** |
+|---|---|---|
+| Kontrakt (schéma nástroje) | drží **server**, může se změnit bez tebe | držíš ty, verzuješ v gitu |
+| Autentizace | konfigurace MCP serveru | tvoje, per akce a per uživatel |
+| Validace parametrů | to, co dělá server | tvoje, před voláním |
+| Audit | co server nabídne | tvoje telemetrie, plná stopa |
+| Náklad na zavedení | nízký — nástroj „je" | vyšší — píšeš to |
+
+- **Kdy MCP**: cizí systém s hotovým MCP serverem, čtecí nebo málo rizikové operace, žádný
+  tvrdý požadavek na auditní stopu per uživatel.
+- **Kdy vlastní handler**: akce s validací, autorizací per uživatel a auditem — přesně náš
+  `CreateTicket`. Proto se v labu píše ručně, i když by mock API šlo obalit MCP serverem.
+- **Popisy MCP nástrojů vstupují do kontextu modelu.** Nedůvěryhodný server tak dodává
+  instrukce do promptu — a to je útočný vektor, ne jen integrační detail.
+- Pravidlo: **MCP nezbavuje odpovědnosti.** Za to, co agent udělal, ručíš ty, i když nástroj
+  napsal někdo jiný.
 
 ## Klíčové rozlišení
 - **Delegated** (dědí permissions uživatele) vs. **app-only** (vidí všechno) — a proč je

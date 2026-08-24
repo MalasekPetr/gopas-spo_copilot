@@ -18,38 +18,68 @@ zadání z praxe studenta — a obhájit ho před skupinou.
 
 ### Část A — architektura (20 min)
 
-1. <!-- TODO: nakreslit vrstvy: kanaly, AgentApplication, middleware, orchestrace,
-     knowledge, akce, hosting, identita, telemetrie -->
-2. <!-- TODO: vyznacit hranice opravneni a kde tečou data -->
+1. Nakresli architekturu **na jednu stránku**, po vrstvách: kanály (Teams / M365 Copilot) →
+   `AgentApplication` → middleware pipeline → orchestrace (triage + resolver) → knowledge
+   (`Runbooky`) a akce (`CreateTicket`, Graph) → model endpoint; vedle toho hosting,
+   identita (Entra Agent ID) a telemetrie (Agent 365). Referenční diagram z README použij
+   jako kostru, ale **nakresli svou variantu** — místa, kde se liší, jsou tvoje rozhodnutí.
+2. Vyznač do diagramu **hranice oprávnění a tok dat**: kde končí delegated identita
+   uživatele, kudy odcházejí data mimo tenant (volání modelu!), co se loguje a kam, a kde
+   stojí obranné vrstvy. Označ **každý přechod hranice** — u zákazníka je to první otázka
+   security týmu a rozhoduje o tom, jestli projekt vůbec začne.
 
 ### Část B — rozhodnutí (25 min)
 
-3. <!-- TODO: vyplnit checklist rozhodnuti, kazde JEDNOU vetou odůvodneni:
-     cesta tvorby / vlastni retrieval / multi-agent / hosting / instrumentace /
-     obranne vrstvy / nakladovy strop / prahy pro promotion -->
-4. <!-- TODO: u KAZDEHO rozhodnuti napsat, co by ho zmenilo (jaka zmena zadani nebo prostredi) -->
+3. Vyplň **checklist osmi rozhodnutí** z README: cesta tvorby, vlastní retrieval,
+   multi-agent, hosting, instrumentace do Agent 365, obranné vrstvy, nákladový strop, prahy
+   pro promotion. Ke každému **jedna věta odůvodnění** — ne odstavec. Kde jsi rozhodnutí
+   v labech reálně nedělal, rozhodni teď a přiznej, že je to volba na zelené louce.
+4. Ke **každému** rozhodnutí připiš, **co by ho změnilo**: jaká změna zadání, objemu,
+   rozpočtu, regulace nebo dostupnosti produktu. Například: „hosting bych přehodnotil
+   na Foundry Agent Service, kdyby agentů bylo pět a nikdo je nechtěl provozovat."
+   Tohle je otázka, kterou dostaneš při prezentaci.
 
 ### Část C — KPI a evaluační matice (20 min)
 
-5. <!-- TODO: technicke metriky s prahy (z golden setu D4) -->
-6. <!-- TODO: business KPI: vyresene bez cloveka, cas do odpovedi, naklad na dotaz -->
-7. <!-- TODO: jak se KPI meri v provozu (telemetrie z D4) — ne "budeme to sledovat" -->
+5. Vyplň **technické metriky s prahy** z golden setu (`evaluation-quality`): pass rate,
+   groundedness, správnost volby nástroje, latence p95, tokeny na dotaz. Používej
+   **naměřené hodnoty**, ne odhady — máš je z předchozího bloku. Ke každému prahu napiš,
+   co se stane, když ho verze nesplní.
+6. Doplň **business KPI**: podíl dotazů vyřešených bez člověka, čas do odpovědi proti
+   dnešnímu stavu supportu, náklad na vyřešený dotaz, objem eskalací. Ke každému uveď
+   cílovou hodnotu **a výchozí stav** — KPI bez baseline se nedá vyhodnotit.
+7. Ke každému KPI napiš, **jak a odkud se měří**: které pole telemetrie z D4, který
+   evaluační běh, která statistika helpdesku, jak často a kdo se na to dívá. Věta „budeme
+   to sledovat" se v capstonu nepočítá.
 
 ### Část D — rizika a rollback (15 min)
 
-8. <!-- TODO: tri hlavni rizika s mitigaci; model hrozby z D5 -->
-9. <!-- TODO: rollback plan a co je nevratne -->
+8. Vyber **tři hlavní rizika** a ke každému napiš dopad, mitigaci a **jak poznáš, že
+   nastalo**. Vycházej z modelu hrozby z D3 (`middleware-policy`): XPIA přes obsah
+   runbooku, exfiltrace přes příliš široký scope nebo app-only oprávnění, odpověď bez
+   podkladu s citací, duplicitní akce po retry, náklady mimo strop.
+9. Napiš **rollback plán**: co se vrací (verze manifestu, build endpointu, systémový prompt,
+   konfigurace prahů), v jakém pořadí a jak dlouho to trvá. Zvlášť vypiš, co je
+   **nevratné** — založené tikety, odeslané zprávy uživatelům, zápisy do cizích systémů,
+   obsah, který se dostal ven. U nevratných věcí platí prevence, ne rollback.
 
 ### Část E — prezentace (dle času)
 
-10. <!-- TODO: 5 min na osobu pred skupinou; jedna otazka od publika,
-      jedna od instruktora (typicky "co by tohle rozhodnuti zmenilo") -->
+10. Odprezentuj blueprint před skupinou — **5 minut na osobu**, v pořadí: architektura,
+    tři nejdůležitější rozhodnutí, KPI s prahy, největší riziko a rollback. Pak **jedna
+    otázka od publika a jedna od instruktora** (typicky „co by tohle rozhodnutí změnilo?").
+    Při zkráceném režimu totéž ve dvojicích (pair-share) — formát otázek zůstává.
 
 ### Část F — další kroky (10 min)
 
-11. <!-- TODO: certifikacni cesta: AI-103 a AI-200 (NE retirovane AI-102/AZ-204);
-      ukazat Certification Poster PDF a nejnovejsi AI kurzy v kurikulu -->
-12. <!-- TODO: kazdy student si zapise jednu vec, kterou udela do 14 dnu -->
+11. Zapiš si certifikační cestu: **AI-103** (Azure AI Apps and Agents Developer Associate)
+    a **AI-200** (Azure AI Cloud Developer Associate) — **ne** retirované AI-102 a AZ-204.
+    Projděte s instruktorem aktuální **Certification Poster (PDF)**, navazující větve
+    (AI-500, GH-600, AB-900) a ověřte jejich stav k dnešnímu datu; odkaz na poster si
+    odnes s sebou.
+12. Napiš si **jednu konkrétní věc, kterou uděláš do 14 dnů**, s datem: „pustím golden set
+    nad naším agentem", „sepíšu hranice oprávnění našeho bota", „přihlásím se na AI-103".
+    Jednu věc, ne seznam — seznam se nedělá.
 
 ## Ověření
 

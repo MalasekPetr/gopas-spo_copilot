@@ -2,8 +2,8 @@
 
 ## Timing
 
-- ~45 min (30 výklad + 15 mini-audit). Závěrečný blok dne 2 — záměrně lehčí formát
-  (demo + checklist), studenti jsou po actions-graph unavení.
+- **30 min (20 výklad + 10 checklist)** — zkrácená varianta je po rekalibraci výchozí,
+  ne nouzová. Závěrečný blok dne 2, záměrně lehký formát (demo + checklist).
 - Při skluzu dne se dá stáhnout na 30 min: výklad zkrátit, checklist zadat jako
   večerní úlohu. Nevypouštět celý — security-risk (D5) na hygienu odkazuje.
 

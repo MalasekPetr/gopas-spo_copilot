@@ -18,38 +18,66 @@ změřitelně vyrostl — a který zachytí, kdyby ho příští změna zhoršil
 
 ### Část A — golden set
 
-1. <!-- TODO: rozsirit ctyri testovaci dotazy scenare na golden set ~12 pripadu:
-     znalostni s podkladem, znalostni BEZ podkladu (musi priznat neznalost),
-     akcni (eskalace), negativni (musi odmitnout), edge case (nejednoznacne zadani) -->
-2. <!-- TODO: ke kazdemu pripadu zapsat OCEKAVANE chovani, ne ocekavany text -->
+1. Rozšiř čtyři testovací dotazy ze scénáře na golden set **minimálně 12 případů** tak, aby
+   byla zastoupená každá z pěti tříd: znalostní **s podkladem** v `Runbookách` (dotazy 1–2
+   a další), znalostní **bez podkladu** (odpověď v runboocích není — agent musí přiznat
+   neznalost), **akční** (eskalace přes `CreateTicket` — dotaz 3), **negativní** (musí
+   odmítnout — dotaz 4 a jeho varianty), **edge case** (nejednoznačné nebo neúplné zadání:
+   chybí chybová hláška, dvě možné příčiny). Ulož je jako datový soubor vedle runneru, ne
+   do kódu testu.
+2. Ke každému případu zapiš **očekávané chování, ne očekávaný text**: která třída odpovědi
+   (odpověď / neznalost / eskalace / odmítnutí), který zdroj má citovat, jestli se smí
+   volat nástroj a s jakými parametry, a co v odpovědi **nesmí** být. Píšeš rubriku pro
+   stroj — v části C ji dostane judge.
 
 ### Část B — deterministické regresní testy (bez modelu)
 
-3. <!-- TODO: rozsirit unit testy z D3 middleware nad pipeline: kazda politika ma test -->
-4. <!-- TODO: testy validace parametru z D2 actions (whitelist, zadatel z identity) -->
-5. <!-- TODO: spustit — musi projit 100 %, zadna tolerance (je to deterministicke) -->
+3. Rozšiř unit testy z D3 nad middleware pipeline tak, aby **každá politika měla vlastní
+   test**: redakce PII, klasifikace mimo-scope, detekce instrukčních vzorů v obsahu,
+   vynucení citace, výstupní redakce. Vstup dovnitř, očekávaný verdikt ven — bez volání
+   modelu.
+4. Přidej testy **validace parametrů akcí** z D2 (`actions-graph`): whitelist hodnot
+   (priorita), žadatel odvozený **z identity**, ne z textu dotazu, odmítnutí neúplných
+   a přetečených vstupů, whitelist cílů odchozího volání.
+5. Spusť celou sadu. **Musí projít 100 %, bez tolerance** — je deterministická. Změř a zapiš
+   dobu běhu; kontrast proti části C (minuty a tokeny) je součást pointy.
 
 ### Část C — evaluace odpovědí (s modelem)
 
-6. <!-- TODO: pustit golden set proti agentovi pres rucne psany TS runner (smycka pres
-     pripady + LLM-as-judge s rubrikou z ocekavaneho chovani) a zaznamenat: pass rate,
-     groundedness, spravnost volby nastroje, latenci, tokeny. First-party alternativu
-     (Microsoft.Extensions.AI.Evaluation, .NET-only) jen zminit -->
-7. <!-- TODO: opakovat 3x a podivat se na rozptyl — nedeterminismus je merítelny -->
-8. <!-- TODO: nastavit prahy pro rozhodnuti o vydani (co je "dost dobre") -->
+6. Pusť golden set proti agentovi přes **ručně psaný TS runner**: smyčka přes případy →
+   volání agenta → sběr odpovědi, trace a metrik → **LLM-as-judge** s rubrikou z kroku 2 →
+   agregace. Zaznamenej pass rate, groundedness, správnost volby nástroje, latenci
+   (p50/p95) a tokeny na případ. First-party alternativu **Microsoft.Extensions.AI.Evaluation**
+   si jen prohlédni — je .NET-only a do tohoto TS stacku nepatří.
+7. Pusť **tentýž běh 3×** beze změny agenta a porovnej výsledky: kolik případů dopadlo
+   pokaždé stejně a kolik plavalo. Zapiš rozptyl pass rate a jmenovitě nestabilní případy —
+   z těch se nedá nic vyvodit, dokud je neupřesníš (nebo dokud nepřijmeš, že jsou sporné
+   a patří člověku).
+8. Nastav **prahy pro rozhodnutí o vydání**: minimální celkový pass rate, **tvrdý požadavek
+   na negativní případy** (odmítnutí musí projít vždy, tolerance 0), strop latence p95,
+   strop tokenů na dotaz. Ke každému prahu napiš, co uděláš, když ho běh nesplní — jinak
+   je to jen číslo v tabulce.
 
 ### Část D — regrese a human-in-the-loop
 
-9. <!-- TODO: udelat zamerne zhorsujici zmenu (zjednodusit systemovy prompt)
-     a overit, ze golden set to ZACHYTI -->
-10. <!-- TODO: u multi-agenta urcit, KTERA vrstva chybila (triage vs resolver) — bez toho
-      se chyba neopravi -->
-11. <!-- TODO: navrhnout, kde v Support Asistentovi musi zustat clovek (a proc) -->
+9. Udělej **záměrně zhoršující změnu**: zkrať systémový prompt o pravidla „odpovídej jen
+    z runbooků" a „když nevíš, přiznej to". Pusť golden set znovu a ověř, že to **zachytí** —
+    a zjisti, které třídy případů spadly. Změnu pak vrať.
+10. U spadlých případů urči z trace, **která vrstva chybila**: triage (špatné směrování),
+    resolver (špatná odpověď nad správným zdrojem), nebo middleware (pustil, co pustit
+    neměl). Zapiš to ke každému spadlému případu — „agent odpověděl špatně" není diagnóza.
+11. Navrhni, **kde v Support Asistentovi zůstane člověk**: u kterých akcí, v jaké fázi
+    nasazení a při jakém skóre z evaluace. Doplň, čím se ten podíl bude snižovat — jaké
+    naměřené číslo tě přesvědčí, že u dané třídy případů už člověk být nemusí.
 
 ### Část E — spojení celého týdne
 
-12. <!-- TODO: sestavit jednu tabulku: baseline D3 -> po multi-agentu D3 -> po middleware D3
-      -> dnes. Co se zlepsilo, co se zhorsilo (latence, tokeny). Vstup do capstonu. -->
+12. Sestav **jednu tabulku celého týdne**. Řádky: baseline (D3 `prompt-orchestration`),
+    po rozdělení na triage + resolver (D3 `agent-framework`), po middleware
+    (D3 `middleware-policy`), dnes. Sloupce: pass rate, odmítnutí dotazu 4, groundedness,
+    latence p95, tokeny na dotaz. **Vypiš i to, co se zhoršilo** — multi-agent a middleware
+    stály latenci a tokeny; to je zaplacená cena, ne selhání. Tabulka jde beze změny
+    do capstonu.
 
 ## Ověření
 

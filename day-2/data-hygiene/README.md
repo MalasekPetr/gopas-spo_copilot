@@ -1,6 +1,6 @@
 # Datová hygiena v SharePoint Online a Exchange Online
 
-> Typ: povinný · Den: 2 · Odhad: **45 min** (30 výklad + 15 mini-audit) · Publikum: **vývojáři / architekti**
+> Typ: povinný · Den: 2 · Odhad: **30 min** (20 výklad + 10 checklist) · Publikum: **vývojáři / architekti**
 > Prostředí: viz [`../../environment.md`](../../environment.md) · Názvosloví: [`../../GLOSSARY.md`](../../GLOSSARY.md)
 
 Agent neprolamuje oprávnění — on je **zviditelňuje**. Grounding nad semantic indexem je
@@ -20,35 +20,57 @@ v SharePointu a Exchange v pořádku, **než** se do nich pustí agent.
 
 ### Proč to zviditelní právě agent
 
-<!-- TODO: semantic index respektuje ACL -- problem NEJSOU prolomena opravneni, ale
-     spatne nastavena: "Everyone except external users", dedictvi z migraci, mrtve weby.
-     Dotaz 4 ze scenare jako ilustrace: agent odpovi jen z toho, co uzivatel SMI videt --
-     a prave proto spatne ACL znamena spatnou odpoved "po pravu". -->
+- **Semantic index respektuje ACL.** Problém nejsou prolomená oprávnění — problém jsou
+  **špatně nastavená** oprávnění, která tam roky ležela bez povšimnutí.
+- Typické zdroje: sdílení na **„Everyone except external users"**, dědičnost přenesená
+  z migrací, mrtvé weby po projektech, knihovny nasdílené „dočasně" před třemi lety.
+- Dřív to nikdo nenašel, protože nikdo nehledal. Agent hledá pokaždé — a odpoví
+  **z všeho, co uživatel smí vidět**.
+- Ilustrace na dotazu 4 ze scénáře: agent odmítne odpovědět na plat kolegy, jen když
+  ta data uživatel opravdu nesmí vidět. **Špatné ACL znamená správnou odpověď agenta
+  a špatný výsledek pro firmu** — a nikdo nemůže tvrdit, že agent selhal.
 
 ```mermaid
-%% TODO: diagram -- tenant: uklizene vs neuklizene ACL -> co semantic index vynese do odpovedi
 flowchart LR
-  A[placeholder] --> B[placeholder]
+  subgraph OK[uklizeny tenant]
+    A1[ACL odpovidaji zameru] --> S1[semantic index] --> O1[agent odpovi<br/>jen z opravneneho obsahu]
+  end
+  subgraph BAD[neuklizeny tenant]
+    A2[Everyone except external<br/>dedictvi z migraci<br/>mrtve weby] --> S2[semantic index] --> O2[agent odpovi PO PRAVU<br/>z obsahu, ktery tam nemel byt]
+  end
 ```
 
 ### Nástroje hygieny — SharePoint Online
 
-<!-- TODO: SharePoint Advanced Management (reporty oversharingu, site access review,
-     inactive site policy), Restricted SharePoint Search / Restricted Content Discovery
-     (vyjmuti webu z indexu pro Copilot/agenty), sensitivity labels na webech a souborech.
-     Enumerovat proti aktualni dokumentaci, licencni podminky SAM overit. -->
+- **SharePoint Advanced Management (SAM)** — provozní hygiena webů: reporty oversharingu,
+  site access review, politika neaktivních webů. Licenční podmínky (samostatně vs. součást
+  Copilot licence) **ověřit k datu běhu**, mění se.
+- **Restricted SharePoint Search / Restricted Content Discovery (RCD)** — vyjme web nebo
+  knihovnu z indexu pro Copilot a agenty. Obsah zůstane, agent ho přestane vidět.
+- **Sensitivity labels** (Purview) — klasifikace na webech i souborech; agent labely
+  respektuje a je to vrstva nad ACL, ne místo nich.
+- Pořadí použití je důležité: SAM najde problém → RCD ho **zhasne** → oprava ACL ho
+  **vyřeší**. Kdo se zastaví u RCD, má hasicí přístroj místo architektury.
 
 ### Nástroje hygieny — Exchange Online
 
-<!-- TODO: sdilene schranky a jejich clenstvi, retention politiky, co z mailboxu vidi
-     semantic index a agent s Graph opravnenimi (navaznost na actions-graph delegated
-     vs app-only). -->
+- **Sdílené schránky a jejich členství** — nejčastější zdroj překvapení. Kdo je členem,
+  vidí obsah; agent s delegovanou identitou uživatele ho vidí taky.
+- **Retention politiky** — co v tenantu ještě existuje, i když to uživatel „smazal".
+- Co z mailboxu vidí agent, závisí na tom, **s čí identitou** běží. Delegovaná identita
+  drží hranici uživatele; app-only ji nemá — návaznost na
+  [`../actions-graph/`](../actions-graph/), kde je to protipříklad.
 
 ### Checklist před nasazením agenta
 
-<!-- TODO: prakticky checklist: audit oversharingu -> RCD na citlive knihovny ->
-     sensitivity labels -> lifecycle mrtvych webu -> teprve pak grounding.
-     Deliverable, ktery si student odnasi k zakaznikovi. -->
+Deliverable, který si student odnáší k zákazníkovi. Pořadí není libovolné:
+
+1. **Audit oversharingu** (SAM reporty) — zjisti rozsah, než cokoli měníš.
+2. **RCD na citlivé knihovny** — okamžité zhasnutí rizika, dokud běží oprava.
+3. **Oprava ACL** — řešení příčiny; bez tohoto kroku zůstává RCD trvalou berličkou.
+4. **Sensitivity labels** na tom, co má klasifikaci mít.
+5. **Lifecycle mrtvých webů** — co nikdo nespravuje, nemá být v indexu.
+6. **Teprve pak grounding.**
 
 ## Klíčové rozlišení
 

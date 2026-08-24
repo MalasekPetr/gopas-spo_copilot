@@ -2,8 +2,9 @@
 
 ## Timing
 
-- ~50 min výklad + 60 min lab. **Opener dne 3** — protějšek deklarativních instructions
-  z D1; kratší blok než zbytek dne, rozjede den bez tlaku.
+- ~40 min výklad + 45 min lab. **Závěr dne 3** — protějšek deklarativních instructions
+  z D2. Zkráceno při rekalibraci; je to **první kompresní ventil týdne**, další škrt jde
+  do části C labu.
 - Část A (baseline) se studentům zdá jako zdržení. Netolerovat její vynechání: bez baseline
   je zbytek labu dojmologie a nefunguje ani návaznost na `evaluation-quality`.
 

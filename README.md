@@ -54,9 +54,10 @@ gopas-spo_copilot/
 
 ## Stav
 
-Fáze 1 — **skeleton**. Root soubory a agenda hotové, 16 modulů založených jako strukturované
-kostry (sekce + Mermaid placeholdery). Fáze 2 (rozpracování do plné hloubky) běží den po dni,
-v pořadí 1→5, s autorskou revizí mezi dny.
+Fáze 2 — **obsah dopsán** (2026-08-24). Všechny moduly, laby i diagramy jsou rozpracované
+do plné hloubky; v repu nezůstaly žádné TODO placeholdery kromě šablon v
+[`_templates/`](_templates/). Rozvržení dnů je po prvním běhu rekalibrované — viz
+[`agenda.md`](agenda.md) a [`self-study.md`](self-study.md).
 
 Model endpoint pro custom engine agenty: **instruktorský Foundry deployment** (rozhodnuto
 2026-08-24, viz [`environment.md`](environment.md)) — Business Basic + Copilot Credits

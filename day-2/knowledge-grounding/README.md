@@ -1,6 +1,6 @@
 # Grounding: Copilot connectors, semantic index, MCP
 
-> Typ: povinný · Den: 2 · Odhad: **120 min** (55 výklad + 65 lab) · Publikum: **vývojáři / architekti**
+> Typ: povinný · Den: 3 · Odhad: **100 min** (45 výklad + 55 lab) · Publikum: **vývojáři / architekti**
 > Prostředí: viz [`../../environment.md`](../../environment.md) · Názvosloví: [`../../GLOSSARY.md`](../../GLOSSARY.md)
 
 Kde agent bere data — a hlavně **kdy si retrieval nemá dělat sám**.
@@ -15,20 +15,60 @@ Kde agent bere data — a hlavně **kdy si retrieval nemá dělat sám**.
 
 ### Firemní strategie ingestionu
 
-<!-- TODO: principy indexace SharePoint/OneDrive obsahu; co se indexuje, co ne;
-     ACL a jejich vynuceni; obohaceni metadaty. -->
+- **SharePoint a OneDrive už v indexu jsou.** Konektor se pro ně nestaví — Graph je indexuje
+  nativně. Konektory řeší obsah **mimo** Microsoft 365: ticketing, wiki, fileshare, databáze.
+- **Co se indexuje**: text dokumentů v podporovaných formátech, obsah stránek a metadata
+  sloupců knihovny. **Co ne**: obsah vyloučený nastavením (opt-out knihovny, Restricted
+  SharePoint Search), šifrovaný a neparsovatelný obsah — a všechno, co crawl **ještě
+  nestihl**. Index není okamžitý; to je nejčastější „agent nefunguje" tohoto bloku.
+- **ACL jde do indexu spolu s obsahem** a každý dotaz se trimuje identitou volajícího. Agent
+  nevidí nic, co by uživatel neviděl ve vyhledávání. Nosný důsledek: **když agent ukáže něco
+  navíc, je to chyba oprávnění ve zdroji, ne v agentovi** — proto [`../data-hygiene/`](../data-hygiene/).
+- **Obohacení metadaty se vyplácí dřív než ladění relevance.** Sloupce knihovny `Runbooky`
+  (kategorie, platnost, vlastník) jdou do indexu jako properties — dají se filtrovat i citovat.
+  Levnější investice než vlastní embeddings.
+- Ingestion strategie je vědomé rozhodnutí, **co vůbec pustit agentovi do dosahu**. „Všechno,
+  co uživatel vidí" je legitimní volba — ale musí to být volba, ne výchozí stav bez majitele.
 
 ```mermaid
-%% TODO: diagram -- synced (crawl -> Graph index -> semantic index) vs federated (MCP -> live fetch)
 flowchart LR
-  A[placeholder] --> B[placeholder]
+  subgraph SY[synced connector]
+    direction LR
+    S1[externi zdroj] -->|crawl obsahu + ACL| GI[Graph index]
+    GI --> SI[semantic index]
+  end
+  subgraph FE[federated connector]
+    direction LR
+    S2[externi zdroj] -->|MCP: live fetch v case dotazu| LF[vysledek bez indexace]
+  end
+  Q[dotaz uzivatele] --> SI
+  Q --> S2
+  SI --> ANS[kontext modelu -> odpoved]
+  LF --> ANS
 ```
 
 ### Synced vs. federated connectors
 
-<!-- TODO: tabulka a rozhodovaci osa. Synced: index do Graphu pres Graph connectors API,
-     tenant nebo personal konfigurace, custom konektory MOZNE. Federated: MCP, live fetch,
-     bez indexace, read-only, custom konektory (k datu psani) NE. -->
+| | **Synced** | **Federated** |
+|---|---|---|
+| Mechanismus | Microsoft Graph connectors API — crawl obsahu **i ACL** | **MCP** — live fetch v čase dotazu |
+| Data | kopie v indexu Graphu | žádná kopie, dotaz do zdroje |
+| Semantic index | ano (relevance, ranking) | ne |
+| Aktuálnost | podle refreshe crawlu | vždy aktuální |
+| Zápis | ne | ne (read-only) |
+| Konfigurace | tenant (admin) nebo personal (uživatel) | admin povolí, uživatel se autentizuje |
+| Vlastní konektor | **ano** | k datu psaní **ne** — jen konektory od Microsoftu |
+
+Rozhodovací osa, v tomhle pořadí:
+
+1. **Je zdroj uvnitř M365?** Ano → nestav nic, index ho už má. (Tohle je náš případ — `Runbooky`.)
+2. **Smí data existovat v kopii mimo zdrojový systém?** Nesmí → federated, jinak řešíš retenci
+   a klasifikaci dvakrát.
+3. **Mění se data po minutách** (stavy tiketů, sklad, kurzy)? → federated; indexovaná kopie
+   by lhala.
+4. **Chceš relevance a hledání napříč vším** v jednom dotazu? → synced, to je celý smysl
+   semantic indexu.
+5. **Potřebuješ vlastní konektor?** → zbývá jen synced.
 
 > [!IMPORTANT] Názvosloví
 > **Microsoft Graph connectors → Microsoft 365 Copilot connectors.** Backend API se ale
@@ -36,26 +76,74 @@ flowchart LR
 
 ### Semantic index — co dostaneš zdarma
 
-<!-- TODO: relevance, personalizace, ACL trimming. Nosna pointa: tohle je prace, kterou
-     bys u vlastniho vektoroveho ulozište musel udelat sam — vcetne ACL modelu a refreshe. -->
+- **Relevance**: hybridní vyhledávání (lexikální + sémantické) nad obsahem tenantu,
+  chunking a ranking dělá Microsoft. Ty posíláš dotaz, dostáváš pasáže.
+- **Personalizace**: signály Work IQ (kdo s kým pracuje, co kdo nedávno otevřel) posouvají
+  pořadí výsledků. Tohle si vlastním retrievalem nepostavíš — ta data mimo platformu nejsou.
+- **ACL trimming při každém dotazu**, ne při indexaci. Odebrání oprávnění se propíše, aniž
+  bys cokoliv reindexoval.
+- **Refresh**: změna dokumentu se do indexu dostane bez tvé práce.
+- **Nosná pointa: tohle všechno je práce, kterou u vlastního vektorového úložiště děláš sám** —
+  chunking, embeddings, ranking, refresh a hlavně **vlastní ACL model**. Nejdražší na vlastním
+  retrievalu není indexace, ale to, že se oprávnění ve zdroji mění a tvůj index o tom musí
+  vědět dřív, než agent někomu ukáže cizí dokument.
+- „Zdarma" znamená **bez tvé práce**, ne bez licence — přístup k semantic indexu se platí
+  (Copilot licence nebo PAYG, viz [`../../GLOSSARY.md`](../../GLOSSARY.md)).
 
 ### MCP jako přístup k datům
 
-<!-- TODO: MCP nese federated konektory; MCP je zaroven cesta k nastrojum (viz actions-graph).
-     Rozliseni: MCP jako knowledge vs MCP jako akce. -->
+- **MCP nese federated konektory** — to je jeho role v grounding příběhu: standardizovaný
+  způsob, jak se model dostane k datům, která nikdo neindexoval.
+- Stejný protokol je zároveň **cesta k nástrojům** — a tam se z něj stává akce
+  ([`../actions-graph/`](../actions-graph/)).
+- Rozlišení, které si studenti pletou:
+
+| | **MCP jako knowledge** | **MCP jako akce** |
+|---|---|---|
+| Co dělá | agent **čte**, výsledek jde do kontextu | agent **mění stav** ve zdroji |
+| Riziko | únik dat, nedůvěryhodný obsah v kontextu | provedení nechtěné operace |
+| Co musíš řešit | ACL, klasifikace, citace | autorizace, validace parametrů, audit |
+| Kde v kurzu | tento modul | [`../actions-graph/`](../actions-graph/) |
+
+- **Jeden MCP server umí obojí.** Kategorie serveru nic neříká — rozhoduje seznam nástrojů,
+  které nabízí. Číst popisy nástrojů, ne marketing.
+- Popisy nástrojů z MCP serveru **vstupují do kontextu modelu**. Nedůvěryhodný server = cizí
+  instrukce v promptu; vrací se v [`../../day-5/security-risk/`](../../day-5/security-risk/).
 
 ### Grounding v agentovi — Copilot Retrieval API
 
-<!-- TODO: jak se knowledge zapoji do custom engine agenta pres Retrieval API:
-     dotaz -> relevantni text chunky ze semantic (hybrid) indexu -> do kontextu modelu.
-     RAG bez vlastniho indexu: zadna replikace dat, ACL respektovane, data zustavaji
-     v tenantu. Opravneni: Files.Read.All + Sites.Read.All. Limity: 200 req/user/h,
-     max 25 vysledku, queryString 1500 znaku. Rozdil proti deklarativnimu agentovi,
-     kde je knowledge deklarace v manifestu (declarative-agents, vcera). -->
+Tok jednoho turnu v custom engine agentovi:
 
-<!-- TODO: alternativa Graph Search API (funguje i bez Copilot/PAYG, ale BEZ semantic
-     indexu -- jen lexikalni search + ACL trimming) -- pojmenovat jako fallback vetev,
-     ne jako rovnocennou cestu. -->
+1. dotaz uživatele → **Copilot Retrieval API** (delegated, jménem volajícího),
+2. odpověď = **relevantní text chunky** ze semantic (hybrid) indexu, včetně odkazu na zdroj,
+3. chunky vložíš do kontextu modelu **jako tool/kontextovou zprávu** — ne do systémového promptu,
+4. model formuluje odpověď a ty pod ni vypíšeš **citace** z metadat chunků.
+
+- **RAG bez vlastního indexu**: žádná replikace dat, žádné embeddings, žádný refresh.
+  ACL se vynucují dotazem, **data zůstávají v tenantu zákazníka** — to je architektonický
+  argument, který se prodává sám.
+- **Oprávnění** (delegated): `Files.Read.All` + `Sites.Read.All`.
+- **Limity, se kterými se navrhuje**: 200 requestů / uživatel / hodinu, max 25 výsledků na
+  dotaz, `queryString` do 1 500 znaků. Důsledky do návrhu: jeden retrieval na turn (ne jeden
+  na každou iteraci loopu), cachovat opakované dotazy, posílat **otázku uživatele**, ne
+  slepenou historii konverzace.
+- **Rozdíl proti deklarativnímu agentovi** ([`../declarative-agents/`](../declarative-agents/)):
+  tam byla knowledge **deklarace v manifestu** a retrieval udělal orchestrátor Copilotu. Tady
+  voláš retrieval sám — a tím přebíráš rozhodnutí, která ti platforma dělala: kolik chunků
+  vzít, jak je zkrátit, jak citovat a **co udělat, když se nevrátí nic**. Celý rozdíl mezi
+  deklarativní a custom engine cestou v jedné funkci.
+
+**Fallback větev — Graph Search API.** Když Copilot licence ani PAYG nejsou:
+
+- funguje pod běžnou M365 licencí, **ACL trimming platí stejně**,
+- ale **bez semantic indexu**: lexikální vyhledávání, žádný sémantický ranking, žádné
+  Work IQ signály,
+- vrací **položky** (dokumenty), ne text chunky — chunking, výběr a zkracování si děláš sám;
+- to je zároveň fallback našeho labu.
+
+Pojmenovat to studentům přesně: **není to rovnocenná cesta, je to fallback.** Rozdíl v kvalitě
+odpovědí (a v tom, kolik práce zůstane na tobě) je přesně hodnota, za kterou se u Retrieval API
+platí.
 
 > [!WARNING] Ověřit k datu běhu — stav k 2026-08
 > **Retrieval API přes pay-as-you-go** (bez M365 Copilot licence) je **preview** a platí

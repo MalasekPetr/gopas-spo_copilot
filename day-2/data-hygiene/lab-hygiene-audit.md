@@ -18,16 +18,20 @@ použije u zákazníka před každým groundingem.
 
 ### Část A — demo: co je v tenantu špatně (instruktor)
 
-1. <!-- TODO: ukazat oversharing report / site access review na demo tenantu;
-     jeden zamerne "spatne" nasdileny web -->
-2. <!-- TODO: Restricted Content Discovery na citlive knihovne a dopad na agenta
-     (prestane z ni odpovidat) -->
+1. Instruktor promítne **oversharing report / site access review** na demo tenantu —
+   včetně jednoho záměrně špatně nasdíleného webu. Studenti si značí, čím se takový nález
+   pozná a jak by ho popsali zákazníkovi.
+2. Instruktor zapne **Restricted Content Discovery** na citlivé knihovně a ukáže dopad:
+   agent z ní přestane odpovídat, ačkoli obsah dál existuje a uživatel k němu má přístup
+   přes SharePoint.
 
 ### Část B — checklist (studenti)
 
-3. <!-- TODO: student sestavi checklist: audit oversharingu -> RCD/oprava ACL ->
-     sensitivity labels -> lifecycle mrtvych webu -> grounding az nakonec -->
-4. <!-- TODO: ke kazdemu bodu: kdo ho dela (IT admin vs vyvojar) a cim se overi -->
+3. Sestav **hygienický checklist před nasazením agenta** v obhajitelném pořadí: audit
+   oversharingu → RCD jako okamžité zhasnutí → oprava ACL → sensitivity labels →
+   lifecycle mrtvých webů → grounding až nakonec. Minimálně 5 bodů.
+4. Ke každému bodu doplň dva sloupce: **kdo ho dělá** (IT admin vs. vývojář agenta)
+   a **čím se ověří, že je hotový** — bez druhého sloupce je checklist přání, ne kontrola.
 
 ## Ověření
 

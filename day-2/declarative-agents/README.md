@@ -1,6 +1,6 @@
 # Deklarativní agenti & Agents Toolkit — maximum bez serverového kódu
 
-> Typ: povinný · Den: 2 · Odhad: **115 min** (50 výklad + 65 lab) · Publikum: **vývojáři / architekti**
+> Typ: povinný · Den: 2 · Odhad: **100 min** (40 výklad + 60 lab) · Publikum: **vývojáři / architekti**
 > Prostředí: viz [`../../environment.md`](../../environment.md) · Názvosloví: [`../../GLOSSARY.md`](../../GLOSSARY.md)
 
 Než sáhnete k serverovému kódu, máte **opravdu hodně možností** — a tenhle blok je vyčerpá.
@@ -62,6 +62,28 @@ flowchart LR
 - **POZOR: instructions nejsou system prompt vlastního modelu.** Model i runtime patří
   Copilotu; instructions jsou vstup do cizí pipeline, ne kontrola nad ní. Vlastní system
   prompt přijde až s custom enginem (D3).
+
+**Vrstvy instrukcí — kdo všechno mluví do odpovědi.** Studenti tyhle vrstvy slepují
+dohromady; nakreslit je na tabuli:
+
+| Vrstva | Kdo nastavuje | Trvání | Kde |
+|---|---|---|---|
+| **Prompt** | uživatel | jedna otázka | chat |
+| **Context** | konverzace + grounding | jedna session | context window |
+| **custom instructions** | uživatel sobě | trvale | nastavení Copilotu |
+| **Memory** | Copilot (odvozené) + uživatel | trvale | skrytá složka v Exchange mailboxu |
+| **Agent Instructions** | **tvůrce agenta** | život agenta | manifest (limit ~8 000 znaků) |
+
+- **custom instructions vs. Agent Instructions**: první říká „jak mluvit se **mnou**",
+  druhé „jak se chová **agent**" — vy píšete to druhé, platí všem uživatelům agenta.
+- **Context vs. Memory**: context je pracovní paměť jedné konverzace (zmizí), Memory jsou
+  trvalé poznámky o uživateli napříč konverzacemi. Memory je preview a Purview retence
+  ani audit na ni nesahají — governance dotek, který se vrací v D5.
+- **Instrukce nikdy nedávat do knowledge zdrojů** — je to vektor cross-prompt injection
+  (XPIA). Útok i obrana přijdou v `middleware-policy` (D4); tady stačí pravidlo.
+
+Podrobněji ve volitelném modulu
+[`../../day-1/opt-prompting-fundamentals/`](../../day-1/opt-prompting-fundamentals/).
 
 ### Capabilities — co všechno umí aktuální verze manifestu
 

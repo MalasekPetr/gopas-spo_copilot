@@ -12,9 +12,10 @@
 - **Re-verify: Copilot Retrieval API na PAYG studentským účtem.** Empiricky ověřeno
   2026-08-06, ale PAYG consumption je **preview** — podmínky, ceny i dostupnost se mohou
   změnit bez oznámení. Když nefunguje, jet fallback labu (Graph Search API).
-- Knihovna `Runbooky` na `/sites/hr-demo` naplněná a **zaindexovaná**. Seed běží **večer
-  dne 1** (declarative-agents ji potřebuje hned ráno D2) — index není okamžitý, později
-  už je pozdě a selhání vypadá jako chyba studenta.
+- Knihovna `Runbooky` na `/sites/hr-demo` naplněná a **zaindexovaná**. Seed běží
+  **v poledne dne 1** (declarative-agents ji potřebuje už odpoledne D1) — index není
+  okamžitý; ráno D2 před tímto blokem ověřit (10 min, dotazy 1–2 na deklarativním
+  agentovi ze včerejška), jinak selhání vypadá jako chyba studenta.
 - Ověřit, že student (Business Basic, ne admin) knihovnu vidí a že search vrací výsledky
   pod jeho identitou.
 - Ověřit aktuální seznam **default federated konektorů** a jestli už jdou stavět custom —
@@ -39,7 +40,7 @@
 ## Vazby
 
 - Zpět: agent z `agents-sdk-core` (volá model, má ošetřené chyby).
-- Zpět též: `declarative-agents` (knowledge deklarativně v manifestu — ráno; teď to samé
+- Zpět též: `declarative-agents` (knowledge deklarativně v manifestu — včera; teď to samé
   kódem, srovnání se nabízí samo).
 - Dopředu: `actions-graph` (MCP jako nástroj, hranice oprávnění), `opt-custom-retrieval`
   (kdy si retrieval dělat sám), `security-risk` (obsah v knowledge zdroji

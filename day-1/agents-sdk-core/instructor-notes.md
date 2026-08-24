@@ -2,15 +2,17 @@
 
 ## Timing
 
-- ~60 min výklad + 75 min lab. Lab je delší než výklad záměrně — je to první kód týdne
-  a studenti potřebují prostor.
+- ~60 min výklad + 75 min lab. **Opener dne 2** (prohozeno s `declarative-agents`,
+  rozhodnutí prvního běhu 2026-08-24). Lab je delší než výklad záměrně — je to první kód
+  týdne a studenti potřebují prostor; ráno na něj mají nejvíc energie.
 - Část D labu (chybové větve) **nezkracovat**. Je to nosný rozdíl mezi tímto kurzem
   a tutoriálem z internetu.
 
 ## Go/no-go — KLÍČOVÉ, otestovat před během
 
-- **Model endpoint funkční z kurzovní sítě** (firewall, proxy). Otestovat ze stroje v učebně,
-  ne ze svého notebooku.
+- **Model endpoint (instruktorský Foundry deployment) funkční z kurzovní sítě** (firewall,
+  proxy). Otestovat večer D1 ze stroje v učebně, ne ze svého notebooku; klíče rozdat ráno
+  před blokem. Hard cap na deploymentu ověřit spolu s tím.
 - Přebuildovat `solution/` aktuální verzí SDK a ověřit signatury proti API referenci —
   namespace a názvy typů se mezi verzemi měnily.
 - Ověřit, že Agents Playground startuje bez přihlášení do tenantu (mělo by; když ne,
@@ -33,7 +35,9 @@
 
 ## Vazby
 
-- Zpět: toolchain a scaffold z `onboarding`; rozhodnutí „custom engine" z `agent-landscape`.
+- Zpět: toolchain a scaffold z `onboarding`; rozhodnutí „custom engine" z `agent-landscape`;
+  změřený strop deklarativního agenta ze včerejška (`declarative-agents`) je motivace
+  celého bloku — otevřít jím.
 - Dopředu: knowledge (`knowledge-grounding`), akce (`actions-graph`), prompt
   (`prompt-orchestration`) — všechno se zapojuje do tohoto projektu.
   Chybové větve z části D se vracejí v `event-driven-hosting` (timeout patterny)

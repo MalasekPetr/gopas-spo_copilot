@@ -21,21 +21,28 @@ Referenční údaje o prostředí, na které se odkazují laby.
 | Hesla | přidělena na začátku kurzu |
 | SharePoint root URL | `https://ms365x17157302.sharepoint.com` |
 
-## BLOKUJÍCÍ ROZHODNUTÍ — model endpoint
+## Model endpoint — instruktorský Foundry deployment (rozhodnuto 2026-08-24)
 
-> [!WARNING] Rozhodnout minimálně 2 týdny před během.
+> [!IMPORTANT] Proč vlastní endpoint
 > **Copilot Credits neplatí volání modelu z vlastního kódu.** Business Basic + PAYG dává
 > Copilot zážitky a deklarativní agenty, ale **nedává inference endpoint** pro custom engine
-> agenta postaveného na Agents SDK. Bez rozhodnutí níže nelze hands-on odjet **8 z 21 modulů**:
+> agenta postaveného na Agents SDK. Na endpointu stojí hands-on **8 z 21 modulů**:
 > `agents-sdk-core`, `prompt-orchestration`, `agent-framework`, `middleware-policy`,
 > `event-driven-hosting`, `evaluation-quality`, `security-risk`, `perf-cost-lifecycle`.
 
-Dvě varianty, obě **bez** požadavku na Azure subscription nebo Global admin u studentů:
+Řešení: **jeden model deployment (mini tier) v instruktorské Azure subscription**, bez
+požadavku na Azure subscription nebo Global admin u studentů. Provozní pravidla:
 
-| Varianta | Jak | Cena / riziko |
-|---|---|---|
-| **A — instruktorský Foundry deployment** *(preferováno)* | jeden model deployment v instruktorské Azure subscription, klíče rozdané per student, **budget cap** nastavený předem | tokeny jdou z instruktorské subscription; nutný hard cap, jinak 20 studentů v loopu utrží účet |
-| **B — GitHub Models** | studentské GitHub účty, free tier | váže se na už otevřenou otázku **GitHub Copilot seatů**; rate limity mohou lab zastavit |
+- **Hard cap na deploymentu** (TPM/RPM quota) nastavený předem — jediné reálné nákladové
+  riziko je 20 studentů ve smyčce; alerty samy spotřebu nezastaví.
+- **Klíče per student, výhradně mimo repo** (rozdává instruktor; user secrets / `.env`).
+- **Po kurzu klíče rotovat/zneplatnit** — povinný krok offboardingu (viz
+  [`scripts/`](scripts/)); klíče byly u 20 lidí.
+- Orientační náklad: mini-tier model, laby celého týdne ≈ nízké desítky USD.
+
+Fallback pro jednotlivce (rozbitý klíč, výpadek): **GitHub Models** na studentském GitHub
+účtu — jen jako záchrana jednoho studenta, ne kurzovní cesta (free tier rate limity by
+zastavily multi-agent lab D3 i evaluace D5).
 
 > [!IMPORTANT] Data sovereignty
 > Instruktorský model endpoint znamená inference **mimo studentský tenant**. V labech proto
@@ -87,14 +94,13 @@ Zajišťuje `day-1/onboarding`. Bez tohoto nic dalšího nepojede:
 |---|---|
 | **Visual Studio Code** | primární IDE |
 | **Microsoft 365 Agents Toolkit** (rozšíření VS Code) | scaffolding, publikace, MCP |
-| **.NET SDK** | C# je primární jazyk kurzu |
+| **Node.js** (LTS) | TypeScript je primární jazyk kurzu (sjednoceno 2026-08-24) |
 | **Microsoft 365 Agents Playground** | lokální test agenta bez tenantu a tunelu |
-| **Node.js** | TypeScript parity úryvky, část toolingu |
 | **Git** | repo-as-code návyk, capstone artefakty |
 | **GitHub Copilot** | volitelné, vlastní licence mimo M365 |
 
 > [!WARNING] Ověřit k datu běhu
-> Verze Agents Toolkitu, .NET SDK a názvy šablon v Toolkitu se mění po měsících. Projít
+> Verze Agents Toolkitu, Node.js LTS a názvy šablon v Toolkitu se mění po měsících. Projít
 > `day-1/onboarding/instructor-notes.md` go/no-go a scaffoldnout referenční projekt den předem.
 
 ## Náklady — PAYG upozornění pro učebnu
@@ -104,13 +110,14 @@ Zajišťuje `day-1/onboarding`. Bez tohoto nic dalšího nepojede:
 > tool call) — orientačně ~12 kreditů/konverzace. **Žádný tvrdý strop** (alerty nezastaví
 > spotřebu). Při 20 studentech se to sčítá — mít nastavený budget alert.
 >
-> **Navíc** k tomu jdou tokeny modelu z instruktorského endpointu (varianta A výše). To je
+> **Navíc** k tomu jdou tokeny modelu z instruktorského Foundry deploymentu (výše). To je
 > **druhá, oddělená** nákladová položka — přesně ten teaching point, který kurz učí
 > (viz [`GLOSSARY.md`](GLOSSARY.md), sekce „tři různé peněženky").
 
 ## Otevřené položky před prvním během
 
-- [ ] **Model endpoint** — varianta A nebo B, včetně budget capu.
+- [x] **Model endpoint** — rozhodnuto (2026-08-24): **instruktorský Foundry deployment**
+      s hard capem; nasadit a otestovat z učebny večer D1, klíče rozdat ráno D2.
 - [ ] **GitHub Copilot seaty** pro studenty (mimo M365 licenční tok, zajistit dopředu).
 - [x] **Agent 365 licence** — rozhodnuto (2026-08-07): **1× licence jen pro lektora**
       ($15/user/měs, ověřit prerekvizity). Demo v `agent-365-governance` jede živě

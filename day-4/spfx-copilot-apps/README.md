@@ -51,7 +51,7 @@ flowchart LR
 - **MCP Apps model s tenant hostingem** — na rozdíl od obecných MCP Apps neřešíš hosting
   ani routing; komponenta žije v M365 tenantu (data sovereignty zdarma).
 - **SPFx dovednosti se přenášejí 1:1** — packaging, tooling, projektová struktura;
-  jazyk je tu TypeScript (jediný TS-first blok kurzu, záměrně).
+  jazyk je tu TypeScript — stejně jako ve zbytku kurzu, most k SPFx je bezešvý.
 - **Public Preview** — bez Copilot licence pro build (v preview), store distribuce zatím
   nepodporovaná, pracovní název se může změnit.
 

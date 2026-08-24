@@ -69,8 +69,8 @@ sequenceDiagram
 ## Naše prostředí
 
 Hands-on, **bez tenantu** — Agents Playground běží lokálně. Potřebuje ale **model endpoint**
-(viz [`../../environment.md`](../../environment.md)). Bez rozhodnutého endpointu se lab
-dokončí v echo režimu a LLM turn se odloží.
+(instruktorský Foundry deployment, viz [`../../environment.md`](../../environment.md)).
+Při výpadku endpointu se lab dokončí v echo režimu a LLM turn se odloží.
 
 ## Lab
 Viz [`lab-first-agent.md`](lab-first-agent.md). Referenční řešení v `solution/`.
@@ -83,14 +83,14 @@ poprvé — zatím na ně agent odpovídá špatně, protože nemá knowledge. T
 ## Zdroje (Microsoft)
 - [What is the Microsoft 365 Agents SDK](https://learn.microsoft.com/en-us/microsoft-365/agents-sdk/agents-sdk-overview)
 - [AgentApplication in Microsoft 365 Agents SDK](https://learn.microsoft.com/en-us/microsoft-365/agents-sdk/agent-application)
-- [AgentApplication Class (Microsoft.Agents.Builder.App)](https://learn.microsoft.com/en-us/dotnet/api/microsoft.agents.builder.app.agentapplication?view=m365-agents-sdk)
+- [AgentApplication class (@microsoft/agents-hosting)](https://learn.microsoft.com/en-us/javascript/api/@microsoft/agents-hosting/agentapplication)
 - [Quickstart: Create and test a basic agent](https://learn.microsoft.com/en-us/microsoft-365/agents-sdk/quickstart)
 - [Test your agent locally in Microsoft 365 Agents Playground](https://learn.microsoft.com/en-us/microsoft-365/agents-sdk/test-with-toolkit-project)
 
 ## Stav produktu / delta
 
 > [!WARNING] Ověřit k datu běhu — stav k 2026-08.
-> Verze Agents SDK a názvy typů/namespace se mezi verzemi měnily. Ověřit signatury proti
-> [API referenci](https://learn.microsoft.com/en-us/dotnet/api/microsoft.agents.builder.app.agentapplication?view=m365-agents-sdk)
+> Verze Agents SDK a názvy typů/exportů se mezi verzemi měnily. Ověřit signatury proti
+> [API referenci](https://learn.microsoft.com/en-us/javascript/api/@microsoft/agents-hosting/agentapplication)
 > a přebuildovat `solution/` před během. Rovněž ověřit aktuální požadavek na Bot registraci
 > per kanál.

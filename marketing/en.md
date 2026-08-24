@@ -67,8 +67,7 @@ prompt-injection defence, and a cost model.
 
 The course is built around decision competence: when a declarative agent, when a custom
 engine agent, when Copilot Studio, and when Microsoft Foundry — and how to defend that choice
-to a customer and to an internal security team. Code is written in **C#**, with TypeScript
-snippets for parity.
+to a customer and to an internal security team. Code is written in **TypeScript** (Node.js, Microsoft 365 Agents SDK).
 
 ## Who this course is for
 
@@ -79,8 +78,8 @@ snippets for parity.
 
 ## Prerequisites
 
-- C# fundamentals (GOC2125 course level) — **the course's primary language**
-- JavaScript (JS_PROG1) and TypeScript (JS_TS1) basics — for parity snippets
+- JavaScript (JS_PROG1) and TypeScript (JS_TS1) basics — **the course's primary language**
+- C# fundamentals (GOC2125 course level) — advantageous (instructor demos of Agent Framework)
 - REST and JSON
 - Azure and Microsoft 365 basics
 - Microsoft Graph experience (advantageous)
@@ -90,7 +89,7 @@ snippets for parity.
 
 - 5 days, instructor-led with hands-on labs
 - level: advanced
-- code in **C#**, TypeScript snippets for parity
+- code in **TypeScript** (Node.js)
 
 > [!NOTE] Editor note
 > Price intentionally omitted — GOPAS sales fills it in directly in the CMS/price list.
@@ -99,7 +98,7 @@ snippets for parity.
 
 ### Day 1 — Stack map, no-code/low-code, and the first agent
 
-- **Onboarding, environment & toolchain** — VS Code, Microsoft 365 Agents Toolkit, .NET SDK,
+- **Onboarding, environment & toolchain** — VS Code, Microsoft 365 Agents Toolkit, Node.js,
   Agents Playground; the three billing models (Copilot licence, Copilot Credits, inference).
 - **Agent build paths & the decision axis** — Copilot architecture; declarative vs. custom
   engine agents; Agents SDK, Agent Framework, Copilot Studio, Microsoft Foundry, Agent Builder

@@ -1,7 +1,7 @@
 # Lab · XPIA proti vlastnímu agentovi — a oprava scope
 
 > Modul: `security-risk` · Odhad: 75 min · Režim: **hands-on**
-> Jazyk: C# · Scénář: [`../../scenario-support-agent.md`](../../scenario-support-agent.md)
+> Jazyk: TypeScript · Scénář: [`../../scenario-support-agent.md`](../../scenario-support-agent.md)
 
 ## Cíl
 

@@ -54,13 +54,14 @@ flowchart LR
 
 ### Nástroje
 
-<!-- TODO: PRIMARNI nastroj labu = Microsoft.Extensions.AI.Evaluation (.NET knihovna:
-     quality + agent-quality evaluatory jako IntentResolution/TaskAdherence, reporting,
-     dotnet CLI) — jede lokalne v C#, bez Foundry. Foundry evaluations (evaluatory,
-     batch behy, srovnani verzi) jako reporting/demo vrstva nad tim.
+<!-- TODO: PRIMARNI nastroj labu = rucne psany TS golden-set runner (smycka pres pripady
+     + LLM-as-judge + prahy) — didakticky pruhledny, zadna knihovna mezi studentem
+     a mechanismem. First-party alternativy zminit jednim slidem: Microsoft.Extensions.AI.Evaluation
+     (.NET-only — evaluatory IntentResolution/TaskAdherence, reporting, dotnet CLI; JS
+     ekvivalent neexistuje, dalsi misto kde volba jazyka zuzuje stack) a Foundry
+     evaluations (evaluatory, batch behy, srovnani verzi) jako cloud vrstva.
      OpenTelemetry (trace pres turn, spans pres nastroje) — navaznost na telemetrii
-     z D4 governance. Citovana evaluate-sdk stranka je Python — pro C# kurz je nosna
-     .NET knihovna, ne Python SDK. -->
+     z D4 governance. Citovana evaluate-sdk stranka je Python — jen pro srovnani. -->
 
 ## Klíčové rozlišení
 - **Deterministické testy** (middleware, validace — musí projít vždy) vs. **nedeterministické
@@ -85,7 +86,7 @@ Support Asistent získává **golden set a regresní běh**. Baseline ze
 tabulky — student vidí celý týden jako křivku, ne jako sérii pokusů.
 
 ## Zdroje (Microsoft)
-- [Microsoft.Extensions.AI.Evaluation — libraries](https://learn.microsoft.com/en-us/dotnet/ai/evaluation/libraries) (primární C# nástroj labu)
+- [Microsoft.Extensions.AI.Evaluation — libraries](https://learn.microsoft.com/en-us/dotnet/ai/evaluation/libraries) (first-party evaluační knihovna — .NET-only, v kurzu jen zmínka)
 - [Exploring agent quality and NLP evaluators — .NET Blog](https://devblogs.microsoft.com/dotnet/exploring-agent-quality-and-nlp-evaluators/)
 - [Evaluation of generative AI applications — Microsoft Foundry](https://learn.microsoft.com/en-us/azure/ai-foundry/concepts/evaluation-approach-gen-ai)
 - [Evaluate your AI application — Microsoft Foundry](https://learn.microsoft.com/en-us/azure/ai-foundry/how-to/develop/evaluate-sdk) (Python SDK — jen pro srovnání)

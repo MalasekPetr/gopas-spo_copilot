@@ -26,7 +26,7 @@
 ## Vazby
 
 - Zpět: `event-driven-hosting` (publikace do org katalogu — předchozí blok),
-  `declarative-agents` (D2 — co se publikuje u deklarativního vs. custom engine),
+  `declarative-agents` (D1 — co se publikuje u deklarativního vs. custom engine),
   `spfx-copilot-apps` (dnes ráno — store distribuce Apps zatím nepodporovaná, srovnání).
 - Dopředu: `agent-365-governance` (hned potom — publikovaný agent pod governance),
   `capstone` (store ANO/NE rozhodnutí patří do roadmapy).

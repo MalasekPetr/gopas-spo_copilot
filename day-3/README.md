@@ -9,7 +9,7 @@ Jak se skládá prompt a systémová orchestrace vlastního modelu, orchestrace 
 | 2 | Microsoft Agent Framework, workflows & multi-agent (A2A) | [`agent-framework`](agent-framework/) | P |
 | 3 | Middleware & enforcement politik | [`middleware-policy`](middleware-policy/) | P |
 
-> [!NOTE] Blok 1 je protějšek deklarativních instructions ze dne 2 — tady je model,
+> [!NOTE] Blok 1 je protějšek deklarativních instructions ze dne 1 — tady je model,
 > system prompt i tool-call loop poprvé plně v rukou studenta. Blok 2 je největší doplněk
 > proti publikované katalogové osnově (Agent Framework tam chybí úplně). Blok 3 slučuje
 > Responsible AI guardraily s middleware pipeline záměrně: v pro-code kurzu je guardrail

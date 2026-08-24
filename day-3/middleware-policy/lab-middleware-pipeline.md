@@ -1,7 +1,7 @@
 # Lab · Middleware pipeline — guardrail, který se vykoná
 
-> Modul: `middleware-policy` · Odhad: 75 min · Režim: **hands-on**
-> Jazyk: C# · Scénář: [`../../scenario-support-agent.md`](../../scenario-support-agent.md)
+> Modul: `middleware-policy` · Odhad: 90 min · Režim: **hands-on**
+> Jazyk: TypeScript · Scénář: [`../../scenario-support-agent.md`](../../scenario-support-agent.md)
 
 ## Cíl
 

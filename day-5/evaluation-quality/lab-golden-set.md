@@ -1,7 +1,7 @@
 # Lab · Golden set a regresní běh
 
 > Modul: `evaluation-quality` · Odhad: 75 min · Režim: **hands-on**
-> Jazyk: C# · Scénář: [`../../scenario-support-agent.md`](../../scenario-support-agent.md)
+> Jazyk: TypeScript · Scénář: [`../../scenario-support-agent.md`](../../scenario-support-agent.md)
 
 ## Cíl
 
@@ -12,7 +12,7 @@ změřitelně vyrostl — a který zachytí, kdyby ho příští změna zhoršil
 
 - Agent z [`../agent-365-governance/`](../../day-4/agent-365-governance/lab-instrument-agent.md)
   (s telemetrií).
-- Zapsané baseline z D2 (`prompt-orchestration`, část A) a měření z D3 (`agent-framework`, část A/D).
+- Zapsané baseline z D3 (`prompt-orchestration`, část A) a měření z D3 (`agent-framework`, část A/D).
 
 ## Kroky
 
@@ -31,9 +31,10 @@ změřitelně vyrostl — a který zachytí, kdyby ho příští změna zhoršil
 
 ### Část C — evaluace odpovědí (s modelem)
 
-6. <!-- TODO: pustit golden set proti agentovi pres Microsoft.Extensions.AI.Evaluation
-     (C#, lokalne) a zaznamenat: pass rate, groundedness, spravnost volby nastroje,
-     latenci, tokeny -->
+6. <!-- TODO: pustit golden set proti agentovi pres rucne psany TS runner (smycka pres
+     pripady + LLM-as-judge s rubrikou z ocekavaneho chovani) a zaznamenat: pass rate,
+     groundedness, spravnost volby nastroje, latenci, tokeny. First-party alternativu
+     (Microsoft.Extensions.AI.Evaluation, .NET-only) jen zminit -->
 7. <!-- TODO: opakovat 3x a podivat se na rozptyl — nedeterminismus je merítelny -->
 8. <!-- TODO: nastavit prahy pro rozhodnuti o vydani (co je "dost dobre") -->
 
@@ -47,7 +48,7 @@ změřitelně vyrostl — a který zachytí, kdyby ho příští změna zhoršil
 
 ### Část E — spojení celého týdne
 
-12. <!-- TODO: sestavit jednu tabulku: baseline D2 -> po multi-agentu D3 -> po middleware D3
+12. <!-- TODO: sestavit jednu tabulku: baseline D3 -> po multi-agentu D3 -> po middleware D3
       -> dnes. Co se zlepsilo, co se zhorsilo (latence, tokeny). Vstup do capstonu. -->
 
 ## Ověření

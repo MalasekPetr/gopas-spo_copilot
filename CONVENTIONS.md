@@ -29,7 +29,7 @@ Podle potřeby modul přidává i další soubory (bez šablony, ale konzistentn
 | `comparison-<téma>.md` | srovnávací tabulka + rozhodovací osa |
 | `guide-<téma>.md` | krok-za-krokem návod (instruktorský demo skript nebo referenční postup) |
 | `scenario-<téma>.md` | běžící příklad/dataset sdílený napříč sourozeneckými moduly |
-| `solution/<soubor>.cs` | referenční řešení labu — plně okomentované, odpovídá `Ověření` v labu |
+| `solution/<soubor>.ts` | referenční řešení labu — plně okomentované, odpovídá `Ověření` v labu |
 
 Pořadí modulů v běhu drží **`agenda.md`** — je to jediný zdroj pravdy o pořadí. Změna pořadí =
 úprava `agenda.md`, ne přejmenování složek.
@@ -99,12 +99,14 @@ Každý modul má na konci:
 
 ## Kód v materiálech
 
-- **Primární jazyk je C#** (.NET, Microsoft 365 Agents SDK). TypeScript se objevuje jako
-  **parity úryvek** tam, kde je to levné (manifest, MCP konfigurace, deklarativní agent).
-  Python jen zmínkou v modulu o Toolkitu — nedržíme tři jazyky do hloubky.
-- C# ukázky: XML doc komentáře (`/// <summary>`) u veřejných typů delších ukázek, `Options`
-  pattern pro konfiguraci (`AgentApplicationOptions`), `async`/`await` bez `.Result`/`.Wait()`,
-  `CancellationToken` propagovaný skrz.
+- **Primární jazyk je TypeScript** (Node.js, Microsoft 365 Agents SDK —
+  `@microsoft/agents-hosting`); sjednoceno 2026-08-24, dřívější primární jazyk byl C#.
+  Publikum jsou SPFx vývojáři — TS je jejich domácí jazyk a jede jím i `spfx-copilot-apps`.
+  **C# zůstává jen tam, kde Microsoft JS SDK nemá**: Agent Framework (D3, instruktorské
+  demo) a zmínka Microsoft.Extensions.AI.Evaluation (D5). Python jen zmínkou.
+- TypeScript ukázky: TSDoc komentáře (`/** ... */`) u exportovaných typů delších ukázek,
+  konfigurace přes typované options objekty, `async`/`await` (žádné surové `.then` řetězy),
+  `AbortSignal` propagovaný skrz, striktní `tsconfig`.
 - **Žádné tenant ID, ClientId, cert thumbprinty, subscription ID, API klíče ani connection
   stringy natvrdo v kódu** — vždy konfigurace / proměnné prostředí / user secrets
   (viz [`environment.md`](environment.md)). Repo je public.
@@ -112,7 +114,7 @@ Každý modul má na konci:
   path** — to je nosný pedagogický bod kurzu (inženýrská robustnost, ne demo-ware).
   Konkrétně: klasifikace transientní vs permanentní chyby, timeout, a co agent odpoví
   uživateli, když nástroj selže.
-- Referenční řešení labu žije v `solution/*.cs`, plně okomentované, a odpovídá přesně
+- Referenční řešení labu žije v `solution/*.ts`, plně okomentované, a odpovídá přesně
   krokům v sekci `Ověření` daného labu.
 - V kódových blocích a skriptech **jen ASCII** — žádné typografické pomlčky, šipky ani
   uvozovky. (V prozaickém textu materiálů je česká typografie v pořádku.)
@@ -121,5 +123,5 @@ Každý modul má na konci:
 
 - Provozní skripty repa i příkazy v labech jsou **PowerShell**, ne bash. Line continuation
   je backtick (`` ` ``), ne backslash.
-- CLI příkazy pro .NET / Agents Toolkit / Agent 365 CLI uvádět v podobě, v jaké je student
+- CLI příkazy pro npm/npx / Agents Toolkit / Agent 365 CLI uvádět v podobě, v jaké je student
   reálně spustí ve Windows terminálu.

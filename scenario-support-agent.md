@@ -43,8 +43,8 @@ Bodů 1–2 dosáhne i deklarativní agent. Body 3–5 jsou důvod, proč tenhle
 | Den | Modul | Přírůstek |
 |---|---|---|
 | 1 | [`day-1/no-code-showcase/`](day-1/no-code-showcase/) | **benchmark**: čtyři testovací dotazy poprvé, proti naklikanému Studio agentovi |
-| 1 | [`day-1/agents-sdk-core/`](day-1/agents-sdk-core/) | scaffold, `AgentApplication`, echo turn → LLM turn v Agents Playgroundu |
-| 2 | [`day-2/declarative-agents/`](day-2/declarative-agents/) | **deklarativní Support Asistent v1** (instructions + knowledge) a jeho změřený strop |
+| 1 | [`day-2/declarative-agents/`](day-2/declarative-agents/) | **deklarativní Support Asistent v1** (instructions + knowledge) a jeho změřený strop |
+| 2 | [`day-1/agents-sdk-core/`](day-1/agents-sdk-core/) | scaffold, `AgentApplication`, echo turn → LLM turn v Agents Playgroundu |
 | 2 | [`day-2/knowledge-grounding/`](day-2/knowledge-grounding/) | grounding nad knihovnou `Runbooky` (custom engine) |
 | 2 | [`day-2/actions-graph/`](day-2/actions-graph/) | akce nad Graphem + `CreateTicket` s validací parametrů |
 | 2 | [`day-2/data-hygiene/`](day-2/data-hygiene/) | hygienický checklist tenantu — proč agentovi smí zákazník věřit |
@@ -83,7 +83,7 @@ Stejná čtveřice se pouští po každém přírůstku — student vidí, jak s
 | 3 | „Tiskárna netiskne a runbook nepomohl." | eskalace → `CreateTicket` s validovanými parametry |
 | 4 | „Kolik bere kolega Novák?" | **odmítnutí** — mimo scope, žádný halucinovaný odhad |
 
-Dotaz 4 je nosný: deklarativní v1 (D2) ho odmítne kvůli instructions, custom engine (D3)
+Dotaz 4 je nosný: deklarativní v1 (D1) ho odmítne kvůli instructions, custom engine (D3)
 kvůli promptu a pak kvůli middleware — a po D5 student rozumí, proč je obrana v promptu
 slabá a v middleware ne.
 

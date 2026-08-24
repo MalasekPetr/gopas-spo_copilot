@@ -7,7 +7,7 @@ Kde agent běží, když už neběží na notebooku — a jak se odtud dostane k
 
 ## Cíle
 - Rozlišit **dvě různé otázky**: kde běží **endpoint agenta** (App Service / Azure
-  Container Apps — je to ASP.NET Core aplikace) a kde běží **orchestrace okolo něj**
+  Container Apps — je to Node.js/Express aplikace) a kde běží **orchestrace okolo něj**
   (Functions / Durable / Logic Apps / Foundry Agent Service) — a rozhodnutí odůvodnit.
 - Rozumět řetězení volání modelu a nástrojů v dlouhých, stavových operacích.
 - Navrhnout **timeout a retry patterny** pro agenta, který je závislý na modelu a na API.
@@ -30,7 +30,7 @@ flowchart LR
 
 ### Dvě otázky, pět voleb
 
-<!-- TODO: NEJDRIV oddelit osu: (1) endpoint agenta = vzdy bezici ASP.NET Core app ->
+<!-- TODO: NEJDRIV oddelit osu: (1) endpoint agenta = vzdy bezici Node.js (Express) app ->
      vychozi odpoved App Service nebo Azure Container Apps (na consumption Functions
      je atypicky); (2) orchestrace OKOLO agenta -> rozhodovaci tabulka:
      Functions: kratke, event-driven, consumption, cold start.
@@ -95,7 +95,7 @@ flowchart LR
 ```
 
 ## Klíčové rozlišení
-- **Endpoint agenta** (vždy běžící ASP.NET Core app → App Service / Azure Container Apps)
+- **Endpoint agenta** (vždy běžící Node.js (Express) app → App Service / Azure Container Apps)
   vs. **orchestrace okolo agenta** — dvě otázky, ne jedna; katalogová osnova je směšuje.
 - **Functions** (krátké, event-driven) vs. **Durable** (dlouhé, stavové) vs. **Logic Apps**
   (integrace, málo kódu) vs. **Foundry Agent Service** (hostovaný agent — řeší obojí).

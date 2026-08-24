@@ -1,7 +1,7 @@
 # Lab · Snížit náklady bez ztráty kvality + promotion
 
 > Modul: `perf-cost-lifecycle` · Odhad: **elastický 45–70 min** · Režim: **hands-on**
-> Jazyk: C# · Scénář: [`../../scenario-support-agent.md`](../../scenario-support-agent.md)
+> Jazyk: TypeScript · Scénář: [`../../scenario-support-agent.md`](../../scenario-support-agent.md)
 
 ## Cíl
 

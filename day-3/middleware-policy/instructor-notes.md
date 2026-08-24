@@ -9,6 +9,11 @@
 
 ## Go/no-go — otestovat před během
 
+- **Ověřit middleware kontrakt v JS Agents SDK** (po sjednocení kurzu na TypeScript
+  2026-08-24): JS větev SDK se v middleware API liší od C# — ověřit, jak se v aktuální
+  verzi `@microsoft/agents-hosting` zapojuje pre/post zpracování turnu. Kdyby chybělo,
+  fallback je wrapper kolem handlerů — připravit dopředu, ne u tabule.
+
 - Ověřit, jestli Agents SDK mezitím nepřidalo vlastní middleware abstrakci — změnilo by to
   podobu labu z „postav si pipeline" na „použij tuhle".
 - Ověřit aktuální kategorie a konfiguraci content filtrů na platformě (co je default,

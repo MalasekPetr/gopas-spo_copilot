@@ -2,7 +2,8 @@
 
 ## Timing
 
-- ~55 min výklad + 75 min lab. První blok dne 5 — jet ráno, je to nejnáročnější blok dne.
+- ~55 min výklad + 75 min lab. **Blok 3 dne 5** — nejnáročnější blok dne; nenechat ho
+  sklouznout do pozdního odpoledne, elastické bloky jsou až po něm.
 - Části A a B (útoky) jsou dramaturgie, části C a D (obrana) jsou hodnota. Když čas tlačí,
   zkrátit útoky na jeden, ne obranu.
 

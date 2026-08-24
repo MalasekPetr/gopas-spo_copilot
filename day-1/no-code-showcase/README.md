@@ -19,38 +19,59 @@ před studenty, na stejném zadání, na které pak celý týden stavíme pro-co
 
 ### Proč to musí vidět i pro-code tým
 
-<!-- TODO: argument: 80 % pozadavku zakaznika nepotrebuje SDK; kdo neumi rict "tohle
-     nakliknete ve Studiu za hodinu", prodava zbytecne drahe reseni. Duveryhodnost
-     konzultanta = znat celou osu, ne jen svuj oblibeny konec. -->
+- Většina zákaznických požadavků SDK nepotřebuje. Kdo neumí říct *„tohle naklikáte
+  ve Studiu za hodinu"*, prodává zbytečně drahé řešení — a jednou mu na to zákazník přijde.
+- Důvěryhodnost konzultanta = znát **celou osu**, ne jen svůj oblíbený konec. Doporučení
+  pro-code má váhu, jen když umíš obhájit, proč ne no-code.
+- Dnes odpoledne k těmto dvěma příčkám přibude třetí (deklarativní agent) — a strop té
+  třetí je důvod, proč existuje zbytek kurzu.
 
-### Copilot agent builder — no-code
+### Copilot agent builder — no-code (studentský hands-on)
 
-<!-- TODO: demo naskriptovat: agent builder v M365 Copilotu, instructions + knowledge
-     (SharePoint), bez akci. Kolik minut to trvalo. Kde jsou hranice (zadne akce
-     s validaci, zadna orchestrace, sdileni omezene). -->
+Skript dema — část A labu, každý student sám (PAYG kryje):
 
-### Copilot Studio — low-code
+1. M365 Copilot → vytvořit agenta v **agent builderu**: instructions podle zadání ze
+   scénáře + knowledge = SharePoint (knihovna `Runbooky`, pokud už je indexovaná; jinak
+   libovolný web).
+2. Změřit **čas stavby** (reálně jednotky minut) a pustit čtyři testovací dotazy.
+3. Pojmenovat hranice: **žádné akce s validací, žádná orchestrace, omezené sdílení** —
+   agent žije u uživatele, ne v ALM.
 
-<!-- TODO: demo naskriptovat: Studio agent na stejne zadani, topics/generative answers,
-     akce (konektor), publikace do Teams. Zminit: Studio agenti se do Agent 365 registry
-     registruji AUTOMATICKY (kotva pro day-4/agent-365-governance). -->
+### Copilot Studio — low-code (instruktorské demo)
+
+Skript dema — stejné zadání, záložní agent připravený v tenantu:
+
+1. Studio agent: topics + generative answers nad stejným zdrojem, **akce přes konektor**
+   (tady builder končí), publikace do Teams.
+2. Studenti si značí: čas stavby, kde instruktor narazil, které ze čtyř dotazů agent zvládl.
+3. Zaseknout kotvu: **Studio agenti se do Agent 365 registrují automaticky** — pro-code
+   agent se bude instrumentovat ručně (D4). Governance zdarma vs. governance prací.
 
 ```mermaid
-%% TODO: diagram -- osa: agent builder -> Copilot Studio -> deklarativni agent -> custom engine
 flowchart LR
-  A[placeholder] --> B[placeholder]
+  AB[agent builder<br/>no-code, minuty] --> ST[Copilot Studio<br/>low-code, hodiny]
+  ST --> DA[deklarativni agent<br/>Toolkit - dnes odpoledne]
+  DA --> CE[custom engine<br/>Agents SDK - zbytek tydne]
 ```
 
 ### Kde jsou stropy — a co z toho plyne pro zbytek týdne
 
-<!-- TODO: tabulka rozdilu (hosting, model, penezenka, ALM, governance, extensibility).
-     Pointa: dotazy 1-2 ze scenare zvladne Studio, dotaz 3 (akce s validaci) a 4 (vynucene
-     odmitnuti) uz ne spolehlive -- presne tam zacina zbytek kurzu. -->
+| | Agent builder | Copilot Studio |
+|---|---|---|
+| Hosting a model | platforma (neviditelné) | platforma (Power Platform) |
+| Peněženka | M365 Copilot / PAYG kredity | **Copilot Credits / message billing** |
+| Akce | ne | konektory, Power Automate — bez vlastní validace |
+| ALM a verzování | ne | solutions, environments |
+| Governance | omezená | PPAC + DLP + **auto-registrace Agent 365** |
+| Extensibility strop | instructions + knowledge | kde končí konektor, končí Studio |
+
+- **Pointa na plátno**: dotazy 1–2 ze scénáře zvládne i Studio. Dotaz 3 (akce s validací)
+  a 4 (vynucené odmítnutí) už spolehlivě ne — **přesně tam začíná zbytek kurzu.**
 
 ## Klíčové rozlišení
 
 - **Copilot agent builder** (no-code, uvnitř M365 Copilotu) vs. **Copilot Studio**
-  (low-code platforma s ALM) vs. **deklarativní agent z Toolkitu** (D2) vs.
+  (low-code platforma s ALM) vs. **deklarativní agent z Toolkitu** (hned další blok) vs.
   **custom engine agent** (zbytek týdne) — čtyři příčky jedné osy, ne čtyři produkty.
 - **Peněženky**: Copilot Studio jede na **Copilot Credits / message billing** — jiná
   peněženka než M365 Copilot licence i než Azure inference vlastního kódu.
@@ -83,7 +104,7 @@ Studio agentovi. Dotazy 1–2 zvládne, 3–4 ne. Zbytek týdne je odpověď na 
 ## Zdroje (Microsoft)
 
 - [Microsoft Copilot Studio — overview](https://learn.microsoft.com/en-us/microsoft-copilot-studio/fundamentals-what-is-copilot-studio)
-- [Build agents with the Copilot Studio agent builder](https://learn.microsoft.com/en-us/microsoft-365-copilot/extensibility/copilot-studio-agent-builder)
+- [Build agents with the Copilot Studio agent builder](https://learn.microsoft.com/en-us/microsoft-365/copilot/extensibility/agent-builder)
 - [Copilot Studio — licensing and message management](https://learn.microsoft.com/en-us/microsoft-copilot-studio/requirements-messages-management)
 
 ## Stav produktu / delta

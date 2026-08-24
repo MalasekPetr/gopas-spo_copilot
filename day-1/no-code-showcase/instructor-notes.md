@@ -4,7 +4,7 @@
 
 - ~50 min: 15 min agent builder demo, 15 min Copilot Studio demo, 20 min tabulka + diskuse.
 - Nenafukovat. Blok je showcase, ne kurz Copilot Studia — hloubka by sežrala
-  `agents-sdk-core`, který ten den nese první běžící kód.
+  `declarative-agents`, který den uzavírá stropem deklarativní cesty.
 
 ## Go/no-go — otestovat před během
 
@@ -21,10 +21,13 @@
 
 - **Sklouznutí do Studio-bashingu.** Publikum je pro-code a bude se pošklebovat. Pointa
   bloku je opačná: u části zadání je no-code/low-code správná odpověď a konzultant,
-  který to neumí říct, prodává předražená řešení.
+  který to neumí říct, prodává předražená řešení. (Očekávané odpovědi mini-zadání
+  z části C labu: a = agent builder / deklarativní, b = Copilot Studio, c = custom
+  engine — v labu je studenti nemají.)
 - **Sklouznutí do hloubky Studia** (topics, variables, DLP…). Ukázat, nekonfigurovat.
 - Studenti si spletou Copilot Studio agenta s deklarativním agentem z Toolkitu — deklarativní
-  cesta přijde až v [`../../day-2/declarative-agents/`](../../day-2/declarative-agents/),
+  cesta přijde hned v dalším bloku
+  ([`../../day-2/declarative-agents/`](../../day-2/declarative-agents/)),
   tady jen zaseknout kotvu „to je další příčka".
 - Zmínit auto-registraci Studio agentů do Agent 365 **jen jako kotvu** — governance patří
   do [`../../day-4/agent-365-governance/`](../../day-4/agent-365-governance/).
@@ -32,5 +35,5 @@
 ## Vazby
 
 - Zpět: `agent-landscape` (osa, kterou tenhle blok materializuje).
-- Dopředu: `declarative-agents` (D2 — další příčka osy), `agents-sdk-core` (hned potom —
+- Dopředu: `declarative-agents` (hned potom — další příčka osy), `agents-sdk-core` (D2 —
   proč vůbec psát kód), `agent-365-governance` (D4 — auto-registrace vs. instrumentace).

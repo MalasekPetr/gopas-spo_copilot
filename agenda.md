@@ -1,6 +1,8 @@
 # Agenda — pořadí bloků
 
 Jediný zdroj pravdy o pořadí modulů. Složky jsou slugy; pořadí drží tato tabulka.
+Prefix `day-N/` ve slugu je **stabilní identifikátor**, ne garance dne — po prohození
+bloků (viz den 1/2) se složky nepřesouvají.
 
 **5 dní · 21 modulů (20 povinných + 1 volitelný) · 4–5 bloků/den.** P = povinný, V = volitelný.
 Fokus kurzu: **blízké okolí Microsoft 365** — vlastní vektorizace, hluboký Azure a obecná
@@ -18,38 +20,45 @@ AI témata jsou vedlejší koleje, ne jádro.
 > níže je **~6–6,5 h/den**; publikovaná čísla ber jako marketingová. Skutečné timingy žijí
 > v `instructor-notes.md` jednotlivých modulů.
 
-## Den 1 — Mapa stacku, no-code/low-code a první agent (~6,3 h)
+## Den 1 — Mapa stacku, no-code/low-code a deklarativní maximum (~6,0 h)
 
 | # | Blok | Slug | Typ |
 |---|---|---|---|
 | 1 | Onboarding, prostředí & toolchain | `day-1/onboarding` | P |
 | 2 | Mapa cest tvorby agentů & rozhodovací osa | `day-1/agent-landscape` | P |
 | 3 | No-code a low-code cesty — showcase | `day-1/no-code-showcase` | P |
-| 4 | Agents SDK — jádro: AgentApplication, aktivity, turny | `day-1/agents-sdk-core` | P |
+| 4 | Deklarativní agenti & Agents Toolkit — maximum bez serverového kódu | `day-2/declarative-agents` | P |
 
 > [!NOTE] Den 1 staví rozhodovací vrstvu **před** kódem. Blok 2 je ten, za který zákazník platí
 > nejvíc: kdy deklarativní agent, kdy custom engine, kdy Copilot Studio, kdy Foundry — a proč.
-> Blok 3 osu materializuje naživo (agent builder + Copilot Studio) — než developer sáhne
-> k SDK, musí umět posoudit no-code a low-code cesty. Blok 4 končí prvním běžícím agentem
-> v Agents Playgroundu (bez tenantu, bez tunelu).
+> Blok 3 osu materializuje naživo (agent builder + Copilot Studio). Blok 4 vyčerpá
+> deklarativní cestu (Toolkit, instructions, capabilities) a končí přesně pojmenovaným
+> stropem — cliffhanger pro custom engine, který přijde ráno D2. Celý den tak jede
+> **bez model endpointu** (jen tenant + PAYG).
+>
+> Prohození `declarative-agents` ↔ `agents-sdk-core` je rozhodnutí prvního běhu
+> (2026-08-24): model endpoint (instruktorský Foundry deployment) se nasazuje až večer
+> dne 1. Zároveň den 1 nově pokrývá celý žebřík no-code → low-code → deklarativní
+> v jednom dni.
 
-## Den 2 — Deklarativní maximum, znalosti, akce a hygiena (~6,9 h)
+## Den 2 — První agent v kódu, znalosti, akce a hygiena (~7,0 h)
 
 | # | Blok | Slug | Typ |
 |---|---|---|---|
-| 1 | Deklarativní agenti & Agents Toolkit — maximum bez serverového kódu | `day-2/declarative-agents` | P |
+| 1 | Agents SDK — jádro: AgentApplication, aktivity, turny | `day-1/agents-sdk-core` | P |
 | 2 | Grounding: Copilot connectors, semantic index, MCP | `day-2/knowledge-grounding` | P |
 | 3 | Action handlers & integrace s Microsoft Graph | `day-2/actions-graph` | P |
 | 4 | Datová hygiena v SharePoint Online a Exchange Online | `day-2/data-hygiene` | P |
 | 5 | Vlastní retrieval: chunking, embeddings, hybrid ranking | `day-2/opt-custom-retrieval` | V |
 
-> [!NOTE] Blok 1 vyčerpá možnosti **před prvním řádkem serverového kódu** (Toolkit,
-> instructions, capabilities aktuální verze manifestu) a končí přesně pojmenovaným stropem —
-> motivací pro custom engine zbytek týdne. Blok 2 učí nosné rozlišení **synced vs. federated
-> (MCP)** konektorů a hlavně *kdy retrieval nedělat sám*. Blok 4 uzavírá den otázkou, kterou
-> praxe klade před grounding: **je tenant na agenta uklizený?** Vlastní vektorizace je
-> **volitelný** blok 5 — rozhodnutí, ne výchozí stav; zároveň **hlavní kompresní ventil dne**
-> (leaf node, nic na něm nezávisí).
+> [!NOTE] Blok 1 je odpověď na strop deklarativního agenta ze závěru dne 1 — končí prvním
+> běžícím custom engine agentem v Agents Playgroundu (bez tenantu, bez tunelu). Vyžaduje
+> instruktorský Foundry deployment (nasazený večer D1), klíče se rozdají ráno. Blok 2 učí nosné rozlišení
+> **synced vs. federated (MCP)** konektorů a hlavně *kdy retrieval nedělat sám*. Blok 4
+> uzavírá den otázkou, kterou praxe klade před grounding: **je tenant na agenta uklizený?**
+> — jede ve zkrácené 30min variantě (checklist jako večerní úloha), den je i tak nad
+> stropem. Vlastní vektorizace je **volitelný** blok 5 — rozhodnutí, ne výchozí stav;
+> zároveň **hlavní kompresní ventil dne** (leaf node, nic na něm nezávisí).
 
 ## Den 3 — Prompt, multi-agent a politiky (~6,6 h)
 
@@ -80,7 +89,7 @@ AI témata jsou vedlejší koleje, ne jádro.
 > do Agent 365 registrují automaticky, **pro-code agenti se musí explicitně
 > instrumentovat**.
 
-## Den 5 — Governance alternativa, kvalita, bezpečnost a capstone (~6,5 h s ventily)
+## Den 5 — Governance alternativa, kvalita, bezpečnost a capstone (~6,8 h s ventily)
 
 | # | Blok | Slug | Typ |
 |---|---|---|---|
@@ -96,9 +105,10 @@ AI témata jsou vedlejší koleje, ne jádro.
 > capstone prezentace mění na pair-share a jádro (end-to-end architektura + evaluační
 > matice + rollback plán) zůstává vždy.
 
-> [!WARNING] Hustota dnů 2 (~6,9 h) a 4 (~6,8 h) je nad kalibračním stropem (~6,25 h)
-> Kompaktní bloky na okrajích dnů (data-hygiene, marketplace) se při skluzu zkracují
-> první, před kompresními ventily níže. Reálné timingy doladit po prvním běhu.
+> [!WARNING] Hustota dnů 2 (~7,0 h) a 4 (~6,8 h) je nad kalibračním stropem (~6,25 h)
+> Kompaktní bloky na okrajích dnů (data-hygiene — už započtená ve 30min variantě,
+> marketplace) se při skluzu zkracují první, před kompresními ventily níže. Reálné
+> timingy doladit po prvním běhu.
 
 ## Kompresní ventily — v tomto pořadí
 
@@ -116,7 +126,7 @@ Scénář: [`scenario-support-agent.md`](scenario-support-agent.md).
 
 ```mermaid
 flowchart LR
-  D1[D1 showcase benchmark<br/>+ scaffold + LLM turn] --> D2[D2 deklarativni v1<br/>+ knowledge + akce]
+  D1[D1 showcase benchmark<br/>+ deklarativni v1] --> D2[D2 scaffold + LLM turn<br/>+ knowledge + akce]
   D2 --> D3[D3 prompt<br/>+ multi-agent + middleware]
   D3 --> D4[D4 hosting + publish<br/>+ Agent 365]
   D4 --> D5[D5 evaluace + XPIA<br/>+ cache + promotion]
@@ -125,7 +135,7 @@ flowchart LR
 
 ## Nitě napříč kurzem
 
-- **Rozhodovací nit**: `agent-landscape` + `no-code-showcase` (D1) → `declarative-agents` +
+- **Rozhodovací nit**: `agent-landscape` + `no-code-showcase` + `declarative-agents` (D1) →
   `knowledge-grounding` (D2) → `agent-framework` (D3) → `event-driven-hosting` (D4).
   Pokaždé „která vrstva, a proč ne ta druhá".
 - **Governance nit**: `actions-graph` (hranice oprávnění, D2) → `middleware-policy` (D3) →

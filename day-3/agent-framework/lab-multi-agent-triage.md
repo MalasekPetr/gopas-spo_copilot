@@ -1,7 +1,8 @@
 # Lab · Triage + resolver — a co to stálo
 
 > Modul: `agent-framework` · Odhad: 75 min · Režim: **hands-on**
-> Jazyk: C# · Scénář: [`../../scenario-support-agent.md`](../../scenario-support-agent.md)
+> Jazyk: TypeScript (orchestrace ručně nad Agents SDK; Agent Framework = instruktorské
+> demo v C# — JS SDK neexistuje) · Scénář: [`../../scenario-support-agent.md`](../../scenario-support-agent.md)
 
 ## Cíl
 
@@ -21,10 +22,12 @@ Deliverable není „funguje to", ale rozhodnutí, jestli si to v produkci zaslo
 1. <!-- TODO: zmerit latenci a pocet volani modelu na ctyrech testovacich dotazech
      u soucasneho JEDNOHO agenta. Zapsat. -->
 
-### Část B — zapojit Agent Framework
+### Část B — Agent Framework demo (instruktor, C#) a návrh TS orchestrace
 
-2. <!-- TODO: pridat Agent Framework do projektu a overit, ze agent stale funguje jako drive -->
-3. <!-- TODO: pojmenovat, co se zmenilo v architekture a co ne (SDK obal zustava) -->
+2. <!-- TODO: instruktorske demo: tataz triage+resolver uloha v Agent Frameworku (C#) --
+     studenti si zapisuji, co Framework resi za ne (handoff, stav, retry, telemetrie) -->
+3. <!-- TODO: navrh vlastni orchestrace v TS: rozhrani triage/resolver, kontrakt handoffu
+     (typovany vysledek klasifikace), limit iteraci. SDK obal (AgentApplication) zustava. -->
 
 ### Část C — triage + resolver
 
@@ -39,10 +42,13 @@ Deliverable není „funguje to", ale rozhodnutí, jestli si to v produkci zaslo
 9. <!-- TODO: rozbit jeden agent (napr. resolver hodi vyjimku) a overit, co uvidi uzivatel -->
 10. <!-- TODO: rozhodnuti: zaslouzi si Support Asistent multi-agent? ANO/NE + duvod.
       Spravna odpoved neni predem dana — obhajitelne je oboji. -->
+11. <!-- TODO: reflexe proti demu z casti B: co z rucni TS orchestrace by Agent Framework
+      udelal za nas — a co ta uspora stoji (C#/Python stack, dalsi zavislost) -->
 
 ## Ověření
 
-- [ ] Agent Framework zapojený, agent nadále odpovídá správně na čtyři testovací dotazy.
+- [ ] TS orchestrace (triage → resolver) zapojená, agent nadále odpovídá správně na čtyři
+  testovací dotazy.
 - [ ] Triage správně klasifikuje minimálně 3 ze 4 dotazů.
 - [ ] Handoff funguje, loop se zastaví na limitu iterací.
 - [ ] **Naměřený rozdíl** latence a počtu volání modelu proti baseline.
@@ -51,8 +57,8 @@ Deliverable není „funguje to", ale rozhodnutí, jestli si to v produkci zaslo
 
 ## Fallback
 
-- Nestíhá se: části A, B a krok 8 (měření) stačí jako deliverable — student vidí zapojení
-  Frameworku a cenu orchestrace. Část C se dodělá jako samostudium proti `solution/`.
+- Nestíhá se: části A, B a krok 8 (měření) stačí jako deliverable — student vidí Framework
+  demo a cenu orchestrace. Část C se dodělá jako samostudium proti `solution/`.
 - Nestabilní model endpoint: multi-agent je na něm nejcitlivější. Snížit počet dotazů
   ze čtyř na dva a měření provést jednou, ne opakovaně.
 

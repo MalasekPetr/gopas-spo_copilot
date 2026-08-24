@@ -18,27 +18,35 @@ tabulka stropu: co zvládl, co ne, a za jak dlouho byl hotový.
 
 ### Část A — scaffold a instructions
 
-1. <!-- TODO: scaffoldnout Declarative Agent v Toolkitu; projit strukturu projektu -->
-2. <!-- TODO: napsat instructions ze scenare: role, scope, ton, pravidlo odmitnuti
-     mimo-scope dotazu. Iterovat aspon jednou -- prvni verze nikdy nesedi. -->
+1. V Toolkitu scaffoldni **deklarativního agenta** (šablona podle aktuální verze —
+   instruktor promítá). Projdi strukturu projektu: manifest aplikace,
+   `declarativeAgent.json`, `env/`.
+2. Napiš instructions ze scénáře: role (IT support), scope (runbooky), tón, pravidlo
+   odmítnutí mimo-scope dotazů. **Iteruj aspoň jednou** — první verze nikdy nesedí;
+   obě verze si ponech, rozdíl je součást pointy.
 
 ### Část B — knowledge a capabilities
 
-3. <!-- TODO: knowledge = knihovna Runbooky (OneDriveAndSharePoint capability) -->
-4. <!-- TODO: pridat jednu dalsi capability dle aktualniho schematu (napr. WebSearch)
-     a rict, proc ji Support Asistent chce / nechce -->
+3. Zapoj knowledge: knihovna `Runbooky` přes capability **`OneDriveAndSharePoint`**
+   (URL webu promítne instruktor).
+4. Přidej jednu další capability podle aktuálního schématu (např. `WebSearch`) a napiš
+   jednou větou, proč ji Support Asistent **chce, nebo nechce** — každá capability
+   rozšiřuje, kam agent smí.
 
 ### Část C — provision a měření
 
-5. <!-- TODO: Provision do tenantu; overit, ze agent je videt v M365 Copilotu -->
-6. <!-- TODO: pustit ctyri testovaci dotazy; zaznamenat vysledek a cas stavby -->
+5. **Provision** do tenantu; ověř, že agent je vidět v M365 Copilotu pod tvým účtem.
+6. Pusť čtyři testovací dotazy ze scénáře; zaznamenej výsledek každého z nich
+   a **celkový čas stavby** (od scaffoldu po první odpověď).
 
 ### Část D — strop
 
-7. <!-- TODO: tabulka: dotaz 1-2 (zvladl -- knowledge), dotaz 3 (akce s validaci -- kde
-     presne narazil), dotaz 4 (vynucene odmitnuti -- co udelaly instructions). -->
-8. <!-- TODO: pojmenovat, co by se stalo, kdyby zakaznik chtel POUZE deklarativniho
-     agenta -- a ktera zadani by to uplne stacilo -->
+7. Vyplň tabulku stropu: dotazy 1–2 (zvládl — knowledge z Runbooků), dotaz 3 (akce
+   s validací — **kde přesně** narazil), dotaz 4 (vynucené odmítnutí — co udělaly
+   instructions a proč to není enforcement).
+8. Odpověz písemně: co by se stalo, kdyby zákazník chtěl **pouze** deklarativního
+   agenta? U jakých zadání by to úplně stačilo — a které body scénáře (3–5) by
+   zůstaly neuzavřené?
 
 ## Ověření
 

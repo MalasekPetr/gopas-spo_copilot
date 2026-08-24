@@ -1,7 +1,7 @@
 # Lab · První SharePoint Copilot App — scaffold a Copilot Workbench
 
 > Modul: `spfx-copilot-apps` · Odhad: 40 min · Režim: **hands-on** (deploy = instruktorské demo)
-> Jazyk: TypeScript (jediný TS-first lab kurzu, záměrně) · Scénář: [`../../scenario-support-agent.md`](../../scenario-support-agent.md)
+> Jazyk: TypeScript · Scénář: [`../../scenario-support-agent.md`](../../scenario-support-agent.md)
 
 ## Cíl
 

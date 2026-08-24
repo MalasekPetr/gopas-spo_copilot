@@ -1,7 +1,7 @@
 # Lab · Instrumentace pro-code agenta do Agent 365
 
 > Modul: `agent-365-governance` · Odhad: 70 min · Režim: **instruktorské demo + implementační část studentů**
-> Jazyk: C# · Scénář: [`../../scenario-support-agent.md`](../../scenario-support-agent.md)
+> Jazyk: TypeScript · Scénář: [`../../scenario-support-agent.md`](../../scenario-support-agent.md)
 
 ## Cíl
 

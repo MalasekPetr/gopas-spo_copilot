@@ -1,7 +1,8 @@
 # SPO_COPILOT — Microsoft 365 Agents SDK a Copilot Extensions
 
 Zdrojové materiály kurzu **SPO_COPILOT** (GOPAS). Vše je psané v Markdownu s Mermaid diagramy,
-renderovatelné přímo na GitHubu. 5 dní, pro-code kurz (C# primárně, TypeScript parity).
+renderovatelné přímo na GitHubu. 5 dní, pro-code kurz (TypeScript primárně; C# jen
+v instruktorských demech Agent Frameworku).
 
 > [!IMPORTANT] Osnova v repu ≠ osnova na webu
 > Repo drží **restrukturalizovanou osnovu odpovídající stacku 2026**. Publikovaná katalogová
@@ -57,6 +58,6 @@ Fáze 1 — **skeleton**. Root soubory a agenda hotové, 16 modulů založených
 kostry (sekce + Mermaid placeholdery). Fáze 2 (rozpracování do plné hloubky) běží den po dni,
 v pořadí 1→5, s autorskou revizí mezi dny.
 
-Blokující předpoklad před Fází 2: **rozhodnutí o model endpointu** pro custom engine agenty
-(viz [`environment.md`](environment.md)) — Business Basic + Copilot Credits nedává inference
-endpoint pro vlastní kód.
+Model endpoint pro custom engine agenty: **instruktorský Foundry deployment** (rozhodnuto
+2026-08-24, viz [`environment.md`](environment.md)) — Business Basic + Copilot Credits
+nedává inference endpoint pro vlastní kód.

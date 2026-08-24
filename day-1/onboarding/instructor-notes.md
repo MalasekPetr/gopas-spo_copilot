@@ -7,13 +7,14 @@
 
 ## Go/no-go — KLÍČOVÉ, otestovat před během
 
-- **Model endpoint rozhodnutý a otestovaný** (varianta A instruktorský Foundry deployment,
-  nebo B GitHub Models). Bez toho nepojede LLM turn v dalším bloku ani 7 dalších modulů.
-  Budget cap nastavený — 20 studentů v loopu utrží účet.
+- **Model endpoint = instruktorský Foundry deployment** (rozhodnuto 2026-08-24) —
+  nasazený a otestovaný. Bez něj nepojede LLM turn v `agents-sdk-core` (opener D2) ani
+  7 dalších modulů; den 1 ho nepotřebuje, klíče se rozdávají ráno D2. Hard cap na
+  deploymentu nastavený — 20 studentů v loopu utrží účet.
 - Scaffoldnout referenční projekt **den předem** aktuální verzí Toolkitu. Názvy šablon
   se mění; screenshot v labu zestárne rychleji než text.
 - Ověřit, že rozšíření VS Code lze na kurzovních strojích instalovat (politika).
-- Ověřit `dotnet --version` na jednom stroji z učebny, ne jen na svém.
+- Ověřit `node --version` (LTS) na jednom stroji z učebny, ne jen na svém.
 - Účty `user.11`–`user.30` aktivní, hesla vytištěná, MFA vyřešená.
 
 ## Tripwires

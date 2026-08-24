@@ -17,29 +17,35 @@ custom engine) a schopnost říct u konkrétního zadání, **která příčka s
 
 ### Část A — agent builder hands-on (PAYG)
 
-1. <!-- TODO: student si sam nakliknuti builder agenta na zadani ze scenare
-     (instructions + knowledge); zmeri cas stavby a pusti ctyri testovaci dotazy -->
+1. V M365 Copilotu otevři **agent builder** a naklikni agenta na zadání ze scénáře:
+   instructions (role, scope, odmítání) + knowledge (SharePoint). Změř **čas stavby**
+   a pusť čtyři testovací dotazy; výsledky si zapiš — je to první sloupec tabulky.
 
 ### Část A2 — Copilot Studio demo (instruktor)
 
-2. <!-- TODO: behem dema si student znaci: cas stavby, kde instruktor narazil,
-     ktere z ctyr testovacich dotazu agent zvladl -->
+2. Během dema si zapisuj: čas stavby, kde instruktor narazil, a které ze čtyř testovacích
+   dotazů Studio agent zvládl.
 
 ### Část B — srovnávací tabulka
 
-3. <!-- TODO: tabulka: hosting / model a penezenka / knowledge / akce s validaci /
-     middleware a guardraily / ALM a verzovani / governance (Agent 365) / strop -->
-4. <!-- TODO: k tabulce doplnit sloupce "deklarativni agent (D2)" a "custom engine (D1-D5)"
-     zatim jako hypotezu -- studenti si je behem tydne overi a opravi -->
+3. Vyplň srovnávací tabulku — řádky: **hosting / model a peněženka / knowledge / akce
+   s validací / middleware a guardraily / ALM a verzování / governance (Agent 365) /
+   strop**; sloupce: agent builder, Copilot Studio.
+4. Doplň sloupce **„deklarativní agent (dnes odpoledne)"** a **„custom engine (D2–D5)"**
+   zatím jako hypotézu — během týdne si je ověříš a opravíš.
 
 ### Část C — rozhodnutí
 
-5. <!-- TODO: tri mini-zadani (jine nez scenar); student ke kazdemu prirkne pricku osy
-     a jednu vetu proc. Spravna odpoved u aspon jednoho JE no-code/low-code. -->
+5. Tři mini-zadání — ke každému přiřkni příčku osy a jednu větu proč:
+   - **a)** Interní FAQ nad produktovou dokumentací pro obchodní tým; vlastní si ho
+     obchod sám, žádné akce.
+   - **b)** Stavový dotaz na tikety v ServiceNow a založení požadavku přes existující
+     konektor; zákazník má zavedenou Power Platform governance.
+   - **c)** Agent pro externí zákazníky na veřejném webu, vlastní autentizace, smluvní SLA.
 
 ## Ověření
 
-- [ ] Tabulka vyplněná pro agent builder a Copilot Studio (sloupce D2/custom engine jako hypotéza).
+- [ ] Tabulka vyplněná pro agent builder a Copilot Studio (sloupce deklarativní/custom engine jako hypotéza).
 - [ ] Student umí říct, které z čtyř testovacích dotazů Studio agent zvládl a proč ne zbytek.
 - [ ] U tří mini-zadání přiřknutá příčka osy s odůvodněním — aspoň jednou no-code/low-code.
 
@@ -53,4 +59,4 @@ custom engine) a schopnost říct u konkrétního zadání, **která příčka s
 ## Zdroje (Microsoft)
 
 - [Microsoft Copilot Studio — overview](https://learn.microsoft.com/en-us/microsoft-copilot-studio/fundamentals-what-is-copilot-studio)
-- [Build agents with the Copilot Studio agent builder](https://learn.microsoft.com/en-us/microsoft-365-copilot/extensibility/copilot-studio-agent-builder)
+- [Build agents with the Copilot Studio agent builder](https://learn.microsoft.com/en-us/microsoft-365/copilot/extensibility/agent-builder)

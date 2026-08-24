@@ -40,8 +40,8 @@ Tenhle kurz je pro-code, což mění offboarding i přípravu:
 
 ## Offboarding — co skripty nepokryjí (ruční kroky)
 
-1. **Rotace / zneplatnění klíčů k model endpointu** — pokud jel instruktorský Foundry
-   deployment, klíče byly rozdané 20 lidem.
+1. **Rotace / zneplatnění klíčů k model endpointu** — kurz jede na instruktorském Foundry
+   deploymentu (rozhodnuto 2026-08-24), klíče byly rozdané 20 lidem.
 2. **Cleanup Azure resource group** pro instruktorská dema (Functions, AI Search, Foundry).
 3. **PAYG spending policies**: Microsoft 365 admin center → Copilot → Cost Management.
 4. **Deklarativní agenti**: Microsoft 365 admin center → Integrated apps.

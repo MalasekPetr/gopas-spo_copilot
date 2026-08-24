@@ -2,7 +2,8 @@
 
 ## Timing
 
-- ~60 min výklad + 75 min lab. První blok nejhustšího dne — jet ráno, dokud jsou svěží.
+- ~60 min výklad + 75 min lab. **Blok 2 dne 3** (po `prompt-orchestration`) — jet ještě
+  dopoledne, dokud jsou svěží; nejtěžší látka dne.
 - Část D labu (měření ceny) **nevynechávat**. Bez ní si studenti odnesou „multi-agent je
   lepší", což je špatná lekce.
 

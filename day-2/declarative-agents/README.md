@@ -21,51 +21,91 @@ kurzu.
 
 ### Agents Toolkit ve VS Code
 
-<!-- TODO: scaffold, struktura projektu, Provision, kde ziji soubory manifestu.
-     Lineage: Toolkit = nastupce Teams Toolkitu, sirsi zaber. -->
+- **Lineage: Teams Toolkit → Microsoft 365 Agents Toolkit** — širší záběr (agenti, ne jen
+  Teams aplikace). Ve starších návodech potkáte původní název.
+- Scaffold z šablony deklarativního agenta → projekt s manifesty, žádný serverový kód.
+- Struktura projektu: manifest aplikace + `declarativeAgent.json` (jméno se může lišit
+  podle verze šablony) + ikony + prostředí (`env/`).
+- **Provision** = nahrání do tenantu pod přihlášeným účtem; agent se objeví v M365
+  Copilotu. Bez buildu, bez hostingu, bez registrace bota.
+- Tady vzniká návyk **repo-as-code**: manifest je soubor v gitu, změna agenta je commit.
 
 ### Anatomie deklarativního agenta
 
-<!-- TODO: declarativeAgent.json: name, description, instructions, knowledge
-     (capabilities), actions. Nosna pointa: manifest je to, co schvaluje admin --
-     kod nevidi, protoze zadny neni. -->
+- `declarativeAgent.json`: `name`, `description`, **`instructions`** (orchestrace slovy),
+  **`capabilities`** (knowledge — kde smí hledat), **`actions`** (odkaz na OpenAPI popis).
+- **Nosná pointa: manifest je to, co schvaluje admin.** Kód nevidí, protože žádný není —
+  celý agent je deklarace. To je governance výhoda, kterou custom engine musí doplácet
+  prací (D4).
+- Model, orchestrace, retrieval i vynucení permissions dodává platforma M365 Copilotu.
 
 ```mermaid
-%% TODO: diagram -- manifest -> provision -> agent v M365 Copilotu; co dodava platforma
 flowchart LR
-  A[placeholder] --> B[placeholder]
+  M[manifest<br/>instructions + capabilities + actions] -->|Provision z Toolkitu| T[tenant]
+  T --> A[agent v M365 Copilotu]
+  subgraph P[dodava platforma]
+    direction LR
+    MOD[model] --- ORCH[orchestrator] --- SI[semantic index<br/>+ permissions]
+  end
+  A --- P
 ```
 
 ### Instructions jako orchestrace bez kódu
 
-<!-- TODO: co vsechno se da vyresit dobre napsanymi instructions: ton, scope, odmitani,
-     formaty odpovedi, postup reseni. Kde instructions prestavaji stacit (validace,
-     deterministicke vetve, audit). POZOR: instructions nejsou system prompt vlastniho
-     modelu -- model i runtime patri Copilotu. -->
+- Dobře napsané instructions zvládnou překvapivě mnoho: **tón, scope, odmítání
+  mimo-scope dotazů, formát odpovědí, postup řešení** („nejdřív hledej v runboocích,
+  pak nabídni eskalaci").
+- Iterace je normální — první verze instructions nesedí nikdy (uvidíte v labu).
+- **Kde instructions přestávají stačit**: validace vstupů, deterministické větve
+  („vždy, ne většinou"), auditní stopa rozhodnutí. Slova nejsou enforcement — to je
+  celá pointa middleware v D3.
+- **POZOR: instructions nejsou system prompt vlastního modelu.** Model i runtime patří
+  Copilotu; instructions jsou vstup do cizí pipeline, ne kontrola nad ní. Vlastní system
+  prompt přijde až s custom enginem (D3).
 
 ### Capabilities — co všechno umí aktuální verze manifestu
 
-<!-- TODO: projit aktualni schema: OneDriveAndSharePoint, Copilot connectors, WebSearch,
-     CodeInterpreter, GraphicArt, TeamsMessages, EmailMessages, People... vcetne toho,
-     co je manifest-only. Enumerovat proti aktualni verzi schematu, ne z pameti. -->
+- Knowledge a schopnosti se **zapínají deklarací**: `OneDriveAndSharePoint` (náš lab —
+  knihovna `Runbooky`), Copilot connectors, `WebSearch`, `CodeInterpreter`, `GraphicArt`,
+  `TeamsMessages`, `EmailMessages`, `People`…
+- Část funkcí je **manifest-only** — jinde než v deklarativním agentovi je nedostanete.
+- Každá capability rozšiřuje, kam agent smí — tedy i co může uniknout. Výběr capabilities
+  je první bezpečnostní rozhodnutí kurzu (vrací se v D5).
+- **Enumerovat proti aktuální verzi schématu, ne z paměti** — seznam se mění po měsících
+  (viz Stav produktu níže).
 
 ### Akce deklarativně — API plugin
 
-<!-- TODO: OpenAPI popis -> akce v deklarativnim agentovi; auth moznosti; kde konci
-     (zadna vlastni validace, zadny retry pod kontrolou). Jen vyklad + instruktorske demo,
-     hands-on akce prijdou v actions-graph (custom engine). -->
+- Akce = **OpenAPI popis** připojený k manifestu; orchestrátor Copilotu sám rozhodne,
+  kdy akci zavolat. Auth: none / API key / OAuth podle popisu.
+- **Kde to končí**: žádná vlastní validace parametrů, žádný retry pod tvou kontrolou,
+  žádná auditní stopa volání. Dotaz 3 ze scénáře („eskaluj s validovanými parametry")
+  tady spolehlivě nevyřešíš.
+- Jen výklad + instruktorské demo — hands-on akce přijdou v `actions-graph` (D2, custom
+  engine), kde budou pod kontrolou.
 
 ### TypeSpec
 
-<!-- TODO: TypeSpec for Copilot jako typovany zpusob definice; kdy to pomaha proti
-     rucnimu JSON. -->
+- **TypeSpec for Microsoft 365 Copilot** = typovaná definice agenta místo ručního JSON;
+  kompiluje se do manifestu.
+- Pomáhá, když manifest roste: typová kontrola, opakované bloky, review v PR čitelnější
+  než diff JSON. Pro dnešní lab stačí JSON; TypeSpec ukázka je v repu jako parita.
 
 ### Strop deklarativní cesty
 
-<!-- TODO: srovnavaci tabulka na TOM SAMEM zadani ze scenare: co deklarativni agent
-     zvladne za 15 minut a co nezvladne vubec (akce s validaci, middleware, vlastni
-     orchestrace, vlastni telemetrie, vlastni model). Navrat k rozhodovaci ose z D1 --
-     ctvrta pricka za agent builderem a Studiem. -->
+Stejné zadání (scénář Support Asistenta), poctivá bilance:
+
+| Schopnost | Deklarativní agent | Custom engine (zbytek týdne) |
+|---|---|---|
+| Odpovědi z runbooků s citací (dotazy 1–2) | ✅ za 15 minut | ✅ za dva dny práce |
+| Tón, scope, formát odpovědí | ✅ instructions | ✅ system prompt |
+| Akce s validací parametrů (dotaz 3) | ❌ OpenAPI bez validace | ✅ action handler (D2) |
+| Vynucené odmítnutí (dotaz 4) | ⚠️ instructions = prosba, ne enforcement | ✅ middleware (D3) |
+| Vlastní model / orchestrace / telemetrie | ❌ patří Copilotu | ✅ tvoje (D2–D4) |
+| Hosting, provoz, náklady | ✅ nula — platí platforma | ⚠️ tvoje odpovědnost (D4–D5) |
+
+- Návrat k ose z dopoledne: tohle je **čtvrtá příčka** za agent builderem a Studiem.
+  Kde tabulka končí ❌, začíná zítřejší ráno — a to je celý zbytek kurzu.
 
 ## Klíčové rozlišení
 

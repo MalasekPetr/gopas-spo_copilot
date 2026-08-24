@@ -51,7 +51,7 @@ flowchart LR
      RAG bez vlastniho indexu: zadna replikace dat, ACL respektovane, data zustavaji
      v tenantu. Opravneni: Files.Read.All + Sites.Read.All. Limity: 200 req/user/h,
      max 25 vysledku, queryString 1500 znaku. Rozdil proti deklarativnimu agentovi,
-     kde je knowledge deklarace v manifestu (declarative-agents, rano). -->
+     kde je knowledge deklarace v manifestu (declarative-agents, vcera). -->
 
 <!-- TODO: alternativa Graph Search API (funguje i bez Copilot/PAYG, ale BEZ semantic
      indexu -- jen lexikalni search + ACL trimming) -- pojmenovat jako fallback vetev,

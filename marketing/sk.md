@@ -65,7 +65,7 @@ golden setom, obranu proti prompt injection a nákladový model.
 
 Kurz stavia na rozhodovacej kompetencii: kedy deklaratívny agent, kedy custom engine, kedy
 Copilot Studio a kedy Microsoft Foundry — a ako tú voľbu obhájiť pred zákazníkom aj pred
-interným security tímom. Kód sa píše v **C#**, s TypeScript ukážkami pre paritu.
+interným security tímom. Kód sa píše v **TypeScripte** (Node.js, Microsoft 365 Agents SDK).
 
 ## Pre koho je kurz určený
 
@@ -76,8 +76,8 @@ interným security tímom. Kód sa píše v **C#**, s TypeScript ukážkami pre 
 
 ## Predpoklady
 
-- Základy C# (úroveň kurzu GOC2125) — **primárny jazyk kurzu**
-- Základy JavaScriptu (JS_PROG1) a TypeScriptu (JS_TS1) — pre ukážky parity
+- Základy JavaScriptu (JS_PROG1) a TypeScriptu (JS_TS1) — **primárny jazyk kurzu**
+- Základy C# (úroveň kurzu GOC2125) — výhodou (inštruktorské demá Agent Frameworku)
 - REST a JSON
 - Základy Azure a Microsoft 365
 - Skúsenosť s Microsoft Graph (výhodou)
@@ -87,7 +87,7 @@ interným security tímom. Kód sa píše v **C#**, s TypeScript ukážkami pre 
 
 - 5 dní, inštruktorom vedený kurz s praktickými labmi
 - úroveň: pokročilí
-- kód v **C#**, TypeScript ukážky pre paritu
+- kód v **TypeScripte** (Node.js)
 
 > [!NOTE] Pre editora
 > Cena zámerne vynechaná — doplní ju obchodné oddelenie GOPAS priamo v CMS/cenníku.
@@ -96,7 +96,7 @@ interným security tímom. Kód sa píše v **C#**, s TypeScript ukážkami pre 
 
 ### Deň 1 — Mapa stacku, no-code/low-code a prvý agent
 
-- **Onboarding, prostredie & toolchain** — VS Code, Microsoft 365 Agents Toolkit, .NET SDK,
+- **Onboarding, prostredie & toolchain** — VS Code, Microsoft 365 Agents Toolkit, Node.js,
   Agents Playground; tri modely účtovania (Copilot licencia, Copilot Credits, inference).
 - **Mapa ciest tvorby agentov & rozhodovacia os** — architektúra Copilotu; deklaratívny vs.
   custom engine agent; Agents SDK, Agent Framework, Copilot Studio, Microsoft Foundry,

@@ -48,7 +48,7 @@
 - Zpět: `agents-sdk-core` (chybové větve — tady se z nich stává hostingová strategie),
   `actions-graph` (429/Retry-After je konkrétní případ retry politiky; deklarované akce
   se musí potkat s manifestem), `agent-framework` (workflow vs. Durable),
-  `declarative-agents` (D2 — provisioning deklarativního agenta jako protějšek publikace).
+  `declarative-agents` (D1 — provisioning deklarativního agenta jako protějšek publikace).
 - Dopředu: `agent-365-governance` (publikovaný agent potřebuje identitu a telemetrii),
   `evaluation-quality` (D5 — latence hostingu je součást kvality),
   `perf-cost-lifecycle` (odolnost, cache, náklady, verzování → promotion), `capstone`

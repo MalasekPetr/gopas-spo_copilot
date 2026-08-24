@@ -167,13 +167,15 @@ rozsah agent governance ověřovat u vendora před během.
 ## Podporované jazyky Agents SDK
 
 **C#** (.NET), **JavaScript/TypeScript** (Node), **Python**.
-V tomto kurzu: **C# primárně**, TypeScript parity úryvky, Python jen zmínkou — viz
+V tomto kurzu: **TypeScript primárně** (publikum jsou SPFx vývojáři); C# jen tam, kde
+Microsoft JS SDK nemá — Agent Framework (D3, instruktorské demo) a
+Microsoft.Extensions.AI.Evaluation (D5, zmínka); Python jen zmínkou — viz
 [`CONVENTIONS.md`](CONVENTIONS.md).
 
 ## Hosting — endpoint agenta a orchestrace okolo
 
-Dvě různé otázky: kde běží **vždy dostupný HTTP endpoint agenta** (ASP.NET Core aplikace)
-a kde běží **orchestrace okolo něj**.
+Dvě různé otázky: kde běží **vždy dostupný HTTP endpoint agenta** (Node.js/Express
+aplikace) a kde běží **orchestrace okolo něj**.
 
 | Volba | Kdy |
 |---|---|

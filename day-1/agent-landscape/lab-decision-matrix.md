@@ -1,6 +1,6 @@
 # Lab · Rozhodovací matice — tři zadání, tři různé odpovědi
 
-> Modul: `agent-landscape` · Odhad: 50 min · Režim: **hands-on** (návrhový lab, bez kódu)
+> Modul: `agent-landscape` · Odhad: 45 min · Režim: **hands-on** (návrhový lab, bez kódu)
 > Scénář: [`../../scenario-support-agent.md`](../../scenario-support-agent.md)
 
 ## Cíl
@@ -17,24 +17,31 @@ Pro tři různá zadání vybrat cestu tvorby agenta a **odůvodnit ji tak, jak 
 
 ### Část A — tři zadání
 
-1. <!-- TODO: zadani 1 — HR FAQ nad dokumenty v SharePointu, vlastnikem je HR, zadne akce.
-     Ocekavana odpoved: deklarativni agent / Agent Builder. -->
-2. <!-- TODO: zadani 2 — schvalovaci proces s Dataverse a Power Automate, vlastnik je
-     business department, ma Power Platform governance. Ocekavana odpoved: Copilot Studio. -->
-3. <!-- TODO: zadani 3 — Support Asistent (nas scenar): akce nad internim API, hranice
-     opravneni, auditovatelnost, CI/CD. Ocekavana odpoved: custom engine pres Agents SDK. -->
+Ke každému zadání vyber cestu tvorby a zapiš **jeden** primární důvod:
+
+1. **Zadání 1 — HR FAQ.** HR tým chce agenta, který odpovídá zaměstnancům na dotazy
+   (benefity, dovolená, směrnice) z dokumentů v knihovně SharePointu. Vlastníkem řešení
+   je HR, žádné akce, žádná integrace mimo M365.
+2. **Zadání 2 — schvalování služebních cest.** Business oddělení chce agenta, který
+   provede žadatele schvalovacím procesem: data v Dataverse, schvalovací flow v Power
+   Automate. Zákazník má zavedenou Power Platform governance (PPAC, DLP, Managed
+   Environments) a řešení bude vlastnit business, ne IT.
+3. **Zadání 3 — Support Asistent (náš scénář).** Akce nad interním ticket API s validací
+   parametrů, hranice oprávnění, auditovatelnost, source control a CI/CD — body 3–5
+   ze [`scenario-support-agent.md`](../../scenario-support-agent.md).
 
 ### Část B — matice
 
-4. <!-- TODO: student vyplni matici: cesta / vlastnik / infrastruktura / model a inference /
-     governance a registry / ALM / co to stoji / kdo to udrzuje za dva roky -->
+4. Pro každé zadání vyplň řádek matice: **cesta / vlastník řešení / infrastruktura /
+   model a inference (kdo platí) / governance a registry / ALM / co to stojí / kdo to
+   udržuje za dva roky**.
 
 ### Část C — obhajoba
 
-5. <!-- TODO: pair-share: student obhajuje svou volbu, druhy hraje zakaznika, ktery chce
-     Copilot Studio na vsechno. Instruktor moderuje. -->
-6. <!-- TODO: spolecne: u ktereho zadani by se odpoved zmenila, kdyby zakaznik uz mel
-     Agent 365? A kdyby nemel Azure subscription? -->
+5. Pair-share: obhaj svou volbu u přiděleného zadání; kolega hraje zákazníka, který chce
+   Copilot Studio na všechno. Argumentuj maticí, ne preferencí — instruktor moderuje.
+6. Společně: u kterého zadání by se odpověď změnila, kdyby zákazník už měl **Agent 365**?
+   A kdyby **neměl Azure subscription**?
 
 ## Ověření
 

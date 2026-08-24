@@ -16,40 +16,97 @@ Blok, za který zákazník platí nejvíc. Odpovídá na otázku, se kterou stud
 
 ### Architektura Copilotu — co je runtime a co je kanál
 
-<!-- TODO: M365 Copilot jako pracovni plocha; orchestrator; semantic index; Work IQ -->
+- **M365 Copilot je pracovní plocha, ne agent.** Uživatel v ní potkává agenty — vlastní
+  i cizí. Kdo staví agenta, staví obsah do této plochy (nebo mimo ni, a to je rozhodnutí).
+- **Orchestrátor Copilotu**: plánuje, volí knowledge a akce, drží konverzaci. U deklarativního
+  agenta pracuje **za tebe** — dodáváš mu jen instructions, knowledge a akce.
+- **Semantic index**: vyhledání nad tenantem s vynucením permissions. Zadarmo v ceně
+  platformy — vlastní retrieval je proti němu rozhodnutí s cenovkou (D2).
+- **Work IQ signály**: kontext uživatele (kalendář, vztahy, dokumenty) — dostupný platformě,
+  ne tvému custom kódu.
+- **Kanál ≠ runtime.** Teams a M365 Copilot jsou kanály; kde agent *běží*, je jiná otázka —
+  a přesně tu řeší zbytek mapy.
 
 ```mermaid
-%% TODO: diagram -- vrstvy stacku: kanaly / orchestrace / SDK / runtime / control plane
 flowchart TB
-  A[placeholder] --> B[placeholder]
+  subgraph CH[Kanaly]
+    direction LR
+    T[Teams] --- MC[M365 Copilot] --- W[web / vlastni UI]
+  end
+  subgraph OR[Orchestrace]
+    direction LR
+    CO[orchestrator Copilotu<br/>deklarativni agent] --- AF[Agent Framework<br/>custom engine]
+  end
+  subgraph RT[Runtime a data]
+    direction LR
+    SI[semantic index + Work IQ] --- MOD[model: Copilot infra<br/>nebo vlastni endpoint]
+  end
+  SDK[Agents SDK: transport, stav, routing]
+  CP[Agent 365: control plane - identita, telemetrie, governance]
+  CH --> SDK --> OR --> RT
+  CP -. registruje a dohlizi .- OR
 ```
 
 ### Microsoft nesjednocuje — vrstvy koexistují
 
-<!-- TODO: strategie "build agents, your way": no-code / low-code / pro-code / PaaS / control plane.
-     Nosna pointa: neni to jeden nastroj nahrazujici druhy, je to vrstvena mapa. -->
+- Strategie zní **„build agents, your way"**: no-code (agent builder), low-code (Copilot
+  Studio), pro-code (Agents SDK + Agent Framework), PaaS (Foundry Agent Service) a nad tím
+  control plane (Agent 365).
+- **Nosná pointa: není to jeden nástroj nahrazující druhý — je to vrstvená mapa.** Každá
+  vrstva cílí jiné publikum a jiné vlastnictví řešení. Koexistence je záměr, ne dluh.
+- Konzultant, který zná jen jeden konec osy, neprodává řešení, ale svůj zvyk.
 
 ### Pět cest tvorby
 
-<!-- TODO: Agent Builder / Copilot Studio / Agents SDK / Agent Framework / Foundry Agent Service.
-     U kazde: kdo to vlastni, co to potrebuje, kde to bezi, jak se to governuje. -->
+| Cesta | Kdo ji vlastní | Co potřebuje | Kde běží | Governance |
+|---|---|---|---|---|
+| **Copilot agent builder** | koncový uživatel / business | M365 Copilot nebo PAYG | uvnitř M365 Copilotu | omezené sdílení, bez ALM |
+| **Copilot Studio** | business / citizen dev + IT | Studio licenci, Copilot Credits | Power Platform | PPAC, DLP, Managed Environments; **auto-registrace do Agent 365** |
+| **Agents SDK (custom engine)** | vývojový tým | model endpoint, hosting, CI/CD | tvoje infrastruktura (App Service, Container Apps…) | tvoje práce: instrumentace do Agent 365 (D4) |
+| **Agent Framework** | vývojový tým | běží **uvnitř** SDK aplikace | tam, kde SDK aplikace | dtto custom engine; jen C#/Python |
+| **Foundry Agent Service** | vývojový tým / platform tým | Azure subscription | PaaS v Azure | Foundry Control Plane + Entra Agent ID |
+
+- Agent builder a Studio jsi viděl/uvidíš naživo v dalším bloku; deklarativní agent
+  (Toolkit) je šestá příčka mezi Studiem a custom enginem — stavíš ho dnes odpoledne.
 
 ### Rozhodovací osa
 
-<!-- TODO: rozhodovaci strom. Vstupy: potrebuje vlastni orchestraci? vlastni model?
-     source control a CI/CD? externi kanaly? kdo to bude udrzovat? jaky je governance model? -->
+Pořadí otázek je důležité — governance a údržba rozhodují častěji než technologie:
+
+1. **Potřebuje vlastní orchestraci nebo vlastní model?** Ne → zůstaň deklarativně/low-code.
+2. **Potřebuje akce s validací, audit, source control a CI/CD?** Ano → custom engine.
+3. **Má zákazník Power Platform governance (PPAC, DLP) a vlastní to business?** → Studio.
+4. **Stačí instructions + knowledge nad tenantem?** Sdílí se přes org → deklarativní agent;
+   jen pro sebe/tým → agent builder.
+5. **Kdo to bude udržovat za dva roky?** Odpověď „nikdo z IT" diskvalifikuje pro-code.
 
 ```mermaid
-%% TODO: diagram -- rozhodovaci strom volby cesty
 flowchart TD
-  A[placeholder] --> B[placeholder]
+  Q1{vlastni model nebo<br/>orchestrace?} -->|ano| CE[custom engine<br/>Agents SDK]
+  Q1 -->|ne| Q2{akce s validaci, audit,<br/>CI/CD?}
+  Q2 -->|ano| CE
+  Q2 -->|ne| Q3{business vlastni reseni,<br/>Power Platform governance?}
+  Q3 -->|ano| ST[Copilot Studio]
+  Q3 -->|ne| Q4{sdileni pres org?}
+  Q4 -->|ano| DA[deklarativni agent<br/>Toolkit]
+  Q4 -->|jen ja / tym| AB[agent builder]
+  CE --> Q5{multi-agent,<br/>dlouhe workflow?}
+  Q5 -->|ano| AF[+ Agent Framework]
+  CE --> Q6{hosting bez<br/>vlastni infra?}
+  Q6 -->|ano| FAS[Foundry Agent Service]
 ```
 
 ### Copilot Studio — poctivě, ne jako soupeř
 
-<!-- TODO: Copilot Studio je soucast Power Platform (PPAC, DLP, Managed Environments,
-     Dataverse, ALM, Copilot Credits). Kdyz zakaznik rekne "Copilot Studio", casto
-     nevedomky rika "Power Platform governance". Kde Studio vyhrava a kde ne. -->
+- Copilot Studio **je Power Platform** — PPAC, DLP, Managed Environments, Dataverse,
+  Copilot Credits, ALM přes solutions. Marketing ho prezentuje šířeji, admin a licenční
+  model je Power Platform. Tohle studenti jinde nedostanou.
+- Když zákazník řekne „chceme Copilot Studio", často nevědomky říká „chceme Power Platform
+  governance" — a to je legitimní požadavek, ne omyl.
+- **Kde Studio vyhrává**: business vlastní řešení, konektory a Power Automate v zadání,
+  governance zdarma (auto-registrace do Agent 365), rychlost od nápadu k nasazení.
+- **Kde ne**: akce s validací parametrů, deterministické větve, vlastní middleware,
+  vlastní telemetrie, source control nad celým řešením — přesně body 3–5 našeho scénáře.
 
 > [!IMPORTANT] Poznámka pro lektora i studenty
 > Cílem bloku **není** prodat pro-code. Cílem je rozhodovací kompetence. Student, který umí
@@ -69,9 +126,9 @@ flowchart TD
 ## Naše prostředí
 
 Hands-on, bez kódu a bez tenantu — rozhodovací lab. Hned po něm osu materializuje živý
-showcase ([`../no-code-showcase/`](../no-code-showcase/)). Doporučená volba se v dalších
-dnech staví reálně (custom engine přes Agents SDK) a deklarativního agenta si student
-postaví také, v [`../../day-2/declarative-agents/`](../../day-2/declarative-agents/).
+showcase ([`../no-code-showcase/`](../no-code-showcase/)). Deklarativního agenta si
+student postaví ještě dnes ([`../../day-2/declarative-agents/`](../../day-2/declarative-agents/))
+a doporučená volba se v dalších dnech staví reálně (custom engine přes Agents SDK, od D2).
 
 ## Lab
 Viz [`lab-decision-matrix.md`](lab-decision-matrix.md).

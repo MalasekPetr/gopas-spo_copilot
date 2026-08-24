@@ -19,7 +19,9 @@
 
 - **Nesklouznout do prodeje pro-code.** Publikum jsou pro-code lidé a rádi si nechají potvrdit,
   že low-code je hračka. To je pedagogicky škodlivé: u zákazníka pak neobhájí volbu, jen ji
-  vyhlásí. Zadání 2 v labu je záměrně **správně** Copilot Studio.
+  vyhlásí. Zadání 2 v labu je záměrně **správně** Copilot Studio. (Očekávané odpovědi labu:
+  1 = deklarativní agent / agent builder, 2 = Copilot Studio, 3 = custom engine přes
+  Agents SDK — v labu je studenti nemají, drž je u sebe.)
 - Studenti pletou **Agents SDK s orchestrátorem**. Držet čistě: SDK = transport, stav, routing;
   orchestrace = Agent Framework nebo vlastní kód. Microsoft to říká explicitně — Agents SDK
   není model, orchestrační engine ani no-code builder.
@@ -44,8 +46,9 @@
 
 - Zpět: toolchain z `onboarding`.
 - Dopředu: osa se materializuje hned v `no-code-showcase` (agent builder + Copilot Studio
-  naživo); rozhodnutí „custom engine" se realizuje v `agents-sdk-core`; deklarativního
-  agenta student postaví v `declarative-agents` (D2), aby srovnání nezůstalo teoretické;
+  naživo); deklarativního agenta student postaví ještě dnes v `declarative-agents`, aby
+  srovnání nezůstalo teoretické; rozhodnutí „custom engine" se realizuje v
+  `agents-sdk-core` (ráno D2);
   governance vrstva mapy se otevře v `agent-365-governance` (D4).
 - Nit rozhodování: tenhle blok → `knowledge-grounding` (kdy retrieval nedělat sám) →
   `agent-framework` (kdy multi-agent) → `event-driven-hosting` (kde to běží).

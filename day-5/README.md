@@ -19,7 +19,9 @@ architektura postavená z artefaktů celého týdne.
 > na pair-share. Jádro capstonu (end-to-end architektura + evaluační matice + rollback
 > plán) zůstává vždy.
 
-Reálná zátěž ~6,5 h s ventily (35 + 130 + 110 min + dva elastické bloky). Blok 3 útočí na
+Reálná zátěž ~6,8 h s ventily (jádro 35 + 130 + 130 min + dva elastické bloky, dohromady
+min. ~110 min: blok 4 jako výklad bez labu, capstone na 60). Bez ventilů až 8,9 h — den
+stojí a padá s jejich použitím. Blok 3 útočí na
 **vlastního agenta studenta** z nosné linky — prompt injection přes obsah v knowledge
 zdroji. To je nejsilnější „aha" moment kurzu: obrana není v promptu, ale v middleware
 a v minimalizaci scope.

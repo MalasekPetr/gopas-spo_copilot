@@ -1,7 +1,7 @@
 # Lab · Timeouty, idempotence, hosting a publikace
 
 > Modul: `event-driven-hosting` · Odhad: 95 min · Režim: **instruktorské demo + lokální část studentů**
-> Jazyk: C# · Scénář: [`../../scenario-support-agent.md`](../../scenario-support-agent.md)
+> Jazyk: TypeScript · Scénář: [`../../scenario-support-agent.md`](../../scenario-support-agent.md)
 
 ## Cíl
 
@@ -19,7 +19,7 @@ s manifestem a verzí.
 
 ### Část A — demo hostingu (instruktor)
 
-1. <!-- TODO: nasadit ENDPOINT agenta (App Service / Container Apps — ASP.NET Core app);
+1. <!-- TODO: nasadit ENDPOINT agenta (App Service / Container Apps — Node.js app);
       pro srovnani ukazat cold start consumption Functions a jeho dopad na prvni odpoved -->
 2. <!-- TODO: ukazat Durable orchestraci na dlouhe uloze (fan-out pres vic runbooku) -->
 3. <!-- TODO: ukazat Foundry Agent Service jako hostovanou alternativu a publikaci do M365 Copilotu -->

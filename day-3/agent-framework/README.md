@@ -8,10 +8,18 @@
 > **není vůbec** — ani multi-agent orchestrace, ani A2A. Přitom je to vrstva, kterou pro-code
 > tým nad Agents SDK reálně používá, jakmile jeden prompt přestane stačit.
 
+> [!WARNING] Jazyková výjimka kurzu (stav k 2026-08)
+> Agent Framework existuje jen v **C# a Pythonu** — JS/TS SDK nemá. Framework se proto
+> ukazuje jako **instruktorské demo v C#**; studentský lab staví tutéž orchestraci
+> (triage + resolver) **ručně v TypeScriptu nad Agents SDK**. Rozdíl „co Framework dává
+> navíc" je závěrečná reflexe labu — a zároveň lekce rozhodovací osy: volba jazyka
+> zužuje dostupný stack.
+
 ## Cíle
 - Vědět, kde končí Agents SDK a začíná orchestrace — a proč to jsou dvě vrstvy.
-- Použít **Microsoft Agent Framework** uvnitř agenta postaveného na Agents SDK.
-- Rozdělit úlohu na víc agentů (**triage + resolver**) a vědět, kdy to **nedělat**.
+- Vidět **Microsoft Agent Framework** v akci (instruktorské demo, C#) a umět říct,
+  co dává navíc proti ruční orchestraci.
+- Rozdělit úlohu na víc agentů (**triage + resolver**, ručně v TS) a vědět, kdy to **nedělat**.
 - Rozumět **A2A** a orchestračním vzorům (sekvence, fan-out/fan-in, handoff, supervizor).
 
 ## Výklad
@@ -74,8 +82,9 @@ sequenceDiagram
 
 ## Naše prostředí
 
-Hands-on, bez tenantu — potřebuje jen **model endpoint**. Pozor: multi-agent násobí volání
-modelu, tedy tokeny. Nastavit v labu limit iterací.
+Hands-on (TS orchestrace), bez tenantu — potřebuje jen **model endpoint**; Framework část
+je instruktorské demo v C# (jediné místo kurzu, kde instruktor potřebuje .NET SDK).
+Pozor: multi-agent násobí volání modelu, tedy tokeny. Nastavit v labu limit iterací.
 
 ## Lab
 Viz [`lab-multi-agent-triage.md`](lab-multi-agent-triage.md). Referenční řešení v `solution/`.
@@ -95,5 +104,6 @@ získal — a **co tím zaplatil** (latence, tokeny, horší debug).
 
 > [!WARNING] Ověřit k datu běhu — stav k 2026-08.
 > Nejrychleji se vyvíjející vrstva celého stacku. Před **každým** během ověřit: aktuální
-> názvy typů a balíčků Agent Frameworku, stav podpory **A2A** v Agents SDK, a jestli se
-> nezměnil doporučený způsob zapojení Frameworku do SDK aplikace. Přebuildovat `solution/`.
+> názvy typů a balíčků Agent Frameworku, stav podpory **A2A** v Agents SDK, a hlavně
+> **jestli už Framework nemá JS/TS SDK** — pokud ano, lab přepnout z ruční orchestrace
+> na Framework a demo zrušit. Přebuildovat C# demo i TS `solution/`.

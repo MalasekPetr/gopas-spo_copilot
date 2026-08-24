@@ -1,7 +1,7 @@
 # Lab · Akce, validace parametrů a hranice oprávnění
 
 > Modul: `actions-graph` · Odhad: 75 min · Režim: **hands-on**
-> Jazyk: C# · Scénář: [`../../scenario-support-agent.md`](../../scenario-support-agent.md)
+> Jazyk: TypeScript · Scénář: [`../../scenario-support-agent.md`](../../scenario-support-agent.md)
 
 ## Cíl
 

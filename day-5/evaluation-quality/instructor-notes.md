@@ -2,8 +2,8 @@
 
 ## Timing
 
-- ~55 min výklad + 75 min lab. Poslední blok dne 4 — lab je delší, ale části B a D
-  nevyžadují model, takže se dají odjet i při únavě.
+- ~55 min výklad + 75 min lab. **Blok 2 dne 5** (po orchestry openeru) — lab je delší,
+  ale části B a D nevyžadují model, takže se dají odjet i při únavě.
 - **Část E (souhrnná tabulka týdne) nevynechávat.** Deset minut, a je to moment, kdy studenti
   poprvé vidí celý týden jako jednu křivku. Bez ní působí kurz jako série cvičení.
 

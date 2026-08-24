@@ -11,7 +11,7 @@
 - Ověřit, které **Graph permissions** studentský účet (Business Basic, ne admin) reálně
   dostane a co s nimi lze v labu přečíst. Pokud nic užitečného, připravit mock Graph endpoint
   jako primární variantu, ne jako fallback.
-- Mock ticket API v `solution/` musí běžet na čistém stroji (port, .NET verze).
+- Mock ticket API v `solution/` musí běžet na čistém stroji (port, Node verze).
 - Připravit app-only konfiguraci pro část D **dopředu** — improvizovat app registraci
   před 20 lidmi se nedělá. App-only credentials se studentům **rozdávají** (rozhodnutí
   autora 2026-08-06; demo tenant, jen fiktivní data): secret s krátkou platností,

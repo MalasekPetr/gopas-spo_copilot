@@ -16,10 +16,13 @@ appsettings.Local.json
 **/.localConfigs.*
 env/.env.*.user
 
-# .NET build vystupy (solution/*.cs referencni reseni)
+# Node build vystupy (solution/*.ts referencni reseni)
+node_modules/
+dist/
+lib/
+*.tsbuildinfo
+
+# .NET (jen instruktorska dema: Agent Framework D3)
 bin/
 obj/
 *.user
-
-# Node (TypeScript parity ukazky)
-node_modules/

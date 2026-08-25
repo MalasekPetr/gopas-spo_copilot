@@ -139,6 +139,26 @@ sequenceDiagram
 - Pravidlo: **MCP nezbavuje odpovědnosti.** Za to, co agent udělal, ručíš ty, i když nástroj
   napsal někdo jiný.
 
+### Co nemusí dělat model
+
+Validace v kódu místo v promptu je speciální případ obecnějšího pravidla: **u každého
+kroku zadání se ptej, jestli ho musí dělat model.** Většinou nemusí.
+
+- **Deterministické** (API, parser, regex, výpočet) — hodnota je na známém místě.
+- **Extrakce** (levný model, strukturovaný výstup) — hodnota v textu je, kolísá rozložení.
+- **Inference** (reasoning model) — hodnota se **odvozuje** z víc faktů.
+
+Dělicí čára mezi druhým a třetím: *hledáš hodnotu, nebo ji odvozuješ?* Variabilita
+rozložení není důvod pro uvažování.
+
+> [!IMPORTANT] Nejdražší chyba není špatný model, ale neudělaný rozpad
+> Když se zadání nerozloží na kroky, jediná zbylá páka je koupit větší model — nejdražší
+> a nejméně účinná varianta. Dobrý rozpad potřebu silného modelu většinou **odstraní**.
+>
+> Rozbor včetně case study (vlastníci firmy: celé PDF → předfiltr → **strukturované API
+> bez modelu**) a toho, proč se spolehlivost vynucuje kontrolou a ne modelem, je
+> v [`explainer-deterministic-first.md`](explainer-deterministic-first.md).
+
 ## Klíčové rozlišení
 - **Delegated** (dědí permissions uživatele) vs. **app-only** (vidí všechno) — a proč je
   app-only nejčastější zdroj exfiltrace u agentů.
@@ -146,6 +166,8 @@ sequenceDiagram
   udělat tuhle konkrétní věc pro tohoto uživatele.
 - **MCP tool** (externí kontrakt) vs. **action handler** (tvůj kód) — jiné vlastnictví, jiný audit.
 - **Model navrhuje parametry** ≠ parametry jsou validní.
+- **Hledat hodnotu** (extrakce, levný model) vs. **odvozovat ji** (inference, reasoning
+  model) vs. **přečíst ji ze zdroje** (API, parser — žádný model).
 
 ## Naše prostředí
 

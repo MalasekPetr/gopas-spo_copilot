@@ -66,6 +66,29 @@ flowchart LR
   O --- U6
 ```
 
+### Nástroje v tomhle modulu — spočítat si to
+
+Model z předchozího diagramu je v repu spustitelný. Obojí počítá tokeny **turn po turnu
+a kolo po kole**, ne paušálem:
+
+| Nástroj | K čemu | Jak spustit |
+|---|---|---|
+| [`cost-visual.html`](cost-visual.html) | výklad a demo u tabule — posuvníky, šest archetypů jako předvolby | otevřít v prohlížeči, nic se neinstaluje |
+| [`cost-calculator.mjs`](cost-calculator.mjs) | vlastní naměřená čísla, srovnání modelů, citlivost | `node cost-calculator.mjs --model gpt-5-mini` |
+
+- Ceny se stahují z veřejného retail API Azure a ukládají do
+  [`prices-snapshot.json`](prices-snapshot.json). Bez sítě jede `--offline` ze snapshotu;
+  `--refresh-prices` si vynutí nové stažení. **Ve snapshotu je datum stažení — ukázat ho,**
+  ceny se mění a číslo bez data je k ničemu.
+- Přepínače: `--model`, `--cache <0..1>`, `--history <n>`, `--turns <n>`, `--users <n>`,
+  `--scenario <muj.json>`. Nápověda: `--help`.
+- **Vstupní čísla ber z `usage` metadat vlastního agenta**, ne z odhadu. Odhad tokenů se
+  systematicky plete o řád — proto se v labu měří.
+- Nejsilnější dvojice předvoleb ve vizuálu je *Vlastníci z justice.cz* proti
+  *↳ s deterministickým předfiltrem*: ukazuje, že větší úsporu než ladění promptu přinese
+  **vyhození kroku, který model nepotřeboval** —
+  [`../../day-2/actions-graph/explainer-deterministic-first.md`](../../day-2/actions-graph/explainer-deterministic-first.md).
+
 ### Tři peněženky znovu — teď s čísly
 
 Rozlišení z [`../../GLOSSARY.md`](../../GLOSSARY.md) se tady poprvé potkává s reálným účtem

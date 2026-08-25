@@ -2,10 +2,14 @@
 
 ## Timing
 
-- ~45 min výklad + 60 min lab. **Blok 2 dne 3.**
+- ~35 min výklad + 55 min lab. **Blok 3 dne 3** (poslední blok dne).
 - Část D (app-only protipříklad) je jen ~10 min a je to **nejsilnější moment labu**.
   Po zkrácení jede jako demo — ale **nevynechávat**, je to předehra ke scope minimalizaci
   v `middleware-policy` (D4).
+- **Pět minut na konci výkladu nech na princip „co nemusí dělat model"**
+  ([`explainer-deterministic-first.md`](explainer-deterministic-first.md)). Validace v kódu,
+  kterou blok učí, je jen speciální případ — obecné pravidlo zní: u každého kroku zadání
+  se ptej, jestli ho musí dělat model. Case study s ARES je konkrétní a padne dobře.
 
 ## Go/no-go — KLÍČOVÉ, otestovat před během
 

@@ -3,9 +3,11 @@
 ## Timing
 
 - **Elastický blok 60–120 min.** Poslední blok kurzu; studenti občas odcházejí dřív.
-- Rozpad při 120 min: A 20 / B 25 / C 20 / D 15 / E dle počtu lidí / F 10.
+- Rozpad při 120 min: A 25 / B 25 / C 20 / D 15 / E dle počtu lidí / F 10.
 - Rozpad při 60 min: A 15 / B 20 / D 10 / pair-share 10 / F 5. Části C a F zkrátit,
   **A, B a D nikdy nevypouštět**.
+- Část A má tři kroky (diagram, hranice oprávnění, **co nedělá model**). Při 60 min
+  se třetí krok nedělá písemně — projde se ústně nad diagramem, ~2 min na osobu.
 
 ## Go/no-go — otestovat před během
 
@@ -20,12 +22,15 @@
 ## Tripwires
 
 - **Blueprint bez odůvodnění** = diagram. Nejčastější výsledek: studenti nakreslí architekturu
-  a rozhodnutí nezmíní. Část B4 („co by to rozhodnutí změnilo") je test, jestli rozhodnutí
+  a rozhodnutí nezmíní. Část B5 („co by to rozhodnutí změnilo") je test, jestli rozhodnutí
   skutečně udělali, nebo jen zapsali, co udělali v labu.
+- **V diagramu dělá všechno model** (část A3). Typický první návrh: šipka do modelu u každého
+  kroku. Ptát se u konkrétní šipky „proč tohle nemůže udělat volání API?" — obecná otázka
+  nefunguje, konkrétní šipka ano.
 - **Chybí business KPI.** Studenti jsou technici a napíšou pass rate a latenci. Sponzor
   rozhoduje podle nákladu na dotaz a podílu vyřešených bez člověka. Bez toho projekt
   nedostane peníze — to je věta, kterou si mají odnést.
-- „Budeme to sledovat" místo „měří se takhle, z téhle telemetrie". Část C7.
+- „Budeme to sledovat" místo „měří se takhle, z téhle telemetrie". Část C8.
 - **Vlastní zadání z praxe je lepší než Support Asistent.** Aktivně to nabízet — studenti
   se často stydí. Blueprint pro reálný projekt je hodnota, kterou si odnesou do práce.
 - Studenti chtějí v capstonu **stavět**. Není to stavba; je to obhajoba. Když je čas navíc,

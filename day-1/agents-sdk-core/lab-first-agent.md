@@ -39,7 +39,7 @@ zbytek týdne.
    Čtyři hodnoty dostaneš od instruktora. Založ `.env` v kořeni projektu:
 
    ```dotenv
-   AZURE_OPENAI_ENDPOINT=https://<nazev>.cognitiveservices.azure.com/
+   AZURE_OPENAI_ENDPOINT=https://<nazev>.openai.azure.com/
    AZURE_OPENAI_API_KEY=<klic-od-instruktora>
    AZURE_OPENAI_DEPLOYMENT=support-agent
    AZURE_OPENAI_API_VERSION=2024-10-21

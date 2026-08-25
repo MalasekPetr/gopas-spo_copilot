@@ -16,7 +16,7 @@ zadání z praxe studenta — a obhájit ho před skupinou.
 
 ## Kroky
 
-### Část A — architektura (20 min)
+### Část A — architektura (25 min)
 
 1. Nakresli architekturu **na jednu stránku**, po vrstvách: kanály (Teams / M365 Copilot) →
    `AgentApplication` → middleware pipeline → orchestrace (triage + resolver) → knowledge
@@ -27,6 +27,12 @@ zadání z praxe studenta — a obhájit ho před skupinou.
    uživatele, kudy odcházejí data mimo tenant (volání modelu!), co se loguje a kam, a kde
    stojí obranné vrstvy. Označ **každý přechod hranice** — u zákazníka je to první otázka
    security týmu a rozhoduje o tom, jestli projekt vůbec začne.
+3. **Vyznač v diagramu, které kroky model nepotřebují.** Projdi cestu dotazu krok po kroku
+   a u každého odpověz: dělá to model, nebo kód? Kde je to kód, napiš čím (API, parser,
+   výpočet, whitelist). Postup i kritéria:
+   [`../../day-2/actions-graph/explainer-deterministic-first.md`](../../day-2/actions-graph/explainer-deterministic-first.md).
+   Blueprint, ve kterém model dělá všechno, je nejdražší a nejhůř obhajitelná varianta —
+   a je to nejčastější podoba prvního návrhu.
 
 ### Část B — rozhodnutí (25 min)
 
@@ -65,25 +71,26 @@ zadání z praxe studenta — a obhájit ho před skupinou.
 
 ### Část E — prezentace (dle času)
 
-10. Odprezentuj blueprint před skupinou — **5 minut na osobu**, v pořadí: architektura,
+11. Odprezentuj blueprint před skupinou — **5 minut na osobu**, v pořadí: architektura,
     tři nejdůležitější rozhodnutí, KPI s prahy, největší riziko a rollback. Pak **jedna
     otázka od publika a jedna od instruktora** (typicky „co by tohle rozhodnutí změnilo?").
     Při zkráceném režimu totéž ve dvojicích (pair-share) — formát otázek zůstává.
 
 ### Část F — další kroky (10 min)
 
-11. Zapiš si certifikační cestu: **AI-103** (Azure AI Apps and Agents Developer Associate)
+12. Zapiš si certifikační cestu: **AI-103** (Azure AI Apps and Agents Developer Associate)
     a **AI-200** (Azure AI Cloud Developer Associate) — **ne** retirované AI-102 a AZ-204.
     Projděte s instruktorem aktuální **Certification Poster (PDF)**, navazující větve
     (AI-500, GH-600, AB-900) a ověřte jejich stav k dnešnímu datu; odkaz na poster si
     odnes s sebou.
-12. Napiš si **jednu konkrétní věc, kterou uděláš do 14 dnů**, s datem: „pustím golden set
+13. Napiš si **jednu konkrétní věc, kterou uděláš do 14 dnů**, s datem: „pustím golden set
     nad naším agentem", „sepíšu hranice oprávnění našeho bota", „přihlásím se na AI-103".
     Jednu věc, ne seznam — seznam se nedělá.
 
 ## Ověření
 
 - [ ] Architektura na jedné stránce, s vyznačenými hranicemi oprávnění.
+- [ ] V diagramu je vidět, **které kroky model nepotřebují** a čím jsou nahrazené.
 - [ ] Checklist rozhodnutí vyplněný — každé s odůvodněním **a s tím, co by ho změnilo**.
 - [ ] KPI matice obsahuje technické metriky **s prahy** i business KPI.
 - [ ] U každého KPI je řečeno, **jak se měří** (ne „budeme sledovat").

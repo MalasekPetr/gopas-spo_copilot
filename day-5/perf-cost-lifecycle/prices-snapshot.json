@@ -1,0 +1,24 @@
+{
+  "fetchedAt": "2026-08-25",
+  "region": "westeurope",
+  "models": {
+    "gpt-5-nano": {
+      "label": "gpt-5-nano (Global)",
+      "in": 0.0439,
+      "cached": 0.0044,
+      "out": 0.3514
+    },
+    "gpt-5-mini": {
+      "label": "gpt-5-mini (DataZone)",
+      "in": 0.2416,
+      "cached": 0.0242,
+      "out": 1.933
+    },
+    "gpt-5": {
+      "label": "gpt-5 (DataZone)",
+      "in": 1.2081,
+      "cached": 0.1208,
+      "out": 9.6648
+    }
+  }
+}

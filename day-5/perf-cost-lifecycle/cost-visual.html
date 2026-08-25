@@ -1,0 +1,528 @@
+<title>Účet za agenta</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&family=Zilla+Slab:wght@500;600;700&display=swap">
+
+<style>
+  :root {
+    --ground:#F4F6F7; --surface:#FFFFFF; --surface-2:#EDF1F2; --line:#D3DCDF;
+    --ink:#101A1D; --ink-2:#3D4E53; --muted:#66787E;
+    --accent:#00849E; --accent-soft:#E2F0F3;
+    --c-in:#00849E; --c-out:#CE7C00; --c-reason:#96407A;
+    --shadow:0 1px 2px rgba(16,26,29,.06), 0 8px 24px rgba(16,26,29,.05);
+    --r:10px;
+    --f-display:"Zilla Slab", Georgia, serif;
+    --f-sans:"IBM Plex Sans", system-ui, -apple-system, sans-serif;
+    --f-mono:"IBM Plex Mono", ui-monospace, Consolas, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ground:#131A1D; --surface:#1A2327; --surface-2:#212C31; --line:#2E3C42;
+      --ink:#E8EEF0; --ink-2:#BCCBD0; --muted:#8B9EA4;
+      --accent:#0093AE; --accent-soft:#10333B;
+      --c-in:#0093AE; --c-out:#C0821F; --c-reason:#A85A82;
+      --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px rgba(0,0,0,.3);
+    }
+  }
+  :root[data-theme="dark"] {
+    --ground:#131A1D; --surface:#1A2327; --surface-2:#212C31; --line:#2E3C42;
+    --ink:#E8EEF0; --ink-2:#BCCBD0; --muted:#8B9EA4;
+    --accent:#0093AE; --accent-soft:#10333B;
+    --c-in:#0093AE; --c-out:#C0821F; --c-reason:#A85A82;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px rgba(0,0,0,.3);
+  }
+
+  *{box-sizing:border-box}
+  body{
+    margin:0; background:var(--ground); color:var(--ink);
+    font-family:var(--f-sans); font-size:15px; line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1180px; margin:0 auto; padding:28px 22px 56px}
+
+  header{display:flex; flex-wrap:wrap; align-items:flex-end; gap:16px 24px; margin-bottom:26px}
+  h1{
+    font-family:var(--f-display); font-weight:700; font-size:clamp(28px,4vw,40px);
+    letter-spacing:-.01em; margin:0; text-wrap:balance; line-height:1.1;
+  }
+  .sub{color:var(--muted); font-size:13.5px; margin:6px 0 0; max-width:62ch}
+  .meta{
+    margin-left:auto; font-family:var(--f-mono); font-size:11.5px; color:var(--muted);
+    text-align:right; line-height:1.7; letter-spacing:.01em;
+  }
+
+  .grid{display:grid; grid-template-columns:376px minmax(0,1fr); gap:20px; align-items:start}
+  @media (max-width:920px){ .grid{grid-template-columns:1fr} }
+
+  .panel{
+    background:var(--surface); border:1px solid var(--line); border-radius:var(--r);
+    padding:18px 18px 20px; box-shadow:var(--shadow);
+  }
+  .panel h2{
+    font-family:var(--f-sans); font-size:11px; font-weight:600; letter-spacing:.09em;
+    text-transform:uppercase; color:var(--muted); margin:0 0 14px;
+  }
+  .panel + .panel{margin-top:18px}
+
+  .seg{display:flex; gap:4px; background:var(--surface-2); padding:4px; border-radius:8px}
+  .seg button{
+    flex:1; border:0; background:transparent; color:var(--ink-2); cursor:pointer;
+    font-family:var(--f-mono); font-size:12px; padding:7px 6px; border-radius:6px;
+    transition:background .12s, color .12s;
+  }
+  .seg button[aria-pressed="true"]{background:var(--surface); color:var(--ink); font-weight:600; box-shadow:var(--shadow)}
+  .seg button:focus-visible{outline:2px solid var(--accent); outline-offset:2px}
+
+  .presets{display:flex; flex-direction:column; gap:5px}
+  .presets button{
+    text-align:left; border:1px solid var(--line); background:var(--surface); color:var(--ink-2);
+    border-radius:7px; padding:9px 11px; cursor:pointer; font-family:var(--f-sans); font-size:13px;
+    display:flex; justify-content:space-between; align-items:baseline; gap:10px;
+    transition:border-color .12s, background .12s, color .12s;
+  }
+  .presets button:hover{border-color:var(--accent); color:var(--ink)}
+  .presets button[aria-pressed="true"]{
+    border-color:var(--accent); background:var(--accent-soft); color:var(--ink); font-weight:500;
+  }
+  .presets button:focus-visible{outline:2px solid var(--accent); outline-offset:2px}
+  .presets .p-cost{
+    font-family:var(--f-mono); font-size:11.5px; color:var(--muted);
+    font-variant-numeric:tabular-nums; flex:none;
+  }
+  .presets button[aria-pressed="true"] .p-cost{color:var(--ink-2)}
+  .preset-note{margin:11px 0 0; font-size:12px; color:var(--muted); line-height:1.5; min-height:2.6em}
+
+  .ctl{margin-top:15px}
+  .ctl:first-of-type{margin-top:0}
+  .ctl-top{display:flex; justify-content:space-between; align-items:baseline; gap:10px; margin-bottom:5px}
+  .ctl label{font-size:13px; color:var(--ink-2)}
+  .ctl output{
+    font-family:var(--f-mono); font-size:13px; font-weight:600; color:var(--ink);
+    font-variant-numeric:tabular-nums;
+  }
+  input[type=range]{
+    -webkit-appearance:none; appearance:none; width:100%; height:22px;
+    background:transparent; cursor:pointer; display:block;
+  }
+  input[type=range]::-webkit-slider-runnable-track{height:4px; background:var(--surface-2); border-radius:99px}
+  input[type=range]::-moz-range-track{height:4px; background:var(--surface-2); border-radius:99px}
+  input[type=range]::-webkit-slider-thumb{
+    -webkit-appearance:none; width:16px; height:16px; border-radius:50%;
+    background:var(--accent); border:2px solid var(--surface); margin-top:-6px;
+    box-shadow:0 0 0 1px var(--line);
+  }
+  input[type=range]::-moz-range-thumb{
+    width:16px; height:16px; border-radius:50%; background:var(--accent);
+    border:2px solid var(--surface); box-shadow:0 0 0 1px var(--line);
+  }
+  input[type=range]:focus-visible{outline:2px solid var(--accent); outline-offset:4px; border-radius:4px}
+
+  .tokens{display:grid; grid-template-columns:1fr 1fr; gap:9px 12px}
+  .tok{display:flex; flex-direction:column; gap:3px}
+  .tok label{font-size:11.5px; color:var(--muted)}
+  .tok input{
+    width:100%; font-family:var(--f-mono); font-size:12.5px; padding:6px 8px;
+    border:1px solid var(--line); border-radius:6px; background:var(--surface-2);
+    color:var(--ink); font-variant-numeric:tabular-nums;
+  }
+  .tok input:focus-visible{outline:2px solid var(--accent); outline-offset:1px}
+
+  /* ---- readout ---- */
+  .hero{
+    background:var(--surface); border:1px solid var(--line); border-radius:var(--r);
+    padding:22px 24px; box-shadow:var(--shadow);
+  }
+  .hero-label{
+    font-size:11px; font-weight:600; letter-spacing:.09em; text-transform:uppercase;
+    color:var(--muted); margin:0 0 2px;
+  }
+  .hero-num{
+    font-family:var(--f-mono); font-weight:600; font-size:clamp(40px,7vw,66px);
+    line-height:1; letter-spacing:-.02em; font-variant-numeric:tabular-nums;
+    display:flex; align-items:baseline; gap:10px;
+  }
+  .hero-num .unit{font-size:.34em; font-weight:500; color:var(--muted); letter-spacing:0}
+  .hero-row{display:flex; flex-wrap:wrap; gap:26px; margin-top:18px; padding-top:16px; border-top:1px solid var(--line)}
+  .stat-l{font-size:11px; color:var(--muted); letter-spacing:.05em; text-transform:uppercase}
+  .stat-v{font-family:var(--f-mono); font-size:17px; font-weight:600; font-variant-numeric:tabular-nums; margin-top:2px}
+
+  /* ---- stacked bar ---- */
+  .bar{display:flex; height:38px; border-radius:6px; overflow:hidden; gap:2px; margin-top:6px}
+  .seg-fill{position:relative; transition:flex-grow .18s ease}
+  .seg-fill:first-child{border-radius:6px 0 0 6px}
+  .seg-fill:last-child{border-radius:0 6px 6px 0}
+  .hatch{background-image:repeating-linear-gradient(135deg, rgba(255,255,255,.34) 0 3px, transparent 3px 7px)}
+  .legend{display:flex; flex-wrap:wrap; gap:8px 20px; margin-top:12px}
+  .lg{display:flex; align-items:center; gap:7px; font-size:12.5px; color:var(--ink-2)}
+  .sw{width:11px; height:11px; border-radius:3px; flex:none}
+  .lg b{font-family:var(--f-mono); font-weight:600; color:var(--ink); font-variant-numeric:tabular-nums}
+
+  .callout{
+    margin-top:14px; padding:11px 13px; border-radius:8px; background:var(--accent-soft);
+    font-size:13px; color:var(--ink-2); line-height:1.5;
+  }
+  .callout b{color:var(--ink)}
+
+  .charts{display:grid; grid-template-columns:1fr 1fr; gap:18px; margin-top:18px}
+  @media (max-width:820px){ .charts{grid-template-columns:1fr} }
+  svg{display:block; width:100%; height:auto; overflow:visible}
+  .ax{font-family:var(--f-mono); font-size:10.5px; fill:var(--muted)}
+  .vlab{font-family:var(--f-mono); font-size:11px; font-weight:600; fill:var(--ink); font-variant-numeric:tabular-nums}
+  .nlab{font-family:var(--f-sans); font-size:11.5px; fill:var(--ink-2)}
+  .gridline{stroke:var(--line); stroke-width:1}
+
+  table{border-collapse:collapse; width:100%; font-size:13px; margin-top:12px}
+  th,td{text-align:right; padding:6px 9px; border-bottom:1px solid var(--line)}
+  th:first-child, td:first-child{text-align:left}
+  th{font-size:11px; letter-spacing:.05em; text-transform:uppercase; color:var(--muted); font-weight:600}
+  td{font-family:var(--f-mono); font-variant-numeric:tabular-nums}
+  td:first-child{font-family:var(--f-sans)}
+  details summary{cursor:pointer; font-size:12.5px; color:var(--muted); padding:4px 0}
+  details summary:focus-visible{outline:2px solid var(--accent); outline-offset:2px}
+
+  footer{margin-top:30px; font-size:12px; color:var(--muted); line-height:1.7; max-width:78ch}
+  code{font-family:var(--f-mono); font-size:.92em; background:var(--surface-2); padding:1px 5px; border-radius:4px}
+
+  @media (prefers-reduced-motion: reduce){ *{transition:none !important} }
+</style>
+
+<div class="wrap">
+  <header>
+    <div>
+      <h1>Účet za agenta</h1>
+      <p class="sub">Kolik reálně stojí provoz agenta — a kde se ta cena schovává. Táhni posuvníkem a sleduj, co se stane.</p>
+    </div>
+    <div class="meta" id="meta"></div>
+  </header>
+
+  <div class="grid">
+    <!-- ===== ovládání ===== -->
+    <div>
+      <div class="panel">
+        <h2>Typ agenta</h2>
+        <div class="presets" id="presets" role="group" aria-label="Předvolby scénáře"></div>
+        <p class="preset-note" id="presetNote"></p>
+      </div>
+
+      <div class="panel">
+        <h2>Model</h2>
+        <div class="seg" id="models" role="group" aria-label="Volba modelu"></div>
+      </div>
+
+      <div class="panel">
+        <h2>Provoz</h2>
+        <div class="ctl">
+          <div class="ctl-top"><label for="users">Uživatelů</label><output id="users-o"></output></div>
+          <input type="range" id="users" min="5" max="500" step="5" value="20">
+        </div>
+        <div class="ctl">
+          <div class="ctl-top"><label for="turns">Turnů v konverzaci</label><output id="turns-o"></output></div>
+          <input type="range" id="turns" min="1" max="30" step="1" value="6">
+        </div>
+        <div class="ctl">
+          <div class="ctl-top"><label for="kola">Kol na turn</label><output id="kola-o"></output></div>
+          <input type="range" id="kola" min="1" max="5" step="1" value="2">
+        </div>
+      </div>
+
+      <div class="panel">
+        <h2>Optimalizace</h2>
+        <div class="ctl">
+          <div class="ctl-top"><label for="cache">Cache statické části</label><output id="cache-o"></output></div>
+          <input type="range" id="cache" min="0" max="100" step="5" value="0">
+        </div>
+        <div class="ctl">
+          <div class="ctl-top"><label for="hist">Limit historie</label><output id="hist-o"></output></div>
+          <input type="range" id="hist" min="0" max="30" step="1" value="30">
+        </div>
+        <div class="ctl">
+          <div class="ctl-top"><label for="reason">Reasoning tokenů / kolo</label><output id="reason-o"></output></div>
+          <input type="range" id="reason" min="0" max="800" step="25" value="200">
+        </div>
+      </div>
+
+      <div class="panel">
+        <h2>Složení turnu <span style="font-weight:400;text-transform:none;letter-spacing:0">— z usage metadat</span></h2>
+        <div class="tokens">
+          <div class="tok"><label for="sysP">Systémový prompt</label><input type="number" id="sysP" value="800" min="0" step="50"></div>
+          <div class="tok"><label for="tools">Schémata nástrojů</label><input type="number" id="tools" value="600" min="0" step="50"></div>
+          <div class="tok"><label for="ground">Grounding chunky</label><input type="number" id="ground" value="1500" min="0" step="100"></div>
+          <div class="tok"><label for="resp">Odpověď</label><input type="number" id="resp" value="250" min="0" step="25"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== readout ===== -->
+    <div>
+      <div class="hero">
+        <p class="hero-label">Měsíční náklad</p>
+        <div class="hero-num"><span id="big">—</span><span class="unit">EUR</span></div>
+
+        <div class="hero-row">
+          <div><div class="stat-l">Konverzace</div><div class="stat-v" id="perConv">—</div></div>
+          <div><div class="stat-l">Turn</div><div class="stat-v" id="perTurn">—</div></div>
+          <div><div class="stat-l">Volání modelu / měs.</div><div class="stat-v" id="calls">—</div></div>
+          <div><div class="stat-l">Tokenů / měs.</div><div class="stat-v" id="toks">—</div></div>
+        </div>
+
+        <div style="margin-top:22px">
+          <p class="hero-label" style="margin-bottom:0">Z čeho se cena skládá</p>
+          <div class="bar" id="bar">
+            <div class="seg-fill" id="s-in"  style="background:var(--c-in)"></div>
+            <div class="seg-fill" id="s-out" style="background:var(--c-out)"></div>
+            <div class="seg-fill hatch" id="s-rea" style="background:var(--c-reason)"></div>
+          </div>
+          <div class="legend" id="legend"></div>
+        </div>
+
+        <div class="callout" id="callout"></div>
+      </div>
+
+      <div class="charts">
+        <div class="panel">
+          <h2>Týž scénář, jiný model</h2>
+          <svg id="chartModels" viewBox="0 0 340 168" role="img" aria-label="Srovnání měsíčních nákladů podle modelu"></svg>
+        </div>
+        <div class="panel">
+          <h2>Délka konverzace</h2>
+          <svg id="chartGrowth" viewBox="0 0 340 168" role="img" aria-label="Růst měsíčních nákladů s délkou konverzace"></svg>
+        </div>
+      </div>
+
+      <div class="panel" style="margin-top:18px">
+        <details>
+          <summary>Zobrazit jako tabulku</summary>
+          <table id="tbl">
+            <thead><tr><th>Složka</th><th>Tokenů/měs.</th><th>EUR/měs.</th><th>Podíl</th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </details>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    Ceny: <strong>Azure retail, westeurope, EUR za 1M tokenů</strong>, snapshot ze dne uvedeného vpravo nahoře.
+    Ceníky se mění — před citováním zákazníkovi ověř aktuální stav.
+    Autoritativní výpočet dělá <code>cost-calculator.mjs</code> ve stejné složce; tahle stránka je jeho vizuální dvojče pro výklad.
+    Reasoning se počítá v každém kole, což je konzervativní odhad — ověř na vlastních <code>usage</code> metadatech.
+    <br><br>
+    <strong>Nejsilnější páka není v nastavení modelu, ale v architektuře.</strong>
+    Porovnej dvojici u justice.cz: co udělá deterministický kód (stažení, parsování, nalezení sekce),
+    nemusí dělat model. Ušetří to řádově — a navíc dá <em>přesnou</em> hodnotu místo odvozené,
+    což je u dat z rejstříku rozdíl mezi důkazem a domněnkou.
+  </footer>
+</div>
+
+<script type="module">
+const PRICES = {
+  "gpt-5-nano": { label:"gpt-5-nano", note:"Global",   in:0.0439, cached:0.0044, out:0.3514 },
+  "gpt-5-mini": { label:"gpt-5-mini", note:"DataZone", in:0.2416, cached:0.0242, out:1.9330 },
+  "gpt-5":      { label:"gpt-5",      note:"DataZone", in:1.2081, cached:0.1208, out:9.6648 },
+};
+const PRICE_DATE = "25. 8. 2026";
+let current = "gpt-5-mini";
+
+/* Archetypy. Reasoning je zmereny (gpt-5-mini, 64-128 tokenu na trivialni dotaz);
+   ostatni hodnoty jsou strukturalni odhady — startovni bod, ktery student nahradi
+   vlastnim merenim z usage metadat. */
+const PRESETS = {
+  support: {
+    name:"Support Asistent", hint:"Nosná linka kurzu: grounding nad runbooky, eskalace tiketu.",
+    sysP:800, tools:600, ground:1500, resp:250, reason:200, kola:2, turns:6,
+  },
+  triage: {
+    name:"Triage / klasifikátor", hint:"Klasifikace do tří kategorií. Všechno ostatní je maličké, takže <b>reasoning tvoří většinu ceny</b> — argument pro model, který neuvažuje.",
+    sysP:250, tools:150, ground:0, resp:30, reason:150, kola:1, turns:1,
+  },
+  faktura: {
+    name:"Jak zaúčtovat fakturu?", hint:"Dotaz nad účetní metodikou. Krátká otázka, odpověď s citací, uživatel se doptává.",
+    sysP:600, tools:200, ground:1800, resp:350, reason:250, kola:1, turns:4,
+  },
+  justice: {
+    name:"Vlastníci z justice.cz", hint:"Celé PDF nasypané modelu: „najdi v tom vlastníky“. Funguje — a je to nejdražší i nejméně spolehlivá varianta.",
+    sysP:500, tools:300, ground:3000, resp:200, reason:200, kola:2, turns:2,
+  },
+  justiceDet: {
+    name:"↳ s deterministickým předfiltrem", hint:"Stažení a parsování PDF udělá <b>kód</b>, sekci najde regex, modelu jde jen odstavec. Vstup se zmenší pětinásobně a <b>na zbytek stačí nano</b> — složený efekt.",
+    sysP:400, tools:200, ground:600, resp:200, reason:150, kola:1, turns:1,
+  },
+  pnl: {
+    name:"PnL z výroční zprávy", hint:"Nejdražší archetyp: dlouhý dokument v kontextu, mapování položek a výpočet. Pozor i na <b>velikost kontextového okna</b>, nejen na cenu.",
+    sysP:1500, tools:400, ground:12000, resp:1200, reason:1500, kola:3, turns:2,
+  },
+};
+let activePreset = "support";
+
+const $ = (id) => document.getElementById(id);
+const num = (n, d = 0) => n.toLocaleString("cs-CZ", { minimumFractionDigits:d, maximumFractionDigits:d });
+const eur = (n) => n >= 100 ? num(n,0) : n >= 1 ? num(n,2) : n.toFixed(4).replace(".", ",");
+
+function scenario() {
+  const histRaw = +$("hist").value;
+  return {
+    systemPrompt:+$("sysP").value, toolSchemas:+$("tools").value,
+    grounding:+$("ground").value, userMessage:30, response:+$("resp").value,
+    reasoning:+$("reason").value, kolaPerTurn:+$("kola").value,
+    turnsPerConversation:+$("turns").value,
+    historyLimit: histRaw >= 30 ? Infinity : histRaw,
+    cacheHitRatio:+$("cache").value / 100,
+    users:+$("users").value, conversationsPerUserPerDay:3, daysPerMonth:20,
+  };
+}
+
+function simulate(s, p) {
+  const stat = s.systemPrompt + s.toolSchemas, ex = s.userMessage + s.response;
+  let inTok = 0, cachedTok = 0, outTok = 0, reasonTok = 0, calls = 0;
+  for (let t = 1; t <= s.turnsPerConversation; t++) {
+    const hist = Math.min(t - 1, s.historyLimit) * ex;
+    for (let k = 1; k <= s.kolaPerTurn; k++) {
+      calls++;
+      const cached = stat * s.cacheHitRatio;
+      cachedTok += cached;
+      inTok += stat + s.grounding + s.userMessage + hist - cached;
+      reasonTok += s.reasoning;
+      outTok += s.reasoning + (k === s.kolaPerTurn ? s.response : 0);
+    }
+  }
+  const mult = s.conversationsPerUserPerDay * s.users * s.daysPerMonth;
+  const cIn = (inTok*p.in + cachedTok*p.cached) / 1e6;
+  const cReason = (reasonTok*p.out) / 1e6;
+  const cOut = (outTok*p.out) / 1e6 - cReason;
+  const conv = cIn + cOut + cReason;
+  return { inTok, cachedTok, outTok, reasonTok, calls, cIn, cOut, cReason, conv,
+           month: conv*mult, mult, tokens:(inTok+cachedTok+outTok)*mult };
+}
+
+/* ---------- grafy ---------- */
+function barChart(svg, rows, fmt) {
+  const W=340, rowH=34, padL=88, padR=52, top=6;
+  const H = top + rows.length*rowH + 8;
+  const max = Math.max(...rows.map(r=>r.v)) || 1;
+  svg.setAttribute("viewBox", `0 0 ${W} ${H}`);
+  svg.innerHTML = rows.map((r,i)=>{
+    const y = top + i*rowH, w = Math.max(2, (r.v/max)*(W-padL-padR));
+    return `<g>
+      <text class="nlab" x="0" y="${y+15}" dominant-baseline="middle">${r.k}</text>
+      <rect x="${padL}" y="${y+5}" width="${w}" height="19" rx="4" fill="${r.c}">
+        <title>${r.k}: ${fmt(r.v)} EUR/měs.</title></rect>
+      <text class="vlab" x="${padL+w+7}" y="${y+15}" dominant-baseline="middle">${fmt(r.v)}</text>
+    </g>`;
+  }).join("");
+}
+
+function lineChart(svg, pts, fmt) {
+  const W=340, H=168, padL=44, padR=12, padT=12, padB=26;
+  const max = Math.max(...pts.map(p=>p.v)) || 1;
+  const x = i => padL + (i/(pts.length-1))*(W-padL-padR);
+  const y = v => padT + (1 - v/max)*(H-padT-padB);
+  const line = pts.map((p,i)=>`${i?"L":"M"}${x(i).toFixed(1)},${y(p.v).toFixed(1)}`).join(" ");
+  const area = `${line} L${x(pts.length-1).toFixed(1)},${y(0)} L${x(0).toFixed(1)},${y(0)} Z`;
+  const grid = [0,.5,1].map(f=>`<line class="gridline" x1="${padL}" x2="${W-padR}" y1="${y(max*f)}" y2="${y(max*f)}"/>
+    <text class="ax" x="${padL-6}" y="${y(max*f)+3}" text-anchor="end">${fmt(max*f)}</text>`).join("");
+  const dots = pts.map((p,i)=>`<circle cx="${x(i)}" cy="${y(p.v)}" r="4.5" fill="var(--c-out)" stroke="var(--surface)" stroke-width="2">
+      <title>${p.k} turnů: ${fmt(p.v)} EUR/měs.</title></circle>`).join("");
+  const xlab = pts.map((p,i)=>`<text class="ax" x="${x(i)}" y="${H-8}" text-anchor="middle">${p.k}</text>`).join("");
+  const last = pts[pts.length-1];
+  svg.innerHTML = `${grid}
+    <path d="${area}" fill="var(--c-out)" opacity=".12"/>
+    <path d="${line}" fill="none" stroke="var(--c-out)" stroke-width="2" stroke-linejoin="round"/>
+    ${dots}${xlab}
+    <text class="vlab" x="${x(pts.length-1)}" y="${y(last.v)-12}" text-anchor="end">${fmt(last.v)}</text>`;
+}
+
+/* ---------- render ---------- */
+function render() {
+  const s = scenario(), p = PRICES[current], r = simulate(s, p);
+
+  $("users-o").textContent = s.users;
+  $("turns-o").textContent = s.turnsPerConversation;
+  $("kola-o").textContent = s.kolaPerTurn;
+  $("cache-o").textContent = Math.round(s.cacheHitRatio*100) + " %";
+  $("hist-o").textContent = s.historyLimit === Infinity ? "bez limitu" : s.historyLimit + " turnů";
+  $("reason-o").textContent = s.reasoning;
+
+  $("big").textContent = eur(r.month);
+  $("perConv").textContent = eur(r.conv);
+  $("perTurn").textContent = eur(r.conv / s.turnsPerConversation);
+  $("calls").textContent = num(Math.round(r.calls * r.mult));
+  $("toks").textContent = (r.tokens/1e6).toFixed(1).replace(".", ",") + " M";
+
+  const parts = [
+    { id:"s-in",  key:"vstup",     v:r.cIn,     c:"var(--c-in)" },
+    { id:"s-out", key:"výstup",    v:r.cOut,    c:"var(--c-out)" },
+    { id:"s-rea", key:"reasoning", v:r.cReason, c:"var(--c-reason)" },
+  ];
+  parts.forEach(x => { $(x.id).style.flexGrow = Math.max(x.v, 1e-9); });
+  $("legend").innerHTML = parts.map(x =>
+    `<span class="lg"><span class="sw" style="background:${x.c}"></span>${x.key} <b>${(x.v/r.conv*100).toFixed(0)} %</b></span>`
+  ).join("");
+
+  const rp = r.cReason / r.conv * 100;
+  $("callout").innerHTML = s.reasoning === 0
+    ? `Reasoning vypnutý. Zbývá <b>${(r.cIn/r.conv*100).toFixed(0)} %</b> vstup — a ten se posílá znovu v každém kole.`
+    : `Reasoning je <b>${rp.toFixed(0)} %</b> ceny — za text, který uživatel <b>nikdy neuvidí</b>.
+       Statická část se posílá znovu v každém ze <b>${s.kolaPerTurn} kol</b> každého turnu.`;
+
+  barChart($("chartModels"),
+    Object.values(PRICES).map(pp => ({
+      k: pp.label, v: simulate(s, pp).month,
+      c: pp.label === p.label ? "var(--c-out)" : "var(--c-in)"
+    })), eur);
+
+  lineChart($("chartGrowth"),
+    [2,4,8,16,24].map(t => ({ k:t, v:simulate({...s, turnsPerConversation:t}, p).month })), eur);
+
+  $("tbl").querySelector("tbody").innerHTML = parts.map(x =>
+    `<tr><td>${x.key}</td><td>${num(Math.round((x.key==="vstup"?r.inTok+r.cachedTok:x.key==="výstup"?r.outTok-r.reasonTok:r.reasonTok)*r.mult))}</td>
+     <td>${eur(x.v*r.mult)}</td><td>${(x.v/r.conv*100).toFixed(1)} %</td></tr>`
+  ).join("") + `<tr><td><strong>celkem</strong></td><td>${num(Math.round(r.tokens))}</td><td><strong>${eur(r.month)}</strong></td><td>100 %</td></tr>`;
+
+  $("meta").innerHTML = `${p.label} · ${p.note}<br>westeurope · EUR / 1M<br>ceny ${PRICE_DATE}`;
+  drawPresets();
+}
+
+/* ---------- předvolby ---------- */
+function applyPreset(key) {
+  const q = PRESETS[key]; if (!q) return;
+  activePreset = key;
+  $("sysP").value = q.sysP; $("tools").value = q.tools;
+  $("ground").value = q.ground; $("resp").value = q.resp;
+  $("reason").value = q.reason; $("kola").value = q.kola; $("turns").value = q.turns;
+  $("cache").value = 0; $("hist").value = 30;
+  [...$("presets").children].forEach(b => b.setAttribute("aria-pressed", b.dataset.p === key));
+  $("presetNote").innerHTML = q.hint;
+  render();
+}
+
+function drawPresets() {
+  const s0 = scenario();
+  $("presets").innerHTML = Object.entries(PRESETS).map(([k,q]) => {
+    const sc = { ...s0, systemPrompt:q.sysP, toolSchemas:q.tools, grounding:q.ground,
+                 response:q.resp, reasoning:q.reason, kolaPerTurn:q.kola,
+                 turnsPerConversation:q.turns, cacheHitRatio:0, historyLimit:Infinity };
+    const m = simulate(sc, PRICES[current]).month;
+    return `<button type="button" data-p="${k}" aria-pressed="${k===activePreset}">
+      <span>${q.name}</span><span class="p-cost">${eur(m)}</span></button>`;
+  }).join("");
+}
+
+$("presets").addEventListener("click", e => {
+  const b = e.target.closest("button"); if (b) applyPreset(b.dataset.p);
+});
+
+$("models").innerHTML = Object.entries(PRICES).map(([k,v]) =>
+  `<button type="button" data-m="${k}" aria-pressed="${k===current}">${v.label}</button>`).join("");
+$("models").addEventListener("click", e => {
+  const b = e.target.closest("button"); if (!b) return;
+  current = b.dataset.m;
+  [...$("models").children].forEach(x => x.setAttribute("aria-pressed", x.dataset.m === current));
+  render();
+});
+document.querySelectorAll("input").forEach(el => el.addEventListener("input", () => {
+  activePreset = null;                     // ruční úprava = už to není předvolba
+  $("presetNote").textContent = "Vlastní nastavení — čísla nahraď měřením z usage metadat svého agenta.";
+  render();
+}));
+applyPreset("support");
+</script>

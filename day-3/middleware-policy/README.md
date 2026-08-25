@@ -162,6 +162,11 @@ Least privilege prakticky, seřazeno od nejsilnějšího:
   napsaný kód, který někdo příště změní.
 - Scope je poslední krok bloku **záměrně**: prompt padne → middleware drží → ale hranice
   je oprávnění. Studenti chtějí začít u promptu, a to je přesně opačné pořadí.
+- **Nulté opatření: krok, který neprochází modelem, se nedá promptovat.** Než začneš
+  obranu psát, zeptej se, jestli ten krok model vůbec potřebuje — volání API, parser
+  nebo výpočet nemá útočnou plochu, kterou tenhle blok celou dobu ošetřuje. Není to
+  úspora nákladů, je to **odstranění vektoru**. Postup:
+  [`../../day-2/actions-graph/explainer-deterministic-first.md`](../../day-2/actions-graph/explainer-deterministic-first.md).
 
 ### 7. Safety filtry platformy — a co neřeší
 

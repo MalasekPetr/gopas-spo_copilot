@@ -42,7 +42,7 @@ Bodů 1–2 dosáhne i deklarativní agent. Body 3–5 jsou důvod, proč tenhle
 
 | Den | Modul | Přírůstek |
 |---|---|---|
-| 1 | [`day-1/no-code-showcase/`](day-1/no-code-showcase/) | **benchmark**: čtyři testovací dotazy poprvé, proti naklikanému Studio agentovi |
+| 1 | [`day-1/no-code-showcase/`](day-1/no-code-showcase/) | **baseline**: Support Asistent v agent builderu, sdílený skupině Students — zůstává živý celý týden jako měřítko ([návod](day-1/no-code-showcase/guide-agent-builder.md)) |
 | 1 | [`day-2/declarative-agents/`](day-2/declarative-agents/) | **deklarativní Support Asistent v1** (instructions + knowledge) a jeho změřený strop |
 | 2 | [`day-1/agents-sdk-core/`](day-1/agents-sdk-core/) | scaffold, `AgentApplication`, echo turn → LLM turn v Agents Playgroundu |
 | 2 | [`day-2/knowledge-grounding/`](day-2/knowledge-grounding/) | grounding nad knihovnou `Runbooky` (custom engine) |

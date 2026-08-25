@@ -1,8 +1,34 @@
 # Agenda — pořadí bloků
 
 Jediný zdroj pravdy o pořadí modulů. Složky jsou slugy; pořadí drží tato tabulka.
-Prefix `day-N/` ve slugu je **stabilní identifikátor**, ne garance dne — po prohození
-bloků (viz den 1/2) se složky nepřesouvají.
+Prefix `day-N/` ve slugu je **stabilní identifikátor**, ne garance dne — složky se
+při přesunech bloků nepřejmenovávají.
+
+> [!CAUTION] Sedm složek neodpovídá dni, kdy se učí
+> Po rekalibraci (2026-08-24) prefix ve většině případů **lže**. Nehledej modul podle
+> složky, vždy podle tabulek níže.
+>
+> | Složka | Skutečně se učí |
+> |---|---|
+> | `day-1/agents-sdk-core` | **den 2** |
+> | `day-2/knowledge-grounding` | **den 3** |
+> | `day-2/actions-graph` | **den 3** |
+> | `day-3/agent-framework` | **den 4** |
+> | `day-3/middleware-policy` | **den 4** |
+> | `day-4/event-driven-hosting` | **den 5** |
+> | `day-4/agent-365-governance` | **den 5** |
+>
+> Nejzrádnější je `day-4/` — ze čtyř složek se na dni 4 učí jen `spfx-copilot-apps`.
+> Sedí: `onboarding`, `agent-landscape`, `no-code-showcase` (D1), `declarative-agents`,
+> `data-hygiene` (D2), `prompt-orchestration` (D3), `spfx-copilot-apps` (D4),
+> `evaluation-quality`, `capstone` (D5).
+
+> [!NOTE] Rozhodnuto po prvním běhu: prefix zahodit
+> Den je metadata, ne identita modulu — dva přesuny během jediného dne to ukázaly
+> jednoznačně. Po běhu se složky přejmenují do jedné roviny bez prefixu
+> (`onboarding/`, `agents-sdk-core/`, …) a den zůstane výhradně v této agendě.
+> Znamená to přepsat ~157 křížových odkazů, proto se to nedělá uprostřed týdne:
+> studenti mají repo naklonované a cesty by jim pod rukama zmizely.
 
 **5 dní · 16 povinných bloků · 3–4 bloky/den.** P = povinný, V = volitelný / samostudium.
 Fokus kurzu: **blízké okolí Microsoft 365** — vlastní vektorizace, hluboký Azure a obecná

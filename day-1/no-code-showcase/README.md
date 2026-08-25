@@ -26,16 +26,22 @@ před studenty, na stejném zadání, na které pak celý týden stavíme pro-co
 - Dnes odpoledne k těmto dvěma příčkám přibude třetí (deklarativní agent) — a strop té
   třetí je důvod, proč existuje zbytek kurzu.
 
-### Copilot agent builder — no-code (studentský hands-on)
+### Copilot agent builder — no-code (společně se studenty)
 
-Skript dema — část A labu, každý student sám (PAYG kryje):
+Staví se **společně** a výsledek se **sdílí skupině Students** — je to baseline nosné
+linky, proti které se celý týden srovnává. Krok za krokem včetně referenčního textu
+instructions: [`guide-agent-builder.md`](guide-agent-builder.md).
 
 1. M365 Copilot → vytvořit agenta v **agent builderu**: instructions podle zadání ze
-   scénáře + knowledge = SharePoint (knihovna `Runbooky`, pokud už je indexovaná; jinak
-   libovolný web).
-2. Změřit **čas stavby** (reálně jednotky minut) a pustit čtyři testovací dotazy.
-3. Pojmenovat hranice: **žádné akce s validací, žádná orchestrace, omezené sdílení** —
+   scénáře + knowledge = knihovna `Runbooky`.
+2. Nasdílet skupině **Students**, změřit **čas stavby** a pustit čtyři testovací dotazy
+   do srovnávací tabulky.
+3. Pojmenovat hranice: **žádné akce s validací, žádná orchestrace, žádné verzování** —
    agent žije u uživatele, ne v ALM.
+
+> [!IMPORTANT] Tenhle agent zůstává živý celý týden
+> Nemaže se po bloku. Každý další přírůstek se proti němu měří stejnými čtyřmi dotazy —
+> tabulka v návodu je artefakt, který se doplňuje až do `evaluation-quality` (D5).
 
 ### Copilot Studio — low-code (instruktorské demo)
 

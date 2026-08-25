@@ -15,11 +15,13 @@ custom engine) a schopnost říct u konkrétního zadání, **která příčka s
 
 ## Kroky
 
-### Část A — agent builder hands-on (PAYG)
+### Část A — agent builder (společně s instruktorem)
 
-1. V M365 Copilotu otevři **agent builder** a naklikni agenta na zadání ze scénáře:
-   instructions (role, scope, odmítání) + knowledge (SharePoint). Změř **čas stavby**
-   a pusť čtyři testovací dotazy; výsledky si zapiš — je to první sloupec tabulky.
+1. Postavte **společně** Support Asistenta v agent builderu podle
+   [`guide-agent-builder.md`](guide-agent-builder.md): instructions + knowledge = knihovna
+   `Runbooky`, nasdílení skupině **Students**. Změřte **čas stavby** a pusťte čtyři
+   testovací dotazy; výsledky si zapiš — je to první sloupec tabulky a **baseline
+   celého týdne**.
 
 ### Část A2 — Copilot Studio demo (instruktor)
 

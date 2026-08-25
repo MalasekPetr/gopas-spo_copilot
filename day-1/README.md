@@ -8,6 +8,7 @@ a její živá materializace v no-code/low-code showcase.
 | 1 | Onboarding, prostředí & toolchain | [`onboarding`](onboarding/) | P |
 | 2 | Mapa cest tvorby agentů & rozhodovací osa | [`agent-landscape`](agent-landscape/) | P |
 | 3 | No-code a low-code cesty — showcase | [`no-code-showcase`](no-code-showcase/) | P |
+| — | Návod: Support Asistent v agent builderu *(baseline týdne)* | [`guide-agent-builder.md`](no-code-showcase/guide-agent-builder.md) | — |
 | — | Základy promptování a agentní anatomie | [`opt-prompting-fundamentals`](opt-prompting-fundamentals/) | V |
 
 > [!NOTE] Rozhodovací vrstva **před** kódem. Blok 2 odpovídá na otázku, se kterou studenti

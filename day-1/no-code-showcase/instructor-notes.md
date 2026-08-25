@@ -8,8 +8,12 @@
 
 ## Go/no-go — otestovat před během
 
-- **Licence**: studenti mají PAYG (Copilot Credits) — kryje agent builder, takže část A
-  jede hands-on; **ověřit studentským účtem den předem** (licenční hranice PAYG se mění).
+- **Licence**: studenti mají PAYG (Copilot Credits) — kryje agent builder; **ověřit
+  studentským účtem den předem** (licenční hranice PAYG se mění).
+- **Skupina `Students`** musí existovat a obsahovat `user.11`–`user.30` — agent se do ní
+  sdílí a zůstává živý celý týden jako baseline (viz
+  [`guide-agent-builder.md`](guide-agent-builder.md)). Ověřit členství, ne jen existenci.
+- Knihovna `Runbooky` **zaindexovaná** — bez ní nemá baseline u dotazů 1–2 co vrátit.
   Copilot Studio vlastní licence/trial — jinak Studio část z nahrávky (fallback labu).
 - Obě dema **naskriptovat a projet den předem** — UI obou nástrojů se mění po měsících.
 - Studio agent na zadání ze scénáře postavit dopředu a mít ho v tenantu jako zálohu,
@@ -31,6 +35,10 @@
   tady jen zaseknout kotvu „to je další příčka".
 - Zmínit auto-registraci Studio agentů do Agent 365 **jen jako kotvu** — governance patří
   do [`../../day-4/agent-365-governance/`](../../day-4/agent-365-governance/).
+
+- **Baseline agent se nemaže.** Studenti ho po bloku občas smažou jako cvičnou hračku —
+  říct explicitně, že se k němu celý týden vracíme. Odstraní se až při offboardingu
+  (M365 admin centrum → Integrated apps).
 
 ## Vazby
 

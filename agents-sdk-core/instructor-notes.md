@@ -44,6 +44,11 @@
 
 ## Tripwires
 
+- **Scaffold otevře Problems se dvěma chybami** (ověřeno na reálném projektu 2026-08-25):
+  `activity.text` je `string | undefined` (oprava `?? ""` — a rovnou teaching point
+  „aktivita ≠ text") a ts(5108) v tsconfig (editor má TS 6, projekt 5.x — **neopravovat
+  tsconfig**, přepnout Use Workspace Version). Varování je v labu; kdo ho přeskočí,
+  „opraví" tsconfig a rozbije si build.
 - Studenti s Bot Framework historií hledají **bot registraci a tunel**. Playground je
   nepotřebuje. Říct to explicitně dřív, než se do toho pustí sami.
 - **Záměna Agents SDK a orchestrace.** Padne otázka „kde nastavím, aby agent použil nástroj".

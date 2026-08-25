@@ -43,6 +43,15 @@ zbytek týdne.
 4. Zapiš tři věci, které do stavu **nepatří**: tajemství (klíče, tokeny), velká data
    (celé dokumenty místo odkazu) a PII bez důvodu. Ke každé napiš, kam patří místo toho.
 
+> [!WARNING] Scaffold má dvě chyby v Problems hned po otevření — obě známé
+> **`agent.ts`: `context.activity.text` je `string | undefined`** — ne každá aktivita
+> nese text (karta, příloha, lifecycle event). Oprava: `context.activity.text ?? ""`.
+> Není to bug šablony, je to připomínka, že handler dostává **aktivity**, ne texty.
+>
+> **`tsconfig.json`: `moduleResolution=node10 has been removed`** — VS Code používá
+> vestavěný TS 6, projekt má 5.x. **Tsconfig neopravovat**; přepni editor:
+> `Ctrl+Shift+P` → *TypeScript: Select TypeScript Version* → **Use Workspace Version**.
+
 ### Část C — volání modelu
 
 5. Konfigurace modelu žije tam, kam ji zapsal průvodce Toolkitu (volba **Azure OpenAI**

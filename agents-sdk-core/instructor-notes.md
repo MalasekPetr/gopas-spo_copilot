@@ -76,8 +76,9 @@ konverzace = série turnů nad stavem.* Věta pro zákazníka: turn je jednotka 
   a dialog Entra Client ID se nabízí sám. Nesouvisí — je to simulace OAuth uživatele,
   dnes k ničemu. Skutečná chyba je v terminálu agenta / `trace` v Log Panelu; typicky
   404 DeploymentNotFound (název deploymentu) nebo 401 (klíč). Po opravě env
-  **restart přes F5/Toolkit**, ne jen zabít proces — `.localConfigs.playground` se
-  generuje při startu.
+  **úplný Stop (Shift+F5) a nový F5** — `.localConfigs.playground` generují preLaunch
+  tasky Toolkitu. **Tlačítko Restart v debug liště nestačí** (restartuje proces, tasky
+  nepustí — env oprava se nepropíše; ověřeno naživo 2026-08-26 podle mtime souboru).
 - Defaultní hláška „The agent encountered an error or bug" = hotový slide „před"
   pro část D labu. Crash na dotazu 4 („Kolik bere Novák?") patří do baseline —
   je horší než odmítnutí i než halucinace.

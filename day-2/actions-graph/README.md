@@ -1,6 +1,6 @@
 # Action handlers & integrace s Microsoft Graph
 
-> Typ: povinný · Den: 3 · Odhad: **105 min** (45 výklad + 60 lab) · Publikum: **vývojáři / architekti**
+> Typ: povinný · Den: 3 · Odhad: **90 min** (35 výklad + 55 lab) · Publikum: **vývojáři / architekti**
 > Prostředí: viz [`../../environment.md`](../../environment.md) · Názvosloví: [`../../GLOSSARY.md`](../../GLOSSARY.md)
 
 Agent přestává jen mluvit a začíná něco dělat. Tím se otevírá celá governance otázka.

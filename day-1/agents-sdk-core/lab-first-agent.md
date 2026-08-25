@@ -1,6 +1,6 @@
 # Lab · První agent — AgentApplication, turn, LLM a chybová větev
 
-> Modul: `agents-sdk-core` · Odhad: 75 min · Režim: **hands-on**
+> Modul: `agents-sdk-core` · Odhad: 65 min · Režim: **hands-on**
 > Jazyk: TypeScript · Scénář: [`scenario-support-agent.md`](../../scenario-support-agent.md)
 
 ## Cíl
@@ -97,7 +97,7 @@ zbytek týdne.
 ## Fallback
 
 - **Model endpoint nedostupný**: části A, B a D se dají odjet v echo režimu
-  (chybová větev se testuje proti mocku). Část C se doplní na začátku dne 2.
+  (chybová větev se testuje proti mocku). Část C se doplní hned, jak bude endpoint dostupný.
 - Playground nefunguje: instruktor promítne svůj běh; student pokračuje v editaci kódu
   (deliverable části A/B zůstává plnohodnotný).
 

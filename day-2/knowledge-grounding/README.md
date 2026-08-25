@@ -1,6 +1,6 @@
 # Grounding: Copilot connectors, semantic index, MCP
 
-> Typ: povinný · Den: 3 · Odhad: **100 min** (45 výklad + 55 lab) · Publikum: **vývojáři / architekti**
+> Typ: povinný · Den: 3 · Odhad: **85 min** (35 výklad + 50 lab) · Publikum: **vývojáři / architekti**
 > Prostředí: viz [`../../environment.md`](../../environment.md) · Názvosloví: [`../../GLOSSARY.md`](../../GLOSSARY.md)
 
 Kde agent bere data — a hlavně **kdy si retrieval nemá dělat sám**.

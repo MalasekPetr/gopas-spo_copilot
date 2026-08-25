@@ -1,6 +1,6 @@
 # Lab · Akce, validace parametrů a hranice oprávnění
 
-> Modul: `actions-graph` · Odhad: 75 min · Režim: **hands-on**
+> Modul: `actions-graph` · Odhad: 55 min · Režim: **hands-on**
 > Jazyk: TypeScript · Scénář: [`../../scenario-support-agent.md`](../../scenario-support-agent.md)
 
 ## Cíl

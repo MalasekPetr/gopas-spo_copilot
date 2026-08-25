@@ -1,6 +1,6 @@
 # Lab · Grounding nad knihovnou Runbooky
 
-> Modul: `knowledge-grounding` · Odhad: 65 min · Režim: **hands-on**
+> Modul: `knowledge-grounding` · Odhad: 50 min · Režim: **hands-on**
 > Jazyk: TypeScript · Scénář: [`../../scenario-support-agent.md`](../../scenario-support-agent.md)
 
 ## Cíl

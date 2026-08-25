@@ -2,8 +2,9 @@
 
 ## Timing
 
-- ~50 min (35 výklad + 15 checklist). Mezi publish blokem a governance — drží narativ
-  „agent opustil notebook": org katalog → store → governance.
+- ~50 min (35 výklad + 15 checklist). **Přesunuto na den 2** (odučeno 2026-08-25) —
+  navazuje přímo na `Provision` deklarativního agenta: interní distribuce byla před chvílí,
+  tady je ta veřejná. Narativ „agent opouští notebook" pokračuje až governance na D5.
 - Case study nenafukovat přes 15 min — je to ilustrace procesu, ne produktovka.
 
 ## Go/no-go — otestovat před během
@@ -25,8 +26,10 @@
 
 ## Vazby
 
-- Zpět: `event-driven-hosting` (publikace do org katalogu — předchozí blok),
-  `declarative-agents` (D1 — co se publikuje u deklarativního vs. custom engine),
-  `spfx-copilot-apps` (dnes ráno — store distribuce Apps zatím nepodporovaná, srovnání).
-- Dopředu: `agent-365-governance` (hned potom — publikovaný agent pod governance),
-  `capstone` (store ANO/NE rozhodnutí patří do roadmapy).
+- Zpět: `declarative-agents` (předchozí blok — `Provision` je distribuce do vlastního
+  tenantu; tady je veřejná cesta), `skills` a `sharepoint-agents` (co se vůbec publikovat
+  nedá — SharePoint agent žije s webem).
+- Dopředu: `agents-sdk-core` a dál (D3 — custom engine přidává endpoint, který validace
+  prověřuje; deklarativní agent tuhle plochu nemá), `spfx-copilot-apps` (D4 — store
+  distribuce Copilot Apps zatím nepodporovaná, srovnání), `agent-365-governance` (D5 —
+  publikovaný agent pod governance), `capstone` (store ANO/NE patří do roadmapy).

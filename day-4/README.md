@@ -32,7 +32,6 @@ pokrývající **oba** agenty a nakonec se mu zúží scope.
 
 ## Materiál k samostudiu
 
-[`marketplace-agents`](marketplace-agents/) — podmínky publikace do Marketplace a case study
-Normiqa Navigator. [`event-driven-hosting`](event-driven-hosting/) — osa hostingu, timeouty
+[`event-driven-hosting`](event-driven-hosting/) — osa hostingu, timeouty
 a idempotence; „hosting v kostce" je složený do bloku Agent 365 na D5. Viz
 [`../self-study.md`](../self-study.md).

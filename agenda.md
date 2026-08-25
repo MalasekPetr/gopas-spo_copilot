@@ -16,7 +16,7 @@ při přesunech bloků nepřejmenovávají.
 > | `day-3/prompt-orchestration` | **den 4** |
 > | `day-3/agent-framework` | **den 4** |
 > | `day-3/middleware-policy` | **den 4** |
-> | `day-4/marketplace-agents` | **den 2** (case study Normiqa) |
+> | `day-4/marketplace-agents` | **den 2** |
 > | `day-4/agent-365-governance` | **den 5** |
 >
 > Nejzrádnější je `day-4/` — ze čtyř složek se na dni 4 učí jen `spfx-copilot-apps`.
@@ -35,7 +35,7 @@ při přesunech bloků nepřejmenovávají.
 Fokus kurzu: **blízké okolí Microsoft 365** — vlastní vektorizace, hluboký Azure a obecná
 AI témata jsou vedlejší koleje, ne jádro.
 
-Po rekalibraci prvního běhu (2026-08-24) je pět modulů vyřazeno do samostudia a dva bloky
+Po dvou rekalibracích (2026-08-24 a 25) je pět modulů vyřazeno do samostudia a dva bloky
 sloučeny — přehled a důvody v [`self-study.md`](self-study.md).
 
 > [!IMPORTANT] Osnova je restrukturalizovaná proti webu
@@ -88,13 +88,14 @@ zájmu skupiny: M365 strana nejdřív, kód až od D3.
 | 2 | SharePoint agents *(instruktorské demo)* | `day-2/sharepoint-agents` | P | 30 |
 | 3 | Deklarativní agenti & Agents Toolkit | `day-2/declarative-agents` | P | 100 |
 | 4 | Datová hygiena + SharePoint Advanced Management | `day-2/data-hygiene` | P | 60 |
-| 5 | Case study Normiqa Navigator | `day-4/marketplace-agents` | P | ~50 |
+| 5 | Agenti v Marketplace — podmínky publikace (case study Normiqa Navigator) | `day-4/marketplace-agents` | P | 50 |
 
 > [!NOTE] Bloky 1 a 2 jsou převzaté z GOC224 a zařazené na místě podle zájmu skupiny.
 > Blok 3 se sem přesunul z dne 1 a končí přesně pojmenovaným stropem. Blok 4 je rozšířený
 > o hloubku **SAM** (tři pilíře, RAC vs. RCD, licenční past) — nahrazuje samostatný SAM
 > blok. Blok 5 se vešel navíc proti plánu: Navigator je deklarativní agent z Toolkitu
-> s knowledge výhradně z webu, takže sedí hned za blok 3.
+> s knowledge výhradně z webu, takže sedí hned za blok 3. Odučen **celý modul** včetně
+> Partner Center a validačního procesu, ne jen case study.
 
 > [!IMPORTANT] Strop bez odpovědi přes noc
 > Deklarativní agent narazil na strop, ale custom engine přijde až D3. Uzavřít den větou,

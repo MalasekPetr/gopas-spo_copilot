@@ -1,17 +1,18 @@
 # Agenti v Marketplace — podmínky publikace
 
-> Typ: povinný · Den: 4 · Odhad: **50 min** (35 výklad + 15 case study) · Publikum: **vývojáři / architekti**
+> Typ: povinný · Den: 2 · Odhad: **50 min** (35 výklad + 15 case study) · Publikum: **vývojáři / architekti**
 > Prostředí: viz [`../../environment.md`](../../environment.md) · Názvosloví: [`../../GLOSSARY.md`](../../GLOSSARY.md)
 
-Org katalog byl minulý blok. Tenhle je o druhé cestě: **komerční distribuce agenta přes
-Microsoft Marketplace / Agent Store** — co všechno musí být splněno, než tam agent smí,
-a jak proces reálně vypadá. Case study: **Normiqa Navigator**, publikovaný agent autora
-kurzu — ne slide, ale skutečný listing se skutečnou validační historií.
+**Provision** deklarativního agenta z minulého bloku byl distribuce do vlastního tenantu.
+Tenhle blok je o druhé cestě: **komerční distribuce přes Microsoft Marketplace / Agent
+Store** — co všechno musí být splněno, než tam agent smí, a jak proces reálně vypadá.
+Case study: **Normiqa Navigator**, publikovaný agent autora kurzu — ne slide, ale skutečný
+listing se skutečnou validační historií.
 
 ## Cíle
 
-- Znát **distribuční cesty agenta**: org katalog (D4 blok 1) vs. Marketplace / Agent Store —
-  jiný proces, jiné schvalování, jiné publikum.
+- Znát **distribuční cesty agenta**: vlastní tenant (Provision z minulého bloku) vs.
+  Marketplace / Agent Store — jiný proces, jiné schvalování, jiné publikum.
 - Znát **podmínky publikace**: Partner Center účet, validační politiky pro agenty,
   požadavky na manifest, popis, ikony, privacy/terms, podporu.
 - Rozumět **procesu review** — co validace kontroluje, jak dlouho trvá, co jsou nejčastější

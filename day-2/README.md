@@ -10,7 +10,7 @@ je tenant na agenta uklizený?
 | 2 | SharePoint agents *(instruktorské demo)* | [`sharepoint-agents`](sharepoint-agents/) | P | 30 |
 | 3 | Deklarativní agenti & Agents Toolkit | [`declarative-agents`](declarative-agents/) | P | 100 |
 | 4 | Datová hygiena + SharePoint Advanced Management | [`data-hygiene`](data-hygiene/) | P | 60 |
-| 5 | Case study Normiqa Navigator | [`marketplace-agents`](../day-4/marketplace-agents/) | P | ~50 |
+| 5 | Agenti v Marketplace — podmínky publikace (case study Normiqa Navigator) | [`marketplace-agents`](../day-4/marketplace-agents/) | P | 50 |
 
 > [!NOTE] Bloky 1 a 2 jsou převzaté z GOC224 a zařazené podle zájmu skupiny
 > (rozhodnutí lektora 2026-08-25). Skills ukazují, kam až dosáhne Copilot in SharePoint

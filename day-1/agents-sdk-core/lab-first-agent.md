@@ -35,6 +35,38 @@ zbytek týdne.
 
 5. Zapoj model endpoint **z konfigurace** (`.env` / user secrets — nikdy natvrdo).
    Než půjdeš dál, spusť `git status` a ověř, že klíč není v trackovaném souboru.
+
+   Čtyři hodnoty dostaneš od instruktora. Založ `.env` v kořeni projektu:
+
+   ```dotenv
+   AZURE_OPENAI_ENDPOINT=https://<nazev>.cognitiveservices.azure.com/
+   AZURE_OPENAI_API_KEY=<klic-od-instruktora>
+   AZURE_OPENAI_DEPLOYMENT=support-agent
+   AZURE_OPENAI_API_VERSION=2024-10-21
+   ```
+
+   Do repa commitni jen `.env.example` se **stejnými klíči a prázdnými hodnotami** —
+   je to nejlevnější způsob, jak dalšímu člověku říct, co má nastavit:
+
+   ```dotenv
+   AZURE_OPENAI_ENDPOINT=
+   AZURE_OPENAI_API_KEY=
+   AZURE_OPENAI_DEPLOYMENT=
+   AZURE_OPENAI_API_VERSION=
+   ```
+
+> [!WARNING] Prázdná odpověď není rozbitý agent — je to token budget
+> Kurzovní model je **reasoning model**: interní uvažování se počítá do
+> `max_completion_tokens`. Při nízkém limitu spotřebuje reasoning celý budget, model
+> vrátí **HTTP 200 s prázdným obsahem** a `finish_reason: "length"`.
+>
+> Naměřeno na kurzovním deploymentu: limit 16 → 16 reasoning tokenů, odpověď prázdná;
+> limit 200 → 128 reasoning, odpověď v pořádku. **Nastav 400–800** a máš klid.
+>
+> Reasoning modely navíc vyžadují **`max_completion_tokens`, ne `max_tokens`** — starší
+> název skončí chybou parametru. A platíš i tokeny, které nevidíš: k tomuhle číslu
+> se vrátíme v [`../../day-5/perf-cost-lifecycle/`](../../day-5/perf-cost-lifecycle/).
+
 6. Napiš **minimální systémový prompt** Support Asistenta: role (IT support), scope
    (runbooky), pravidlo odmítnutí mimo scope. Víc ne — ladit se bude v
    [`../../day-3/prompt-orchestration/`](../../day-3/prompt-orchestration/).

@@ -30,24 +30,58 @@ Referenční údaje o prostředí, na které se odkazují laby.
 > `agents-sdk-core`, `prompt-orchestration`, `agent-framework`, `middleware-policy`,
 > `event-driven-hosting`, `evaluation-quality`, `security-risk`, `perf-cost-lifecycle`.
 
-Řešení: **jeden model deployment (mini tier) v instruktorské Azure subscription**, bez
-požadavku na Azure subscription nebo Global admin u studentů. Provozní pravidla:
+Řešení: **jeden model deployment v instruktorské Azure subscription**, bez požadavku
+na Azure subscription nebo Global admin u studentů.
 
-- **Hard cap na deploymentu** (TPM/RPM quota) nastavený předem — jediné reálné nákladové
-  riziko je 20 studentů ve smyčce; alerty samy spotřebu nezastaví.
+Nasazeno 2026-08-25 (konkrétní endpoint a klíč jsou instructor-only, mimo repo):
+
+| Položka | Hodnota |
+|---|---|
+| Subscription | `SPDemo.online PAYG` — adresář **`spdemo.online`**, ne malachiský tenant |
+| Resource group | `rg-spo-copilot-course` (samostatná — cleanup jedním příkazem) |
+| Region | `westeurope` |
+| Model | `gpt-5-mini`, verze `2025-08-07` |
+| SKU | **`DataZoneStandard`** — inference zůstává v EU datové zóně, ne global routing |
+| Deployment name | `support-agent` |
+| Capacity | 100 (= 100k TPM); kvóta subscription 300 |
+
+Provozní pravidla:
+
+- **Hard cap na deploymentu** (capacity) nastavený předem — jediné reálné nákladové
+  riziko je 20 studentů ve smyčce. Capacity ale omezuje **rychlost, ne celkovou útratu**;
+  proto navíc **budget alert na resource group**.
 - **Klíče per student, výhradně mimo repo** (rozdává instruktor; user secrets / `.env`).
-- **Po kurzu klíče rotovat/zneplatnit** — povinný krok offboardingu (viz
-  [`scripts/`](scripts/)); klíče byly u 20 lidí.
+- **Po kurzu smazat celou resource group** — `az group delete -n rg-spo-copilot-course`.
+  Tím odpadá i rotace klíčů, protože zdroj přestane existovat.
 - Orientační náklad: mini-tier model, laby celého týdne ≈ nízké desítky USD.
+
+> [!WARNING] `gpt-5-mini` je reasoning model — má to dva praktické důsledky
+> **Reasoning tokeny se počítají do `max_completion_tokens`.** Změřeno na tomto deploymentu:
+> při limitu 16 spotřebovalo reasoning všech 16 tokenů, `finish_reason` byl `length`
+> a odpověď přišla **prázdná** s HTTP 200. Při 200 tokenech (128 reasoning) i 800
+> (64 reasoning) odpověď v pořádku. **V labech nastavovat aspoň 400–800** — jinak student
+> vidí agenta, který „běží a nic neříká", a hledá chybu ve svém kódu.
+>
+> Reasoning modely rovněž vyžadují **`max_completion_tokens`, ne `max_tokens`**.
+>
+> Do `perf-cost-lifecycle` je to konkrétní vstup: platíš i tokeny, které nevidíš.
 
 Fallback pro jednotlivce (rozbitý klíč, výpadek): **GitHub Models** na studentském GitHub
 účtu — jen jako záchrana jednoho studenta, ne kurzovní cesta (free tier rate limity by
 zastavily multi-agent lab D3 i evaluace D5).
 
-> [!IMPORTANT] Data sovereignty
-> Instruktorský model endpoint znamená inference **mimo studentský tenant**. V labech proto
-> jen **kurzovní demo data** — nikdy reálná zákaznická ani personální data. Platí i pro
-> promptové ukázky a golden set v `evaluation-quality`.
+> [!IMPORTANT] Data sovereignty — poctivě
+> Azure subscription je ve **stejném Entra adresáři** (`spdemo.online`) jako studenti,
+> takže zdroj spadá pod tutéž governance. To ale **neznamená, že data zůstávají
+> v M365 tenantu**: co pošleš do modelu, opouští hranici SharePointu a Graphu a jde
+> do Azure. SKU `DataZoneStandard` drží zpracování v EU datové zóně — ne globálně.
+>
+> Praktické pravidlo zůstává: v labech jen **kurzovní demo data**, nikdy reálná zákaznická
+> ani personální. Platí i pro promptové ukázky a golden set v `evaluation-quality`.
+>
+> Pro zákaznická jednání je tohle přesně ten rozdíl, který kurz učí: *„v tenantu"*
+> u Copilotu (semantic index, Retrieval API) vs. *„ve tvé Azure subscription"*
+> u custom engine agenta. Dvě různé hranice, dvě různé odpovědi pro security tým.
 
 ## Matice požadavků per blok
 
@@ -116,12 +150,18 @@ Zajišťuje `day-1/onboarding`. Bez tohoto nic dalšího nepojede:
 
 ## Otevřené položky před prvním během
 
-- [x] **Model endpoint** — rozhodnuto (2026-08-24): **instruktorský Foundry deployment**
-      s hard capem; nasadit a otestovat z učebny večer D1, klíče rozdat ráno D2.
+- [x] **Model endpoint** — nasazeno (2026-08-25): `gpt-5-mini` / `DataZoneStandard` /
+      capacity 100 v `rg-spo-copilot-course`. Smoke test prošel, deployment `Succeeded`.
+- [ ] **Otestovat endpoint ze stroje v učebně** — smoke test běžel z lektorského notebooku,
+      takže ověřil klíč a deployment, **ne firewall a proxy**.
+- [ ] **Budget alert na `rg-spo-copilot-course`** — capacity omezuje rychlost, ne útratu.
 - [ ] **GitHub Copilot seaty** pro studenty (mimo M365 licenční tok, zajistit dopředu).
 - [x] **Agent 365 licence** — rozhodnuto (2026-08-07): **1× licence jen pro lektora**
       ($15/user/měs, ověřit prerekvizity). Demo v `agent-365-governance` jede živě
       z lektorského účtu; studenti instrumentují proti mocku (Fáze 2 artefakt).
 - [ ] Ověřit, že **provisioning deklarativního agenta** na PAYG bez Copilot licence stále
       funguje (empiricky potvrzeno 2026-07-17 na jiném běhu; Microsoft to takto nedokumentuje).
-- [ ] Demo data pro nosný scénář nasazená (viz [`scripts/`](scripts/)).
+- [x] **Demo data pro nosný scénář nasazená** (2026-08-25) — knihovna `Runbooky` a list
+      `Zaměstnanci` na `/sites/hr-demo`. Provisionováno skriptem `New-HRAgentData.ps1`
+      z repa `gopas-goc224`, ne `New-SupportAgentData.ps1` — ten v `scripts/` zatím
+      neexistuje (viz [`scripts/`](scripts/)).

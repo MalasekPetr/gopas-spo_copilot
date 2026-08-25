@@ -1,6 +1,6 @@
 # Agents SDK — jádro: AgentApplication, aktivity, turny
 
-> Typ: povinný · Den: 3 · Odhad: **130 min** (65 výklad + 65 lab) · Publikum: **vývojáři / architekti**
+> Typ: povinný · Den: 3 · Odhad: **150 min** (65 výklad + 20 env setup + 65 lab) · Publikum: **vývojáři / architekti**
 > Prostředí: viz [`../../environment.md`](../environment.md) · Názvosloví: [`../../GLOSSARY.md`](../GLOSSARY.md)
 > Nosná linka: [`scenario-support-agent.md`](../scenario-support-agent.md)
 
@@ -55,6 +55,14 @@ jinak je to připojení na slepo. Celý blok (~15 min):
 hierarchie subscription → resource → deployment (kde bydlí klíč, endpoint a deployment
 name), typy nasazení a proč máme DataZone, capacity jako brzda rychlosti (429 naživo
 v části D labu) a přechod hranice M365 jednou větou pro zákazníka.
+
+### Developer environment — řízený průchod (~20 min, hands-on)
+
+Mezi Foundry a prvním agentem se prostředí staví **od nuly a s vysvětlením, proč každá
+věc v něm je**: fnm + Node 22 (verzovaný runtime bez admin práv), VS Code + Agents
+Toolkit, `atk` CLI, a co z Azure nástrojů (ne)potřebuješ. Průchod je idempotentní —
+co drží z pondělí, se jen odškrtne. Kroky, ověření a fallbacky:
+[`guide-dev-environment.md`](guide-dev-environment.md).
 
 ### Co Agents SDK dělá a co nedělá
 

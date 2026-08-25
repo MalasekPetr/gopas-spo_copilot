@@ -82,11 +82,11 @@ zájmu skupiny: M365 strana nejdřív, kód až od D3.
 > která z přesunu udělá argument: *„Strop jste viděli. Odpověď na něj začneme psát zítra
 > ráno — dneškem jsme se ujistili, že tenant, do kterého ho pustíme, je uklizený."*
 
-## Den 3 — První agent v kódu, znalosti a akce (305 min)
+## Den 3 — První agent v kódu, znalosti a akce (325 min)
 
 | # | Blok | Slug | Typ | min |
 |---|---|---|---|---|
-| 1 | Agents SDK — jádro: AgentApplication, aktivity, turny *(vč. Foundry v kostce)* | `agents-sdk-core` | P | 130 |
+| 1 | Agents SDK — jádro: AgentApplication, aktivity, turny *(vč. Foundry v kostce a env setupu)* | `agents-sdk-core` | P | 150 |
 | 2 | Grounding: Copilot connectors, semantic index, MCP | `knowledge-grounding` | P | 85 |
 | 3 | Action handlers & integrace s Microsoft Graph | `actions-graph` | P | 90 |
 
@@ -94,6 +94,13 @@ zájmu skupiny: M365 strana nejdřív, kód až od D3.
 > agent v Agents Playgroundu. Klíče k model endpointu rozdat **ráno před blokem**. Blok 2
 > učí *kdy retrieval nedělat sám* a navazuje na hygienu ze závěru D2. Blok 3 je pointa
 > custom engine cesty — akce s validací, na kterou deklarativní agent nedosáhl.
+
+> [!WARNING] D3 je 15 min nad etalonem (~310) — ventily v tomto pořadí
+> Env setup (rozhodnutí lektora 2026-08-25 večer) posunul den na 325 min. Když se
+> nedohání: 1) Foundry sdílená obrazovka 5 → 2 min, 2) část D labu `actions-graph`
+> jako demo (−10, už je v celkových ventilech), 3) `usage` krok labu bloku 1 jen
+> společně na plátně místo per student (−5). **Nezkracovat část D labu bloku 1**
+> (chybové větve) — je to nosný rozdíl kurzu.
 
 ## Den 4 — Copilot Apps, prompt, multi-agent a bezpečnost (315 min)
 

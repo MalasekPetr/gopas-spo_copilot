@@ -2,7 +2,11 @@
 
 ## Timing
 
-- ~65 min výklad + 65 min lab. **Blok 1 dne 3** a zároveň **první blok s Azure** —
+- ~65 min výklad + 20 min env setup + 65 min lab = **150 min**. Pořadí: otvírák →
+  Foundry v kostce → **env setup** ([`guide-dev-environment.md`](guide-dev-environment.md))
+  → lab. Setup před labem záměrně: fnm mění PATH a chce nový terminál — kdo ho dělá
+  uprostřed labu, ztratí kontext dvakrát.
+- **Blok 1 dne 3** a zároveň **první blok s Azure** —
   je to odpověď na strop `declarative-agents` z předchozího dne, tak tím otevřít.
   Lab je delší než výklad záměrně: je to první kód týdne a studenti potřebují prostor.
 - **Foundry v kostce má ~15 min** hned po otvíráku (10 výklad + 5 sdílená obrazovka):
@@ -34,6 +38,9 @@
   je to změna a je potřeba upravit lab).
 - Připravit **rozbitý** endpoint / špatný klíč pro část D, aby se demo chybové větve
   nemuselo improvizovat.
+- **Env setup**: ověřit na stroji v učebně, že `winget` a `npm install -g` nejsou
+  blokované politikou; mít offline **Node 22 LTS MSI** jako fallback. Ověřit aktuální
+  název npm balíčku `atk` CLI a VS Code rozšíření (obojí se v lineage přejmenovávalo).
 
 ## Tripwires
 

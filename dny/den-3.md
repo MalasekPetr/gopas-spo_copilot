@@ -6,7 +6,7 @@ oprávnění.
 
 | Pořadí | Blok | Slug | Typ | min |
 |---|---|---|---|---|
-| 1 | Agents SDK — jádro: AgentApplication, aktivity, turny *(vč. Foundry v kostce)* | [`agents-sdk-core`](../agents-sdk-core/) | P | 130 |
+| 1 | Agents SDK — jádro: AgentApplication, aktivity, turny *(vč. Foundry v kostce a env setupu)* | [`agents-sdk-core`](../agents-sdk-core/) | P | 150 |
 | 2 | Grounding: Copilot connectors, semantic index, MCP | [`knowledge-grounding`](../knowledge-grounding/) | P | 85 |
 | 3 | Action handlers & integrace s Microsoft Graph | [`actions-graph`](../actions-graph/) | P | 90 |
 
@@ -16,8 +16,11 @@ oprávnění.
 > Blok 3 je pointa custom engine cesty — akce s validací parametrů, na kterou deklarativní
 > agent nedosáhl.
 
-Reálná zátěž **305 min** (etalon ~310 — rezerva 5 min; první ventil je zkrátit
-sdílenou obrazovku Foundry, ne lab).
+Reálná zátěž **325 min** — **15 min nad etalonem ~310**. Pořadí bloku 1:
+otvírák → Foundry v kostce → **env setup (fnm + Node 22, Toolkit, `atk`,
+[`guide-dev-environment.md`](../agents-sdk-core/guide-dev-environment.md))** → lab.
+Ventily v pořadí: Foundry obrazovka 5→2 min · část D `actions-graph` jako demo (−10) ·
+`usage` krok společně na plátně (−5). Chybové větve labu bloku 1 nezkracovat.
 
 > [!WARNING] Ranní prerekvizity
 > **Ohlásit přestavbu repa** — složky ztratily prefix `day-N/`, studenti musí `git pull`

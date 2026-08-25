@@ -131,9 +131,11 @@ Stejné zadání (scénář Support Asistenta), poctivá bilance:
 
 > [!IMPORTANT] Strop není slepá ulička — pod ním se dá vydat produkt
 > Tabulka výš snadno vyzní, že deklarativní agent je jen odrazový můstek. Není.
-> **Normiqa Navigator** je publikovaný agent autora kurzu postavený **v Agents Toolkitu**,
-> jehož knowledge tvoří **výhradně webové zdroje** — žádný SharePoint, žádné akce, žádný
-> vlastní hosting. Přesně ta cesta, kterou dnes stavíte.
+> **Normiqa Navigator** je publikovaný agent autora kurzu postavený **v Agents Toolkitu**:
+> bezplatný agent pro Microsoft 365 Copilot, který provádí české a slovenské organizace
+> tématem **NIS2 a ISO 27001**. Knowledge tvoří **výhradně webové zdroje** — žádný
+> SharePoint, žádné akce, žádný vlastní hosting. Přesně ta cesta, kterou dnes stavíte,
+> a je vydaná v Microsoft Marketplace.
 >
 > Je to protiváha k dnešnímu labu: u Support Asistenta `WebSearch` nejspíš vypnete, protože
 > rozšiřuje scope mimo tenant a citace přestane být důkaz. U agenta nad **veřejnou,
@@ -143,6 +145,19 @@ Stejné zadání (scénář Support Asistenta), poctivá bilance:
 > Celá case study včetně validačního procesu a Partner Center je v
 > [`../../day-4/marketplace-agents/`](../../day-4/marketplace-agents/) (materiál
 > k samostudiu — v běhu se neodučí).
+
+> [!WARNING] Web jako knowledge má vlastní past — zdroj nemusí být pro agenta viditelný
+> Když je knowledge web, přestává platit „co vidím v prohlížeči, uvidí i agent". Agent čte
+> to, co z stránky zbylo po crawleru — a u moderních JS aplikací to bývá **nic**.
+>
+> Ověřeno na produktové stránce Normiqa Navigatoru: vrací HTTP 200, má 11 server-side meta
+> tagů, ale v `<body>` je **devět slov** („You need to enable JavaScript to run this app.")
+> a **žádný `<title>`**. Marketplace listing zase odpoví 200 prohlížeči a **403** curlu.
+>
+> Rozbor příčin a **postup ověření** (co dostane klient bez JS, robots/sitemap/llms.txt,
+> chování k botům, `site:` v Bingu, Bing Webmaster Tools) je v
+> [`explainer-web-knowledge.md`](explainer-web-knowledge.md). Patří to do **návrhu**
+> agenta, ne do ladění.
 
 ## Klíčové rozlišení
 

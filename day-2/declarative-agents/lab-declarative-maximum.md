@@ -102,6 +102,9 @@ složku i jednotlivý soubor; čím užší scope, tím míň má agent kam sáh
 > agent postavený v Toolkitu, jehož knowledge jsou **výhradně webové zdroje**. Nad veřejnou
 > kurátorovanou doménou je to jediná správná volba. Capability se vybírá podle toho,
 > co má agent dělat (viz [`README.md`](README.md), sekce Strop deklarativní cesty).
+>
+> **Než zdroj zapojíš, ověř, že ho agent vůbec uvidí** — moderní JS weby vracejí crawleru
+> prázdnou stránku. Postup v [`explainer-web-knowledge.md`](explainer-web-knowledge.md).
 
 **Manifest-only funkce** — tohle je hodnota Toolkitu proti agent builderu: pole, která
 v žádném UI nenaklikáš. Vyzkoušej alespoň jedno:

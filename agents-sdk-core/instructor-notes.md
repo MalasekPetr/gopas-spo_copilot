@@ -66,6 +66,16 @@ konverzace = série turnů nad stavem.* Věta pro zákazníka: turn je jednotka 
   „aktivita ≠ text") a ts(5108) v tsconfig (editor má TS 6, projekt 5.x — **neopravovat
   tsconfig**, přepnout Use Workspace Version). Varování je v labu; kdo ho přeskočí,
   „opraví" tsconfig a rozbije si build.
+- **Chyba modelu svádí ke „Configure Authentication" v Playgroundu** (ověřeno naživo
+  2026-08-26): `OnTurnError` z rozbitého volání modelu vypadá jako problém přihlášení
+  a dialog Entra Client ID se nabízí sám. Nesouvisí — je to simulace OAuth uživatele,
+  dnes k ničemu. Skutečná chyba je v terminálu agenta / `trace` v Log Panelu; typicky
+  404 DeploymentNotFound (název deploymentu) nebo 401 (klíč). Po opravě env
+  **restart přes F5/Toolkit**, ne jen zabít proces — `.localConfigs.playground` se
+  generuje při startu.
+- Defaultní hláška „The agent encountered an error or bug" = hotový slide „před"
+  pro část D labu. Crash na dotazu 4 („Kolik bere Novák?") patří do baseline —
+  je horší než odmítnutí i než halucinace.
 - Studenti s Bot Framework historií hledají **bot registraci a tunel**. Playground je
   nepotřebuje. Říct to explicitně dřív, než se do toho pustí sami.
 - **Záměna Agents SDK a orchestrace.** Padne otázka „kde nastavím, aby agent použil nástroj".

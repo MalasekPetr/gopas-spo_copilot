@@ -69,7 +69,7 @@ zbytek týdne.
 
    ```dotenv
    SECRET_AZURE_OPENAI_API_KEY=<zasifrovano Toolkitem>
-   AZURE_OPENAI_ENDPOINT='https://<nazev>.openai.azure.com/openai/v1'
+   AZURE_OPENAI_ENDPOINT='https://<nazev>.openai.azure.com'
    AZURE_OPENAI_DEPLOYMENT_NAME='support-agent'
    ```
 
@@ -84,19 +84,21 @@ zbytek týdne.
    v `.user` jsou tajemství, ve zbytku identifikátory prostředí. Tohle je vzor, který
    si odnášíš do vlastních projektů; ruční `.env` v kořeni tady nepotřebuješ.
 
-> [!IMPORTANT] Čtvrtá hodnota v konfiguraci není — je zadrátovaná v kódu
-> Starší návody uvádějí `AZURE_OPENAI_API_VERSION` jako čtvrtou proměnnou. V tomto
-> scaffoldu **v `env/` není** a přidat ji tam nemá efekt: verze je natvrdo v `src/agent.ts`
-> v konstruktoru klienta (`apiVersion: "2024-12-01-preview"`). Endpoint od průvodce navíc
-> nese cestu `/openai/v1`.
+> [!IMPORTANT] Dvě 404 pasti v konfiguraci — obě změřené na kurzovním endpointu (2026-08-26)
+> **Endpoint musí být holý** (`https://<nazev>.openai.azure.com`). Portál i příklady ho
+> ukazují s cestou `/openai/v1` — ale klient ve scaffoldu (`AzureOpenAI` s `apiVersion`
+> v konstruktoru) si cestu `/openai/deployments/…` přidává sám. S `/openai/v1` v endpointu
+> se cesty zdvojí → **404 Resource not found**.
 >
-> **Najdi to a pojmenuj jako vadu.** Hodnota, která patří do konfigurace, sedí v kódu —
-> po změně api-version se musí přebuildovat aplikace místo přenastavení prostředí. Je to
-> první příklad hranice „co je konfigurace a co je kód", kterou budeme řešit celý týden.
+> **Název deploymentu** (`AZURE_OPENAI_DEPLOYMENT_NAME`) musí sedět na deployment
+> v Azure (`support-agent`), ne na název projektu. Průvodce vezme cokoliv a chyba se
+> projeví až za běhu → **404 DeploymentNotFound**.
 >
-> Druhá past je **název deploymentu**: `AZURE_OPENAI_DEPLOYMENT_NAME` musí sedět
-> na deployment v Azure (`support-agent`), ne na název projektu. Průvodce sem ochotně
-> vezme cokoliv a chyba se projeví až za běhu jako **404 DeploymentNotFound**.
+> Obě 404 vypadají v Playgroundu stejně: „The agent encountered an error or bug".
+> Skutečná chyba je v terminálu agenta. A dvě poznámky k anatomii: `AZURE_OPENAI_API_VERSION`
+> jako proměnná neexistuje — verze je **natvrdo v `src/agent.ts`** (pojmenuj jako vadu:
+> hodnota konfigurace sedí v kódu); a `model: ""` ve volání **není chyba** — u Azure
+> klienta nese model deployment z konstruktoru.
 
 > [!WARNING] Prázdná odpověď není rozbitý agent — je to token budget
 > Kurzovní model je **reasoning model**: interní uvažování se počítá do

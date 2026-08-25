@@ -154,7 +154,10 @@ Zajišťuje `day-1/onboarding`. Bez tohoto nic dalšího nepojede:
       capacity 100 v `rg-spo-copilot-course`. Smoke test prošel, deployment `Succeeded`.
 - [ ] **Otestovat endpoint ze stroje v učebně** — smoke test běžel z lektorského notebooku,
       takže ověřil klíč a deployment, **ne firewall a proxy**.
-- [ ] **Budget alert na `rg-spo-copilot-course`** — capacity omezuje rychlost, ne útratu.
+- [x] **Budget alert na `rg-spo-copilot-course`** (2026-08-25) — `budget-spo-copilot-course`,
+      **100 EUR/měsíc**, prahy: 50 % a 80 % skutečné útraty + 100 % prognózované.
+      Prognózovaný práh chytí runaway dřív než skutečný. Capacity omezuje rychlost,
+      budget hlídá útratu — dvě nezávislé brzdy.
 - [ ] **GitHub Copilot seaty** pro studenty (mimo M365 licenční tok, zajistit dopředu).
 - [x] **Agent 365 licence** — rozhodnuto (2026-08-07): **1× licence jen pro lektora**
       ($15/user/měs, ověřit prerekvizity). Demo v `agent-365-governance` jede živě

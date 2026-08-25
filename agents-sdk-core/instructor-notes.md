@@ -42,6 +42,23 @@
   blokované politikou; mít offline **Node 22 LTS MSI** jako fallback. Ověřit aktuální
   název npm balíčku `atk` CLI a VS Code rozšíření (obojí se v lineage přejmenovávalo).
 
+## Demo: aktivita vs. turn (k části A, kroku 2)
+
+Do obou handlerů `console.log(">>> TURN start | aktivita: ${type} | text: ${text}")`
+a `"<<< TURN end"`. Pak v Playgroundu:
+
+1. **Restart konverzace** → turn s `conversationUpdate | text: undefined`. Nahlas:
+   *proběhl celý turn a nikdo nic nenapsal* — tentýž `undefined`, kvůli kterému se
+   opravoval `activity.text ?? ""`.
+2. **„ahoj"** → druhý turn, uvnitř jedno volání modelu.
+3. Mezera mezi logy = prostor pro **kola**: dnes jedno volání, od `actions-graph` víc.
+   Jeden turn ≠ jedno volání modelu — platí se každé kolo.
+
+Tabule: *aktivita = co přišlo (podstatné jméno) · turn = co se s tím dělo (děj) ·
+konverzace = série turnů nad stavem.* Věta pro zákazníka: turn je jednotka zpracování
+(latence, tokeny za kola), aktivita jednotka doručení. Typ parametru se jmenuje
+`TurnContext` — jméno je odpověď.
+
 ## Tripwires
 
 - **Scaffold otevře Problems se dvěma chybami** (ověřeno na reálném projektu 2026-08-25):

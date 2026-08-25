@@ -1,6 +1,6 @@
 # Agents SDK — jádro: AgentApplication, aktivity, turny
 
-> Typ: povinný · Den: 2 · Odhad: **115 min** (50 výklad + 65 lab) · Publikum: **vývojáři / architekti**
+> Typ: povinný · Den: 3 · Odhad: **115 min** (50 výklad + 65 lab) · Publikum: **vývojáři / architekti**
 > Prostředí: viz [`../../environment.md`](../../environment.md) · Názvosloví: [`../../GLOSSARY.md`](../../GLOSSARY.md)
 > Nosná linka: [`scenario-support-agent.md`](../../scenario-support-agent.md)
 
@@ -12,6 +12,39 @@
 - Zapojit první volání modelu — a hlavně **ošetřit, když selže**.
 
 ## Výklad
+
+### Otvírák dne — co za tebe platforma přestává dělat
+
+Dnešek **není povýšení na „opravdové agenty"**. Deklarativní agent z úterý není juniorní
+verze toho dnešního — je to [vrstvená mapa, ne žebřík](../agent-landscape/README.md).
+Kdo dneska přejde na custom engine, něco získá **a něco ztratí**.
+
+Co se láme, je vlastnictví. Do včerejška ti tři věci držela platforma. Od dneška jsou tvoje:
+
+| | **Deklarativní agent** (D2) | **Custom engine agent** (od dneška) |
+|---|---|---|
+| **Model** | orchestrátor M365 Copilot, nevybíráš ho | **tvůj endpoint**, tvoje volba, tvoje subscription |
+| **Hosting** | žádný — agent je manifest | **povinný**; server běží a fakturuje i v noci |
+| **Autorizace a ACL trimming** | zdarma ze zdroje, agent nikdy nepřekročí práva uživatele | **tvůj kód**, per akce — [`../../day-2/actions-graph/`](../../day-2/actions-graph/) |
+| **Grounding** | capability v manifestu | tvoje volání — Retrieval API, konektor nebo vlastní index |
+| **Audit a governance** | platforma | tvoje instrumentace — [`../../day-4/agent-365-governance/`](../../day-4/agent-365-governance/) |
+| **Lifecycle** | verze manifestu | build, deploy, rollback — [`../../day-4/event-driven-hosting/`](../../day-4/event-driven-hosting/) |
+
+- **Proč tedy vůbec?** Protože včerejší strop je konkrétní: deklarativní agent neumí
+  spustit **tvůj kód** — validaci parametrů, autorizaci per uživatel, retry, auditní stopu.
+  Kde tohle zákazník potřebuje, žádné ladění manifestu nepomůže. Kde to nepotřebuje, je
+  custom engine agent **over-engineering** a rozhodovací matice z D1 to má říct nahlas.
+- **Peněženky se nemění na jednu, ale na čtyři.** Copilot Credits nezmizí — grounding přes
+  Retrieval API se z nich platí dál, i z custom engine agenta. Odstěhuje se **jen
+  inference**: každý turn, včetně reasoning tokenů, jde přes Azure subscription. Přibude
+  hosting, který běží bez ohledu na provoz. Detail v [`../../GLOSSARY.md`](../../GLOSSARY.md),
+  s čísly v [`../../day-5/perf-cost-lifecycle/`](../../day-5/perf-cost-lifecycle/).
+- Věta pro zákazníka: **„Máme Copilot licence, tak agenta máme zaplaceného"** přestává
+  platit v okamžiku, kdy sáhneš po Agents SDK. Ne proto, že licence zmizí — proto, že
+  přibude faktura, kterou dosud nikdo neviděl.
+- Zapamatovatelně: **custom engine agent není vyšší level, je to obchod.** Kupuješ si
+  kontrolu nad akcemi, orchestrací a auditem. Platíš infrastrukturou, fakturou
+  a odpovědností.
 
 ### Co Agents SDK dělá a co nedělá
 

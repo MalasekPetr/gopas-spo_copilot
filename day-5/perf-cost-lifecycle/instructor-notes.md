@@ -13,10 +13,13 @@
 - **Neuvádět žádnou cenu z hlavy.** Ceny modelů, sazby Copilot Credits a data deprecace
   se mění po měsících. Ověřit na aktuálních stránkách a doplnit do výkladu jako
   „stav k <měsíc>".
-- **Před během spustit `node cost-calculator.mjs --refresh-prices`**, aby snapshot nesl
-  aktuální datum. Ve třídě pak stačí `--offline` a nezávisíš na síti. Vizuál
-  `cost-visual.html` má ceny v sobě — otevřít ho jednou dopředu a zkontrolovat, že
-  souhlasí s čerstvým snapshotem; jinak studenti uvidí dvě různá čísla pro totéž.
+- **Modul se neodučí, ale jeho nástroje ano** — `cost-visual.html` v otvíráku nákladů
+  na D3 (`actions-graph`, princip „co nemusí dělat model") a `cost-calculator.mjs`
+  u nákladového stropu v capstonu na D5. **Před během spustit
+  `node cost-calculator.mjs --refresh-prices`**, aby snapshot nesl aktuální datum; ve třídě
+  pak stačí `--offline` a nezávisíš na síti. Vizuál má ceny natvrdo v sobě — otevřít ho
+  jednou dopředu a ověřit, že souhlasí s čerstvým snapshotem, jinak studenti uvidí dvě
+  různá čísla pro totéž.
 - Ověřit, jestli **model na kurzovním endpointu podporuje prompt caching** — část B5 na tom
   závisí.
 - Ideálně zajistit **druhý model** na endpointu pro část E. Je to nejsilnější moment bloku

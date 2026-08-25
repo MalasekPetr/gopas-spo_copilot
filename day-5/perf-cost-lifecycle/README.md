@@ -1,9 +1,16 @@
 # Výkon, náklady & lifecycle
 
-> Typ: povinný · Den: 5 · Odhad: **elastický 95–120 min** (50 výklad + 45–70 lab) · Publikum: **vývojáři / architekti**
+> Typ: **samostudium** (vyřazeno z osnovy 2026-08-25) · Odhad: 70 min čtení · Publikum: **vývojáři / architekti**
 > Prostředí: viz [`../../environment.md`](../../environment.md) · Názvosloví: [`../../GLOSSARY.md`](../../GLOSSARY.md)
 
 Co agent stojí, jak to snížit, a jak ho dostat z dev do prod a zpátky, když se to pokazí.
+
+> [!IMPORTANT] Modul se neodučí — jeho nástroje ale v kurzu jsou
+> Vyřazen do samostudia při druhé rekalibraci (2026-08-25); jádro (token budget, nákladový
+> strop) je složené do [`../capstone/`](../capstone/). **Kalkulátory v této složce se
+> používají živě**: [`cost-visual.html`](cost-visual.html) na D3 v
+> [`../../day-2/actions-graph/`](../../day-2/actions-graph/) a
+> [`cost-calculator.mjs`](cost-calculator.mjs) u nákladového stropu v capstonu.
 
 ## Cíle
 - Rozumět **token ekonomice** agenta a vědět, kde se peníze reálně ztrácejí.

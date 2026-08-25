@@ -1,6 +1,6 @@
 # Základy promptování a agentní anatomie
 
-> Typ: **volitelný — samostudium** · Den: 1 · Odhad: 75 min (45 výklad + 30 lab)
+> Typ: **volitelný — samostudium** (neodučí se) · Odhad: 75 min čtení
 > Prostředí: viz [`../../environment.md`](../../environment.md) · Názvosloví: [`../../GLOSSARY.md`](../../GLOSSARY.md)
 
 > [!NOTE] Převzato z kurzu GOC224, v tomto běhu se neodučí

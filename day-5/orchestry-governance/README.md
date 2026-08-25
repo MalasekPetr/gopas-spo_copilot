@@ -1,6 +1,6 @@
 # Orchestry — third-party alternativa governance
 
-> Typ: povinný · Den: 5 · Odhad: **35 min** (25 výklad + 10 srovnání) · Publikum: **vývojáři / architekti**
+> Typ: **samostudium** (vyřazeno z osnovy 2026-08-25) · Odhad: 35 min čtení · Publikum: **vývojáři / architekti**
 > Prostředí: viz [`../../environment.md`](../../environment.md) · Názvosloví: [`../../GLOSSARY.md`](../../GLOSSARY.md)
 
 Agent 365 není jediná odpověď na governance otázku. **Orchestry** je third-party

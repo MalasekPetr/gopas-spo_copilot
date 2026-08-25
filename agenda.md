@@ -166,8 +166,8 @@ zájmu skupiny: M365 strana nejdřív, kód až od D3.
 ## Kompresní ventily — v tomto pořadí
 
 1. `day-2/data-hygiene` — tři pilíře SAM na jeden slide, RAC/RCD a checklist zůstávají.
-2. `day-3/actions-graph` — část D jako demo (10 min), ne hands-on.
-3. `day-5/opt-custom-retrieval` — demo padá celé, plný text zůstává k samostudiu.
+2. `day-2/actions-graph` — část D jako demo (10 min), ne hands-on.
+3. `day-2/opt-custom-retrieval` — demo padá celé, plný text zůstává k samostudiu.
 4. `day-5/evaluation-quality` — část C labu jeden běh místo tří.
 
 **Capstone není ventil.** Při skluzu D5 se zkracuje evaluace, ne závěr týdne.

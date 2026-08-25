@@ -1,6 +1,6 @@
 # Vlastní retrieval: chunking, embeddings, hybrid ranking
 
-> Typ: **volitelný** · Den: 2 · Odhad: **105 min** (60 výklad + 45 lab) · Publikum: **vývojáři / architekti**
+> Typ: **instruktorské demo 30 min** (den 5, blok 3) · plný text k samostudiu · Publikum: **vývojáři / architekti**
 > Prostředí: viz [`../../environment.md`](../../environment.md) · Názvosloví: [`../../GLOSSARY.md`](../../GLOSSARY.md)
 
 > [!IMPORTANT] Proč je tento modul volitelný

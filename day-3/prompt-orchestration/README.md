@@ -1,6 +1,6 @@
 # Prompt & systémová orchestrace
 
-> Typ: povinný · Den: 3 · Odhad: **85 min** (40 výklad + 45 lab) · Publikum: **vývojáři / architekti**
+> Typ: povinný · Den: 4 · Odhad: **60 min** (25 výklad + 35 lab) · Publikum: **vývojáři / architekti**
 > Prostředí: viz [`../../environment.md`](../../environment.md) · Názvosloví: [`../../GLOSSARY.md`](../../GLOSSARY.md)
 
 ## Cíle

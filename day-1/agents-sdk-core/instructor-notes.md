@@ -2,10 +2,18 @@
 
 ## Timing
 
-- ~50 min výklad + 65 min lab. **Blok 1 dne 3** a zároveň **první blok s Azure** —
+- ~65 min výklad + 65 min lab. **Blok 1 dne 3** a zároveň **první blok s Azure** —
   je to odpověď na strop `declarative-agents` z předchozího dne, tak tím otevřít.
   Lab je delší než výklad záměrně: je to první kód týdne a studenti potřebují prostor.
-- **Otvírák „co za tebe platforma přestává dělat" má ~10 min** z těch 50. Nepřidává čas
+- **Foundry v kostce má ~15 min** hned po otvíráku (10 výklad + 5 sdílená obrazovka):
+  portál → resource group `rg-spo-copilot-course` → Foundry resource → deployment
+  `support-agent` → záložka kvóty → cenová stránka modelu. Neukazovat *jak se nasazuje* — jen *kde to je, kdo to platí
+  a čím je to brzděné*. Scénář v [`explainer-foundry-basics.md`](explainer-foundry-basics.md).
+- **Portál otevřít předem ve správné identitě.** Subscription žije v adresáři
+  `spdemo.online` — účet `malachis.eu` se tam nepřihlásí (AADSTS50020). Použít oddělený
+  browser profil pro kurzovní tenant; přepínání identit před 20 lidmi je pět ztracených
+  minut a ukázka toho, co učíme nedělat.
+- **Otvírák „co za tebe platforma přestává dělat" má ~10 min** z těch 65. Nepřidává čas
   navíc — dělá pointu „SDK není orchestrátor" srozumitelnou dopředu, takže následující
   sekce jde rychleji. Když se přesto přetáhne, kompresní ventil je stejný jako v agendě.
 - **Neotvírat větou „teď přijdou opravdoví agenti".** Podkopává to včerejšek a je to věcně

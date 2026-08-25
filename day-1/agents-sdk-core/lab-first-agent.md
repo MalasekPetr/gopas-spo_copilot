@@ -87,20 +87,26 @@ zbytek týdne.
 > název skončí chybou parametru. A platíš i tokeny, které nevidíš: k tomuhle číslu
 > se vrátíme v [`../../day-5/perf-cost-lifecycle/`](../../day-5/perf-cost-lifecycle/).
 
-6. Napiš **minimální systémový prompt** Support Asistenta: role (IT support), scope
-   (runbooky), pravidlo odmítnutí mimo scope. Víc ne — ladit se bude v
+8. Napiš **minimální systémový prompt** Support Asistenta (v `src/agent.ts` je
+   placeholder `systemPrompt`): role (IT support), scope (runbooky), pravidlo odmítnutí
+   mimo scope. Víc ne — ladit se bude v
    [`../../day-3/prompt-orchestration/`](../../day-3/prompt-orchestration/).
-7. Pošli čtyři testovací dotazy ze scénáře a **zaznamenej odpovědi**. Agent zatím nemá
-   knowledge, takže dotazy 1–2 odpoví špatně nebo si vymyslí — to je záměr a je to
-   baseline, proti které budeš celý týden měřit.
+9. Po prvním úspěšném volání si **vypiš `result.usage`** (`console.log` stačí):
+   `prompt_tokens`, `completion_tokens` a v detailu **reasoning tokeny, které v textu
+   odpovědi nevidíš — a platíš je**. Je to jediné okno do ekonomiky agenta, které máš
+   z kódu, a je v každé odpovědi zadarmo
+   ([`explainer-foundry-basics.md`](explainer-foundry-basics.md)).
+10. Pošli čtyři testovací dotazy ze scénáře a **zaznamenej odpovědi i `usage`**. Agent
+    zatím nemá knowledge, takže dotazy 1–2 odpoví špatně nebo si vymyslí — to je záměr
+    a je to baseline, proti které budeš celý týden měřit.
 
 ### Část D — chybové větve (nepřeskakovat)
 
-10. Nastav **timeout** na volání modelu a ověř chování: co udělá agent, když model
+11. Nastav **timeout** na volání modelu a ověř chování: co udělá agent, když model
     neodpoví včas? Zkrať timeout na nesmyslně malou hodnotu, ať to uvidíš.
-11. Rozbij klíč (nebo ho odeber) a ověř, že uživatel dostane **srozumitelnou větu**,
+12. Rozbij klíč (nebo ho odeber) a ověř, že uživatel dostane **srozumitelnou větu**,
     ne stack trace a ne prázdnou bublinu.
-12. Rozliš v kódu **transientní** chybu (throttling, timeout → retry s exponenciálním
+13. Rozliš v kódu **transientní** chybu (throttling, timeout → retry s exponenciálním
     backoffem a stropem) od **permanentní** (401/403/404 → neretryovat, rovnou
     srozumitelná odpověď). Ověř obě větve.
 
@@ -113,6 +119,7 @@ zbytek týdne.
       ne výjimku ani prázdnou zprávu.
 - [ ] Timeout je nastavený explicitně, ne ponechaný na default.
 - [ ] Student zaznamenal chování na čtyřech testovacích dotazech (baseline pro celý týden).
+- [ ] Student viděl `usage` vlastního turnu a umí říct, co jsou reasoning tokeny.
 
 ## Fallback
 

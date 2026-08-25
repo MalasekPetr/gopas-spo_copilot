@@ -102,11 +102,11 @@ zájmu skupiny: M365 strana nejdřív, kód až od D3.
 > která z přesunu udělá argument: *„Strop jste viděli. Odpověď na něj začneme psát zítra
 > ráno — dneškem jsme se ujistili, že tenant, do kterého ho pustíme, je uklizený."*
 
-## Den 3 — První agent v kódu, znalosti a akce (290 min)
+## Den 3 — První agent v kódu, znalosti a akce (305 min)
 
 | # | Blok | Slug | Typ | min |
 |---|---|---|---|---|
-| 1 | Agents SDK — jádro: AgentApplication, aktivity, turny | `day-1/agents-sdk-core` | P | 115 |
+| 1 | Agents SDK — jádro: AgentApplication, aktivity, turny *(vč. Foundry v kostce)* | `day-1/agents-sdk-core` | P | 130 |
 | 2 | Grounding: Copilot connectors, semantic index, MCP | `day-2/knowledge-grounding` | P | 85 |
 | 3 | Action handlers & integrace s Microsoft Graph | `day-2/actions-graph` | P | 90 |
 

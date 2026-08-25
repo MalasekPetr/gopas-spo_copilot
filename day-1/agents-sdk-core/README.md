@@ -1,6 +1,6 @@
 # Agents SDK — jádro: AgentApplication, aktivity, turny
 
-> Typ: povinný · Den: 3 · Odhad: **115 min** (50 výklad + 65 lab) · Publikum: **vývojáři / architekti**
+> Typ: povinný · Den: 3 · Odhad: **130 min** (65 výklad + 65 lab) · Publikum: **vývojáři / architekti**
 > Prostředí: viz [`../../environment.md`](../../environment.md) · Názvosloví: [`../../GLOSSARY.md`](../../GLOSSARY.md)
 > Nosná linka: [`scenario-support-agent.md`](../../scenario-support-agent.md)
 
@@ -45,6 +45,16 @@ Co se láme, je vlastnictví. Do včerejška ti tři věci držela platforma. Od
 - Zapamatovatelně: **custom engine agent není vyšší level, je to obchod.** Kupuješ si
   kontrolu nad akcemi, orchestrací a auditem. Platíš infrastrukturou, fakturou
   a odpovědností.
+
+### Microsoft Foundry v kostce — kam se to připojujeme
+
+První závazek z tabulky výše (model) má konkrétní podobu: **Foundry deployment**.
+Než se na něj v labu připojíme, patří k němu vysvětlení a pět minut sdílené obrazovky —
+jinak je to připojení na slepo. Celý blok (~15 min):
+[`explainer-foundry-basics.md`](explainer-foundry-basics.md) — co Foundry je a není,
+hierarchie subscription → resource → deployment (kde bydlí klíč, endpoint a deployment
+name), typy nasazení a proč máme DataZone, capacity jako brzda rychlosti (429 naživo
+v části D labu) a přechod hranice M365 jednou větou pro zákazníka.
 
 ### Co Agents SDK dělá a co nedělá
 

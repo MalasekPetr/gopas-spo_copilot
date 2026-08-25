@@ -33,6 +33,104 @@ tabulka stropu: co zvládl, co ne, a za jak dlouho byl hotový.
    jednou větou, proč ji Support Asistent **chce, nebo nechce** — každá capability
    rozšiřuje, kam agent smí.
 
+> [!IMPORTANT] Fragmenty níže ověř proti schématu, které máš v projektu
+> Verze manifest schématu se mění po měsících. Autoritativní je hodnota `$schema`
+> ve **tvém** scaffoldnutém `declarativeAgent.json` a IntelliSense ve VS Code —
+> ne tenhle soubor. Když se název pole liší, platí schéma; fragmenty ber jako tvar,
+> ne jako doslovný text.
+
+**Kostra manifestu** — `name`, `description` a `instructions` jsou povinné jádro:
+
+```json
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/copilot/declarative-agent/v1.7/schema.json",
+  "version": "v1.7",
+  "name": "Support Asistent v1",
+  "description": "Odpovida na dotazy IT helpdesku z runbooku v knihovne Runbooky.",
+  "instructions": "Jsi Support Asistent interniho IT helpdesku. Odpovidej vyhradne z runbooku v knihovne Runbooky a ke kazde odpovedi uved zdroj. Kdyz postup neexistuje nebo na dany pripad nestaci, rekni to otevrene a navrhni eskalaci na tiket. Nikdy si postup nedomyslej. Personalni, mzdove a osobni udaje zamestnancu jsou mimo tvuj rozsah.",
+  "conversation_starters": [
+    { "title": "Access denied", "text": "Nejde mi upload, hlasi access denied." },
+    { "title": "SLA", "text": "Jaka je SLA na P1?" }
+  ]
+}
+```
+
+> [!NOTE] Instructions inline vs. v souboru
+> Nahoře jsou instructions **přímo v manifestu** — funguje vždy a je to nejkratší cesta
+> k běžícímu agentovi. Toolkit umí instructions i externalizovat do samostatného souboru,
+> který se do manifestu vloží při buildu; tvar té reference se mezi verzemi Toolkitu lišil,
+> takže ji ověř ve scaffoldnutém projektu (často je tam už předvyplněná). Pro delší
+> instructions je externí soubor lepší — diff v PR je čitelný.
+>
+> Je to **tentýž text**, který jste psali do agent builderu v
+> [`../../day-1/no-code-showcase/guide-agent-builder.md`](../../day-1/no-code-showcase/guide-agent-builder.md).
+> Stejné zadání, jiná cesta — a odtud plyne zbytek srovnání.
+
+**Knowledge — knihovna `Runbooky`** přes `items_by_url`. Scopovat jde na web, knihovnu,
+složku i jednotlivý soubor; čím užší scope, tím míň má agent kam sáhnout:
+
+```json
+"capabilities": [
+  {
+    "name": "OneDriveAndSharePoint",
+    "items_by_url": [
+      { "url": "https://ms365x17157302.sharepoint.com/sites/hr-demo/Runbooky" }
+    ]
+  }
+]
+```
+
+**Další capability** — `WebSearch` se scopem na konkrétní weby. Do stejného pole
+`capabilities` jako druhý objekt:
+
+```json
+{
+  "name": "WebSearch",
+  "sites": [
+    { "url": "https://learn.microsoft.com" }
+  ]
+}
+```
+
+> [!NOTE] Krok 4 chce jednu větu, ne kód
+> Rozhodnutí je důležitější než syntaxe: **web search rozšiřuje scope mimo tenant.**
+> U Support Asistenta to znamená, že odpověď na dotaz z runbooku může přijít z internetu
+> a citace přestane být důkaz. Většina studentů ho po téhle úvaze vypne — a to je
+> správný výsledek kroku.
+
+**Manifest-only funkce** — tohle je hodnota Toolkitu proti agent builderu: pole, která
+v žádném UI nenaklikáš. Vyzkoušej alespoň jedno:
+
+```json
+"behavior_overrides": {
+  "special_instructions": {
+    "discourage_model_knowledge": true
+  }
+}
+```
+
+```json
+"editorial_answers": [
+  {
+    "trigger_phrases": ["SLA na P1", "jaka je SLA", "P1 sla"],
+    "answer": "P1 = kriticky incident. Reakce do 15 minut, obnova do 4 hodin. Zdroj: runbook Incident P1."
+  }
+]
+```
+
+`discourage_model_knowledge` potlačí obecné znalosti modelu — agent má odpovídat z runbooků,
+ne z toho, co „ví" o IT obecně. `editorial_answers` dává **předdefinovanou odpověď**
+na známý dotaz (schéma umožňuje řádově stovky párů); u dotazu 2 je to levnější a
+deterministické. Obojí ověř proti svému schématu — u `editorial_answers` zvlášť,
+názvy podpolí se liší mezi verzemi.
+
+> [!TIP] TypeSpec — tentýž manifest typovaně
+> Místo ručního JSON jde agent definovat v **TypeSpec** a nechat ho zkompilovat do
+> manifestu: typová kontrola, znovupoužitelné bloky a v PR čitelný diff místo hlídání
+> závorek. Pro dnešní lab stačí JSON; koho to zajímá, najde postup v
+> [Create declarative agents using TypeSpec](https://learn.microsoft.com/en-us/microsoft-365/copilot/extensibility/build-declarative-agents-typespec)
+> — je to varianta zápisu, ne jiná cesta tvorby.
+
 ### Část C — provision a měření
 
 5. **Provision** do tenantu; ověř, že agent je vidět v M365 Copilotu pod tvým účtem.
@@ -70,3 +168,5 @@ tabulka stropu: co zvládl, co ne, a za jak dlouho byl hotový.
 - [Create declarative agents using Microsoft 365 Agents Toolkit](https://learn.microsoft.com/en-us/microsoft-365/copilot/extensibility/build-declarative-agents)
 - [Add capabilities and custom actions to a declarative agent](https://learn.microsoft.com/en-us/microsoft-365/copilot/extensibility/build-declarative-agents-add-skills)
 - [Declarative agents for Microsoft 365 Copilot](https://learn.microsoft.com/en-us/microsoft-365/copilot/extensibility/overview-declarative-agent)
+- [Create declarative agents using TypeSpec](https://learn.microsoft.com/en-us/microsoft-365/copilot/extensibility/build-declarative-agents-typespec) — typovaná alternativa k ručnímu JSON
+- [Declarative agent manifest — reference](https://learn.microsoft.com/en-us/microsoft-365/copilot/extensibility/declarative-agent-manifest-1.7) — autoritativní seznam polí; **ověř verzi proti `$schema` ve svém projektu**

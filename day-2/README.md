@@ -1,34 +1,36 @@
-# Den 2 — Deklarativní strop, první agent v kódu a hygiena
+# Den 2 — Copilot v SharePointu, deklarativní strop a hygiena
 
-Kolik toho jde postavit **před prvním řádkem serverového kódu** — a kde to skončí. Pak
-odpověď na ten strop: první běžící custom engine agent. Na závěr otázka, kterou praxe
-klade před grounding: je tenant na agenta uklizený?
+**Celý den bez Azure** — jede na tenantu `spdemo.online` a PAYG. Od Skills a SharePoint
+agentů přes deklarativního agenta až po otázku, kterou praxe klade před groundingem:
+je tenant na agenta uklizený?
 
-| Pořadí | Blok | Slug | Typ |
-|---|---|---|---|
-| 1 | Deklarativní agenti & Agents Toolkit — maximum bez serverového kódu | [`declarative-agents`](declarative-agents/) | P |
-| 2 | Agents SDK — jádro: AgentApplication, aktivity, turny | [`agents-sdk-core`](../day-1/agents-sdk-core/) | P |
-| 3 | Datová hygiena v SharePoint Online a Exchange Online | [`data-hygiene`](data-hygiene/) | P |
+| Pořadí | Blok | Slug | Typ | min |
+|---|---|---|---|---|
+| 1 | Skills — rozšíření Copilot in SharePoint | [`skills`](skills/) | P | 70 |
+| 2 | SharePoint agents *(instruktorské demo)* | [`sharepoint-agents`](sharepoint-agents/) | P | 30 |
+| 3 | Deklarativní agenti & Agents Toolkit | [`declarative-agents`](declarative-agents/) | P | 100 |
+| 4 | Datová hygiena + SharePoint Advanced Management | [`data-hygiene`](data-hygiene/) | P | 60 |
 
-> [!NOTE] Blok 1 se sem přesunul z dne 1 (přetečení prvního běhu). Vyčerpá deklarativní
-> cestu až po přesně pojmenovaný strop — dotazy 1–2 ze scénáře projdou, dotaz 3 (akce
-> s validací) a 4 (vynucené odmítnutí) ne. Blok 2 je odpověď: první běžící agent lokálně
-> (Agents Playground — bez tenantu, bez tunelu, bez registrace bota). Blok 3 je vědomě
-> kompaktní závěr dne (30 min, checklist jako večerní úloha).
+> [!NOTE] Bloky 1 a 2 jsou převzaté z GOC224 a zařazené podle zájmu skupiny
+> (rozhodnutí lektora 2026-08-25). Skills ukazují, kam až dosáhne Copilot in SharePoint
+> bez agenta; SharePoint agent je nejbližší vstup pro publikum, které spravuje obsah —
+> včetně jeho tvrdého stropu (jeden zdroj a nic jiného). Blok 3 se sem přesunul z dne 1
+> a končí **přesně pojmenovaným stropem** deklarativní cesty. Blok 4 je rozšířený
+> o hloubku **SAM** — tři pilíře, RAC vs. RCD a licenční past.
 
-Reálná zátěž **245 min** (100 + 115 + 30). Den je záměrně lehčí — nese rezervu na doběh
-rozjezdu a je to **první měřený den po rekalibraci**; po něm timing přeměřit.
+Reálná zátěž **260 min**.
 
-> [!WARNING] Ranní prerekvizity
-> Klíče k instruktorskému Foundry deploymentu rozdat **před blokem 2**. Před blokem 1
-> ověřit (10 min), že semantic index vrací obsah knihovny `Runbooky` — deklarativní agent
-> je na to rychlý test a je to zároveň prerekvizita `knowledge-grounding` (D3).
+> [!IMPORTANT] Strop zůstává přes noc bez odpovědi
+> Deklarativní agent dnes narazí na strop (dotaz 3 nezaloží tiket, dotaz 4 odmítne jen
+> promptem), ale custom engine přijde až zítra. Uzavři den větou, která z toho udělá
+> argument místo díry: *„Strop jste viděli. Odpověď na něj začneme psát zítra ráno —
+> dneškem jsme se ujistili, že tenant, do kterého ho pustíme, je uklizený."*
 
-Nosná linka dnes získá **deklarativní Support Asistent v1** se změřeným stropem, pak
-custom engine scaffold s LLM turnem — a hygienický checklist, který říká, **proč mu smí
-zákazník věřit**.
+Nosná linka dnes získá **deklarativní Support Asistent v1** se změřeným stropem
+a hygienický checklist, který říká, **proč mu smí zákazník věřit**.
 
 ## Materiál k samostudiu
 
-[`opt-custom-retrieval`](opt-custom-retrieval/) — vlastní vektorizace (chunking, embeddings,
-hybrid ranking). Vyřazeno z osnovy po rekalibraci; viz [`../self-study.md`](../self-study.md).
+[`opt-custom-retrieval`](opt-custom-retrieval/) — vlastní vektorizace. Na D5 z něj jede
+**30min instruktorské demo** (zájem skupiny); plný text zůstává ke čtení. Viz
+[`../self-study.md`](../self-study.md).

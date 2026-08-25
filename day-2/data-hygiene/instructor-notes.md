@@ -2,8 +2,11 @@
 
 ## Timing
 
-- **30 min (20 výklad + 10 checklist)** — zkrácená varianta je po rekalibraci výchozí,
-  ne nouzová. Závěrečný blok dne 2, záměrně lehký formát (demo + checklist).
+- **60 min (40 výklad + 20 checklist)** — rozšířeno 2026-08-25 o hloubku **SAM**
+  (tři pilíře, RAC vs. RCD, licenční past) převzatou z GOC224 `advanced-management`,
+  na základě zájmu skupiny. Nahrazuje samostatný SAM blok — nedělat obojí, překrývá se.
+- Závěrečný blok dne 2. Kdyby čas tlačil, zkrátit **tři pilíře** na jeden slide
+  a nechat RAC/RCD rozlišení plus checklist — to je jádro.
 - Při skluzu dne se dá stáhnout na 30 min: výklad zkrátit, checklist zadat jako
   večerní úlohu. Nevypouštět celý — security-risk (D5) na hygienu odkazuje.
 

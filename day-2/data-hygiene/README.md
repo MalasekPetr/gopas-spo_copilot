@@ -1,6 +1,6 @@
 # Datová hygiena v SharePoint Online a Exchange Online
 
-> Typ: povinný · Den: 2 · Odhad: **30 min** (20 výklad + 10 checklist) · Publikum: **vývojáři / architekti**
+> Typ: povinný · Den: 2 · Odhad: **60 min** (40 výklad + 20 checklist) · Publikum: **vývojáři / architekti**
 > Prostředí: viz [`../../environment.md`](../../environment.md) · Názvosloví: [`../../GLOSSARY.md`](../../GLOSSARY.md)
 
 Agent neprolamuje oprávnění — on je **zviditelňuje**. Grounding nad semantic indexem je
@@ -40,17 +40,50 @@ flowchart LR
   end
 ```
 
+### SharePoint Advanced Management — tři pilíře
+
+SAM se spravuje ze SharePoint admin centra a stojí na třech pilířích. Pro agenty je
+nosný ten třetí:
+
+```mermaid
+flowchart TB
+  SAM[SharePoint Advanced Management]
+  SAM --> S[Content sprawl]
+  SAM --> L[Content lifecycle]
+  SAM --> O[Oversharing]
+  S --> S1[politika vlastnictvi webu<br/>inactive site policy<br/>atestace webu]
+  L --> L1[change history 180 dni<br/>admin akce 30 dni<br/>restricted site creation]
+  O --> O1[RAC · RCD · DAG reporty<br/>access reviews<br/>block download]
+```
+
+- **Content sprawl** — politika vlastnictví webů, inactive site policy s notifikací
+  vlastníkům, atestace.
+- **Content lifecycle** — katalog webů, change history reporty 180 dní zpět, nedávné
+  admin akce 30 dní, omezení zakládání webů aplikacemi.
+- **Oversharing** — pro Copilota a agenty nejdůležitější: **RAC**, **RCD**, **DAG reporty**
+  (permission state, sharing links za 28 dní, EEEU insights, per-user permissions),
+  site access reviews. Politiky jde porovnávat přes tisíce webů najednou.
+
 ### Nástroje hygieny — SharePoint Online
 
-- **SharePoint Advanced Management (SAM)** — provozní hygiena webů: reporty oversharingu,
-  site access review, politika neaktivních webů. Licenční podmínky (samostatně vs. součást
-  Copilot licence) **ověřit k datu běhu**, mění se.
-- **Restricted SharePoint Search / Restricted Content Discovery (RCD)** — vyjme web nebo
-  knihovnu z indexu pro Copilot a agenty. Obsah zůstane, agent ho přestane vidět.
+- **Restricted Access Control (RAC)** — přístup k webu nebo OneDrive jen pro vybrané
+  security groups. Bere lidem **přístup**.
+- **Restricted Content Discovery (RCD)** — web zůstane přístupný, ale Copilot a search
+  ho **negroundují**. Bere agentovi **viditelnost**, ne lidem přístup.
 - **Sensitivity labels** (Purview) — klasifikace na webech i souborech; agent labely
   respektuje a je to vrstva nad ACL, ne místo nich.
-- Pořadí použití je důležité: SAM najde problém → RCD ho **zhasne** → oprava ACL ho
-  **vyřeší**. Kdo se zastaví u RCD, má hasicí přístroj místo architektury.
+- Pořadí použití je důležité: DAG report najde problém → RCD ho **zhasne** → oprava ACL
+  ho **vyřeší**. Kdo se zastaví u RCD, má hasicí přístroj místo architektury.
+
+> [!IMPORTANT] Licencování SAM — neříkej „zdarma s Copilotem"
+> SAM není jedno SKU, ale sada funkcí se **dvěma odemykacími cestami**: samostatný
+> **SAM Plan 1** add-on (per-user), nebo **M365 Copilot licence** — kde **jedna přiřazená
+> licence odemkne SAM pro celý tenant**. Feature set je shodný až na dokumentovanou výjimku
+> (*restricted site creation by apps* chce Plan 1 tak jako tak); DAG report nad sensitivity
+> labels navíc vyžaduje E5.
+>
+> Formulaci hlídej: Copilot licence je dražší než Plan 1, odemčení SAM je **vedlejší efekt**,
+> ne úspora. Ověř k datu běhu — licenční podmínky se mění.
 
 ### Nástroje hygieny — Exchange Online
 
@@ -75,10 +108,13 @@ Deliverable, který si student odnáší k zákazníkovi. Pořadí není libovol
 ## Klíčové rozlišení
 
 - **Agent neprolamuje oprávnění** — ACL platí; hygiena řeší, že ACL jsou **špatně nastavená**.
+- **RAC vs. RCD**: RAC bere lidem **přístup**, RCD bere Copilotu a search **viditelnost**
+  (člověk s odkazem se dostane dál). Pro „citlivé, ale používané" weby je správně RCD,
+  pro „tam nemá co dělat nikdo" RAC.
+- **SAM vs. Purview**: SAM řídí **weby a sdílení** (SharePoint vrstva), Purview řídí
+  **data a compliance** (labely, retence, audit). Doplňují se, nenahrazují.
 - **Restricted Content Discovery** (web zůstane, agent ho nevidí) vs. **oprava ACL**
   (řešení příčiny, ne příznaku) — RCD je hasicí přístroj, ne architektura.
-- **Purview / sensitivity labels** (klasifikace a politika nad obsahem) vs.
-  **SharePoint Advanced Management** (provozní hygiena webů) — doplňují se, nezastupují.
 - Hygiena je **předpoklad** groundingu z bloku [`../knowledge-grounding/`](../knowledge-grounding/),
   ne jeho náhrada.
 

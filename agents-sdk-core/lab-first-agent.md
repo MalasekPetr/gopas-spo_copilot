@@ -33,8 +33,10 @@ zbytek týdne.
 
 ### Část C — volání modelu
 
-5. **Tři hodnoty jsi zadal už v průvodci** při zakládání projektu (volba **Azure OpenAI**).
-   Toolkit je zapsal sám — do repa je psát nemusíš. Najdi je a pojmenuj nahlas:
+5. Konfigurace modelu žije tam, kam ji zapsal průvodce Toolkitu (volba **Azure OpenAI**
+   při zakládání projektu). **Pondělní scaffold vznikl bez klíče** — otevři soubory níže
+   a tři hodnoty od instruktora doplň, případně oprav placeholdery z pondělí.
+   Pro běh v Playgroundu čte agent `env/.env.playground.user`:
 
    ```text
    env/.env.dev.user

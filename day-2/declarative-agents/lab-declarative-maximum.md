@@ -97,6 +97,11 @@ složku i jednotlivý soubor; čím užší scope, tím míň má agent kam sáh
 > U Support Asistenta to znamená, že odpověď na dotaz z runbooku může přijít z internetu
 > a citace přestane být důkaz. Většina studentů ho po téhle úvaze vypne — a to je
 > správný výsledek kroku.
+>
+> Že to není univerzální „vypni WebSearch", ukazuje **Normiqa Navigator** — publikovaný
+> agent postavený v Toolkitu, jehož knowledge jsou **výhradně webové zdroje**. Nad veřejnou
+> kurátorovanou doménou je to jediná správná volba. Capability se vybírá podle toho,
+> co má agent dělat (viz [`README.md`](README.md), sekce Strop deklarativní cesty).
 
 **Manifest-only funkce** — tohle je hodnota Toolkitu proti agent builderu: pole, která
 v žádném UI nenaklikáš. Vyzkoušej alespoň jedno:

@@ -129,6 +129,21 @@ Stejné zadání (scénář Support Asistenta), poctivá bilance:
 - Návrat k ose z dopoledne: tohle je **čtvrtá příčka** za agent builderem a Studiem.
   Kde tabulka končí ❌, začíná zítřejší ráno — a to je celý zbytek kurzu.
 
+> [!IMPORTANT] Strop není slepá ulička — pod ním se dá vydat produkt
+> Tabulka výš snadno vyzní, že deklarativní agent je jen odrazový můstek. Není.
+> **Normiqa Navigator** je publikovaný agent autora kurzu postavený **v Agents Toolkitu**,
+> jehož knowledge tvoří **výhradně webové zdroje** — žádný SharePoint, žádné akce, žádný
+> vlastní hosting. Přesně ta cesta, kterou dnes stavíte.
+>
+> Je to protiváha k dnešnímu labu: u Support Asistenta `WebSearch` nejspíš vypnete, protože
+> rozšiřuje scope mimo tenant a citace přestane být důkaz. U agenta nad **veřejnou,
+> kurátorovanou** doménou je to naopak jediný správný zdroj. **Capability se nevybírá
+> podle toho, co umí, ale podle toho, co má agent dělat.**
+>
+> Celá case study včetně validačního procesu a Partner Center je v
+> [`../../day-4/marketplace-agents/`](../../day-4/marketplace-agents/) (materiál
+> k samostudiu — v běhu se neodučí).
+
 ## Klíčové rozlišení
 
 - **Deklarativní agent** (bez hostingu, bez vlastního modelu — platí ho Copilot

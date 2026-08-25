@@ -33,27 +33,47 @@ zbytek týdne.
 
 ### Část C — volání modelu
 
-5. Zapoj model endpoint **z konfigurace** (`.env` / user secrets — nikdy natvrdo).
-   Než půjdeš dál, spusť `git status` a ověř, že klíč není v trackovaném souboru.
+5. **Tři hodnoty jsi zadal už v průvodci** při zakládání projektu (volba **Azure OpenAI**).
+   Toolkit je zapsal sám — do repa je psát nemusíš. Najdi je a pojmenuj nahlas:
 
-   Čtyři hodnoty dostaneš od instruktora. Založ `.env` v kořeni projektu:
-
-   ```dotenv
-   AZURE_OPENAI_ENDPOINT=https://<nazev>.openai.azure.com/
-   AZURE_OPENAI_API_KEY=<klic-od-instruktora>
-   AZURE_OPENAI_DEPLOYMENT=support-agent
-   AZURE_OPENAI_API_VERSION=2024-10-21
+   ```text
+   env/.env.dev.user
+   env/.env.local.user
+   env/.env.playground.user
    ```
 
-   Do repa commitni jen `.env.example` se **stejnými klíči a prázdnými hodnotami** —
-   je to nejlevnější způsob, jak dalšímu člověku říct, co má nastavit:
+   V každém z nich jsou tytéž tři řádky (hodnoty od instruktora):
 
    ```dotenv
-   AZURE_OPENAI_ENDPOINT=
-   AZURE_OPENAI_API_KEY=
-   AZURE_OPENAI_DEPLOYMENT=
-   AZURE_OPENAI_API_VERSION=
+   SECRET_AZURE_OPENAI_API_KEY=<zasifrovano Toolkitem>
+   AZURE_OPENAI_ENDPOINT='https://<nazev>.openai.azure.com/openai/v1'
+   AZURE_OPENAI_DEPLOYMENT_NAME='support-agent'
    ```
+
+6. **Otevři `src/config.ts` ve svém projektu a najdi rozpor.** Kód čte
+   `process.env.AZURE_OPENAI_API_KEY` — **bez prefixu `SECRET_`**, i když v souboru
+   prefix je. Vysvětlení: prefix `SECRET_` je pokyn pro Toolkit, aby hodnotu
+   **zašifroval v souboru** a v UI maskoval; do procesu ji vloží dešifrovanou a bez
+   prefixu. Kdo to neví, hledá v kódu proměnnou, která tam nikdy nebude.
+
+7. Ověř governance: v `.gitignore` scaffoldu je `env/.env.*.user`, zatímco `env/.env.dev`
+   trackovaný **je**. Spusť `git status` a pojmenuj, proč je to správně rozdělené —
+   v `.user` jsou tajemství, ve zbytku identifikátory prostředí. Tohle je vzor, který
+   si odnášíš do vlastních projektů; ruční `.env` v kořeni tady nepotřebuješ.
+
+> [!IMPORTANT] Čtvrtá hodnota v konfiguraci není — je zadrátovaná v kódu
+> Starší návody uvádějí `AZURE_OPENAI_API_VERSION` jako čtvrtou proměnnou. V tomto
+> scaffoldu **v `env/` není** a přidat ji tam nemá efekt: verze je natvrdo v `src/agent.ts`
+> v konstruktoru klienta (`apiVersion: "2024-12-01-preview"`). Endpoint od průvodce navíc
+> nese cestu `/openai/v1`.
+>
+> **Najdi to a pojmenuj jako vadu.** Hodnota, která patří do konfigurace, sedí v kódu —
+> po změně api-version se musí přebuildovat aplikace místo přenastavení prostředí. Je to
+> první příklad hranice „co je konfigurace a co je kód", kterou budeme řešit celý týden.
+>
+> Druhá past je **název deploymentu**: `AZURE_OPENAI_DEPLOYMENT_NAME` musí sedět
+> na deployment v Azure (`support-agent`), ne na název projektu. Průvodce sem ochotně
+> vezme cokoliv a chyba se projeví až za běhu jako **404 DeploymentNotFound**.
 
 > [!WARNING] Prázdná odpověď není rozbitý agent — je to token budget
 > Kurzovní model je **reasoning model**: interní uvažování se počítá do
@@ -76,11 +96,11 @@ zbytek týdne.
 
 ### Část D — chybové větve (nepřeskakovat)
 
-8. Nastav **timeout** na volání modelu a ověř chování: co udělá agent, když model
-   neodpoví včas? Zkrať timeout na nesmyslně malou hodnotu, ať to uvidíš.
-9. Rozbij klíč (nebo ho odeber) a ověř, že uživatel dostane **srozumitelnou větu**,
-   ne stack trace a ne prázdnou bublinu.
-10. Rozliš v kódu **transientní** chybu (throttling, timeout → retry s exponenciálním
+10. Nastav **timeout** na volání modelu a ověř chování: co udělá agent, když model
+    neodpoví včas? Zkrať timeout na nesmyslně malou hodnotu, ať to uvidíš.
+11. Rozbij klíč (nebo ho odeber) a ověř, že uživatel dostane **srozumitelnou větu**,
+    ne stack trace a ne prázdnou bublinu.
+12. Rozliš v kódu **transientní** chybu (throttling, timeout → retry s exponenciálním
     backoffem a stropem) od **permanentní** (401/403/404 → neretryovat, rovnou
     srozumitelná odpověď). Ověř obě větve.
 

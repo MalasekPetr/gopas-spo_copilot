@@ -19,17 +19,17 @@ Rozhodnutí prvního běhu (2026-08-24 a 25) po rekalibraci timingu — viz
 
 | Modul | Proč vyřazen | Co v něm student najde |
 |---|---|---|
-| [`day-4/event-driven-hosting`](day-4/event-driven-hosting/) | studenti nemají Azure subscription — blok byl stejně jen instruktorské demo; „hosting v kostce" složen do `agent-365-governance` | osa hostingu (App Service, Container Apps, Functions, Durable, Logic Apps, Foundry Agent Service), timeout a retry patterny, idempotence, publikace do kanálů |
-| [`day-2/opt-custom-retrieval`](day-2/opt-custom-retrieval/) | vedlejší kolej kurzu — ale zájem skupiny byl reálný, proto **30min instruktorské demo na D5** a plný text zůstává ke čtení | chunking, embeddings, hybrid ranking, security trimming — a hlavně *kdy retrieval nedělat sám* |
-| [`day-5/perf-cost-lifecycle`](day-5/perf-cost-lifecycle/) | elastický ventil; jádro (token budget) složeno do capstonu | prompt caching, token budget, model retirements, promotion dev → test |
-| [`day-5/orchestry-governance`](day-5/orchestry-governance/) | srovnávací rámec, leaf; 10 min shrnutí složeno do `agent-365-governance` | third-party governance jako alternativa k Agent 365 |
-| [`day-1/opt-prompting-fundamentals`](day-1/opt-prompting-fundamentals/) | převzato z GOC224, pro pro-code publikum pod úrovní | anatomie promptu, orchestrator, **vrstvy instrukcí** (tabulka je vytažená do `declarative-agents`) |
+| [`event-driven-hosting`](event-driven-hosting/) | studenti nemají Azure subscription — blok byl stejně jen instruktorské demo; „hosting v kostce" složen do `agent-365-governance` | osa hostingu (App Service, Container Apps, Functions, Durable, Logic Apps, Foundry Agent Service), timeout a retry patterny, idempotence, publikace do kanálů |
+| [`opt-custom-retrieval`](opt-custom-retrieval/) | vedlejší kolej kurzu — ale zájem skupiny byl reálný, proto **30min instruktorské demo na D5** a plný text zůstává ke čtení | chunking, embeddings, hybrid ranking, security trimming — a hlavně *kdy retrieval nedělat sám* |
+| [`perf-cost-lifecycle`](perf-cost-lifecycle/) | elastický ventil; jádro (token budget) složeno do capstonu | prompt caching, token budget, model retirements, promotion dev → test |
+| [`orchestry-governance`](orchestry-governance/) | srovnávací rámec, leaf; 10 min shrnutí složeno do `agent-365-governance` | third-party governance jako alternativa k Agent 365 |
+| [`opt-prompting-fundamentals`](opt-prompting-fundamentals/) | převzato z GOC224, pro pro-code publikum pod úrovní | anatomie promptu, orchestrator, **vrstvy instrukcí** (tabulka je vytažená do `declarative-agents`) |
 
 ## Referenční dokumenty
 
 | Dokument | K čemu |
 |---|---|
-| [`day-1/agent-landscape/comparison-agent-paths.md`](day-1/agent-landscape/comparison-agent-paths.md) | rozdílová matice čtyř cest tvorby **včetně SharePoint agentů** — schopnosti, exkluzivity, rozhodovací osa. Hodnotnější než tabulka pěti cest ve výkladu. |
+| [`agent-landscape/comparison-agent-paths.md`](agent-landscape/comparison-agent-paths.md) | rozdílová matice čtyř cest tvorby **včetně SharePoint agentů** — schopnosti, exkluzivity, rozhodovací osa. Hodnotnější než tabulka pěti cest ve výkladu. |
 
 ## Převzato z GOC224 a zařazeno do osnovy
 
@@ -38,14 +38,14 @@ Opak vyřazování — moduly, které se do kurzu **přidaly** na základě záj
 
 | Modul | Kde se učí | Proč |
 |---|---|---|
-| [`day-2/skills`](day-2/skills/) | D2, otvírák | Skills jako rozšíření Copilot in SharePoint — nejbližší vstup pro SPFx publikum |
-| [`day-2/sharepoint-agents`](day-2/sharepoint-agents/) | D2, instruktorské demo | agent vzniklý nad knihovnou bez opuštění webu; ukazuje tvrdý strop single-source |
-| SAM (hloubka) | složeno do [`day-2/data-hygiene`](day-2/data-hygiene/) | tři pilíře, RAC vs. RCD, licenční past — nahrazuje samostatný SAM blok |
+| [`skills`](skills/) | D2, otvírák | Skills jako rozšíření Copilot in SharePoint — nejbližší vstup pro SPFx publikum |
+| [`sharepoint-agents`](sharepoint-agents/) | D2, instruktorské demo | agent vzniklý nad knihovnou bez opuštění webu; ukazuje tvrdý strop single-source |
+| SAM (hloubka) | složeno do [`data-hygiene`](data-hygiene/) | tři pilíře, RAC vs. RCD, licenční past — nahrazuje samostatný SAM blok |
 
 ## Sloučené bloky
 
 `middleware-policy` + `security-risk` → **jeden blok** „Bezpečnost & middleware — útok
-a obrana jako kód" ([`day-3/middleware-policy/`](day-3/middleware-policy/)). Oba učily totéž
+a obrana jako kód" ([`middleware-policy/`](middleware-policy/)). Oba učily totéž
 z opačných stran: útok ukáže, že obrana v promptu nedrží, middleware je odpověď. Sloučením
 odpadl druhý rozjezd a XPIA má bezprostřední odpověď místo dvoudenní pauzy.
 

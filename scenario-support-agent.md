@@ -31,7 +31,7 @@ Bodů 1–2 dosáhne i deklarativní agent. Body 3–5 jsou důvod, proč tenhle
 |---|---|---|
 | Knihovna `Runbooky` (4 postupy) | `/sites/hr-demo` | seed skript, viz [`scripts/`](scripts/) |
 | Zaměstnanci (list) | `/sites/hr-demo` | seed skript |
-| Mock ticket API | lokálně | součást `solution/` v [`day-2/actions-graph/`](day-2/actions-graph/) |
+| Mock ticket API | lokálně | součást `solution/` v [`actions-graph/`](actions-graph/) |
 
 > [!NOTE] Název webu `/sites/hr-demo` je záměrný
 > Web se sdílí se seed skripty kurzu GOC224 (reuse provisioning artefaktů) — proto HR
@@ -42,24 +42,24 @@ Bodů 1–2 dosáhne i deklarativní agent. Body 3–5 jsou důvod, proč tenhle
 
 | Den | Modul | Přírůstek |
 |---|---|---|
-| 1 | [`day-1/no-code-showcase/`](day-1/no-code-showcase/) | **baseline**: Support Asistent v agent builderu, sdílený skupině Students — zůstává živý celý týden jako měřítko ([návod](day-1/no-code-showcase/guide-agent-builder.md)) |
-| 1 | [`day-2/declarative-agents/`](day-2/declarative-agents/) | **deklarativní Support Asistent v1** (instructions + knowledge) a jeho změřený strop |
-| 2 | [`day-1/agents-sdk-core/`](day-1/agents-sdk-core/) | scaffold, `AgentApplication`, echo turn → LLM turn v Agents Playgroundu |
-| 2 | [`day-2/knowledge-grounding/`](day-2/knowledge-grounding/) | grounding nad knihovnou `Runbooky` (custom engine) |
-| 2 | [`day-2/actions-graph/`](day-2/actions-graph/) | akce nad Graphem + `CreateTicket` s validací parametrů |
-| 2 | [`day-2/data-hygiene/`](day-2/data-hygiene/) | hygienický checklist tenantu — proč agentovi smí zákazník věřit |
-| 3 | [`day-3/prompt-orchestration/`](day-3/prompt-orchestration/) | systémový prompt, tool-call loop, „neznám" chování |
-| 3 | [`day-3/agent-framework/`](day-3/agent-framework/) | rozdělení na **triage** + **resolver** agenta |
-| 3 | [`day-3/middleware-policy/`](day-3/middleware-policy/) | redakční middleware, filtrování výstupů |
-| 4 | [`day-4/spfx-copilot-apps/`](day-4/spfx-copilot-apps/) | první vlastní Copilot App (scaffold + Workbench); vize: eskalace (dotaz 3) jako interaktivní karta |
-| 4 | [`day-4/event-driven-hosting/`](day-4/event-driven-hosting/) | hosting, timeout a retry chování; manifest, verzování, **publikace do Teams / M365 Copilotu** |
-| 4 | [`day-4/marketplace-agents/`](day-4/marketplace-agents/) | rozhodnutí store ANO/NE s odůvodněním — do roadmapy |
-| 4 | [`day-4/agent-365-governance/`](day-4/agent-365-governance/) | **instrumentace do Agent 365**, Entra Agent ID |
-| 5 | [`day-5/orchestry-governance/`](day-5/orchestry-governance/) | rozhodnutí first-party vs. third-party governance — do architektury |
-| 5 | [`day-5/evaluation-quality/`](day-5/evaluation-quality/) | golden set + regresní běh |
-| 5 | [`day-5/security-risk/`](day-5/security-risk/) | prompt injection přes obsah runbooku — a obrana |
-| 5 | [`day-5/perf-cost-lifecycle/`](day-5/perf-cost-lifecycle/) | cache, token budget, promotion dev → test |
-| 5 | [`day-5/capstone/`](day-5/capstone/) | prezentace celku, KPI a evaluační matice |
+| 1 | [`no-code-showcase/`](no-code-showcase/) | **baseline**: Support Asistent v agent builderu, sdílený skupině Students — zůstává živý celý týden jako měřítko ([návod](no-code-showcase/guide-agent-builder.md)) |
+| 1 | [`declarative-agents/`](declarative-agents/) | **deklarativní Support Asistent v1** (instructions + knowledge) a jeho změřený strop |
+| 2 | [`agents-sdk-core/`](agents-sdk-core/) | scaffold, `AgentApplication`, echo turn → LLM turn v Agents Playgroundu |
+| 2 | [`knowledge-grounding/`](knowledge-grounding/) | grounding nad knihovnou `Runbooky` (custom engine) |
+| 2 | [`actions-graph/`](actions-graph/) | akce nad Graphem + `CreateTicket` s validací parametrů |
+| 2 | [`data-hygiene/`](data-hygiene/) | hygienický checklist tenantu — proč agentovi smí zákazník věřit |
+| 3 | [`prompt-orchestration/`](prompt-orchestration/) | systémový prompt, tool-call loop, „neznám" chování |
+| 3 | [`agent-framework/`](agent-framework/) | rozdělení na **triage** + **resolver** agenta |
+| 3 | [`middleware-policy/`](middleware-policy/) | redakční middleware, filtrování výstupů |
+| 4 | [`spfx-copilot-apps/`](spfx-copilot-apps/) | první vlastní Copilot App (scaffold + Workbench); vize: eskalace (dotaz 3) jako interaktivní karta |
+| 4 | [`event-driven-hosting/`](event-driven-hosting/) | hosting, timeout a retry chování; manifest, verzování, **publikace do Teams / M365 Copilotu** |
+| 4 | [`marketplace-agents/`](marketplace-agents/) | rozhodnutí store ANO/NE s odůvodněním — do roadmapy |
+| 4 | [`agent-365-governance/`](agent-365-governance/) | **instrumentace do Agent 365**, Entra Agent ID |
+| 5 | [`orchestry-governance/`](orchestry-governance/) | rozhodnutí first-party vs. third-party governance — do architektury |
+| 5 | [`evaluation-quality/`](evaluation-quality/) | golden set + regresní běh |
+| 5 | [`security-risk/`](security-risk/) | prompt injection přes obsah runbooku — a obrana |
+| 5 | [`perf-cost-lifecycle/`](perf-cost-lifecycle/) | cache, token budget, promotion dev → test |
+| 5 | [`capstone/`](capstone/) | prezentace celku, KPI a evaluační matice |
 
 ```mermaid
 flowchart LR

@@ -39,7 +39,8 @@ gopas-spo_copilot/
 ├─ agenda.md           # 5denní pořadí bloků (single source of order)
 ├─ environment.md      # tenant, PAYG, model endpoint, matice požadavků
 ├─ _templates/         # module.md, lab.md
-├─ day-1/ … day-5/     # obsah po dnech; každý modul = složka se slugem
+├─ dny/                # denní briefingy (den-1.md … den-5.md)
+├─ <modul>/            # každý modul = složka se slugem v kořeni; den a pořadí drží agenda
 ├─ marketing/          # NÁVRH nové osnovy pro web (cs / en / sk)
 └─ scripts/            # provozní skripty kurzu (lifecycle studentů, seed dat)
 ```

@@ -38,16 +38,17 @@ Pořadí modulů v běhu drží **`agenda.md`** — je to jediný zdroj pravdy o
 
 - H1 nadpis modulu je jen `# <Název>` — **žádná pořadová čísla** v nadpisech ani v textu.
   Vkládání/přesun modulu tak nikdy nevyvolá přečíslování napříč repem.
-- Křížové odkazy mezi moduly vždy **slugem jako relativní odkaz na složku**. Tvar odkazu
-  (z pohledu souboru uvnitř složky modulu):
+- Křížové odkazy mezi moduly vždy **slugem jako relativní odkaz na složku**. Moduly leží
+  v jedné rovině, takže z pohledu souboru uvnitř složky modulu je každý jiný modul
+  sourozenec (den nehraje roli):
 
   ```md
-  jiný den:        [`../../day-3/agent-framework/`](../../day-3/agent-framework/)
-  sourozenec dne:  [`../actions-graph/`](../actions-graph/)
+  jiný modul:      [`../agent-framework/`](../agent-framework/)
+  soubor v kořeni: [`../agenda.md`](../agenda.md)
   ```
 
 - V instruktorských poznámkách (sekce Vazby) stačí backtick slug bez odkazu.
-- Pořadí v rámci dne drží výhradně `agenda.md` (a `day-N/README.md` tabulka).
+- Pořadí v rámci dne drží výhradně `agenda.md`; denní briefingy jsou v `dny/den-N.md`.
 
 ## Markdown styl
 

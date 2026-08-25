@@ -1,7 +1,7 @@
 # <Název modulu>
 
 > Typ: povinný | volitelný · Den: <N> · Odhad: <min> · Publikum: **vývojáři / architekti**
-> Prostředí: viz [`../../environment.md`](../../environment.md) · Názvosloví: [`../../GLOSSARY.md`](../../GLOSSARY.md)
+> Prostředí: viz [`../environment.md`](../environment.md) · Názvosloví: [`../GLOSSARY.md`](../GLOSSARY.md)
 
 ## Cíle
 - <co student po modulu umí>

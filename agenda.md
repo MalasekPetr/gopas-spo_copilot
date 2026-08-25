@@ -1,35 +1,15 @@
 # Agenda — pořadí bloků
 
-Jediný zdroj pravdy o pořadí modulů. Složky jsou slugy; pořadí drží tato tabulka.
-Prefix `day-N/` ve slugu je **stabilní identifikátor**, ne garance dne — složky se
-při přesunech bloků nepřejmenovávají.
+Jediný zdroj pravdy o pořadí modulů. Moduly leží v jedné rovině bez prefixu dne
+(`onboarding/`, `agents-sdk-core/`, …) — **den je metadata a žije výhradně tady**.
+Denní briefingy (prerekvizity rána, kompresní ventily dne) jsou v [`dny/`](dny/).
 
-> [!CAUTION] Osm složek neodpovídá dni, kdy se učí
-> Po dvou rekalibracích prefix ve většině případů **lže**. Nehledej modul podle složky,
-> vždy podle tabulek níže.
->
-> | Složka | Skutečně se učí |
-> |---|---|
-> | `day-1/agents-sdk-core` | **den 3** |
-> | `day-2/knowledge-grounding` | **den 3** |
-> | `day-2/actions-graph` | **den 3** |
-> | `day-3/prompt-orchestration` | **den 4** |
-> | `day-3/agent-framework` | **den 4** |
-> | `day-3/middleware-policy` | **den 4** |
-> | `day-4/marketplace-agents` | **den 2** |
-> | `day-4/agent-365-governance` | **den 5** |
->
-> Nejzrádnější je `day-4/` — ze čtyř složek se na dni 4 učí jen `spfx-copilot-apps`.
-> Sedí: `onboarding`, `agent-landscape`, `no-code-showcase` (D1), `skills`,
-> `sharepoint-agents`, `declarative-agents`, `data-hygiene` (D2), `spfx-copilot-apps` (D4),
-> `evaluation-quality`, `capstone` (D5).
-
-> [!NOTE] Rozhodnuto po prvním běhu: prefix zahodit
-> Den je metadata, ne identita modulu — dva přesuny během jediného dne to ukázaly
-> jednoznačně. Po běhu se složky přejmenují do jedné roviny bez prefixu
-> (`onboarding/`, `agents-sdk-core/`, …) a den zůstane výhradně v této agendě.
-> Znamená to přepsat ~157 křížových odkazů, proto se to nedělá uprostřed týdne:
-> studenti mají repo naklonované a cesty by jim pod rukama zmizely.
+> [!IMPORTANT] Přestavba složek 2026-08-25 večer — studenti musí udělat `git pull`
+> Původní struktura `day-N/<modul>` po dvou rekalibracích u 8 z 24 modulů lhala o dni
+> výuky, proto se prefix zahodil uprostřed týdne (rozhodnutí lektora). Kdo má repo
+> naklonované z pondělí, má po pullu jiné cesty — **ohlásit ráno D3 před blokem 1**.
+> Staré odkazy `day-N/…` v poznámkách studentů už nevedou nikam; modul se najde podle
+> názvu v kořeni repa.
 
 **5 dní · 16 povinných bloků · 3–4 bloky/den.** P = povinný, V = volitelný / samostudium.
 Fokus kurzu: **blízké okolí Microsoft 365** — vlastní vektorizace, hluboký Azure a obecná
@@ -55,11 +35,11 @@ sloučeny — přehled a důvody v [`self-study.md`](self-study.md).
 
 | # | Blok | Slug | Typ |
 |---|---|---|---|
-| 1 | Onboarding, prostředí & toolchain | `day-1/onboarding` | P |
-| 2 | Mapa cest tvorby agentů & rozhodovací osa | `day-1/agent-landscape` | P |
-| 3 | No-code a low-code cesty — showcase | `day-1/no-code-showcase` | P |
-| — | Základy promptování a agentní anatomie | `day-1/opt-prompting-fundamentals` | V |
-| — | Srovnání schopností podle cesty tvorby *(dokument, ne blok)* | `day-1/agent-landscape/comparison-agent-paths.md` | V |
+| 1 | Onboarding, prostředí & toolchain | `onboarding` | P |
+| 2 | Mapa cest tvorby agentů & rozhodovací osa | `agent-landscape` | P |
+| 3 | No-code a low-code cesty — showcase | `no-code-showcase` | P |
+| — | Základy promptování a agentní anatomie | `opt-prompting-fundamentals` | V |
+| — | Srovnání schopností podle cesty tvorby *(dokument, ne blok)* | `agent-landscape/comparison-agent-paths.md` | V |
 
 > [!NOTE] Den 1 staví rozhodovací vrstvu **před** kódem. Blok 2 je ten, za který zákazník
 > platí nejvíc: kdy deklarativní agent, kdy custom engine, kdy Copilot Studio, kdy Foundry —
@@ -84,11 +64,11 @@ zájmu skupiny: M365 strana nejdřív, kód až od D3.
 
 | # | Blok | Slug | Typ | min |
 |---|---|---|---|---|
-| 1 | Skills — rozšíření Copilot in SharePoint | `day-2/skills` | P | 70 |
-| 2 | SharePoint agents *(instruktorské demo)* | `day-2/sharepoint-agents` | P | 30 |
-| 3 | Deklarativní agenti & Agents Toolkit | `day-2/declarative-agents` | P | 100 |
-| 4 | Datová hygiena + SharePoint Advanced Management | `day-2/data-hygiene` | P | 60 |
-| 5 | Agenti v Marketplace — podmínky publikace (case study Normiqa Navigator) | `day-4/marketplace-agents` | P | 50 |
+| 1 | Skills — rozšíření Copilot in SharePoint | `skills` | P | 70 |
+| 2 | SharePoint agents *(instruktorské demo)* | `sharepoint-agents` | P | 30 |
+| 3 | Deklarativní agenti & Agents Toolkit | `declarative-agents` | P | 100 |
+| 4 | Datová hygiena + SharePoint Advanced Management | `data-hygiene` | P | 60 |
+| 5 | Agenti v Marketplace — podmínky publikace (case study Normiqa Navigator) | `marketplace-agents` | P | 50 |
 
 > [!NOTE] Bloky 1 a 2 jsou převzaté z GOC224 a zařazené na místě podle zájmu skupiny.
 > Blok 3 se sem přesunul z dne 1 a končí přesně pojmenovaným stropem. Blok 4 je rozšířený
@@ -106,9 +86,9 @@ zájmu skupiny: M365 strana nejdřív, kód až od D3.
 
 | # | Blok | Slug | Typ | min |
 |---|---|---|---|---|
-| 1 | Agents SDK — jádro: AgentApplication, aktivity, turny *(vč. Foundry v kostce)* | `day-1/agents-sdk-core` | P | 130 |
-| 2 | Grounding: Copilot connectors, semantic index, MCP | `day-2/knowledge-grounding` | P | 85 |
-| 3 | Action handlers & integrace s Microsoft Graph | `day-2/actions-graph` | P | 90 |
+| 1 | Agents SDK — jádro: AgentApplication, aktivity, turny *(vč. Foundry v kostce)* | `agents-sdk-core` | P | 130 |
+| 2 | Grounding: Copilot connectors, semantic index, MCP | `knowledge-grounding` | P | 85 |
+| 3 | Action handlers & integrace s Microsoft Graph | `actions-graph` | P | 90 |
 
 > [!NOTE] **První den s Azure.** Blok 1 je odpověď na strop z D2: první běžící custom engine
 > agent v Agents Playgroundu. Klíče k model endpointu rozdat **ráno před blokem**. Blok 2
@@ -119,10 +99,10 @@ zájmu skupiny: M365 strana nejdřív, kód až od D3.
 
 | # | Blok | Slug | Typ | min |
 |---|---|---|---|---|
-| 1 | SharePoint Copilot Apps *(Public Preview)* | `day-4/spfx-copilot-apps` | P | 50 |
-| 2 | Prompt & systémová orchestrace | `day-3/prompt-orchestration` | P | 60 |
-| 3 | Microsoft Agent Framework, workflows & multi-agent (A2A) | `day-3/agent-framework` | P | 75 |
-| 4 | Bezpečnost & middleware — útok a obrana jako kód *(sloučený blok)* | `day-3/middleware-policy` | P | 130 |
+| 1 | SharePoint Copilot Apps *(Public Preview)* | `spfx-copilot-apps` | P | 50 |
+| 2 | Prompt & systémová orchestrace | `prompt-orchestration` | P | 60 |
+| 3 | Microsoft Agent Framework, workflows & multi-agent (A2A) | `agent-framework` | P | 75 |
+| 4 | Bezpečnost & middleware — útok a obrana jako kód *(sloučený blok)* | `middleware-policy` | P | 130 |
 
 > [!NOTE] Nejhustší den týdne. Blok 1 je vizuální rozjezd a **most k SPFx kurzům**. Blok 2
 > dá agentovi systémový prompt s měřenou baseline — a pokus o obejití na jeho konci
@@ -134,10 +114,10 @@ zájmu skupiny: M365 strana nejdřív, kód až od D3.
 
 | # | Blok | Slug | Typ | min |
 |---|---|---|---|---|
-| 1 | Agent 365, Entra Agent ID & instrumentace *(vč. hostingu v kostce)* | `day-4/agent-365-governance` | P | 60 |
-| 2 | Evaluace & kvalita | `day-5/evaluation-quality` | P | 60 |
-| 3 | Vlastní retrieval — instruktorské demo | `day-2/opt-custom-retrieval` | P | 30 |
-| 4 | Capstone architektura & roadmapa | `day-5/capstone` | P | 60 |
+| 1 | Agent 365, Entra Agent ID & instrumentace *(vč. hostingu v kostce)* | `agent-365-governance` | P | 60 |
+| 2 | Evaluace & kvalita | `evaluation-quality` | P | 60 |
+| 3 | Vlastní retrieval — instruktorské demo | `opt-custom-retrieval` | P | 30 |
+| 4 | Capstone architektura & roadmapa | `capstone` | P | 60 |
 
 > [!WARNING] Nejkratší den — 9:00 až 13:00 **bez pauzy na oběd**
 > Reálně ~220 min čistého času. Plán má 210, rezerva je deset minut. Blok 4 je hodnotový
@@ -147,7 +127,7 @@ zájmu skupiny: M365 strana nejdřív, kód až od D3.
 
 > [!NOTE] Blok 1 pohltil i hosting (osa hostingu → samostudium). Blok 3 je odpověď
 > na zájem skupiny o vlastní vektorizaci — demo místo plného modulu, plný text
-> v [`day-2/opt-custom-retrieval/`](day-2/opt-custom-retrieval/).
+> v [`opt-custom-retrieval/`](opt-custom-retrieval/).
 
 > [!IMPORTANT] Etalon po dvou měřeních — kapacita je ~310 min/den
 > | Den | Plán | Odučeno | Poznámka |
@@ -165,10 +145,10 @@ zájmu skupiny: M365 strana nejdřív, kód až od D3.
 
 ## Kompresní ventily — v tomto pořadí
 
-1. `day-2/data-hygiene` — tři pilíře SAM na jeden slide, RAC/RCD a checklist zůstávají.
-2. `day-2/actions-graph` — část D jako demo (10 min), ne hands-on.
-3. `day-2/opt-custom-retrieval` — demo padá celé, plný text zůstává k samostudiu.
-4. `day-5/evaluation-quality` — část C labu jeden běh místo tří.
+1. `data-hygiene` — tři pilíře SAM na jeden slide, RAC/RCD a checklist zůstávají.
+2. `actions-graph` — část D jako demo (10 min), ne hands-on.
+3. `opt-custom-retrieval` — demo padá celé, plný text zůstává k samostudiu.
+4. `evaluation-quality` — část C labu jeden běh místo tří.
 
 **Capstone není ventil.** Při skluzu D5 se zkracuje evaluace, ne závěr týdne.
 

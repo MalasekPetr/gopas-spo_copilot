@@ -1,7 +1,7 @@
 # Lab · <Název labu>
 
 > Modul: <slug> · Odhad: <min> · Režim: hands-on | instruktorské demo | simulace
-> Jazyk: TypeScript · Scénář: [`../../scenario-support-agent.md`](../../scenario-support-agent.md)
+> Jazyk: TypeScript · Scénář: [`../scenario-support-agent.md`](../scenario-support-agent.md)
 
 ## Cíl
 

@@ -20,7 +20,19 @@ zbytek týdne.
 
 1. Ve scaffoldu najdi tři místa a pojmenuj je nahlas: kde se vytváří `AgentApplication`,
    kde se **registruje handler** na příchozí zprávu, a kde se předává konfigurace
-   (`AgentApplicationOptions`). Nic zatím neměň.
+   (`AgentApplicationOptions`). Nic zatím neměň. Mapa souborů (názvy dle aktuální šablony):
+
+   | Soubor | Role | Sáhneš na něj? |
+   |---|---|---|
+   | `src/index.ts` | vstupní bod — `startServer(agentApp)`, hosting dodá SDK | prakticky nikdy |
+   | `src/proxy.ts` | infrastruktura (proxy pro odchozí volání) | ne |
+   | `src/config.ts` | čtení env proměnných | při nové konfiguraci |
+   | `src/agent.ts` | **celý agent**: klient modelu, `systemPrompt`, `AgentApplication`, handlery | **celý týden** |
+
+   **Aplikační logika = těla handlerů.** Scaffold žádnou vrstvu navíc nepředpřipravil —
+   controllery ani services tu nejsou a nebudou, dokud si je sám nevytvoříš. Až handler
+   přeroste (akce v `actions-graph`), vytáhneš business logiku do vlastních modulů vedle;
+   pravidlo *tenký handler* viz [`../actions-graph/`](../actions-graph/).
 2. Zapiš si vlastními slovy rozdíl mezi **aktivitou** a **turnem** — a v kódu ukaž,
    kde turn začíná a kde končí. Tohle je otázka, kterou dostaneš u zákazníka.
 

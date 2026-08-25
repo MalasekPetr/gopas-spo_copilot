@@ -4,23 +4,24 @@ Jediný zdroj pravdy o pořadí modulů. Složky jsou slugy; pořadí drží tat
 Prefix `day-N/` ve slugu je **stabilní identifikátor**, ne garance dne — složky se
 při přesunech bloků nepřejmenovávají.
 
-> [!CAUTION] Sedm složek neodpovídá dni, kdy se učí
-> Po rekalibraci (2026-08-24) prefix ve většině případů **lže**. Nehledej modul podle
-> složky, vždy podle tabulek níže.
+> [!CAUTION] Osm složek neodpovídá dni, kdy se učí
+> Po dvou rekalibracích prefix ve většině případů **lže**. Nehledej modul podle složky,
+> vždy podle tabulek níže.
 >
 > | Složka | Skutečně se učí |
 > |---|---|
-> | `day-1/agents-sdk-core` | **den 2** |
+> | `day-1/agents-sdk-core` | **den 3** |
 > | `day-2/knowledge-grounding` | **den 3** |
 > | `day-2/actions-graph` | **den 3** |
+> | `day-3/prompt-orchestration` | **den 4** |
 > | `day-3/agent-framework` | **den 4** |
 > | `day-3/middleware-policy` | **den 4** |
-> | `day-4/event-driven-hosting` | **den 5** |
+> | `day-4/marketplace-agents` | **den 2** (case study Normiqa) |
 > | `day-4/agent-365-governance` | **den 5** |
 >
 > Nejzrádnější je `day-4/` — ze čtyř složek se na dni 4 učí jen `spfx-copilot-apps`.
-> Sedí: `onboarding`, `agent-landscape`, `no-code-showcase` (D1), `declarative-agents`,
-> `data-hygiene` (D2), `prompt-orchestration` (D3), `spfx-copilot-apps` (D4),
+> Sedí: `onboarding`, `agent-landscape`, `no-code-showcase` (D1), `skills`,
+> `sharepoint-agents`, `declarative-agents`, `data-hygiene` (D2), `spfx-copilot-apps` (D4),
 > `evaluation-quality`, `capstone` (D5).
 
 > [!NOTE] Rozhodnuto po prvním běhu: prefix zahodit
@@ -45,9 +46,9 @@ sloučeny — přehled a důvody v [`self-study.md`](self-study.md).
 
 > [!WARNING] Timing — publikovaná čísla jsou nominální
 > Web slibuje 2 h + 13×2,5 h + 2,5 h = **37 h / 5 dní = 7,4 h/den**. První běh naměřil
-> **~4,1 h skutečně odučeného obsahu za den** (den 1: 245 z plánovaných 360 min) — původní
-> odhady byly ~1,5× optimistické. Dny 2–5 jsou podle toho přeplánované na 245–310 min/den.
-> Publikovaná čísla ber jako marketingová. Skutečné timingy žijí v `instructor-notes.md`
+> **~5,2 h skutečně odučeného obsahu za den** (D1 245 min, D2 ~310 min) — publikovaná
+> čísla ber jako marketingová. Pracovní kapacita plánu je **~310 min/den**, u D5 tvrdý
+> strop ~220 (konec ve 13:00 bez oběda). Skutečné timingy žijí v `instructor-notes.md`
 > jednotlivých modulů.
 
 ## Den 1 — Mapa stacku a no-code/low-code (~4,1 h odučeno)
@@ -76,9 +77,9 @@ sloučeny — přehled a důvody v [`self-study.md`](self-study.md).
 > `comparison-agent-paths.md` (rozdílová matice čtyř cest **včetně SharePoint agentů** —
 > hodnotnější než tabulka pěti cest ve výkladu, dát studentům jako referenci).
 
-## Den 2 — Copilot v SharePointu, deklarativní strop a hygiena (260 min)
+## Den 2 — Copilot v SharePointu, deklarativní strop a hygiena (~310 min, ODUČENO)
 
-**Bez Azure** — celý den jede na tenantu a PAYG. Rozhodnutí lektora 2026-08-25 podle
+**Bez Azure** — celý den jel na tenantu a PAYG. Rozhodnutí lektora 2026-08-25 podle
 zájmu skupiny: M365 strana nejdřív, kód až od D3.
 
 | # | Blok | Slug | Typ | min |
@@ -87,16 +88,18 @@ zájmu skupiny: M365 strana nejdřív, kód až od D3.
 | 2 | SharePoint agents *(instruktorské demo)* | `day-2/sharepoint-agents` | P | 30 |
 | 3 | Deklarativní agenti & Agents Toolkit | `day-2/declarative-agents` | P | 100 |
 | 4 | Datová hygiena + SharePoint Advanced Management | `day-2/data-hygiene` | P | 60 |
+| 5 | Case study Normiqa Navigator | `day-4/marketplace-agents` | P | ~50 |
 
 > [!NOTE] Bloky 1 a 2 jsou převzaté z GOC224 a zařazené na místě podle zájmu skupiny.
-> Blok 3 se sem přesunul z dne 1 (přetečení prvního běhu) a končí přesně pojmenovaným
-> stropem. Blok 4 je rozšířený o hloubku **SAM** (tři pilíře, RAC vs. RCD, licenční past)
-> — nahrazuje samostatný SAM blok, nedělat obojí.
+> Blok 3 se sem přesunul z dne 1 a končí přesně pojmenovaným stropem. Blok 4 je rozšířený
+> o hloubku **SAM** (tři pilíře, RAC vs. RCD, licenční past) — nahrazuje samostatný SAM
+> blok. Blok 5 se vešel navíc proti plánu: Navigator je deklarativní agent z Toolkitu
+> s knowledge výhradně z webu, takže sedí hned za blok 3.
 
 > [!IMPORTANT] Strop bez odpovědi přes noc
-> Deklarativní agent dnes narazil na strop, ale custom engine přijde až zítra. Uzavři den
-> větou, která z přesunu udělá argument: *„Strop jste viděli. Odpověď na něj začneme psát
-> zítra ráno — dneškem jsme se ujistili, že tenant, do kterého ho pustíme, je uklizený."*
+> Deklarativní agent narazil na strop, ale custom engine přijde až D3. Uzavřít den větou,
+> která z přesunu udělá argument: *„Strop jste viděli. Odpověď na něj začneme psát zítra
+> ráno — dneškem jsme se ujistili, že tenant, do kterého ho pustíme, je uklizený."*
 
 ## Den 3 — První agent v kódu, znalosti a akce (290 min)
 
@@ -111,14 +114,14 @@ zájmu skupiny: M365 strana nejdřív, kód až od D3.
 > učí *kdy retrieval nedělat sám* a navazuje na hygienu ze závěru D2. Blok 3 je pointa
 > custom engine cesty — akce s validací, na kterou deklarativní agent nedosáhl.
 
-## Den 4 — Copilot Apps, prompt, multi-agent a bezpečnost (300 min)
+## Den 4 — Copilot Apps, prompt, multi-agent a bezpečnost (315 min)
 
 | # | Blok | Slug | Typ | min |
 |---|---|---|---|---|
 | 1 | SharePoint Copilot Apps *(Public Preview)* | `day-4/spfx-copilot-apps` | P | 50 |
 | 2 | Prompt & systémová orchestrace | `day-3/prompt-orchestration` | P | 60 |
 | 3 | Microsoft Agent Framework, workflows & multi-agent (A2A) | `day-3/agent-framework` | P | 75 |
-| 4 | Bezpečnost & middleware — útok a obrana jako kód *(sloučený blok)* | `day-3/middleware-policy` | P | 115 |
+| 4 | Bezpečnost & middleware — útok a obrana jako kód *(sloučený blok)* | `day-3/middleware-policy` | P | 130 |
 
 > [!NOTE] Nejhustší den týdne. Blok 1 je vizuální rozjezd a **most k SPFx kurzům**. Blok 2
 > dá agentovi systémový prompt s měřenou baseline — a pokus o obejití na jeho konci
@@ -145,10 +148,19 @@ zájmu skupiny: M365 strana nejdřív, kód až od D3.
 > na zájem skupiny o vlastní vektorizaci — demo místo plného modulu, plný text
 > v [`day-2/opt-custom-retrieval/`](day-2/opt-custom-retrieval/).
 
-> [!WARNING] Rekalibrace — dvě kola (2026-08-24 a 2026-08-25)
-> Den 1 odučil 245 z plánovaných 360 min; odhady byly ~1,5× optimistické. Druhé kolo
-> reagovalo na zájem skupiny o M365 stranu a na zjištění, že **D5 končí ve 13:00 bez oběda**.
-> Jádro je zkrácené celkem zhruba o třetinu proti původnímu návrhu. Po každém dni přeměřit.
+> [!IMPORTANT] Etalon po dvou měřeních — kapacita je ~310 min/den
+> | Den | Plán | Odučeno | Poznámka |
+> |---|---|---|---|
+> | D1 | 360 | **245** | jednorázová režie onboardingu u 20 strojů + seznamování |
+> | D2 | 260 | **~310** | vešel se navíc celý blok Normiqa Navigator |
+>
+> **D1 byl výjimka, ne etalon.** Onboarding se neopakuje a diskusní bloky prvního dne
+> byly nejhustší v týdnu. Pracovní kapacita je **~310 min/den** — kromě D5, který končí
+> ve 13:00 bez oběda a má tvrdý strop ~220.
+>
+> Slack z toho **nerozpouštět celý**: první běh, tři restrukturalizace a D3 je první den
+> s Azure (klíče, `.env`, možná proxy u 20 strojů). D3 proto zůstává na 290 jako rezerva,
+> D4 dostal zpět 15 minut do nejsilnějšího bloku týdne.
 
 ## Kompresní ventily — v tomto pořadí
 

@@ -10,6 +10,7 @@ je tenant na agenta uklizený?
 | 2 | SharePoint agents *(instruktorské demo)* | [`sharepoint-agents`](sharepoint-agents/) | P | 30 |
 | 3 | Deklarativní agenti & Agents Toolkit | [`declarative-agents`](declarative-agents/) | P | 100 |
 | 4 | Datová hygiena + SharePoint Advanced Management | [`data-hygiene`](data-hygiene/) | P | 60 |
+| 5 | Case study Normiqa Navigator | [`marketplace-agents`](../day-4/marketplace-agents/) | P | ~50 |
 
 > [!NOTE] Bloky 1 a 2 jsou převzaté z GOC224 a zařazené podle zájmu skupiny
 > (rozhodnutí lektora 2026-08-25). Skills ukazují, kam až dosáhne Copilot in SharePoint
@@ -18,7 +19,9 @@ je tenant na agenta uklizený?
 > a končí **přesně pojmenovaným stropem** deklarativní cesty. Blok 4 je rozšířený
 > o hloubku **SAM** — tři pilíře, RAC vs. RCD a licenční past.
 
-Reálná zátěž **260 min**.
+**Odučeno 2026-08-25, ~310 min** — vešel se navíc blok Normiqa Navigator (case study
+z [`../day-4/marketplace-agents/`](../day-4/marketplace-agents/)). Kapacita dne se tím
+změřila podruhé: D1 byl s 245 min výjimka kvůli onboardingu, pracovní etalon je ~310.
 
 > [!IMPORTANT] Strop zůstává přes noc bez odpovědi
 > Deklarativní agent dnes narazí na strop (dotaz 3 nezaloží tiket, dotaz 4 odmítne jen

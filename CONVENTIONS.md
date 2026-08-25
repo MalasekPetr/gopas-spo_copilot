@@ -97,6 +97,23 @@ Každý modul má na konci:
 - <co se od napsání změnilo, co ověřit>
 ```
 
+## Terminologie — turn, kolo, konverzace
+
+Tři pojmy, které se v materiálech **nesmí zaměňovat**; záměna je nejčastější zdroj
+chybných nákladových odhadů (viz [`GLOSSARY.md`](GLOSSARY.md)):
+
+| Pojem | Význam | Nepoužívat |
+|---|---|---|
+| **turn** | zpracování jedné aktivity od příjmu po odpověď | ~~tah~~ |
+| **kolo** | jeden cyklus model → nástroj → model **uvnitř** turnu | ~~iterace~~, ~~tah~~ |
+| **konverzace** | série turnů mezi týmiž účastníky | — |
+
+- **`turn` se skloňuje česky** podle vzoru *hrad*: turn, turnu, turnem, turny, turnů.
+  Nepřekládá se — student ho má o dva řádky níž v API (`TurnContext`, `TurnState`).
+- **„limit kol"**, ne „limit iterací" — u tool-call loopu i u multi-agent orchestrace.
+- Slovo **iterace** zůstává vyhrazené pro *ladění promptu* („první verze instructions
+  nesedí, iteruj") a pro *proces review* — tam je správně.
+
 ## Kód v materiálech
 
 - **Primární jazyk je TypeScript** (Node.js, Microsoft 365 Agents SDK —

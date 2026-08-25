@@ -66,7 +66,7 @@ flowchart TB
   nad chat completion a filtry kolem volání. **AutoGen** přinesl myšlenku víc agentů, kteří
   spolu konverzují, a vzory jejich řízení. Agent Framework je jejich sloučení.
 - **Co si student přenese**: koncepty. Nástroj se pořád popisuje schématem, orchestrace je
-  pořád o rolích a předávání řízení, limit iterací je pořád povinný.
+  pořád o rolích a předávání řízení, limit kol je pořád povinný.
 - **Co už platí jinak**: názvy typů a balíčků a způsob zapojení do hostitelské aplikace.
   Starší tutoriál na SK nebo AutoGen se **nedá přepsat 1:1**.
 - Praktické pravidlo pro rešerši: **blogpost starší než sloučení je koncepčně použitelný,
@@ -109,11 +109,11 @@ Klasifikace není vždy práce pro model — `if` je levnější, rychlejší a 
 | **Sekvence** | pevné pořadí kroků (klasifikuj → odpověz) | latence se sčítá | nejsnáz — lineární stopa |
 | **Fan-out / fan-in** | nezávislé dílčí dotazy, agregace výsledku | tokeny za všechny větve, nutná agregace | hůř — nedeterministické pořadí výsledků |
 | **Handoff** | agent předá řízení druhému i s kontextem | riziko ztráty kontextu při předání | středně — sleduje se obsah handoffu |
-| **Supervizor / worker** | supervizor rozhoduje, kdo pracuje dál a kdy skončit | nejdražší — supervizor běží v každé iteraci | nejhůř — bez tvrdého limitu iterací neřešitelné |
+| **Supervizor / worker** | supervizor rozhoduje, kdo pracuje dál a kdy skončit | nejdražší — supervizor běží v každém kole | nejhůř — bez tvrdého limitu kol neřešitelné |
 
 - **Náš scénář je handoff**: triage klasifikuje a předá resolveru **typovaný výsledek**.
   Volba je záměrná — nejlevnější na debug a nejlépe se z ní měří cena rozdělení.
-- **Limit iterací je povinný u každého vzoru.** Bez něj je smyčka mezi agenty otevřený účet
+- **Limit kol je povinný u každého vzoru.** Bez něj je smyčka mezi agenty otevřený účet
   za tokeny a jediný důvod, proč lab hlídá strop volání modelu.
 - **Handoff nese kontrakt, ne konverzaci.** Předávat volný text znamená vyrobit si druhý
   prompt injection vektor uvnitř vlastní aplikace (D3 [`../middleware-policy/`](../middleware-policy/)).
@@ -144,14 +144,14 @@ sequenceDiagram
     C-->>R: cislo tiketu
     R-->>U: potvrzeni eskalace
   end
-  Note over A,R: limit iteraci - pri prekroceni fallback odpoved, ne timeout
+  Note over A,R: limit kol - pri prekroceni fallback odpoved, ne timeout
 ```
 
 ### Workflows
 
 - **Workflow = stavová orchestrace uvnitř procesu**: definované kroky, přechody mezi nimi
   a stav sdílený napříč kroky. Žije v paměti tvé aplikace.
-- Má smysl, jakmile orchestrace přestane být „dva tahy za sebou" a začne mít větve,
+- Má smysl, jakmile orchestrace přestane být „dvě kola za sebou" a začne mít větve,
   opakování a podmínky — a ty je nechceš mít rozeseté v `if`ech uvnitř handleru turnu.
 - **Strop je tvrdý**: proces spadne, restartuje se nebo se škáluje na druhou instanci →
   **stav je pryč**. Workflow sám o sobě restart nepřežije.
@@ -179,7 +179,7 @@ sequenceDiagram
 
 ## Klíčové rozlišení
 - **Agents SDK** (transport/stav/routing) vs. **Agent Framework** (orchestrace) — SDK není orchestrátor.
-- **Řetězení promptů** (jeden agent, víc tahů) vs. **multi-agent** (víc agentů, víc identit).
+- **Řetězení promptů** (jeden agent, víc kol) vs. **multi-agent** (víc agentů, víc identit).
 - **Workflow** (orchestrace uvnitř procesu) vs. **Durable Functions** (orchestrace s persistencí
   a hostingem, viz D4).
 - **A2A** (protokol mezi agenty) vs. **tool call** (agent volá nástroj).
@@ -188,7 +188,7 @@ sequenceDiagram
 
 Hands-on (TS orchestrace), bez tenantu — potřebuje jen **model endpoint**; Framework část
 je instruktorské demo v C# (jediné místo kurzu, kde instruktor potřebuje .NET SDK).
-Pozor: multi-agent násobí volání modelu, tedy tokeny. Nastavit v labu limit iterací.
+Pozor: multi-agent násobí volání modelu, tedy tokeny. Nastavit v labu limit kol.
 
 ## Lab
 Viz [`lab-multi-agent-triage.md`](lab-multi-agent-triage.md). Referenční řešení v `solution/`.

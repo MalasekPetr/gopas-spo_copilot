@@ -125,7 +125,7 @@ Tok jednoho turnu v custom engine agentovi:
 - **Oprávnění** (delegated): `Files.Read.All` + `Sites.Read.All`.
 - **Limity, se kterými se navrhuje**: 200 requestů / uživatel / hodinu, max 25 výsledků na
   dotaz, `queryString` do 1 500 znaků. Důsledky do návrhu: jeden retrieval na turn (ne jeden
-  na každou iteraci loopu), cachovat opakované dotazy, posílat **otázku uživatele**, ne
+  na každé kolo loopu), cachovat opakované dotazy, posílat **otázku uživatele**, ne
   slepenou historii konverzace.
 - **Rozdíl proti deklarativnímu agentovi** ([`../declarative-agents/`](../declarative-agents/)):
   tam byla knowledge **deklarace v manifestu** a retrieval udělal orchestrátor Copilotu. Tady

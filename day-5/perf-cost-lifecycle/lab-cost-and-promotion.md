@@ -25,13 +25,13 @@ navrhnout promotion dev → test s rollback plánem.
    změříš **před** odesláním requestu; usage metadata pak dají kontrolní součet.
    Pusť dotaz 1 a dotaz 3 ze scénáře a porovnej je — turn s eskalací obsahuje dvě volání
    modelu, což musí být v číslech vidět.
-2. Pusť souvislou konverzaci na 8 a více tahů a zapiš vstupní tokeny každého tahu do
-   tabulky. Ke každému tahu dopočítej, **jaký podíl vstupu tvoří historie**. Poslední řádek
+2. Pusť souvislou konverzaci na 8 a více turnů a zapiš vstupní tokeny každého turnu do
+   tabulky. Ke každému turnu dopočítej, **jaký podíl vstupu tvoří historie**. Poslední řádek
    tabulky je argument pro krok 3 — bez něj je limit historie jen dojem.
 
 ### Část B — optimalizace
 
-3. Zaveď **limit historie**: do requestu posílej jen posledních N tahů (začni malým N,
+3. Zaveď **limit historie**: do requestu posílej jen posledních N turnů (začni malým N,
    typicky čtyřmi až šesti) nebo starší část jednou shrň sumarizačním voláním. Pusť stejnou
    osmitahovou konverzaci znovu a změř rozdíl proti kroku 2.
 4. **Zúži knowledge**: sniž počet kandidátů z retrievalu a zkrať text předávaný modelu

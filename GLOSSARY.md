@@ -62,8 +62,30 @@ Rozhodovací osa je nosný obsah [`day-1/agent-landscape/`](day-1/agent-landscap
 | **`AgentApplicationOptions`** | konfigurace aplikace (storage, autentizace, chování turnu) |
 | **Activity** | jedna příchozí/odchozí událost (zpráva, lifecycle event, akce Adaptive Card, OAuth callback) |
 | **Turn** | zpracování jedné aktivity od příjmu po odpověď |
+| **Kolo** | jeden cyklus model → nástroj → model **uvnitř** turnu (iterace tool-call loopu) |
+| **Konverzace** | série turnů mezi týmiž účastníky |
 | **`TurnState`** | stav v rámci turnu / konverzace / uživatele |
 | **Kanál** | Microsoft 365 Copilot, Teams, web chat, e-mail, SMS a další |
+
+> [!IMPORTANT] Turn ≠ volání modelu — a na tom stojí celý výpočet nákladů
+> Uživatel vnímá **jeden turn**: napsal dotaz, dostal odpověď. Uvnitř toho turnu ale může
+> proběhnout **žádné, jedno, nebo pět volání modelu** — a platíš každé z nich.
+>
+> | Situace | Volání modelu v jednom turnu |
+> |---|---|
+> | mimo-scope dotaz odmítnutý middlewarem | **0** |
+> | prostá odpověď z kontextu | **1** |
+> | tool-call loop (model → nástroj → model) | **2** = dvě kola |
+> | triage + resolver (multi-agent) | **2–3** |
+> | totéž s tool-call loopem a jedním retry | **4–6** |
+>
+> **Věta pro tabuli:** *„Jeden turn může obsahovat několik kol — a platíš každé z nich."*
+> Důsledek: náklady se nepočítají za konverzaci ani za uživatele, ale **za volání modelu**.
+> Kolik jich průměrný turn obsahuje, se musí **změřit**, ne odhadnout.
+>
+> Terminologie kurzu je proto ostrá: **turn** (zpracování aktivity) · **kolo** (iterace
+> loopu uvnitř turnu) · **konverzace** (série turnů). Nezaměňovat — záměna je nejčastější
+> zdroj chybných nákladových odhadů.
 
 > [!WARNING] Ověřit k datu běhu
 > Role **Azure Bot Service** se zúžila na registraci kanálu a channel adaptaci — není to

@@ -87,7 +87,7 @@ flowchart TB
 
 - Cyklus: model dostane **popisy nástrojů** → navrhne volání → **tvoje validace**
   ([`../../day-2/actions-graph/`](../../day-2/actions-graph/)) → provedení → výsledek jako
-  **`tool` zpráva** → model dostane další tah. Končí, když model odpoví bez návrhu nástroje.
+  **`tool` zpráva** → model dostane další kolo. Končí, když model odpoví bez návrhu nástroje.
 - **Zastavovací podmínky musí být explicitní**, jinak žádné nejsou:
   - max počet iterací na turn (jednotky, ne desítky),
   - token / časový budget na turn,
@@ -95,7 +95,7 @@ flowchart TB
 - Bez limitu se loop **zacyklí**: model zavolá nástroj, dostane chybu, zkusí totéž znovu.
   Cena roste s každou iterací a uživatel jen čeká.
 - **Když nástroj selže**, rozliš:
-  - **transientní** (429, 503, timeout) → retry s backoffem, uvnitř limitu iterací,
+  - **transientní** (429, 503, timeout) → retry s backoffem, uvnitř limitu kol,
   - **permanentní** (403, 404, chyba validace) → žádný retry, chyba jde **jako tool zpráva
     zpět modelu**, aby uměl odpovědět nebo se doptat.
 - **Při dosažení limitu agent nemlčí a nefabuluje**: řekne, co zkusil a co bude dál — typicky
@@ -112,7 +112,7 @@ flowchart LR
   V -->|neprosla| E[chyba jako tool zprava]
   V -->|prosla| X[provedeni nastroje]
   X --> R[vysledek jako tool zprava]
-  E --> I{limit iteraci dosazen?}
+  E --> I{limit kol dosazen?}
   R --> I
   I -->|ne| C
   I -->|ano| F[stop: shrnuti pokusu<br/>+ nabidka eskalace]

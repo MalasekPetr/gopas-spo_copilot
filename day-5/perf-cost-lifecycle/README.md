@@ -15,13 +15,13 @@ Co agent stojí, jak to snížit, a jak ho dostat z dev do prod a zpátky, když
 
 ### Token ekonomika
 
-Výchozí fakt, který studenti podceňují: **model nemá paměť**. Každý tah posílá celý vstup
+Výchozí fakt, který studenti podceňují: **model nemá paměť**. Každý turn posílá celý vstup
 znovu — účtuje se tedy celý turn, ne jen to, co uživatel napsal.
 
 | Složka vstupu | Kdy se platí | Roste s |
 |---|---|---|
-| **systémový prompt** | **každý turn** | délkou promptu × počtem tahů |
-| **historie konverzace** | každý turn | délkou konverzace — u plné historie přibývá s každým tahem |
+| **systémový prompt** | **každý turn** | délkou promptu × počtem turnů |
+| **historie konverzace** | každý turn | délkou konverzace — u plné historie přibývá s každým turnem |
 | **definice nástrojů** | každý turn | počtem nástrojů a upovídaností jejich popisů |
 | **knowledge chunky** | turn s retrievalem | počtem kandidátů × velikostí chunku |
 | **výsledky nástrojů** | turn s tool-callem | velikostí odpovědi API — surový JSON je typický žrout |
@@ -52,7 +52,7 @@ flowchart LR
   subgraph USP[kde se da usporit]
     direction TB
     U1[zkratit + prompt caching]
-    U2[limit N poslednich tahu<br/>nebo sumarizace]
+    U2[limit N poslednich turnu<br/>nebo sumarizace]
     U3[jen nastroje relevantni<br/>pro dany krok]
     U4[mene kandidatu,<br/>kratsi chunky]
     U5[vracet jen pouzita pole,<br/>ne cely JSON]
@@ -125,7 +125,7 @@ za Support Asistenta:
 |---|---|---|
 | **Méně kandidátů z retrievalu** | vstupní tokeny, latenci re-rankingu | odpověď bez podkladu, když správný chunk vypadl |
 | **Kratší chunky** | vstupní tokeny | utržený kontext, neúplný postup |
-| **Limit historie** (posledních N tahů) | roste-li konverzace, nejvíc ze všeho | agent „zapomene", co bylo na začátku konverzace |
+| **Limit historie** (posledních N turnů) | roste-li konverzace, nejvíc ze všeho | agent „zapomene", co bylo na začátku konverzace |
 | **Sumarizace historie** místo plné | totéž, s menší ztrátou kontextu | jedno volání modelu navíc; sumarizace může vypustit detail |
 
 - Ke každé páce patří i **zúžení výsledků nástrojů** — vracet do turnu jen pole, která

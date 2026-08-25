@@ -34,7 +34,7 @@ Deliverable není „funguje to", ale rozhodnutí, jestli si to v produkci zaslo
    - rozhraní obou agentů — co dostanou na vstupu a co vrací (`classify`, `resolve`);
    - **kontrakt handoffu**: typovaný výsledek klasifikace, **ne volný text** — např.
      `{ kind: "knowledge" | "action" | "out-of-scope"; confidence: number; reason: string }`;
-   - **limit iterací** a co se stane, když se vyčerpá;
+   - **limit kol** a co se stane, když se vyčerpá;
    - kudy prochází `AbortSignal` (musí projít oběma agenty i voláním nástroje).
 
    `AgentApplication` z Agents SDK **zůstává obal** — orchestrace žije uvnitř handleru
@@ -52,11 +52,11 @@ Deliverable není „funguje to", ale rozhodnutí, jestli si to v produkci zaslo
    Ponech mu systémový prompt z `prompt-orchestration` — resolver je v podstatě tvůj
    dosavadní agent zbavený klasifikace.
 6. Zapoj **handoff**: verdikt triage vstupuje do resolveru **jako typovaná hodnota, ne jako
-   text v promptu**. Nastav **limit iterací** (2–3 stačí) a ošetři tři situace:
+   text v promptu**. Nastav **limit kol** (2–3 stačí) a ošetři tři situace:
    - triage klasifikuje **mimo scope** → resolver se vůbec nevolá (levné odmítnutí);
    - triage klasifikuje **špatně** (akční dotaz jako znalostní) → resolver musí umět říct
      „na tohle nemám podklad" a vrátit řízení, ne halucinovat;
-   - **limit iterací se vyčerpá** → uživatel dostane srozumitelnou odpověď, ne timeout.
+   - **limit kol se vyčerpá** → uživatel dostane srozumitelnou odpověď, ne timeout.
 7. Pusť **stejné čtyři testovací dotazy** jako v části A. U každého zapiš: verdikt triage,
    zvolenou cestu (runbook / eskalace / odmítnutí) a jestli je odpověď **lepší, stejná,
    nebo horší** než v baseline.
@@ -84,7 +84,7 @@ Deliverable není „funguje to", ale rozhodnutí, jestli si to v produkci zaslo
 - [ ] TS orchestrace (triage → resolver) zapojená, agent nadále odpovídá správně na čtyři
   testovací dotazy.
 - [ ] Triage správně klasifikuje minimálně 3 ze 4 dotazů.
-- [ ] Handoff funguje, loop se zastaví na limitu iterací.
+- [ ] Handoff funguje, loop se zastaví na limitu kol.
 - [ ] **Naměřený rozdíl** latence a počtu volání modelu proti baseline.
 - [ ] Selhání jednoho agenta nevede k pádu ani k prázdné odpovědi uživateli.
 - [ ] Zapsané rozhodnutí ANO/NE s jedním hlavním důvodem.

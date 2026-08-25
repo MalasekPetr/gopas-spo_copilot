@@ -53,6 +53,11 @@ a `"<<< TURN end"`. Pak v Playgroundu:
 2. **„ahoj"** → druhý turn, uvnitř jedno volání modelu.
 3. Mezera mezi logy = prostor pro **kola**: dnes jedno volání, od `actions-graph` víc.
    Jeden turn ≠ jedno volání modelu — platí se každé kolo.
+4. **„Kdo je Alex Wilber?"** — padne hned po startu. Simulovaná persona z Microsoft demo
+   dat; Playground simuluje uživatele a kanály (Personal/Group/Channel), ne tenant.
+   Dvě dema zadarmo: čítač z části B se testuje **přepnutím Personal → Group Chat**
+   (nová konverzace = scope od nuly, bez restartu); a Alex bez tokenů je důvod, proč
+   delegated Graph v Playgroundu nepojede (`actions-graph`, mock endpoint).
 
 Tabule: *aktivita = co přišlo (podstatné jméno) · turn = co se s tím dělo (děj) ·
 konverzace = série turnů nad stavem.* Věta pro zákazníka: turn je jednotka zpracování

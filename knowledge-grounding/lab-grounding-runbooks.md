@@ -63,19 +63,33 @@ Rychlá zkouška, že odpovídá: `node knowledge-grounding/solution/mock-retrie
 Do `src/agent.ts` (nad handlery):
 
 ```ts
-const RETRIEVAL_URL = process.env.RETRIEVAL_URL ?? "http://localhost:4002/retrieval";
-const RETRIEVAL_TOKEN = process.env.RETRIEVAL_TOKEN; // jen varianta ZIVE
+import { existsSync, readFileSync } from "fs";
+
+// Prepinac MOCK/ZIVE: existuje-li v projektu soubor .lab-token (delegated token
+// z device-auth), vola se skutecne Retrieval API; jinak lokalni mock.
+// Soubor, ne env promenna - F5 spousti vlastni shelly a env z terminalu nevidi.
+function labToken(): string | undefined {
+  return existsSync(".lab-token") ? readFileSync(".lab-token", "utf8").trim() : undefined;
+}
 
 type Chunk = { title: string; url: string; text: string };
 
 async function retrieve(query: string): Promise<Chunk[]> {
-  const res = await fetch(RETRIEVAL_URL, {
+  const token = labToken();
+  const url = token
+    ? "https://graph.microsoft.com/beta/copilot/retrieval"
+    : "http://localhost:4002/retrieval";
+  const res = await fetch(url, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      ...(RETRIEVAL_TOKEN ? { Authorization: `Bearer ${RETRIEVAL_TOKEN}` } : {}),
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
     },
-    body: JSON.stringify({ queryString: query }),
+    body: JSON.stringify(
+      token
+        ? { queryString: query, dataSource: "sharePoint", maximumNumberOfResults: 3 }
+        : { queryString: query },
+    ),
     signal: AbortSignal.timeout(10_000), // sitove volani = timeout vzdy
   });
   if (!res.ok) throw new Error(`retrieval selhal: ${res.status}`);
@@ -153,22 +167,23 @@ a otevře se — tam je proklik plnohodnotné ověření.
 Bez ověřitelné citace nemáš grounding, jen důvěryhodně znějící text — a rozdíl
 mezi oběma checkpointy je přesně rozdíl mezi kulisou a auditovatelným zdrojem.
 
-> [!NOTE] Varianta ŽIVĚ — jen když instruktor napíše na tabuli RETRIEVAL: ŽIVĚ
-> Skutečné **Copilot Retrieval API**: delegated token s `Files.Read.All` +
-> `Sites.Read.All` si vyrob přes
-> [`../actions-graph/solution/device-auth.mjs`](../actions-graph/solution/device-auth.mjs)
-> (client id dá instruktor), pak v terminálu agenta nastav:
+> [!NOTE] Varianta ŽIVĚ — jen když je na tabuli RETRIEVAL: ŽIVĚ
+> **Jedna app registrace pro všechny** (client ID z tabule — není tajemství),
+> token si každý vyrobí **svůj**: nese tvoji identitu a tvoje ACL. V terminálu
+> **ve složce svého projektu agenta**:
 >
 > ```powershell
-> $env:RETRIEVAL_TOKEN = "<token>"
-> $env:RETRIEVAL_URL = "https://graph.microsoft.com/beta/copilot/retrieval"
+> $env:LAB_CLIENT_ID = "<client id z tabule>"
+> node <klon-repa>/actions-graph/solution/device-auth.mjs "User.Read Files.Read.All Sites.Read.All" > .lab-token
+> Add-Content .gitignore "`n.lab-token"   # token NIKDY do repa
 > ```
 >
-> a do těla požadavku v `retrieve()` přidej
-> `dataSource: "sharePoint"` a `filterExpression` omezený na `/sites/hr-demo`.
-> Tvar odpovědi mock zrcadlí, mapování chunků zůstává. **Ověřit k datu běhu** —
-> API je preview (beta) a tvar se může změnit. Živá cesta má navíc to, co mock
-> nemá: **semantic index a ACL trimming** z části A.
+> Přihlas se kódem na microsoft.com/devicelogin **svým** účtem `user.NN`.
+> Soubor `.lab-token` je přepínač: existuje → agent volá živé API (kód ho čte
+> při každém dotazu, žádný restart není potřeba); smaž ho → zpět na MOCK.
+> Token žije ~1 h — při 401 smaž a vyrob nový. Tvar odpovědi mock zrcadlí,
+> mapování chunků se nemění. **Ověřit k datu běhu** — API je beta. Živá cesta
+> má navíc to, co mock nemá: **semantic index a ACL trimming** z části A.
 
 ## Část C — chování při neznámé odpovědi
 
@@ -221,10 +236,11 @@ sám** — v části A jsi viděl rozdíl na vlastní oči.
 
 ## Fallback
 
-- **Mock neběží** (port obsazený): `PORT=4102 node …` a přepiš `RETRIEVAL_URL`.
-- **Živá cesta selhává** (token, PAYG, preview API): vrať se na mock — v kódu je to
-  změna dvou env proměnných; rozdíl (bez ACL trimmingu, bez semantic indexu)
-  pojmenuj nahlas, je to teaching point, ne ostuda.
+- **Mock neběží** (port obsazený): `$env:PORT=4102; node …` a přepiš mock URL
+  v `retrieve()`.
+- **Živá cesta selhává** (401 = vypršel token → vyrob nový; jiná chyba = PAYG /
+  preview API): **smaž `.lab-token`** a jsi zpět na mocku; rozdíl (bez ACL
+  trimmingu, bez semantic indexu) pojmenuj nahlas, je to teaching point, ne ostuda.
 - **Index runbooků neproběhl** (část A krok 1): části B–D jedou na mocku beze změny;
   část A dožene instruktor demem, až index naběhne.
 - Při skluzu: části A a D lze zkrátit na společnou diskusi.

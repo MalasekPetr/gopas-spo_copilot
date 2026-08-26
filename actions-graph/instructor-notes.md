@@ -17,6 +17,10 @@
   a ŽIVĚ. Ráno napiš na tabuli `GRAPH: MOCK/ŽIVĚ` a `RETRIEVAL: MOCK/ŽIVĚ` podle toho,
   co níže stihneš ověřit. **Bez ohlášení jedou studenti MOCK** — lab je na tom postavený
   a nic dalšího nevyžaduje.
+- **ŽIVĚ přepínač = soubor `.lab-token` v projektu studenta** (jedna app registrace,
+  token per student přes device code). Záměrně soubor, ne env proměnná — env
+  z terminálu do F5 procesů nedoteče (stejná lekce jako fnm). Kód labů čte token
+  při každém volání, takže výroba/smazání souboru nepotřebuje restart.
 - **App registrace pro ŽIVĚ cestu** (~10 min, v adresáři `spdemo.online` — správný
   browser profil!): Entra → App registrations → New: název `spo-copilot-lab`,
   single tenant, bez redirect URI. Pak: Authentication → **Allow public client

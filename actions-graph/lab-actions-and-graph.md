@@ -46,13 +46,15 @@ Do `src/agent.ts` přidej helper. Tři chybové větve, **každá jinak** — to
 kroku:
 
 ```ts
-const GRAPH_BASE = process.env.GRAPH_BASE ?? "http://localhost:4001/v1.0";
-const GRAPH_TOKEN = process.env.GRAPH_TOKEN; // jen varianta ZIVE
+// labToken() mas z knowledge-grounding labu (soubor .lab-token = prepinac MOCK/ZIVE)
+const GRAPH_MOCK = "http://localhost:4001/v1.0";
+const GRAPH_LIVE = "https://graph.microsoft.com/v1.0";
 
 async function graphGet(path: string, attempts = 3): Promise<{ ok: boolean; data?: any; userMessage?: string }> {
+  const token = labToken();
   for (let i = 1; ; i++) {
-    const res = await fetch(`${GRAPH_BASE}${path}`, {
-      headers: GRAPH_TOKEN ? { Authorization: `Bearer ${GRAPH_TOKEN}` } : {},
+    const res = await fetch(`${token ? GRAPH_LIVE : GRAPH_MOCK}${path}`, {
+      headers: token ? { Authorization: `Bearer ${token}` } : {},
       signal: AbortSignal.timeout(10_000),
     });
     if (res.status === 429 && i < attempts) {
@@ -170,18 +172,13 @@ zeptej se „Kdo jsem?".
 `Retry-After: 2` a tvůj kód ho **respektuje** (nečeká 500 ms jako u obecné chyby).
 Po vyčerpání pokusů dostane uživatel větu, ne stack trace. **Hlavičku zase odeber.**
 
-> [!NOTE] Varianta ŽIVĚ — jen když instruktor napíše na tabuli GRAPH: ŽIVĚ
-> Delegated token si vyrob: `LAB_CLIENT_ID=<od instruktora> node
-> actions-graph/solution/device-auth.mjs "User.Read"` — přihlas se **svým**
-> účtem `user.NN`. Pak v terminálu agenta:
->
-> ```powershell
-> $env:GRAPH_TOKEN = "<token>"
-> $env:GRAPH_BASE = "https://graph.microsoft.com/v1.0"
-> ```
->
-> Chování krok 5 se změní podle skutečných oprávnění tenantu — co Business Basic
-> účet reálně přečte, se dozvíš naživo; 403/404 zůstávají správné výsledky.
+> [!NOTE] Varianta ŽIVĚ — jen když je na tabuli GRAPH: ŽIVĚ
+> Přepínač je tentýž **soubor `.lab-token`** jako v grounding labu (postup výroby
+> tokenu je tam — jedna app registrace pro všechny, token per student, scopes
+> už zahrnují `User.Read`). Máš-li ho z minulého labu a nevypršel, **není co
+> nastavovat** — `graphGet` ho vidí sám. Chování kroku 5 se změní podle
+> skutečných oprávnění tenantu — co Business Basic účet reálně přečte, se dozvíš
+> naživo; 403/404 zůstávají správné výsledky, ne chyba labu.
 
 ## Část B — CreateTicket a validace
 
@@ -326,9 +323,9 @@ Checkpoint: Novák zase vrací 403.
 
 ## Fallback
 
-- **Mocky neběží** (obsazený port): `PORT=4100 node …` + přepiš URL/`GRAPH_BASE`.
-- **ŽIVĚ cesta zlobí** (token vypršel — žije ~1 h, oprávnění chybí): přepni na MOCK
-  (dvě env proměnné), lab pokračuje beze ztráty; rozdíl pojmenuj.
+- **Mocky neběží** (obsazený port): `$env:PORT=4100; node …` + přepiš mock URL v kódu.
+- **ŽIVĚ cesta zlobí** (401 = token vypršel po ~1 h → vyrob nový; oprávnění chybí):
+  **smaž `.lab-token`** a jedeš MOCK, lab pokračuje beze ztráty; rozdíl pojmenuj.
 - Při skluzu: část D jako instruktorské demo — je to 10 minut a je to nejsilnější
   moment labu, nevynechávat úplně.
 

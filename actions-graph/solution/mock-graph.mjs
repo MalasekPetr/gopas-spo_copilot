@@ -11,7 +11,8 @@
 
 import { createServer } from "http";
 
-const PORT = Number(process.env.PORT ?? 4001);
+const SELF_TEST = process.argv.includes("--self-test");
+const PORT = SELF_TEST ? 0 : Number(process.env.PORT ?? 4001); // self-test: nahodny volny port, nekoliduje s bezici instanci
 const ME = process.env.MOCK_ME ?? "user.11@spdemo.online";
 // existující kolegové = 403 (nemáš oprávnění); kdokoli jiný = 404 (neexistuje)
 const KNOWN = new Set(["novak@spdemo.online", "jana.k@spdemo.online", ME]);
@@ -45,9 +46,10 @@ const server = createServer((req, res) => {
 });
 
 server.listen(PORT, async () => {
-  console.log(`Mock Graph bezi na http://localhost:${PORT}/v1.0/me (ja = ${ME})`);
-  if (process.argv.includes("--self-test")) {
-    const s = async (p, h = {}) => (await fetch(`http://localhost:${PORT}${p}`, { headers: h })).status;
+  const port = server.address().port;
+  console.log(`Mock Graph bezi na http://localhost:${port}/v1.0/me (ja = ${ME})`);
+  if (SELF_TEST) {
+    const s = async (p, h = {}) => (await fetch(`http://localhost:${port}${p}`, { headers: h })).status;
     const results = [
       ["GET /me", await s("/v1.0/me"), 200],
       ["cizí známý", await s("/v1.0/users/novak@spdemo.online"), 403],

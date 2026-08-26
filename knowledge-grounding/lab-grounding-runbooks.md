@@ -140,11 +140,18 @@ a ztratit hranici mezi „kdo jsem" a „co zrovna vím".
 jsou citace s odkazem** — žádné doptávání. V terminálu mocku vidíš
 `[retrieval] "…" -> 2 chunku`.
 
-### 6. Ověř citaci proklikem
+### 6. Ověř citaci
 
-**Checkpoint:** odkaz v citaci vede na skutečný runbook, ze kterého odpověď vznikla
-(u mocku na URL knihovny `Runbooky`). Bez ověřitelné citace nemáš grounding, jen
-důvěryhodně znějící text.
+**Checkpoint (MOCK):** citace sedí na obsah — otevři soubor z citace v
+`knowledge-grounding/solution/runbooky/` a najdi v něm větu, ze které odpověď
+vznikla. URL v citaci je u mocku **syntetická kulisa** (mock z SharePointu nečte
+nic, servíruje lokální kopie) — proklik může vrátit 404 a je to v pořádku.
+
+**Checkpoint (ŽIVĚ):** odkaz vede na skutečný dokument v knihovně `Runbooky`
+a otevře se — tam je proklik plnohodnotné ověření.
+
+Bez ověřitelné citace nemáš grounding, jen důvěryhodně znějící text — a rozdíl
+mezi oběma checkpointy je přesně rozdíl mezi kulisou a auditovatelným zdrojem.
 
 > [!NOTE] Varianta ŽIVĚ — jen když instruktor napíše na tabuli RETRIEVAL: ŽIVĚ
 > Skutečné **Copilot Retrieval API**: delegated token s `Files.Read.All` +

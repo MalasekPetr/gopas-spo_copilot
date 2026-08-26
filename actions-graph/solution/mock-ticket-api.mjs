@@ -13,7 +13,8 @@
 
 import { createServer } from "http";
 
-const PORT = Number(process.env.PORT ?? 4000);
+const SELF_TEST = process.argv.includes("--self-test");
+const PORT = SELF_TEST ? 0 : Number(process.env.PORT ?? 4000); // self-test: nahodny volny port, nekoliduje s bezici instanci
 let tickets = [];
 let nextId = 1001;
 
@@ -56,9 +57,10 @@ const server = createServer((req, res) => {
 });
 
 server.listen(PORT, async () => {
-  console.log(`Mock ticket API bezi na http://localhost:${PORT}/tickets`);
-  if (process.argv.includes("--self-test")) {
-    const base = `http://localhost:${PORT}/tickets`;
+  const port = server.address().port;
+  console.log(`Mock ticket API bezi na http://localhost:${port}/tickets`);
+  if (SELF_TEST) {
+    const base = `http://localhost:${port}/tickets`;
     const post = await fetch(base, { method: "POST", body: JSON.stringify({ priority: "P2", description: "test", requester: "self-test" }) });
     const throttled = await fetch(base, { method: "POST", headers: { "x-force": "429" }, body: "{}" });
     const list = await (await fetch(base)).json();

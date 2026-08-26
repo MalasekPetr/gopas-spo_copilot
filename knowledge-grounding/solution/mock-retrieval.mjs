@@ -2,8 +2,10 @@
 // Servíruje chunky z lokálních kopií runbooků (./runbooky/*.md) s naivním keyword
 // skórováním. Tvar odpovědi volně zrcadlí Copilot Retrieval API (retrievalHits ->
 // extracts/text + webUrl), aby přepnutí na skutečné API byla změna URL a tokenu,
-// ne přepis kódu. POZOR na rozdíl, který se v labu pojmenovává: tenhle mock nemá
-// ACL trimming ani semantic index — jen lexikální shodu.
+// ne přepis kódu. POZOR na rozdíly, které se v labu pojmenovávají: tenhle mock
+// NEČTE ze SharePointu (webUrl v odpovědi je syntetická kulisa pro formát citace,
+// proklik může vrátit 404), NEOVĚŘUJE volajícího (žádný token) a NEMÁ ACL trimming
+// ani semantic index — jen lexikální shodu nad lokálními soubory.
 //
 // Spuštění:  node mock-retrieval.mjs            (port 4002)
 // Self-test: node mock-retrieval.mjs --self-test
@@ -16,7 +18,8 @@ import { readFileSync, readdirSync } from "fs";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
 
-const PORT = Number(process.env.PORT ?? 4002);
+const SELF_TEST = process.argv.includes("--self-test");
+const PORT = SELF_TEST ? 0 : Number(process.env.PORT ?? 4002); // self-test: nahodny volny port, nekoliduje s bezici instanci
 const DIR = join(dirname(fileURLToPath(import.meta.url)), "runbooky");
 
 // nacti runbooky jednou pri startu; chunk = odstavec
@@ -66,10 +69,11 @@ const server = createServer((req, res) => {
 });
 
 server.listen(PORT, async () => {
-  console.log(`Mock retrieval bezi na http://localhost:${PORT}/retrieval (${chunks.length} chunku z ${DIR})`);
-  if (process.argv.includes("--self-test")) {
+  const port = server.address().port;
+  console.log(`Mock retrieval bezi na http://localhost:${port}/retrieval (${chunks.length} chunku z ${DIR})`);
+  if (SELF_TEST) {
     const ask = async (q) =>
-      (await (await fetch(`http://localhost:${PORT}/retrieval`, { method: "POST", body: JSON.stringify({ queryString: q }) })).json()).retrievalHits.length;
+      (await (await fetch(`http://localhost:${port}/retrieval`, { method: "POST", body: JSON.stringify({ queryString: q }) })).json()).retrievalHits.length;
     const upload = await ask("Nejde mi upload, hlásí access denied");
     const sla = await ask("Jaká je SLA na P1?");
     const nic = await ask("recept na svíčkovou");

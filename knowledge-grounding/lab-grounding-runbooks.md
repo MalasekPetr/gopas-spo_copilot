@@ -76,6 +76,8 @@ type Chunk = { title: string; url: string; text: string };
 
 async function retrieve(query: string): Promise<Chunk[]> {
   const token = labToken();
+  // diagnostika: JEDINY spolehlivy zpusob, jak zjistit, v jakem rezimu agent bezi
+  console.log(`[retrieve] rezim=${token ? "ZIVE" : "MOCK"} | q="${query}"`);
   const url = token
     ? "https://graph.microsoft.com/beta/copilot/retrieval"
     : "http://localhost:4002/retrieval";
@@ -94,11 +96,14 @@ async function retrieve(query: string): Promise<Chunk[]> {
   });
   if (!res.ok) throw new Error(`retrieval selhal: ${res.status}`);
   const data = await res.json();
-  return (data.retrievalHits ?? []).map((h: any) => ({
-    title: h.resourceMetadata?.title ?? "bez názvu",
+  const hits = (data.retrievalHits ?? []).map((h: any) => ({
+    // zive API vraci resourceMetadata prazdnou (zmereno 2026-08-26) -> titulek z URL
+    title: h.resourceMetadata?.title ?? decodeURIComponent(h.webUrl?.split("/").pop() ?? "runbook"),
     url: h.webUrl,
     text: (h.extracts ?? []).map((e: any) => e.text).join("\n"),
   }));
+  console.log(`[retrieve] status=${res.status} | hitu=${hits.length}`);
+  return hits;
 }
 ```
 
@@ -181,6 +186,12 @@ mezi oběma checkpointy je přesně rozdíl mezi kulisou a auditovatelným zdroj
 > Přihlas se kódem na microsoft.com/devicelogin **svým** účtem `user.NN`.
 > Soubor `.lab-token` je přepínač: existuje → agent volá živé API (kód ho čte
 > při každém dotazu, žádný restart není potřeba); smaž ho → zpět na MOCK.
+>
+> **Nejčastější chyba: soubor ve špatné složce.** Musí ležet v **projektu agenta**
+> (tam, kde je `package.json`) — ne v klonu repa kurzu, kde běží mocky. Kontrola
+> je řádek `[retrieve] rezim=ZIVE` v terminálu agenta: dokud píše `MOCK`, agent
+> tvůj token nevidí. Druhá past: token vyráběj v **pwsh 7** — `>` ve Windows
+> PowerShellu 5.1 zapíše soubor v UTF-16 a token je nečitelný.
 > Token žije ~1 h — při 401 smaž a vyrob nový. Tvar odpovědi mock zrcadlí,
 > mapování chunků se nemění. **Ověřit k datu běhu** — API je beta. Živá cesta
 > má navíc to, co mock nemá: **semantic index a ACL trimming** z části A.

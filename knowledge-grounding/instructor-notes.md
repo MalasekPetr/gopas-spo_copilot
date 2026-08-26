@@ -14,10 +14,21 @@
   `node solution/mock-retrieval.mjs --self-test` na stroji v učebně (servíruje chunky
   z `solution/runbooky/`, lexikální skórování, bez ACL). ŽIVĚ vyžaduje: app registraci
   z `actions-graph` instructor-notes (device code, `Files.Read.All` + `Sites.Read.All`)
-  **a** jeden úspěšný testovací POST na
-  `https://graph.microsoft.com/beta/copilot/retrieval` s vlastním tokenem — API je
-  beta a na PAYG nemusí fungovat. Bez obojího nech MOCK; lab rozdíl explicitně
-  pojmenovává (semantic index + ACL trimming = hodnota živé cesty). — otestovat před během
+  **a** jeden úspěšný testovací POST — API je beta a na PAYG nemusí fungovat.
+  Test jedním průchodem (z klonu repa, PowerShell; přihlásit studentským účtem):
+
+  ```powershell
+  $env:LAB_CLIENT_ID = "<client-id>"
+  $token = node actions-graph/solution/device-auth.mjs "User.Read Files.Read.All Sites.Read.All"
+  curl.exe -s -X POST "https://graph.microsoft.com/beta/copilot/retrieval" `
+    -H "Authorization: Bearer $token" -H "Content-Type: application/json" `
+    -d '{\"queryString\":\"access denied upload\",\"dataSource\":\"sharePoint\",\"maximumNumberOfResults\":3}'
+  ```
+
+  Vrátí `retrievalHits` s obsahem runbooku → tabule ŽIVĚ. Vrátí 402/403/licenční
+  chybu → nech MOCK (GRAPH: ŽIVĚ tím není dotčené — na retrievalu nezávisí);
+  lab rozdíl explicitně pojmenovává (semantic index + ACL trimming = hodnota
+  živé cesty). — otestovat před během
 
 - **Re-verify: Copilot Retrieval API na PAYG studentským účtem.** Empiricky ověřeno
   2026-08-06, ale PAYG consumption je **preview** — podmínky, ceny i dostupnost se mohou

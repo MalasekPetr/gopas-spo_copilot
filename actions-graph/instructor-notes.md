@@ -16,6 +16,16 @@
 
 ## Go/no-go — KLÍČOVÉ, otestovat před během
 
+- **List `Tikety` na /sites/hr-demo** (rozhodnutí 2026-08-26): sloupce `Priorita`
+  (choice P1/P2/P3), `Popis` (multiline), `Zadavatel` (text) — **názvy bez diakritiky**,
+  jinak SharePoint vyrobí zakódované interní názvy a kód z labu je netrefí. Registrace
+  potřebuje delegated **`Sites.ReadWrite.All`** s admin consentem; studenti si ráno
+  vyrábějí token s tímhle scope navíc.
+- **Ověřeno naživo (2026-08-26):** zápis přes Graph projde, `Created By` doplní
+  SharePoint z tokenu (`user.15`), zatímco `Zadavatel` nese to, co zapsal kód
+  (persona z Playgroundu). Ten rozdíl je pointa kroku 10 a znovu kroku 15.
+- **Před během smaž testovací tikety z listu**, ať studenti začínají na prázdném.
+
 - **Mechanismus tabule (od 2026-08-26):** lab má cesty MOCK (výchozí, funguje vždy)
   a ŽIVĚ. Ráno napiš na tabuli `GRAPH: MOCK/ŽIVĚ` a `RETRIEVAL: MOCK/ŽIVĚ` podle toho,
   co níže stihneš ověřit. **Bez ohlášení jedou studenti MOCK** — lab je na tom postavený

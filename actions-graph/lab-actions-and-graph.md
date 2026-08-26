@@ -10,28 +10,31 @@ Konec labu: agent eskaluje tiket, ale **nezaloží ho za jiného uživatele** a 
 data, na která volající nemá právo.
 
 **Jak lab číst:** každý krok končí **Checkpointem** — nesedí-li, nepokračuj.
-Graph čteme **naživo** (token z včerejška), ticketing přes lokální mock.
+Graph čteme i **zapisujeme naživo**: profil z adresáře a eskalaci do SharePoint listu.
 
 ## Předpoklady
 
 - Agent z [`../knowledge-grounding/`](../knowledge-grounding/lab-grounding-runbooks.md)
   odpovídá z runbooků (grounding zůstává zapojený).
 - `.lab-token` v projektu. **Včerejší vypršel** — vyrob nový podle kroku 7a
-  groundingového labu (client ID z tabule, InPrivate okno, tvůj `user.NN`).
+  groundingového labu, ale **se scope navíc**:
+  `offline_access User.Read Files.Read.All Sites.Read.All Sites.ReadWrite.All`
+  (zápis do listu). Client ID z tabule, InPrivate okno, tvůj `user.NN`.
 
 ## Část A — první akce nad Graphem
 
-### 1. Spusť mock ticket API
+### 1. Ověř přístup k listu Tikety
 
-V novém terminálu, z klonu repa kurzu (nech běžet):
+Eskalace půjde do **SharePoint listu `Tikety`** na `/sites/hr-demo`. Otevři si ho
+v prohlížeči a nech otevřený vedle Playgroundu — během labu do něj budeš koukat.
 
-```powershell
-cd <cesta-ke-klonu>/gopas-spo_copilot
-node actions-graph/solution/mock-ticket-api.mjs
-```
+**Checkpoint:** list existuje a má sloupce `Priorita`, `Popis`, `Zadavatel`.
 
-**Checkpoint:** `Mock ticket API bezi na http://localhost:4000/tickets`.
-Seznam tiketů uvidíš kdykoliv v prohlížeči na téže adrese.
+> [!NOTE] Bez tenantu: mock ticket API
+> Když nemáš token nebo je list nedostupný, spusť z klonu repa
+> `node actions-graph/solution/mock-ticket-api.mjs` (port 4000) a v části B piš proti
+> němu. Lekce o validaci drží — jen eskalaci neuvidíš v prohlížeči a přijdeš
+> o srovnání `Zadavatel` vs. `Created By` v kroku 10.
 
 ### 2. Graph helper s rozlišenými chybovými větvemi
 
@@ -193,89 +196,112 @@ najednou; spadne do transientní větve s `Retry-After`.) **Vrať 10 000.**
 
 ## Část B — CreateTicket a validace
 
-### 8. Naivní CreateTicket — schválně špatně
+Eskalace teď nekončí v konzoli — **zapisuje se do SharePointu** a uvidíš ji v prohlížeči.
+Tím se z týdne, který data jen četl, stává agent, který **mění stav ve firemním systému**.
 
-Přidej do `tools` druhý nástroj, **zatím se všemi třemi parametry z modelu**:
+> [!IMPORTANT] Zápis je jiná třída rizika než čtení
+> Špatně přečtená data zmatou jednoho uživatele. **Špatně zapsaná data zůstanou** —
+> a čte je někdo další. Proto je zbytek téhle části o validaci: u čtení je chybný
+> parametr nepříjemnost, u zápisu je to incident.
 
-```ts
-{
-  type: "function" as const,
-  function: {
-    name: "create_ticket",
-    description: "Založí tiket podpory, když runbook nepomohl a je potřeba technik.",
-    parameters: {
-      type: "object",
-      properties: {
-        priority: { type: "string", description: "P1, P2 nebo P3" },
-        description: { type: "string" },
-        requester: { type: "string", description: "e-mail žadatele" }, // krok 10: ODEBRAT
-      },
-      required: ["priority", "description", "requester"],
-    },
-  },
-},
-```
+### 8. Naivní create_ticket — schválně špatně
 
-A do `executeTool` větev **bez jakékoli validace**:
+Nejdřív helper, který si jednou dohledá ID webu a listu (žádné GUIDy natvrdo):
 
 ```ts
-if (name === "create_ticket") {
-  const res = await fetch("http://localhost:4000/tickets", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(args), // naivni: vsechno z navrhu modelu
-    signal: AbortSignal.timeout(10_000),
-  });
-  return JSON.stringify(await res.json());
+const SITE_PATH = "<tenant>.sharepoint.com:/sites/hr-demo";
+let ticketTarget: { siteId: string; listId: string } | undefined;
+
+async function resolveTicketList(token: string) {
+  if (ticketTarget) return ticketTarget;
+  const h = { Authorization: `Bearer ${token}` };
+  const site = await (await fetch(`https://graph.microsoft.com/v1.0/sites/${SITE_PATH}`, { headers: h })).json();
+  const lists = await (await fetch(`https://graph.microsoft.com/v1.0/sites/${site.id}/lists?$select=displayName,id`, { headers: h })).json();
+  const list = (lists.value ?? []).find((l: any) => l.displayName === "Tikety");
+  if (!list) throw new Error("list Tikety nenalezen");
+  ticketTarget = { siteId: site.id, listId: list.id };
+  return ticketTarget;
 }
 ```
 
-**Checkpoint:** pošli dotaz 3 („Tiskárna netiskne a runbook nepomohl.") → agent
-založí tiket. Otevři `http://localhost:4000/tickets` a podívej se, **co model
-dosadil za `requester`** — vymyslel si ho.
-
-### 9. Validace před voláním API
-
-Nahraď naivní větev validovanou. Dvě pravidla: nevalidní vstup **nesmí vést
-k volání API vůbec**, a chyba validace se vrací **jako tool zpráva modelu**:
+A do `executeTool` větev **bez jakékoli validace** — všechny parametry z návrhu modelu:
 
 ```ts
 if (name === "create_ticket") {
-  const errors: string[] = [];
-  if (!["P1", "P2", "P3"].includes(args.priority)) errors.push("priority musí být P1, P2 nebo P3");
-  if (!args.description?.trim()) errors.push("description je povinný");
-  if ((args.description ?? "").length > 500) errors.push("description max 500 znaků");
-  if (errors.length) return JSON.stringify({ error: "validace selhala", details: errors });
-
-  const res = await fetch("http://localhost:4000/tickets", {
+  const token = labToken();
+  if (!token) return JSON.stringify({ error: "chybí token, nemohu založit tiket" });
+  const { siteId, listId } = await resolveTicketList(token);
+  const res = await fetch(`https://graph.microsoft.com/v1.0/sites/${siteId}/lists/${listId}/items`, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ priority: args.priority, description: args.description, requester: args.requester }),
-    signal: AbortSignal.timeout(10_000),
+    headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
+    body: JSON.stringify({ fields: {
+      Title: args.title,
+      Priorita: args.priority,
+      Popis: args.description,
+      Zadavatel: args.requester,   // naivni: z navrhu modelu
+    }}),
+    signal: AbortSignal.timeout(15_000),
   });
-  return JSON.stringify(await res.json());
+  const d = await res.json();
+  if (!res.ok) return JSON.stringify({ error: `zápis selhal: ${d.error?.code}` });
+  return JSON.stringify({ id: d.id, url: d.webUrl });
 }
 ```
 
-**Checkpoint:** napiš „Založ tiket s prioritou URGENT, nejde mi myš." → agent se
-buď **doptá** na prioritu, nebo ji sám opraví na P1–P3 — a v seznamu tiketů žádný
-s `URGENT` **není**. (Mock API schválně nevaliduje nic; validace je práce agenta.)
+Do schématu nástroje přidej `title`, `priority`, `description` a **zatím i `requester`**
+(v kroku 10 ho odebereš).
 
-### 10. Klíčový krok: requester si model nevybírá
+**Checkpoint:** pošli dotaz 3 („Tiskárna netiskne a runbook nepomohl."). Otevři list
+**Tikety** v prohlížeči — tiket tam je. Podívej se, **co model dosadil do `Zadavatel`**:
+vymyslel si ho.
 
-Dvě změny najednou. V definici nástroje `requester` **úplně smaž** (z `properties`
-i `required`), a v `executeTool` ho dosaď z identity volajícího:
+### 9. Validace před zápisem
+
+Nahraď naivní větev validovanou. Dvě pravidla: nevalidní vstup **nesmí vést k zápisu
+vůbec**, a chyba validace se vrací **jako tool zpráva modelu**, aby se uměl doptat:
 
 ```ts
-const requester = context.activity.from?.name ?? context.activity.from?.id ?? "unknown";
+const errors: string[] = [];
+if (!["P1", "P2", "P3"].includes(args.priority)) errors.push("priority musí být P1, P2 nebo P3");
+if (!args.title?.trim()) errors.push("title je povinný");
+if ((args.title ?? "").length > 120) errors.push("title max 120 znaků");
+if (!args.description?.trim()) errors.push("description je povinný");
+if ((args.description ?? "").length > 2000) errors.push("description max 2000 znaků");
+if (errors.length) return JSON.stringify({ error: "validace selhala", details: errors });
 ```
 
-a použij ho v těle požadavku místo `args.requester`.
+**Checkpoint:** napiš „Založ tiket s prioritou URGENT, nejde mi myš." → agent se doptá
+nebo prioritu opraví na P1–P3, a v listu **žádný tiket s `URGENT` nevznikl**.
+SharePoint by ho ostatně odmítl taky (choice sloupec) — ale ty chceš, aby se **k zápisu
+vůbec nedošlo**: chyba až ze serveru stojí volání navíc a horší se z ní formuluje
+srozumitelná odpověď.
+
+### 10. Kdo je žadatel: co kód tvrdí vs. co platforma ví
+
+Odeber `requester` ze schématu nástroje (`properties` i `required`) a v kódu ho dosaď
+z identity volajícího:
+
+```ts
+Zadavatel: context.activity.from?.name ?? "unknown",
+```
 
 **Co si model nesmí vybrat, nedávej mu do schématu — pak není co ošetřovat.**
 
-**Checkpoint:** dotaz 3 znovu → nový tiket má `requester` = tvoje identita
-z Playgroundu, ne vymyšlený e-mail.
+**Checkpoint:** pošli dotaz 3 znovu a v listu se podívej na **dva sloupce vedle sebe**:
+
+| Sloupec | Co v něm je | Kdo ho vyplnil |
+|---|---|---|
+| `Zadavatel` | persona z Playgroundu (např. Alex Wilber) | **tvůj kód** |
+| `Created By` | tvůj skutečný účet `user.NN` | **SharePoint z tokenu** |
+
+> [!IMPORTANT] Tohle je jádro celého labu — změřeno (2026-08-26)
+> `Created By` **nevyplňuje tvůj kód**. Vyplňuje ho SharePoint z identity v tokenu
+> a tvoje aplikace to nemůže přepsat. Zatímco `Zadavatel` je jen **tvrzení tvého kódu** —
+> může tam být cokoliv, co tam zapíšeš.
+>
+> Z toho plyne pravidlo pro každou akci, kterou kdy agentovi dáš:
+> **identitu neposílej v parametrech, nes ji v tokenu.** Co je v parametru, to je
+> tvrzení; co je v tokenu, to je fakt. Auditor se dívá na `Created By`.
 
 ## Část C — pokus o zneužití
 
@@ -321,6 +347,26 @@ protože se šíří dál jako text bez klasifikace.
 **Hned potom vrať delegated token** a credentials smaž z lokální konfigurace.
 Checkpoint: kolega zase vrací 403.
 
+### 15. Podepiš tiket aplikací místo sebe
+
+Ještě s app-only credentials pošli dotaz 3 a nech agenta založit tiket. Pak otevři
+list **Tikety** v prohlížeči a porovnej poslední dva řádky.
+
+**Checkpoint:** u nového tiketu je ve sloupci `Created By` **aplikace**, ne student —
+zatímco `Zadavatel` může být pořád cokoliv, co kód zapsal.
+
+> [!IMPORTANT] Tohle je celý app-only problém na jednom řádku listu
+> V delegated režimu je `Created By` **důkaz**: platforma zapsala, kdo akci provedl,
+> a nikdo to nemohl přepsat. V app-only režimu `Created By` říká jen „nějaká
+> aplikace" — a **stopa ke konkrétnímu člověku zmizela**.
+>
+> Auditor u zákazníka se dívá přesně sem. Věta do capstonu: *„Každá akce agenta
+> musí být dohledatelná ke konkrétnímu uživateli."* Když to neplatí, musí být
+> v architektuře zapsané **proč** — a kdo to podepsal.
+
+**Vrať delegated token** a tiket založený aplikací nech v listu jako exponát.
+
+
 > [!NOTE] Když app-only credentials nejsou
 > Krok jde odjet proti mock Graphu: spusť `node actions-graph/solution/mock-graph.mjs`
 > (port 4001), přesměruj `graphGet` na `http://localhost:4001/v1.0` a přidej hlavičku
@@ -332,17 +378,19 @@ Checkpoint: kolega zase vrací 403.
 - [ ] Agent přečte **tvůj** profil z Graphu a odpoví z něj.
 - [ ] Kolega i neexistující uživatel vrací **403** a student umí říct proč (scope `User.Read`, ne únik informace o existenci).
 - [ ] Timeout/transientní chyba nekončí stack tracem, ale srozumitelnou větou.
-- [ ] Nevalidní priorita ani prázdný popis **nevedou k volání ticket API**.
-- [ ] `requester` pochází z identity volajícího a **není ve schématu nástroje**.
+- [ ] Nevalidní priorita ani prázdný popis **nevedou k zápisu do listu**.
+- [ ] `Zadavatel` pochází z identity volajícího a **není ve schématu nástroje**; student umí vysvětlit rozdíl proti `Created By`.
 - [ ] Student viděl v terminálu **kola** (`[kolo N] …`) a jejich cenu v `usage`.
 - [ ] App-only režim je po části D **vypnutý**.
+- [ ] Student viděl v listu tiket podepsaný aplikací a umí říct, proč je to problém pro audit.
 
 ## Fallback
 
 - **`.lab-token` chybí nebo vypršel (401)**: vyrob nový podle kroku 7a groundingového
   labu. Bez tokenu vrací `graphGet` srozumitelnou hlášku a části B–D jedou dál —
   jsou na Graphu nezávislé.
-- **Mock ticket API neběží**: `$env:PORT=4100; node …` a přepiš URL v `executeTool`.
+- **Zápis vrací 403**: token nemá `Sites.ReadWrite.All` — vyrob nový se scope z Předpokladů.
+- **List Tikety nenalezen**: zkontroluj přesný název a cestu webu v `SITE_PATH`; fallback je mock ticket API.
 - **Model nevolá nástroj**: zkontroluj, že `tools` opravdu předáváš do `callModel`
   a že `description` nástroje říká, **kdy** ho použít — model se rozhoduje podle ní.
 - Při skluzu: část D jako instruktorské demo — je to 10 minut a je to nejsilnější

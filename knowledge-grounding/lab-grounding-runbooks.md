@@ -43,11 +43,16 @@ vlastnost **nemá** a budeš to muset pojmenovat.
 
 ### 3. Spusť mock retrieval
 
-V novém terminálu (nech ho běžet):
+Mock máš v **naklonovaném repu kurzu** (po ranním `git pull`), ne v projektu agenta.
+V novém terminálu se tam nejdřív přepni a nech mock běžet:
 
 ```powershell
+cd <cesta-ke-klonu>/gopas-spo_copilot
 node knowledge-grounding/solution/mock-retrieval.mjs
 ```
+
+Nic se neinstaluje — je to čistý Node bez závislostí. Poběží u tebe lokálně,
+protože agent volá `http://localhost:4002` (tvůj stroj, ne instruktorův).
 
 **Checkpoint:** `Mock retrieval bezi na http://localhost:4002/retrieval (8 chunku …)`.
 Rychlá zkouška, že odpovídá: `node knowledge-grounding/solution/mock-retrieval.mjs --self-test`

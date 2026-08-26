@@ -24,12 +24,18 @@ obě stejný, liší se base URL a token.
 
 ### 1. Spusť mocky
 
-Ve dvou terminálech (nech je běžet):
+Mocky jsou v **naklonovaném repu kurzu** (ne v projektu agenta) a běží lokálně
+u tebe — agent volá localhost. Ve dvou terminálech se přepni do klonu repa
+a nech je běžet:
 
 ```powershell
+cd <cesta-ke-klonu>/gopas-spo_copilot
 node actions-graph/solution/mock-ticket-api.mjs   # port 4000
 node actions-graph/solution/mock-graph.mjs        # port 4001
 ```
+
+Nic se neinstaluje — čistý Node bez závislostí. (Mock retrieval z předchozího
+labu nech běžet taky — grounding v agentovi zůstává zapojený.)
 
 **Checkpoint:** oba vypsaly `bezi na http://localhost:…`. (Kdykoli později:
 `--self-test` varianta ověří chování bez klikání.)

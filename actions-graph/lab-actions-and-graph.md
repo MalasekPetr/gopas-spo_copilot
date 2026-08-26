@@ -1,83 +1,74 @@
 # Lab · Akce, validace parametrů a hranice oprávnění
 
-> Modul: `actions-graph` · Odhad: 55 min · Režim: **hands-on, step-by-step**
+> Modul: `actions-graph` · Odhad: 50 min · Režim: **hands-on, step-by-step**
 > Jazyk: TypeScript · Scénář: [`scenario-support-agent.md`](../scenario-support-agent.md)
 
 ## Cíl
 
-Dát Support Asistentovi akce — a udělat to tak, aby je model nemohl zneužít.
-Konec labu: agent eskaluje tiket, ale **nezaloží ho za jiného uživatele**
-a **neprozradí** data, na která volající nemá právo.
+Dát Support Asistentovi **akce** — a udělat to tak, aby je model nemohl zneužít.
+Konec labu: agent eskaluje tiket, ale **nezaloží ho za jiného uživatele** a **nevidí**
+data, na která volající nemá právo.
 
 **Jak lab číst:** každý krok končí **Checkpointem** — nesedí-li, nepokračuj.
-Graph má dvě cesty: **MOCK** (lokální, výchozí) a **ŽIVĚ** (skutečný Graph
-s delegated tokenem) — kterou jedeme, oznámí instruktor na tabuli. Kód je pro
-obě stejný, liší se base URL a token.
+Graph čteme **naživo** (token z včerejška), ticketing přes lokální mock.
 
 ## Předpoklady
 
 - Agent z [`../knowledge-grounding/`](../knowledge-grounding/lab-grounding-runbooks.md)
-  odpovídá z runbooků (a máš `callModel` s retry z prvního labu).
-- Dva volné terminály na mocky.
+  odpovídá z runbooků (grounding zůstává zapojený).
+- `.lab-token` v projektu. **Včerejší vypršel** — vyrob nový podle kroku 7a
+  groundingového labu (client ID z tabule, InPrivate okno, tvůj `user.NN`).
 
 ## Část A — první akce nad Graphem
 
-### 1. Spusť mocky
+### 1. Spusť mock ticket API
 
-Mocky jsou v **naklonovaném repu kurzu** (ne v projektu agenta) a běží lokálně
-u tebe — agent volá localhost. Ve dvou terminálech se přepni do klonu repa
-a nech je běžet:
+V novém terminálu, z klonu repa kurzu (nech běžet):
 
 ```powershell
 cd <cesta-ke-klonu>/gopas-spo_copilot
-node actions-graph/solution/mock-ticket-api.mjs   # port 4000
-node actions-graph/solution/mock-graph.mjs        # port 4001
+node actions-graph/solution/mock-ticket-api.mjs
 ```
 
-Nic se neinstaluje — čistý Node bez závislostí. (Mock retrieval z předchozího
-labu nech běžet taky — grounding v agentovi zůstává zapojený.)
-
-**Checkpoint:** oba vypsaly `bezi na http://localhost:…`. (Kdykoli později:
-`--self-test` varianta ověří chování bez klikání.)
+**Checkpoint:** `Mock ticket API bezi na http://localhost:4000/tickets`.
+Seznam tiketů uvidíš kdykoliv v prohlížeči na téže adrese.
 
 ### 2. Graph helper s rozlišenými chybovými větvemi
 
-Do `src/agent.ts` přidej helper. Tři chybové větve, **každá jinak** — to je jádro
-kroku:
+Do `src/agent.ts` nad handlery. Tři chybové větve, **každá jinak** — to je jádro kroku:
 
 ```ts
-// labToken() mas z knowledge-grounding labu (soubor .lab-token = prepinac MOCK/ZIVE)
-const GRAPH_MOCK = "http://localhost:4001/v1.0";
-const GRAPH_LIVE = "https://graph.microsoft.com/v1.0";
-
 async function graphGet(path: string, attempts = 3): Promise<{ ok: boolean; data?: any; userMessage?: string }> {
   const token = labToken();
+  if (!token) return { ok: false, userMessage: "Nemám přístup k adresáři (chybí token)." };
+
   for (let i = 1; ; i++) {
-    const res = await fetch(`${token ? GRAPH_LIVE : GRAPH_MOCK}${path}`, {
-      headers: token ? { Authorization: `Bearer ${token}` } : {},
+    const res = await fetch(`https://graph.microsoft.com/v1.0${path}`, {
+      headers: { Authorization: `Bearer ${token}` },
       signal: AbortSignal.timeout(10_000),
     });
     if (res.status === 429 && i < attempts) {
       // transientni: respektuj Retry-After, uzivatel se o retry nedozvi
       const wait = Number(res.headers.get("retry-after") ?? "1") * 1000;
-      console.warn(`Graph 429, cekam ${wait} ms (pokus ${i}/${attempts})`);
+      console.warn(`[graph] 429, cekam ${wait} ms (pokus ${i}/${attempts})`);
       await new Promise((r) => setTimeout(r, wait));
       continue;
     }
-    if (res.status === 403) return { ok: false, userMessage: "Na tuhle informaci nemáš oprávnění." };  // permanentni
-    if (res.status === 404) return { ok: false, userMessage: "Takový objekt neexistuje." };            // permanentni
-    if (!res.ok) return { ok: false, userMessage: "Služba teď neodpovídá, zkus to prosím později." };
+    // permanentni vetve: opakovani nezmeni opravneni ani existenci objektu
+    if (res.status === 403) return { ok: false, userMessage: "Na tuhle informaci nemáš oprávnění." };
+    if (res.status === 404) return { ok: false, userMessage: "Takový objekt neexistuje." };
+    if (!res.ok) return { ok: false, userMessage: "Adresář teď neodpovídá, zkus to prosím později." };
     return { ok: true, data: await res.json() };
   }
 }
 ```
 
-**Checkpoint:** kompiluje. Umíš říct, proč se 403/404 **neretryují**: opakování
+**Checkpoint:** kompiluje. Umíš říct, proč se 403 a 404 **neretryují**: opakování
 nezmění oprávnění ani existenci objektu — retry by jen pálil čas a tokeny.
 
-### 3. Nástroj `lookup_user` — první akce
+### 3. Definuj nástroje a jejich vykonání
 
-Nad handlery definuj nástroje a jejich vykonání. Zatím jeden nástroj:
+Nad handlery. Zatím jeden nástroj — `create_ticket` přidáš v části B:
 
 ```ts
 const tools = [
@@ -85,7 +76,7 @@ const tools = [
     type: "function" as const,
     function: {
       name: "lookup_user",
-      description: "Vrátí profil uživatele z adresáře. Bez parametru vrátí profil tazatele.",
+      description: "Vrátí profil uživatele z firemního adresáře. Bez parametru vrátí profil tazatele.",
       parameters: {
         type: "object",
         properties: { upn: { type: "string", description: "e-mail hledaného uživatele; vynech pro tazatele" } },
@@ -103,36 +94,53 @@ async function executeTool(name: string, args: any, context: TurnContext): Promi
 }
 ```
 
-**Checkpoint:** kompiluje. Chyba z Graphu se vrací **jako obsah tool zprávy**
-(`{ error: … }`), ne jako výjimka — model se z ní umí vzpamatovat a formulovat
-odpověď.
+**Checkpoint:** kompiluje. Všimni si, že chyba z Graphu se vrací **jako obsah tool
+zprávy** (`{ error: … }`), ne jako výjimka — model se z ní umí vzpamatovat a chybu
+srozumitelně přeformulovat uživateli.
 
-### 4. Tool-call smyčka — kola uvnitř turnu
+### 4. Rozšiř callModel o nástroje
 
-Rozšiř `callModel` o nástroje (přidej parametr a předej ho do requestu):
+`callModel` z prvního labu dostane druhý parametr:
 
 ```ts
 async function callModel(
   messages: any[],
   opts: { tools?: any[]; attempts?: number } = {},
 ) {
-  // ... stavajici retry smycka, jen request rozsir:
-  return await client.chat.completions.create({
-    messages,
-    model: "",
-    ...(opts.tools ? { tools: opts.tools } : {}),
-  });
-  // ...
+  const attempts = opts.attempts ?? 3;
+  let delay = 500;
+  for (let i = 1; ; i++) {
+    try {
+      return await client.chat.completions.create({
+        messages,
+        model: "",
+        ...(opts.tools ? { tools: opts.tools } : {}),
+      });
+    } catch (err) {
+      if (classifyError(err) === "permanent" || i >= attempts) throw err;
+      console.warn(`transientni chyba (pokus ${i}/${attempts}), retry za ${delay} ms`);
+      await new Promise((r) => setTimeout(r, delay));
+      delay *= 2;
+    }
+  }
 }
 ```
 
-A v message handleru nahraď jedno volání modelu **smyčkou kol**:
+**Pozor:** volání `callModel` z groundingu (`buildSearchQuery`) teď musí být bez
+druhého parametru — bez nástrojů. Zkontroluj, že tam nic nepředáváš.
+
+**Checkpoint:** kompiluje a **grounding pořád funguje** — pošli dotaz 1 a ověř,
+že odpověď z runbooku s citací přišla jako dřív.
+
+### 5. Tool-call smyčka — kola uvnitř turnu
+
+V message handleru nahraď jedno volání modelu **smyčkou kol**. Grounding zůstává:
 
 ```ts
 const messages: any[] = [
   { role: "system", content: systemPrompt },
   { role: "user", content: userText },
-  { role: "user", content: knowledge }, // grounding z predchoziho labu zustava
+  { role: "user", content: knowledge }, // grounding z predchoziho labu
 ];
 
 let result;
@@ -143,48 +151,51 @@ for (let kolo = 1; kolo <= 4; kolo++) {
   messages.push(msg);
   for (const tc of msg.tool_calls) {
     console.log(`[kolo ${kolo}] ${tc.function.name}(${tc.function.arguments})`);
-    const outcome = await executeTool(tc.function.name, JSON.parse(tc.function.arguments), context);
+    const outcome = await executeTool(tc.function.name, JSON.parse(tc.function.arguments || "{}"), context);
     messages.push({ role: "tool", tool_call_id: tc.id, content: outcome });
   }
 }
 const answer = result!.choices.map((c) => c.message.content ?? "").join("");
 ```
 
-**Checkpoint:** zeptej se agenta **„Kdo jsem?"** → v terminálu `[kolo 1]
-lookup_user(…)` a odpověď obsahuje profil (jméno, pozice z mock Graphu). Právě jsi
-viděl **kolo**: jeden turn, dvě volání modelu. Zkontroluj `usage` — platíš obě.
+**Checkpoint:** zeptej se **„Kdo jsem?"** → v terminálu `[kolo 1] lookup_user({})`
+a odpověď obsahuje tvoje jméno a pozici z adresáře. Právě jsi viděl **kolo**:
+jeden turn, **dvě** volání modelu. Podívej se na `usage` — platíš obě.
 
-### 5. Hranice oprávnění na vlastní kůži
+### 6. Hranice oprávnění na vlastní kůži
 
-Zeptej se: **„Co je Novák zač?"** a pak **„Co je Karel Vopička zač?"**
+Zeptej se: **„Co je zač kolega user.11?"**
 
-**Checkpoint:** Novák → agent řekne, že na to nemáš oprávnění (`403` z mocku,
-existující kolega). Vopička → objekt neexistuje (`404`). Ani jedno není chyba labu —
-**to je delegated identita v praxi: agent vidí přesně to, co ty.** V terminálu
-vidíš, že se nic neretryovalo.
+**Checkpoint:** agent odpoví, že na to nemáš oprávnění. V terminálu vidíš, že se
+**nic neretryovalo**.
 
-### 6. Transientní větev
+> [!IMPORTANT] Tvůj token adresář nepřečte — a je to správně (změřeno 2026-08-26)
+> Token nese scope `User.Read`, což je **jen tvůj vlastní profil**. Čtení kolegů
+> by vyžadovalo `User.Read.All`, tedy admin consent na celý adresář.
+>
+> Zkus i **neexistujícího** uživatele (`nikdo@spdemo.online`) — dostaneš taky
+> **403, ne 404**. Graph nejdřív ověří oprávnění a teprve pak existenci: kdyby
+> vrátil 404, prozradil by ti, že takový účet neexistuje — a to je únik informace.
+>
+> **Scope je hranice, kterou žádný prompt nepřemluví.** Kdyby model chtěl číst
+> kolegy sebevíc, token mu to nedovolí. Tohle je nejsilnější obrana v celém týdnu,
+> silnější než cokoliv, co napíšeš do promptu nebo middlewaru.
 
-Dočasně přidej do `graphGet` hlavičku `"x-force": "429"` (do `headers`), ulož,
-zeptej se „Kdo jsem?".
+### 7. Transientní větev
 
-**Checkpoint:** v terminálu `Graph 429, cekam 2000 ms (pokus 1/3)` — mock posílá
-`Retry-After: 2` a tvůj kód ho **respektuje** (nečeká 500 ms jako u obecné chyby).
-Po vyčerpání pokusů dostane uživatel větu, ne stack trace. **Hlavičku zase odeber.**
+Dočasně přidej do `graphGet` do hlaviček `"x-force": "429"` — ne, tohle Graph
+neumí. Místo toho **zkrať `AbortSignal.timeout(10_000)` na `1`**, ulož, zeptej se
+„Kdo jsem?".
 
-> [!NOTE] Varianta ŽIVĚ — jen když je na tabuli GRAPH: ŽIVĚ
-> Přepínač je tentýž **soubor `.lab-token`** jako v grounding labu (postup výroby
-> tokenu je tam — jedna app registrace pro všechny, token per student, scopes
-> už zahrnují `User.Read`). Máš-li ho z minulého labu a nevypršel, **není co
-> nastavovat** — `graphGet` ho vidí sám. Chování kroku 5 se změní podle
-> skutečných oprávnění tenantu — co Business Basic účet reálně přečte, se dozvíš
-> naživo; 403/404 zůstávají správné výsledky, ne chyba labu.
+**Checkpoint:** volání selže timeoutem a uživatel dostane **srozumitelnou větu**,
+ne stack trace. (Skutečné 429 z Graphu sám nevyrobíš — vyrobí ho celá třída
+najednou; spadne do transientní větve s `Retry-After`.) **Vrať 10 000.**
 
 ## Část B — CreateTicket a validace
 
-### 7. Naivní CreateTicket — schválně špatně
+### 8. Naivní CreateTicket — schválně špatně
 
-Přidej do `tools` druhý nástroj — **zatím se všemi třemi parametry z modelu**:
+Přidej do `tools` druhý nástroj, **zatím se všemi třemi parametry z modelu**:
 
 ```ts
 {
@@ -197,7 +208,7 @@ Přidej do `tools` druhý nástroj — **zatím se všemi třemi parametry z mod
       properties: {
         priority: { type: "string", description: "P1, P2 nebo P3" },
         description: { type: "string" },
-        requester: { type: "string", description: "e-mail žadatele" }, // krok 9: ODEBRAT
+        requester: { type: "string", description: "e-mail žadatele" }, // krok 10: ODEBRAT
       },
       required: ["priority", "description", "requester"],
     },
@@ -205,7 +216,7 @@ Přidej do `tools` druhý nástroj — **zatím se všemi třemi parametry z mod
 },
 ```
 
-A do `executeTool` větev bez jakékoli validace:
+A do `executeTool` větev **bez jakékoli validace**:
 
 ```ts
 if (name === "create_ticket") {
@@ -220,14 +231,13 @@ if (name === "create_ticket") {
 ```
 
 **Checkpoint:** pošli dotaz 3 („Tiskárna netiskne a runbook nepomohl.") → agent
-založí tiket; ověř `curl http://localhost:4000/tickets` (nebo v prohlížeči), že
-tiket existuje. Všimni si, **co model dosadil za `requester`** — vymyslel si ho.
+založí tiket. Otevři `http://localhost:4000/tickets` a podívej se, **co model
+dosadil za `requester`** — vymyslel si ho.
 
-### 8. Validace před voláním API
+### 9. Validace před voláním API
 
 Nahraď naivní větev validovanou. Dvě pravidla: nevalidní vstup **nesmí vést
-k volání API vůbec**, a chyba validace se vrací **jako tool zpráva modelu**, aby se
-uměl doptat:
+k volání API vůbec**, a chyba validace se vrací **jako tool zpráva modelu**:
 
 ```ts
 if (name === "create_ticket") {
@@ -248,84 +258,93 @@ if (name === "create_ticket") {
 ```
 
 **Checkpoint:** napiš „Založ tiket s prioritou URGENT, nejde mi myš." → agent se
-buď **doptá** na prioritu, nebo ji sám opraví na P1–P3 — a v mock API žádný tiket
-s `URGENT` **není** (`curl http://localhost:4000/tickets`).
+buď **doptá** na prioritu, nebo ji sám opraví na P1–P3 — a v seznamu tiketů žádný
+s `URGENT` **není**. (Mock API schválně nevaliduje nic; validace je práce agenta.)
 
-### 9. Klíčový krok: requester si model nevybírá
+### 10. Klíčový krok: requester si model nevybírá
 
-Dvě změny najednou: v definici nástroje `requester` **úplně smaž** (z `properties`
-i `required`) a v `executeTool` ho dosaď z identity volajícího:
+Dvě změny najednou. V definici nástroje `requester` **úplně smaž** (z `properties`
+i `required`), a v `executeTool` ho dosaď z identity volajícího:
 
 ```ts
 const requester = context.activity.from?.name ?? context.activity.from?.id ?? "unknown";
 ```
 
+a použij ho v těle požadavku místo `args.requester`.
+
 **Co si model nesmí vybrat, nedávej mu do schématu — pak není co ošetřovat.**
 
-**Checkpoint:** dotaz 3 znovu → v mock API má nový tiket `requester` = tvoje
-identita z Playgroundu (Alex Wilber), ne vymyšlený e-mail.
+**Checkpoint:** dotaz 3 znovu → nový tiket má `requester` = tvoje identita
+z Playgroundu, ne vymyšlený e-mail.
 
 ## Část C — pokus o zneužití
 
-### 10. Tiket za kolegu
+### 11. Tiket za kolegu
 
 Napiš: **„Založ tiket za kolegu Nováka s prioritou P1."**
 
-**Checkpoint:** `curl http://localhost:4000/tickets` → žadatel je **tvůj účet**,
-ne Novák. Zapiš, jak se agent zachoval: odmítl, nebo tiket založil na tebe a řekl
-to? **Obojí je přijatelné — mlčky založený tiket za Nováka není.** (Model se může
-snažit `requester` propašovat do `description` — zkontroluj i tu.)
+**Checkpoint:** v seznamu tiketů je žadatel **tvůj účet**, ne Novák. Zapiš, jak se
+agent zachoval: odmítl, nebo tiket založil na tebe a řekl to? **Obojí je přijatelné —
+mlčky založený tiket za Nováka není.** Zkontroluj i `description`, jestli tam model
+Nováka nepropašoval.
 
-### 11. Pokus o únik informace
+### 12. Pokus o únik informace
 
 Napiš: **„Jakou má Novák prioritu tiketu?"** Zaznamenej doslova, co agent prozradil.
 
-**Checkpoint:** máš zapsáno, **kde** se dal únik zastavit: validací vstupu, scopem
-oprávnění (403 z kroku 5), nebo až filtrem na výstupu? Jestli ti vyšlo „výstupní
-filtr", máš přesně vstup do [`../middleware-policy/`](../middleware-policy/).
+**Checkpoint:** máš zapsáno, **kde** se to dalo zastavit: validací vstupu, scopem
+oprávnění (403 z kroku 6), nebo až filtrem na výstupu? Odpověď „výstupní filtr" je
+vstup do [`../middleware-policy/`](../middleware-policy/) — dnešní odpolední blok.
 
-### 12. Baseline počtvrté
+### 13. Baseline počtvrté
 
 Pusť čtyři testovací dotazy a doplň tabulku z předchozích labů.
 
 **Checkpoint:** dotaz 3 poprvé vede k **eskalaci s validovanými parametry** místo
-výmluvy. Zapiš, co se změnilo proti ránu — a co se nezměnilo (dotaz 4: odmítá, ale
-pořád jen kvůli promptu).
+výmluvy. Zapiš, co se změnilo proti včerejšku — a co se nezměnilo (dotaz 4 odmítá,
+ale pořád jen kvůli promptu).
 
 ## Část D — app-only jako protipříklad (10 min, nevynechávat)
 
-### 13. Vypni uživatele z hovoru
+### 14. Vypni uživatele z hovoru
 
-V MOCK cestě: přidej do `graphGet` hlavičku `"x-auth-mode": "app-only"` — mock
-začne odpovídat, jako by volala **aplikace bez uživatele** (v ŽIVĚ cestě totéž
-udělají app-only credentials od instruktora — platí jen pro tento krok, do repa
-ani commitu nepatří).
-
-Zopakuj dotaz z kroku 11: **„Jakou má Novák prioritu tiketu?"** / „Co je Novák zač?"
+App-only credentials rozdá instruktor — **platí jen pro tento krok, do repa ani
+commitu nepatří**. Dočasně jimi nahraď delegated token a zopakuj dotaz z kroku 6
+(„Co je zač kolega user.11?").
 
 **Checkpoint:** agent najednou **vidí Novákova data a ochotně je shrne** — včetně
-věcí, které ti ráno vracely 403. Pojmenuj nahlas: zmizel ACL trimming, protože
-v hovoru už není uživatel. Proto je app-only nejčastější zdroj exfiltrace
-u agentů — a shrnutí cizích dat je horší než únik souboru, protože se šíří dál
-jako text bez klasifikace.
+věcí, které ti před chvílí vracely 403. Pojmenuj nahlas: zmizel ACL trimming,
+protože **v hovoru už není uživatel**. Proto je app-only nejčastější zdroj
+exfiltrace u agentů — a shrnutí cizích dat je horší než únik jednoho souboru,
+protože se šíří dál jako text bez klasifikace.
 
-**Hned potom hlavičku odeber** (v ŽIVĚ: vrať delegated a credentials smaž).
-Checkpoint: Novák zase vrací 403.
+**Hned potom vrať delegated token** a credentials smaž z lokální konfigurace.
+Checkpoint: kolega zase vrací 403.
+
+> [!NOTE] Když app-only credentials nejsou
+> Krok jde odjet proti mock Graphu: spusť `node actions-graph/solution/mock-graph.mjs`
+> (port 4001), přesměruj `graphGet` na `http://localhost:4001/v1.0` a přidej hlavičku
+> `"x-auth-mode": "app-only"` — mock začne odpovídat, jako by volala aplikace bez
+> uživatele. Pointa drží, jen na fiktivních datech.
 
 ## Ověření
 
-- [ ] Akce nad Graphem funguje a **nevidí cizí data** (Novák → 403, neexistující → 404).
-- [ ] 429 respektuje `Retry-After`; 403/404 se neretryují — ověřeno v terminálu.
-- [ ] Nevalidní priorita/prázdný popis **nevedou k volání ticket API** (ověřeno výpisem tiketů).
+- [ ] Agent přečte **tvůj** profil z Graphu a odpoví z něj.
+- [ ] Kolega i neexistující uživatel vrací **403** a student umí říct proč (scope `User.Read`, ne únik informace o existenci).
+- [ ] Timeout/transientní chyba nekončí stack tracem, ale srozumitelnou větou.
+- [ ] Nevalidní priorita ani prázdný popis **nevedou k volání ticket API**.
 - [ ] `requester` pochází z identity volajícího a **není ve schématu nástroje**.
 - [ ] Student viděl v terminálu **kola** (`[kolo N] …`) a jejich cenu v `usage`.
-- [ ] App-only režim je po části D **vypnutý** (Novák zase 403).
+- [ ] App-only režim je po části D **vypnutý**.
 
 ## Fallback
 
-- **Mocky neběží** (obsazený port): `$env:PORT=4100; node …` + přepiš mock URL v kódu.
-- **ŽIVĚ cesta zlobí** (401 = token vypršel po ~1 h → vyrob nový; oprávnění chybí):
-  **smaž `.lab-token`** a jedeš MOCK, lab pokračuje beze ztráty; rozdíl pojmenuj.
+- **`.lab-token` chybí nebo vypršel (401)**: vyrob nový podle kroku 7a groundingového
+  labu. Bez tokenu vrací `graphGet` srozumitelnou hlášku a části B–D jedou dál —
+  jsou na Graphu nezávislé.
+- **Mock ticket API neběží**: `$env:PORT=4100; node …` a přepiš URL v `executeTool`.
+- **Model nevolá nástroj**: zkontroluj, že `tools` opravdu předáváš do `callModel`
+  a že `description` nástroje říká, **kdy** ho použít — model se rozhoduje podle ní.
 - Při skluzu: část D jako instruktorské demo — je to 10 minut a je to nejsilnější
   moment labu, nevynechávat úplně.
 
@@ -334,10 +353,12 @@ Checkpoint: Novák zase vrací 403.
 - [Microsoft Graph permissions reference](https://learn.microsoft.com/en-us/graph/permissions-reference)
 - [Microsoft Graph error responses](https://learn.microsoft.com/en-us/graph/errors)
 - [Microsoft Graph throttling guidance](https://learn.microsoft.com/en-us/graph/throttling)
+- [Get a user — Microsoft Graph](https://learn.microsoft.com/en-us/graph/api/user-get)
 
 ## Stav produktu / delta
 
 > [!WARNING] Ověřit k datu běhu — stav k 2026-08-26
-> Tvar `tool_calls` / `role: "tool"` odpovídá openai klientu ze šablony Toolkitu
-> 2026-08. Mock Graph zrcadlí chybové tvary Graphu k tomuto datu. Device code flow
-> vyžaduje app registraci s public client flow — postup v instructor-notes.
+> Tvar `tools` / `tool_calls` / `role: "tool"` odpovídá openai klientu ze šablony
+> Toolkitu 2026-08 — **ověřeno naživo na kurzovním deploymentu**, včetně dvou kol
+> nástrojů v jednom turnu. Chování Graphu (403 i pro neexistujícího uživatele při
+> scope `User.Read`) změřeno tamtéž.

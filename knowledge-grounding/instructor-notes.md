@@ -33,13 +33,24 @@
   chybu → nech MOCK (GRAPH: ŽIVĚ tím není dotčené — na retrievalu nezávisí);
   lab rozdíl explicitně pojmenovává (semantic index + ACL trimming = hodnota
   živé cesty).
-- **Změřeno na prvním běhu (2026-08-26): 403 „User does not have valid license".**
-  Retrieval API vyžaduje M365 Copilot licenci na volajícím uživateli — PAYG/kredity
-  tenant nestačí (Graph /me týmž tokenem prošel, takže flow i registrace OK).
-  Verdikt běhu: `GRAPH: ŽIVĚ · RETRIEVAL: MOCK`. **Použít ve výkladu jako živý
-  příklad tří peněženek**: kredity platí Copilot zážitky (D2), Azure inference
-  agenta (D3 ráno), ale Retrieval API z vlastního kódu chce per-user licenci.
-  Před dalším během ověřit, jestli mezitím nevznikl PAYG meter pro Retrieval API. — otestovat před během
+- **Změřená licenční matice Retrieval API (beta, 2026-08-26)** — stejná app
+  registrace, tenant i dotaz, liší se jen účet:
+
+  | Účet | Licence | Výsledek |
+  |---|---|---|
+  | admin | žádná | **403** „User does not have valid license" |
+  | user.NN | PAYG meter (Copilot Credits) | **200 + data** ✅ |
+  | lektor | M365 Copilot Premium | **200 + 0 hitů** (⁉ anomálie) |
+
+  Třetí řádek je nevysvětlená beta anomálie: účet vidí obsah přes Graph i M365
+  search, Copilot Chat mu groundí — jen Retrieval API vrací prázdno. Ověřit
+  s odstupem / po update API. **Didaktické pointy:** (1) tři peněženky naživo;
+  (2) „200 s prázdnem je horší diagnóza než 403 — nauč agenta rozlišovat
+  ‚nemám data' od ‚nemám právo'." **Instruktorské demo jet se studentským
+  tokenem**, ne s lektorským účtem.
+- **Delegated oprávnění Files/Sites.Read.All vyžadují Grant admin consent na
+  registraci** — bez něj každý ne-admin narazí na „Need admin approval"
+  (změřeno). Jednorázová akce admina, pokrývá celý tenant. — otestovat před během
 
 - **Re-verify: Copilot Retrieval API na PAYG studentským účtem.** Empiricky ověřeno
   2026-08-06, ale PAYG consumption je **preview** — podmínky, ceny i dostupnost se mohou

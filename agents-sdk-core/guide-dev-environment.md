@@ -34,16 +34,23 @@ npm --version
 - Když na stroji už je systémový Node z MSI: nevadí, fnm ho ve svém shellu zastíní.
   Ověř, že `node --version` po aktivaci vrací 22.
 
-> [!TIP] Profil nejde nastavit? Neřeš ho a jeď dál
-> V každém terminálu, kde má běžet node, stačí ručně:
+> [!TIP] Profil nejde nastavit? Ruční obejití funguje jen pro TVOJE terminály
+> V interaktivním terminálu stačí ručně:
 >
 > ```powershell
 > fnm env --use-on-cd | Out-String | Invoke-Expression
 > ```
 >
-> Funguje bez profilu i bez execution policy. Když profil při startu terminálu hlásí
-> „running scripts is disabled": `Set-ExecutionPolicy RemoteSigned -Scope CurrentUser`
-> (bez admin práv) a nový terminál. Když nic z toho — fallback níže (Node MSI).
+> **Ale F5 tím neprojde**: tasky Toolkitu si otevírají vlastní čerstvé shelly a node
+> vidí jen přes profil (nebo machine PATH). Takže pro Playground musí platit jedno z:
+>
+> 1. **Profil opravdu funguje** — když při startu terminálu hlásí „running scripts
+>    is disabled": `Set-ExecutionPolicy RemoteSigned -Scope CurrentUser` (bez admin
+>    práv), pak zavřít VŠECHNY terminály (koš, ne nový tab) a otevřít čistý. Test:
+>    `node --version` bez ručního fnm env.
+> 2. **Execution policy drží GPO a nejde změnit** → fallback níže (Node MSI):
+>    instalátor zapíše machine PATH a F5 jede bez profilu. Jeden pokus o bod 1,
+>    pak rovnou MSI — nedolaďovat 20 profilů individuálně.
 
 ## 2. VS Code — rozšíření a terminál (~5 min)
 

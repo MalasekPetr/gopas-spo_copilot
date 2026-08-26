@@ -2,7 +2,10 @@
 
 ## Timing
 
-- ~45 min výklad + 55 min lab. **Blok 2 dne 4** (po `spfx-copilot-apps`) — jet dopoledne,
+- **KOMPAKT po třetí rekalibraci: 45 min (30 výklad + 15 instruktorské demo), blok 1
+  dne 5.** Lab jde do samostudia — deliverable bloku je rozhodnutí triage/resolver
+  s cenou (latence, tokeny) a A2A přehled, obojí do capstone rozhodnutí č. 3.
+- Původní plán (~45 výklad + 55 lab) — jet dopoledne,
   dokud jsou svěží. Zkráceno při rekalibraci; Framework je stejně demo (JS SDK neexistuje),
   takže škrt jde do výkladu, ne do labu.
 - Část D labu (měření ceny) **nevynechávat**. Bez ní si studenti odnesou „multi-agent je

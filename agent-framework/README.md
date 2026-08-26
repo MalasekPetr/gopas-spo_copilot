@@ -1,6 +1,7 @@
 # Microsoft Agent Framework, workflows & multi-agent
 
-> Typ: povinný · Den: 4 · Odhad: **100 min** (45 výklad + 55 lab) · Publikum: **vývojáři / architekti**
+> Typ: povinný — **kompakt** · Den: 5 · Odhad: **45 min** (30 výklad + 15 instruktorské demo) · Publikum: **vývojáři / architekti**
+> Třetí rekalibrace (2026-08-26): lab [`lab-multi-agent-triage.md`](lab-multi-agent-triage.md) jde do **samostudia**; rozhodnutí triage/resolver a A2A přehled zůstávají (capstone rozhodnutí č. 3).
 > Prostředí: viz [`../../environment.md`](../environment.md) · Názvosloví: [`../../GLOSSARY.md`](../GLOSSARY.md)
 
 > [!IMPORTANT] Největší doplněk proti katalogové osnově

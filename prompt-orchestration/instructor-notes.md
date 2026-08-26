@@ -2,7 +2,7 @@
 
 ## Timing
 
-- ~25 min výklad + 35 lab, celkem **60 min**. **Blok 2 dne 4** — protějšek deklarativních
+- ~25 min výklad + 30 lab, celkem **55 min**. **Blok 2 dne 4** — protějšek deklarativních
   instructions z D2. Zkráceno při druhé rekalibraci z 85 na 60; další škrt jde do části C
   labu. Rozdělení 25/35 je odhad autora, celek 60 drží agenda.
 - Část A (baseline) se studentům zdá jako zdržení. Netolerovat její vynechání: bez baseline

@@ -1,6 +1,6 @@
 # Agent 365, Entra Agent ID & instrumentace pro-code agenta
 
-> Typ: povinný · Den: 5 · Odhad: **85 min** (40 výklad + 45 lab, vč. 10 min Orchestry) · Publikum: **vývojáři / architekti**
+> Typ: povinný · Den: 5 · Odhad: **55 min** (30 výklad + 25 lab, vč. hostingu v kostce a 5 min Orchestry) · Publikum: **vývojáři / architekti**
 > Prostředí: viz [`../../environment.md`](../environment.md) · Názvosloví: [`../../GLOSSARY.md`](../GLOSSARY.md)
 
 > [!IMPORTANT] Pro-code diferenciátor celého kurzu

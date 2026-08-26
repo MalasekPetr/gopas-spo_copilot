@@ -1,6 +1,7 @@
 # Action handlers & integrace s Microsoft Graph
 
-> Typ: povinný · Den: 3 · Odhad: **90 min** (35 výklad + 55 lab) · Publikum: **vývojáři / architekti**
+> Typ: povinný · Den: 4 · Odhad: **80 min** (30 výklad + 50 lab) · Publikum: **vývojáři / architekti**
+> Identity výklad (app registrace, permissions, tokeny) **odučen na D3** — část A jede rychleji, `.lab-token` studenti mají.
 > Prostředí: viz [`../../environment.md`](../environment.md) · Názvosloví: [`../../GLOSSARY.md`](../GLOSSARY.md)
 
 Agent přestává jen mluvit a začíná něco dělat. Tím se otevírá celá governance otázka.

@@ -82,59 +82,61 @@ zájmu skupiny: M365 strana nejdřív, kód až od D3.
 > která z přesunu udělá argument: *„Strop jste viděli. Odpověď na něj začneme psát zítra
 > ráno — dneškem jsme se ujistili, že tenant, do kterého ho pustíme, je uklizený."*
 
-## Den 3 — První agent v kódu, znalosti a akce (325 min)
+## Den 3 — První agent v kódu a znalosti (~270 min, ODUČENO)
 
 | # | Blok | Slug | Typ | min |
 |---|---|---|---|---|
 | 1 | Agents SDK — jádro: AgentApplication, aktivity, turny *(vč. Foundry v kostce a env setupu)* | `agents-sdk-core` | P | 150 |
-| 2 | Grounding: Copilot connectors, semantic index, MCP | `knowledge-grounding` | P | 85 |
-| 3 | Action handlers & integrace s Microsoft Graph | `actions-graph` | P | 90 |
+| 2 | Identita aplikací: app registrace, permissions, single/multi-tenant, Enterprise apps, tokeny *(neplánovaný blok)* | — | P | ~35 |
+| 3 | Grounding: Copilot connectors, semantic index, MCP *(vč. ŽIVÉHO Retrieval API)* | `knowledge-grounding` | P | 85 |
 
-> [!NOTE] **První den s Azure.** Blok 1 je odpověď na strop z D2: první běžící custom engine
-> agent v Agents Playgroundu. Klíče k model endpointu rozdat **ráno před blokem**. Blok 2
-> učí *kdy retrieval nedělat sám* a navazuje na hygienu ze závěru D2. Blok 3 je pointa
-> custom engine cesty — akce s validací, na kterou deklarativní agent nedosáhl.
+> [!IMPORTANT] Realita třetí rekalibrace (2026-08-26)
+> Env setup (fnm sága: profil → policy → PATH pro F5) a ŽIVÉ napojení si vyžádaly
+> čas; před živým Retrieval API lektor zařadil **neplánovaný výklad identity
+> aplikací** — a to je investice, ne skluz: je to první polovina výkladu
+> `actions-graph`, který se proto na D4 zkracuje (90 → 80). **Změřeno na živo:**
+> Retrieval API vyžaduje licenci/PAYG meter per uživatel (admin 403, student 200);
+> studenti odcházeli s agentem groundovaným nad skutečným indexem s vlastním ACL.
+> `actions-graph` se přesouvá na start D4.
 
-> [!WARNING] D3 je 15 min nad etalonem (~310) — ventily v tomto pořadí
-> Env setup (rozhodnutí lektora 2026-08-25 večer) posunul den na 325 min. Když se
-> nedohání: 1) Foundry sdílená obrazovka 5 → 2 min, 2) část D labu `actions-graph`
-> jako demo (−10, už je v celkových ventilech), 3) `usage` krok labu bloku 1 jen
-> společně na plátně místo per student (−5). **Nezkracovat část D labu bloku 1**
-> (chybové větve) — je to nosný rozdíl kurzu.
-
-## Den 4 — Copilot Apps, prompt, multi-agent a bezpečnost (315 min)
+## Den 4 — Akce, prompt, bezpečnost a Copilot Apps (310 min)
 
 | # | Blok | Slug | Typ | min |
 |---|---|---|---|---|
-| 1 | SharePoint Copilot Apps *(Public Preview)* | `spfx-copilot-apps` | P | 50 |
-| 2 | Prompt & systémová orchestrace | `prompt-orchestration` | P | 60 |
-| 3 | Microsoft Agent Framework, workflows & multi-agent (A2A) | `agent-framework` | P | 75 |
-| 4 | Bezpečnost & middleware — útok a obrana jako kód *(sloučený blok)* | `middleware-policy` | P | 130 |
+| 1 | Action handlers & integrace s Microsoft Graph | `actions-graph` | P | 80 |
+| 2 | Prompt & systémová orchestrace | `prompt-orchestration` | P | 55 |
+| 3 | Bezpečnost & middleware — útok a obrana jako kód *(sloučený blok)* | `middleware-policy` | P | 130 |
+| 4 | SharePoint Copilot Apps *(Public Preview)* | `spfx-copilot-apps` | P | 45 |
 
-> [!NOTE] Nejhustší den týdne. Blok 1 je vizuální rozjezd a **most k SPFx kurzům**. Blok 2
-> dá agentovi systémový prompt s měřenou baseline — a pokus o obejití na jeho konci
-> **uspěje**, což je záměr. Blok 4 to napraví: vznikl **sloučením `middleware-policy`
-> a `security-risk`**, dramaturgie útok → proč prompt nedrží → middleware → scope.
-> Middleware musí pokrýt **oba** agenty z bloku 3.
+> [!NOTE] Blok 1 navazuje přímo na včerejšek: identity výklad je odučen, `.lab-token`
+> studenti mají — výklad části A se zkracuje na mechaniku akcí. Blok 2 dá agentovi
+> systémový prompt s měřenou baseline — pokus o obejití na jeho konci **uspěje**,
+> což je záměr. Blok 3 to napraví (sloučený `middleware-policy` + `security-risk`,
+> dramaturgie útok → proč prompt nedrží → middleware → scope) — **chráněný blok,
+> nezkracovat**, jet po poledni s čerstvou pozorností. Blok 4 je oddechový vizuální
+> závěr a **most k SPFx kurzům** — multi-agent zmínku v middleware nahrazuje
+> odkaz na D5.
 
-## Den 5 — Governance, kvalita a capstone (210 min, konec 13:00)
+## Den 5 — Multi-agent, governance, kvalita a capstone (215 min, konec 13:00)
 
 | # | Blok | Slug | Typ | min |
 |---|---|---|---|---|
-| 1 | Agent 365, Entra Agent ID & instrumentace *(vč. hostingu v kostce)* | `agent-365-governance` | P | 60 |
-| 2 | Evaluace & kvalita | `evaluation-quality` | P | 60 |
-| 3 | Vlastní retrieval — instruktorské demo | `opt-custom-retrieval` | P | 30 |
+| 1 | Microsoft Agent Framework & multi-agent (A2A) — *kompakt: výklad + instruktorské demo* | `agent-framework` | P | 45 |
+| 2 | Agent 365, Entra Agent ID & instrumentace *(vč. hostingu v kostce)* | `agent-365-governance` | P | 55 |
+| 3 | Evaluace & kvalita | `evaluation-quality` | P | 55 |
 | 4 | Capstone architektura & roadmapa | `capstone` | P | 60 |
 
 > [!WARNING] Nejkratší den — 9:00 až 13:00 **bez pauzy na oběd**
-> Reálně ~220 min čistého času. Plán má 210, rezerva je deset minut. Blok 4 je hodnotový
-> závěr a **musí proběhnout** — když se skluz nedá dohnat, zkrátí se blok 2, ne capstone.
-> Bez oběda navíc klesá pozornost rychleji než obvykle; capstone drž na 60 a v pair-share
-> formátu, ne jako sérii prezentací.
+> Reálně ~220 min čistého času, plán 215 — rezerva 5 min. Blok 4 je hodnotový
+> závěr a **musí proběhnout** — když se skluz nedá dohnat, krátí se bloky 1–3,
+> ne capstone. Capstone drž na 60 a v pair-share formátu.
 
-> [!NOTE] Blok 1 pohltil i hosting (osa hostingu → samostudium). Blok 3 je odpověď
-> na zájem skupiny o vlastní vektorizaci — demo místo plného modulu, plný text
-> v [`opt-custom-retrieval/`](opt-custom-retrieval/).
+> [!NOTE] Třetí rekalibrace: `agent-framework` z D4 v kompaktní formě (45 min) —
+> lab `lab-multi-agent-triage` jde do samostudia, rozhodnutí triage/resolver
+> a A2A přehled zůstávají (capstone rozhodnutí č. 3 je potřebuje). Blok 2 pohltil
+> i hosting v kostce. **Demo vlastního retrievalu padá** zpět do samostudia —
+> zájem skupiny z velké části pokryl ŽIVÝ semantic index s ACL na D3
+> (plný text v [`opt-custom-retrieval/`](opt-custom-retrieval/)).
 
 > [!IMPORTANT] Etalon po dvou měřeních — kapacita je ~310 min/den
 > | Den | Plán | Odučeno | Poznámka |
@@ -146,18 +148,20 @@ zájmu skupiny: M365 strana nejdřív, kód až od D3.
 > byly nejhustší v týdnu. Pracovní kapacita je **~310 min/den** — kromě D5, který končí
 > ve 13:00 bez oběda a má tvrdý strop ~220.
 >
-> Slack z toho **nerozpouštět celý**: první běh, tři restrukturalizace a D3 je první den
-> s Azure (klíče, `.env`, možná proxy u 20 strojů). D3 proto zůstává na 290 jako rezerva,
-> D4 dostal zpět 15 minut do nejsilnějšího bloku týdne.
+> **D3 etalon potvrdil potřetí** (~270 min odučeného obsahu + režie prvního dne
+> s Azure: fnm sága, klíče, živé napojení). Po třetí rekalibraci: D4 = 310 přesně
+> na etalonu, D5 = 215 pod tvrdým stropem 220.
 
 ## Kompresní ventily — v tomto pořadí
 
-1. `data-hygiene` — tři pilíře SAM na jeden slide, RAC/RCD a checklist zůstávají.
-2. `actions-graph` — část D jako demo (10 min), ne hands-on.
-3. `opt-custom-retrieval` — demo padá celé, plný text zůstává k samostudiu.
-4. `evaluation-quality` — část C labu jeden běh místo tří.
+1. `actions-graph` — část D jako demo (10 min), ne hands-on; MOCK cesta místo ŽIVĚ šetří dalších ~5.
+2. `prompt-orchestration` — část C labu zkrátit (−10).
+3. `spfx-copilot-apps` — lab jako instruktorské demo (−15); most na SPFx kurzy zůstává.
+4. `agent-framework` — demo zkrátit na čistý výklad (−15).
+5. `evaluation-quality` — část C labu jeden běh místo tří (−10).
 
-**Capstone není ventil.** Při skluzu D5 se zkracuje evaluace, ne závěr týdne.
+**Middleware a capstone nejsou ventily.** Bezpečnostní blok je jádro D4;
+při skluzu D5 se zkracují bloky 1–3, ne závěr týdne.
 
 Do samostudia bylo vyřazeno šest modulů — viz [`self-study.md`](self-study.md). Žádný
 povinný modul ani capstone na nich nesmí záviset; to je podmínka, která je udržela

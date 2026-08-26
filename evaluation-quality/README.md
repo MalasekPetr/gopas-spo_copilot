@@ -1,6 +1,6 @@
 # Evaluace & kvalita
 
-> Typ: povinný · Den: 5 · Odhad: **80 min** (35 výklad + 45 lab) · Publikum: **vývojáři / architekti**
+> Typ: povinný · Den: 5 · Odhad: **55 min** (25 výklad + 30 lab) · Publikum: **vývojáři / architekti**
 > Prostředí: viz [`../../environment.md`](../environment.md) · Názvosloví: [`../../GLOSSARY.md`](../GLOSSARY.md)
 
 Jak dokázat, že je agent dobrý — a že ho poslední změna nezhoršila.

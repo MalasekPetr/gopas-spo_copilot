@@ -2,7 +2,8 @@
 
 ## Timing
 
-- ~60 min (20 výklad + 40 lab). **Opener dne 4** — vizuální hands-on rozjezd po
+- ~45 min (15 výklad + 30 lab). **Závěr dne 4** (třetí rekalibrace — už ne opener):
+  oddechový vizuální blok po middleware a most na SPFx kurzy na rozloučenou. Původně po
   nejhustším dni; nastartuje energii před instruktorskými demy zbytku dne. Hands-on
   se studenty je rozhodnutí autora (2026-08-06) — klíčová vazba na SPFx kurzy.
 - Deploy (část C) zůstává instruktorské demo — admin krok, ne studentský.

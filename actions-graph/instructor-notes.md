@@ -2,7 +2,10 @@
 
 ## Timing
 
-- ~35 min výklad + 55 min lab. **Blok 3 dne 3** (poslední blok dne).
+- ~30 min výklad + 50 min lab = **80 min**. **Blok 1 dne 4** (třetí rekalibrace).
+  Identity výklad (registrace, permissions, tokeny) **odučen na D3** — část A výkladu
+  jen krátce zrekapitulovat, ne odučit znovu; `.lab-token` studenti znají, jen po ~1 h
+  vypršel → ráno nové tokeny.
 - Část D (app-only protipříklad) je jen ~10 min a je to **nejsilnější moment labu**.
   Po zkrácení jede jako demo — ale **nevynechávat**, je to předehra ke scope minimalizaci
   v `middleware-policy` (D4).

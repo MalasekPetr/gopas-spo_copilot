@@ -1,41 +1,27 @@
-# Den 5 — Governance, kvalita a capstone
+# Den 5 — Multi-agent, governance, kvalita a capstone
 
-Enterprise governance pro-code agenta, jak se měří že je dobrý, odpověď na zájem o vlastní
-retrieval — a end-to-end architektura postavená z artefaktů celého týdne.
+Nejkratší den: **9:00–13:00 bez pauzy na oběd**, tvrdý strop ~220 min. Plán 215,
+rezerva 5 minut.
 
 | Pořadí | Blok | Slug | Typ | min |
 |---|---|---|---|---|
-| 1 | Agent 365, Entra Agent ID & instrumentace *(vč. hostingu v kostce)* | [`agent-365-governance`](../agent-365-governance/) | P | 60 |
-| 2 | Evaluace & kvalita | [`evaluation-quality`](../evaluation-quality/) | P | 60 |
-| 3 | Vlastní retrieval — instruktorské demo | [`opt-custom-retrieval`](../opt-custom-retrieval/) | P | 30 |
+| 1 | Agent Framework & multi-agent (A2A) — *kompakt* | [`agent-framework`](../agent-framework/) | P | 45 |
+| 2 | Agent 365, Entra Agent ID & instrumentace *(vč. hostingu v kostce)* | [`agent-365-governance`](../agent-365-governance/) | P | 55 |
+| 3 | Evaluace & kvalita | [`evaluation-quality`](../evaluation-quality/) | P | 55 |
 | 4 | Capstone architektura & roadmapa | [`capstone`](../capstone/) | P | 60 |
 
-> [!NOTE] Blok 1 je pro-code diferenciátor celého kurzu: Copilot Studio agenti se do
-> Agent 365 registrují automaticky, **pro-code agenti se musí explicitně instrumentovat**.
-> Pohltil i „hosting v kostce" (kde běží endpoint vs. orchestrace okolo něj) a 10min
-> srovnání s third-party governance (Orchestry). Blok 2 staví na telemetrii z bloku 1 —
-> bez ní se evaluace dělá naslepo. Blok 3 je odpověď na zájem skupiny o vlastní
-> vektorizaci: demo místo plného modulu, plný text zůstává ke čtení.
+> [!WARNING] Capstone musí proběhnout
+> Při skluzu se krátí bloky 1–3, ne capstone. Capstone držet na 60
+> v pair-share formátu, ne jako sérii prezentací. Bez oběda klesá pozornost
+> rychleji — nejtěžší výklad (blok 1) je proto hned ráno.
 
-> [!WARNING] Nejkratší den — 9:00 až 13:00 **bez pauzy na oběd**
-> Reálně ~220 min čistého času; plán má **210**, rezerva je deset minut. Bez oběda klesá
-> pozornost rychleji než obvykle.
->
-> **Capstone je hodnotový závěr a musí proběhnout.** Při skluzu se zkracuje blok 2, ne
-> capstone. Drž ho na 60 minutách v **pair-share** formátu, ne jako sérii prezentací —
-> jádro (end-to-end architektura + evaluační matice + rollback plán) zůstává vždy.
-> Část E labu `evaluation-quality` (souhrnná tabulka týdne) nevynechávat: je to moment,
-> kdy studenti poprvé vidí celý týden jako jednu křivku, a je vstupem do capstonu.
+> [!NOTE] Třetí rekalibrace (2026-08-26)
+> - `agent-framework` z D4 v kompaktu (45): výklad + instruktorské demo
+>   triage/resolver; **lab jde do samostudia**. Rozhodnutí multi-agent ano/ne
+>   a A2A přehled zůstávají — capstone rozhodnutí č. 3 je potřebuje.
+> - **Demo vlastního retrievalu padá** do samostudia — zájem skupiny pokryl
+>   ŽIVÝ semantic index s ACL na D3.
+> - Blok 3: naměřené hodnoty pro golden set studenti mají (usage z D3/D4).
 
-Blok 4 uzavírá i kariérní nit — další kroky jsou **AI-103** a **AI-200**, ne retirované
-AI-102/AZ-204, které jmenuje katalogová osnova (viz [`../GLOSSARY.md`](../GLOSSARY.md)).
-
-## Materiál k samostudiu
-
-- [`perf-cost-lifecycle`](../perf-cost-lifecycle/) — token ekonomika, cache, promotion.
-  Jádro (token budget) je složené do capstonu.
-- [`orchestry-governance`](../orchestry-governance/) — third-party governance; 10min shrnutí
-  je součástí bloku 1.
-- [`security-risk`](../security-risk/) — sloučeno do bloku „Bezpečnost & middleware" (D4).
-
-Přehled a důvody: [`../self-study.md`](../self-study.md).
+Nosná linka končí: blueprint Support Asistenta s KPI, modelem hrozby a náklady —
+deliverable, se kterým student odchází ke svému zákazníkovi.

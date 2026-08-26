@@ -1,6 +1,7 @@
 # Bezpečnost & middleware — útok a obrana jako kód
 
-> Typ: povinný · Den: 4 · Odhad: **150 min** (50 výklad + 100 lab) · Publikum: **vývojáři / architekti**
+> Typ: povinný · Den: 4 · Odhad: **130 min** (45 výklad + 85 lab) · Publikum: **vývojáři / architekti**
+> Multi-agent scope zmínku nahrazuje odkaz na D5 (`agent-framework` se učí až po tomto bloku).
 > Prostředí: viz [`../../environment.md`](../environment.md) · Názvosloví: [`../../GLOSSARY.md`](../GLOSSARY.md)
 
 Útok na **vlastního agenta studenta** — a hned potom obrana, která se skutečně vykoná.

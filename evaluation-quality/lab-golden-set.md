@@ -197,7 +197,18 @@ na X EUR měsíčně, největší položka je …"* — podloženou vlastním m�
 
 A pro obchodní stranu přidej `--roi`:
 
+```powershell
+node <klon-repa>/perf-cost-lifecycle/usage-report.mjs usage-log.jsonl `
+  --users 200 --dotazu 1 --roi --deflekce 10 --minut 12 --sazba 600
+```
 
+Report doplní náklady (inference z tvého logu + hosting), přínos z deflekce,
+návratnost vývoje a **práh deflekce**, při kterém se provoz zaplatí. Plus kontrolu
+reálnosti: ušetřený čas přepočtený na úvazky podpory.
+
+**Checkpoint:** máš práh deflekce a víš, jestli ti kontrola reálnosti nevyhodila
+varování. Když ano, tvůj odhad `--dotazu` nebo `--deflekce` je mimo — oprav ho dřív,
+než ho opraví někdo na poradě.
 
 Celý rozbor „proč tolik kol, proč reasoning, vyplatí se to" je v
 [`obhajoba modelu a ROI`](../perf-cost-lifecycle/explainer-obhajoba-modelu-a-roi.md) —

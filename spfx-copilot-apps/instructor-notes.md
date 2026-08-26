@@ -15,8 +15,7 @@
   a `spHttpClient` v Copilot Workbenchi fungují; **když ne, krok 5 je volitelný**
   a lab jede na statických datech z kroku 4 se stejnou pointou.
 - **Před během nechat v listu aspoň jeden tiket** pro studenty, kteří ráno nedokončili —
-  jinak jim karta vyjde prázdná. — otestovat před během
-
+  jinak jim karta vyjde prázdná.
 - **Preview generator (`@next`) se instaluje v onboardingu dne 1**, ne až tady —
   instalace u 20 strojů uprostřed dne 3 je časová past. Přidat do onboarding checklistu
   a ověřit verzi den předem (preview se mění bez ohlášení).

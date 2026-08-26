@@ -94,6 +94,9 @@ Rozhodovací osa, v tomhle pořadí:
 
 - **MCP nese federated konektory** — to je jeho role v grounding příběhu: standardizovaný
   způsob, jak se model dostane k datům, která nikdo neindexoval.
+- Co protokol samotný je a jak funguje (role, primitiva, transport, co teče do
+  kontextu): [`explainer-mcp.md`](explainer-mcp.md) — ~10 min, doporučené čtení
+  před rozhodovací tabulkou níže.
 - Stejný protokol je zároveň **cesta k nástrojům** — a tam se z něj stává akce
   ([`../actions-graph/`](../actions-graph/)).
 - Rozlišení, které si studenti pletou:

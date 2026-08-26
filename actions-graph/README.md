@@ -138,6 +138,8 @@ sequenceDiagram
   instrukce do promptu — a to je útočný vektor, ne jen integrační detail.
 - Pravidlo: **MCP nezbavuje odpovědnosti.** Za to, co agent udělal, ručíš ty, i když nástroj
   napsal někdo jiný.
+- Mechanika protokolu (role, primitiva, transport — a jak MCP zapadá do tool-call
+  smyčky z labu): [`../knowledge-grounding/explainer-mcp.md`](../knowledge-grounding/explainer-mcp.md).
 
 ### Co nemusí dělat model
 

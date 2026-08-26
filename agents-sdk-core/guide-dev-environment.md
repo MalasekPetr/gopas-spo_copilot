@@ -109,3 +109,10 @@ atk -h
 > Název npm balíčku CLI (`@microsoft/m365agentstoolkit-cli`, příkaz `atk`) i přesný název
 > VS Code rozšíření se v lineage Teams Toolkit → Agents Toolkit už měnily. Ověřit oba
 > před během; Node major verzi srovnat s aktuálním požadavkem šablon Toolkitu.
+
+> [!NOTE] Rozhodnutí po prvním běhu (2026-08-26): otočit pořadí kroků fnm
+> Aktivace přes profil stála na živém běhu tři kola oprav (per-host profil →
+> execution policy → F5 mimo shell). Jediná hodnota fnm pro tento kurz je instalace
+> bez admin práv — a tu dává rovnou trvalý user PATH na `aliases\default`.
+> Pro příští běh: **PATH zápis + restart VS Code jako primární krok**, profil
+> s use-on-cd jen jako volitelný bonus pro zájemce.

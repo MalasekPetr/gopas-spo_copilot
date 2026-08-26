@@ -8,7 +8,16 @@
 - Část D labu (rozhodovací reflexe) je krátká, ale nevynechávat — je to vstup do
   `opt-custom-retrieval` i do capstonu.
 
-## Go/no-go — otestovat před během
+## Go/no-go
+
+- **Mechanismus tabule (od 2026-08-26):** `RETRIEVAL: MOCK/ŽIVĚ`. Výchozí je MOCK —
+  `node solution/mock-retrieval.mjs --self-test` na stroji v učebně (servíruje chunky
+  z `solution/runbooky/`, lexikální skórování, bez ACL). ŽIVĚ vyžaduje: app registraci
+  z `actions-graph` instructor-notes (device code, `Files.Read.All` + `Sites.Read.All`)
+  **a** jeden úspěšný testovací POST na
+  `https://graph.microsoft.com/beta/copilot/retrieval` s vlastním tokenem — API je
+  beta a na PAYG nemusí fungovat. Bez obojího nech MOCK; lab rozdíl explicitně
+  pojmenovává (semantic index + ACL trimming = hodnota živé cesty). — otestovat před během
 
 - **Re-verify: Copilot Retrieval API na PAYG studentským účtem.** Empiricky ověřeno
   2026-08-06, ale PAYG consumption je **preview** — podmínky, ceny i dostupnost se mohou

@@ -13,15 +13,32 @@
 
 ## Go/no-go — KLÍČOVÉ, otestovat před během
 
-- Ověřit, které **Graph permissions** studentský účet (Business Basic, ne admin) reálně
-  dostane a co s nimi lze v labu přečíst. Pokud nic užitečného, připravit mock Graph endpoint
-  jako primární variantu, ne jako fallback.
-- Mock ticket API v `solution/` musí běžet na čistém stroji (port, Node verze).
+- **Mechanismus tabule (od 2026-08-26):** lab má cesty MOCK (výchozí, funguje vždy)
+  a ŽIVĚ. Ráno napiš na tabuli `GRAPH: MOCK/ŽIVĚ` a `RETRIEVAL: MOCK/ŽIVĚ` podle toho,
+  co níže stihneš ověřit. **Bez ohlášení jedou studenti MOCK** — lab je na tom postavený
+  a nic dalšího nevyžaduje.
+- **App registrace pro ŽIVĚ cestu** (~10 min, v adresáři `spdemo.online` — správný
+  browser profil!): Entra → App registrations → New: název `spo-copilot-lab`,
+  single tenant, bez redirect URI. Pak: Authentication → **Allow public client
+  flows: Yes** (device code). API permissions → delegated `User.Read`,
+  `Files.Read.All`, `Sites.Read.All` → **Grant admin consent**. Client ID nadiktuješ
+  studentům (není tajemství). Pro část D app-only: tamtéž application permission
+  `Sites.Read.All` + client secret s platností do konce týdne — **po kurzu smazat
+  celou registraci**.
+- **Test device code flow** (po vytvoření registrace):
+  `LAB_CLIENT_ID=<id> node solution/device-auth.mjs "User.Read"` — přihlas se
+  testovacím studentským účtem a ověř, co Business Basic z Graphu reálně přečte
+  (`/me` musí projít; co dál, řekneš studentům v kroku části A).
+- **Mocky:** `node solution/mock-ticket-api.mjs --self-test`,
+  `node solution/mock-graph.mjs --self-test` — na stroji v učebně, ne jen na svém.
+  Self-testy pokrývají i 429 s Retry-After a app-only režim (hlavička `x-auth-mode`).
 - Připravit app-only konfiguraci pro část D **dopředu** — improvizovat app registraci
   před 20 lidmi se nedělá. App-only credentials se studentům **rozdávají** (rozhodnutí
   autora 2026-08-06; demo tenant, jen fiktivní data): secret s krátkou platností,
   **po kurzu rotovat/zneplatnit** a app registraci uklidit. Ověření labu drží, že po
-  části D je app-only režim vypnutý.
+  části D je app-only režim vypnutý. **V MOCK cestě část D jede bez credentials** —
+  hlavička `x-auth-mode: app-only` na mock Graphu simuluje ztrátu ACL trimmingu
+  (Novák z 403 na ochotně shrnutý profil vč. telefonu). Pointa drží i bez tenantu.
 - Ověřit aktuální stav **Entra Agent ID**: dostává agent v tomto scénáři Agent ID automaticky,
   nebo se registruje ručně? Mění to formulaci ve výkladu.
 

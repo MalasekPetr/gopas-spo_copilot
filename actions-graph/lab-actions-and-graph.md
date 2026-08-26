@@ -373,6 +373,10 @@ zatímco `Zadavatel` může být pořád cokoliv, co kód zapsal.
 > `"x-auth-mode": "app-only"` — mock začne odpovídat, jako by volala aplikace bez
 > uživatele. Pointa drží, jen na fiktivních datech.
 
+> [!NOTE] Nezapomeň přepnout štítek v logu
+> V `logUsage(...)` změň parametr `lab` na `"actions-graph"`, ať se páteční
+> report rozpadne po fázích týdne a je z něj vidět, co který přírůstek stál.
+
 ## Ověření
 
 - [ ] Agent přečte **tvůj** profil z Graphu a odpoví z něj.

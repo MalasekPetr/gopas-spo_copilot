@@ -323,6 +323,10 @@ test("cizi odkaz v odpovedi je zablokovan", async () => {
 [`../evaluation-quality/`](../evaluation-quality/) — obrany se testují bez modelu,
 protože jsou to obyčejné funkce.
 
+> [!NOTE] Nezapomeň přepnout štítek v logu
+> V `logUsage(...)` změň parametr `lab` na `"middleware-policy"`, ať se páteční
+> report rozpadne po fázích týdne a je z něj vidět, co který přírůstek stál.
+
 ## Ověření
 
 - [ ] Tabulka části A: čtyři stupně útoku s výsledkem u každého.

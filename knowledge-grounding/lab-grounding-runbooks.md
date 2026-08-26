@@ -264,9 +264,57 @@ async function buildSearchQuery(userText: string): Promise<string> {
 a v chatu odpověď z reálného runbooku, jejíž **citace je proklikávací odkaz
 do knihovny**. Zpět na MOCK: smaž `.lab-token`. Token žije ~1 h — při 401 vyrob nový.
 
+### 12. Zapisuj spotřebu do logu, ať se dá sečíst
+
+`console.log` s `usage` je hezký, ale zmizí. Od téhle chvíle si agent vede **účetní
+knihu** — jeden řádek na každé volání modelu. V pátek z ní spočítáš, co bude provoz stát.
+
+```ts
+import { appendFileSync } from "fs";
+
+// jeden turn = jeden pruchod handlerem; kola uvnitr sdili turnId
+function logUsage(turnId: string, lab: string, q: string, kolo: number, u: any) {
+  appendFileSync("usage-log.jsonl", JSON.stringify({
+    ts: new Date().toISOString(),
+    turn: turnId,
+    lab,                                   // ktera faze tydne - kvuli krivce
+    q: q.slice(0, 60),
+    kolo,
+    model: "gpt-5-mini",
+    in: u?.prompt_tokens ?? 0,
+    out: u?.completion_tokens ?? 0,
+    reasoning: u?.completion_tokens_details?.reasoning_tokens ?? 0,
+    cached: u?.prompt_tokens_details?.cached_tokens ?? 0,
+  }) + "\n");
+}
+```
+
+Zavolej ho **po každém** volání modelu — tedy i uvnitř `buildSearchQuery`, ne jen
+u finální odpovědi. Kolo, které nezapíšeš, v páteční kalkulaci chybí.
+
+Do `.gitignore` přidej `usage-log.jsonl` (obsahuje dotazy uživatelů).
+
+**Checkpoint:** pošli dva dotazy a otevři `usage-log.jsonl` — jsou tam **čtyři řádky**
+(dvě kola na turn: přepis dotazu + odpověď). Pak z klonu repa:
+
+```powershell
+node perf-cost-lifecycle/usage-report.mjs <cesta>/usage-log.jsonl
+```
+
+Uvidíš první provozní čísla svého agenta. **Nech log běžet celý zbytek týdne** —
+každý další lab do něj přidá svou fázi a v pátek z toho vznikne křivka.
+
+> [!NOTE] Naměřeno na instruktorském běhu (2026-08-26)
+> 4 turny / 8 kol, **2,00 kola na turn** — přepis dotazu na klíčová slova zdvojnásobil
+> počet volání modelu. **71,9 % výstupních tokenů byl reasoning**, který v odpovědi
+> nevidíš. Při 200 uživatelích a 8 dotazech denně z toho vyšlo **81,50 EUR/měsíc**
+> na `gpt-5-mini` — a 11,85 EUR na `gpt-5-nano`. To je ta úvaha o volbě modelu
+> s konkrétním číslem místo dojmu.
+
+
 ## Část C — chování při neznámé odpovědi
 
-### 8. Baseline se posouvá
+### 13. Baseline se posouvá
 
 Pošli **čtyři testovací dotazy** ze scénáře a doplň tabulku z předchozího labu.
 
@@ -274,7 +322,7 @@ Pošli **čtyři testovací dotazy** ze scénáře a doplň tabulku z předchoz�
 si je agent vymýšlel. Dotaz 3 pořád jen slibuje (akce přijdou v dalším bloku),
 dotaz 4 odmítnut.
 
-### 9. Rozlož odmítnutí dotazu 4
+### 14. Rozlož odmítnutí dotazu 4
 
 U „Kolik bere kolega Novák?" zapiš nejen **že** agent odmítl, ale **proč**:
 odmítl kvůli instrukci v promptu, nebo jen proto, že retrieval nic nevrátil?
@@ -283,7 +331,7 @@ odmítl kvůli instrukci v promptu, nebo jen proto, že retrieval nic nevrátil?
 z logu mocku: vrátil pro dotaz 4 nějaké chunky?). Jsou to **dvě různě pevné
 obrany** a obě jsou měkké — zpevňuje se až middlewarem (příští den).
 
-### 10. Neznámé téma nesmí vést k vymýšlení
+### 15. Neznámé téma nesmí vést k vymýšlení
 
 Polož dotaz na téma, které v runboocích **není**: „Jak zažádám o firemní telefon?"
 
@@ -293,7 +341,7 @@ v [`../prompt-orchestration/`](../prompt-orchestration/).
 
 ## Část D — rozhodovací reflexe
 
-### 11. Dvě věty na papír
+### 16. Dvě věty na papír
 
 (a) Kde by v tomhle zadání dával smysl **federated** konektor místo synced — a proč
 (nápověda: ticketing, živá data, ACL v cizím systému). (b) Kdy by tady byla na místě
@@ -313,6 +361,7 @@ sám** — v části A jsi viděl rozdíl na vlastní oči.
 - [ ] Umíš vysvětlit, proč se dotaz uživatele před vyhledáním přepisuje na klíčová slova.
 - [ ] Dotaz na neexistující téma nevede k halucinaci.
 - [ ] Dotaz 4 odmítnut a student rozlišil obranu promptem vs. prázdný retrieval.
+- [ ] `usage-log.jsonl` se plní a `usage-report.mjs` vypíše první provozní čísla.
 - [ ] Zapsané dvě věty z části D.
 
 ## Fallback

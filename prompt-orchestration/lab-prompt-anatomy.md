@@ -183,6 +183,10 @@ věří**, a v HTML komentáři, který v runbooku nikdo nevidí.
 **Uklidit:** injektáž v runbooku **nech tam**. Následující blok ji potřebuje jako
 živý útok, proti kterému budeš stavět middleware.
 
+> [!NOTE] Nezapomeň přepnout štítek v logu
+> V `logUsage(...)` změň parametr `lab` na `"prompt-orchestration"`, ať se páteční
+> report rozpadne po fázích týdne a je z něj vidět, co který přírůstek stál.
+
 ## Ověření
 
 - [ ] Tabulka baseline vs. nový prompt pro všechny čtyři dotazy, včetně počtu kol a tokenů.

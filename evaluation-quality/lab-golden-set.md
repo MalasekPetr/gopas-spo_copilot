@@ -15,6 +15,8 @@ změřitelně vyrostl — a který zachytí, kdyby ho příští změna zhoršil
 
 - Agent po [`../middleware-policy/`](../middleware-policy/lab-middleware-pipeline.md):
   grounding, akce, pipeline s pre/post.
+- **`usage-log.jsonl` plněný od středy** (krok 12 groundingového labu) — bez něj
+  nebude část E mít z čeho počítat.
 - Tabulka baseline ze všech předchozích labů.
 - Unit testy nad pipeline z kroku 14 middleware labu.
 
@@ -161,22 +163,42 @@ U každého spadlého případu urči z logu, která vrstva chybila:
 **Checkpoint:** máš zapsáno, u kterých akcí zůstává člověk, v jaké fázi nasazení,
 a **jaké naměřené číslo** tě přesvědčí, že u dané třídy případů už být nemusí.
 
-## Část E — křivka celého týdne (2 min)
+## Část E — křivka týdne a cena provozu (5 min)
 
-### 10. Jedna tabulka
+### 10. Nech si spočítat celý týden
 
-| Stav agenta | Pass rate | Dotaz 4 odmítnut | Groundedness | p95 | Tokeny/dotaz |
-|---|---|---|---|---|---|
-| baseline (jen model, D3) | | | | | |
-| + grounding (D3) | | | | | |
-| + akce a prompt-kontrakt (D4) | | | | | |
-| + middleware (D4) | | | | | |
+Od středy ti agent do `usage-log.jsonl` zapisoval každé volání modelu. Teď z toho
+udělej odpověď na otázku, kterou dostaneš od sponzora jako první.
 
-**Vypiš i to, co se zhoršilo** — grounding, kola nástrojů i middleware stály latenci
-a tokeny. To je **zaplacená cena, ne selhání**; přesně tuhle větu chce slyšet sponzor.
+```powershell
+node <klon-repa>/perf-cost-lifecycle/usage-report.mjs usage-log.jsonl --users 200 --dotazu 8
+```
 
-**Checkpoint:** tabulka vyplněná. Jde beze změny do capstonu jako důkaz, že agent
-nevyrostl dojmem, ale měřením.
+**Checkpoint:** report vypsal tabulku po fázích (grounding → akce → prompt → middleware),
+cenu na turn a **EUR za měsíc**. Křivka týdne se nevyplňuje ručně — vypadla z logu.
+
+### 11. Přečti si z toho tři věci
+
+1. **Kolik kol na turn** — každý přírůstek týdne jich přidal. Přepis dotazu na klíčová
+   slova zdvojnásobil volání modelu, nástroje přidaly další.
+2. **Podíl reasoning tokenů** — kolik procent výstupu platíš a nevidíš.
+3. **Sloupec „kdyby jiný model"** — rozdíl mezi nano a mini na tvých vlastních číslech.
+
+**Checkpoint:** máš tři čísla zapsaná a umíš u každého říct, **co ho v týdnu zvedlo**.
+
+### 12. Cena do capstonu
+
+Uprav `--users` a `--dotazu` na odhad **svého** zákazníka a výsledek zapiš do
+rozhodnutí č. 8 (nákladový strop). Doplň dvě věty: co se stane při dosažení stropu
+a která položka poroste nejrychleji, když agent poroste.
+
+**Checkpoint:** máš větu ve tvaru *„při N uživatelích a M dotazech denně to vyjde
+na X EUR měsíčně, největší položka je …"* — podloženou vlastním měřením, ne odhadem.
+
+> [!IMPORTANT] Vypiš i to, co se zhoršilo
+> Grounding, kola nástrojů i middleware stály latenci a tokeny. To je **zaplacená
+> cena, ne selhání** — a přesně tuhle větu chce slyšet sponzor. Agent je v pátek
+> dražší než v pondělí, protože v pondělí neuměl nic, čemu by se dalo věřit.
 
 ## Ověření
 
@@ -187,7 +209,8 @@ nevyrostl dojmem, ale měřením.
 - [ ] Prahy včetně sloupce „co udělám, když nesplněno".
 - [ ] Záměrné zhoršení bylo **zachyceno** a víš, která třída spadla.
 - [ ] U spadlých případů určená chybující vrstva.
-- [ ] Vyplněná tabulka celého týdne.
+- [ ] Report ze `usage-log.jsonl` proběhl; zapsaná cena provozu pro odhad zákazníka.
+- [ ] Umíš říct, co v týdnu zvedlo počet kol a co podíl reasoning tokenů.
 
 ## Fallback
 

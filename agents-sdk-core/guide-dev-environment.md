@@ -41,16 +41,23 @@ npm --version
 > fnm env --use-on-cd | Out-String | Invoke-Expression
 > ```
 >
-> **Ale F5 tím neprojde**: tasky Toolkitu si otevírají vlastní čerstvé shelly a node
-> vidí jen přes profil (nebo machine PATH). Takže pro Playground musí platit jedno z:
+> **Ale F5 tím neprojde** — a nestačí ani profil: část spouštěcího řetězu
+> (Toolkit extension, debug adapter) startuje procesy **přímo z VS Code**, mimo
+> shell. Ty vidí jen **trvalý user/machine PATH** z okamžiku startu VS Code.
+> Eskalace po krocích (ověřeno naživo 2026-08-26):
 >
-> 1. **Profil opravdu funguje** — když při startu terminálu hlásí „running scripts
->    is disabled": `Set-ExecutionPolicy RemoteSigned -Scope CurrentUser` (bez admin
->    práv), pak zavřít VŠECHNY terminály (koš, ne nový tab) a otevřít čistý. Test:
->    `node --version` bez ručního fnm env.
-> 2. **Execution policy drží GPO a nejde změnit** → fallback níže (Node MSI):
->    instalátor zapíše machine PATH a F5 jede bez profilu. Jeden pokus o bod 1,
->    pak rovnou MSI — nedolaďovat 20 profilů individuálně.
+> 1. **Profil** (terminály): `Set-ExecutionPolicy RemoteSigned -Scope CurrentUser`,
+>    zavřít všechny terminály, v čistém `node --version` bez ručního fnm env.
+> 2. **Trvalý PATH pro F5** (bez admin práv):
+>
+>    ```powershell
+>    Test-Path "$env:FNM_DIR\aliases\default\node.exe"   # musi byt True
+>    [Environment]::SetEnvironmentVariable("Path", "$env:FNM_DIR\aliases\default;" + [Environment]::GetEnvironmentVariable("Path", "User"), "User")
+>    ```
+>
+>    Pak **restart celého VS Code** (ne jen terminálů). Ověření bez F5:
+>    `cmd /c node --version` — cmd profil nespouští, testuje přesně to, co uvidí F5.
+> 3. **Pořád nic** → fallback níže (Node MSI; pozor, typicky chce admin práva).
 
 ## 2. VS Code — rozšíření a terminál (~5 min)
 

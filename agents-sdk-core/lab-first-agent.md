@@ -113,10 +113,20 @@ agentApp.onActivity(ActivityTypes.Message, async (context: TurnContext, state: T
 });
 ```
 
+> [!WARNING] Bez tohohle řádku čítač věčně vrací 1 — stav se neukládá
+> `AgentApplication` ukládá `TurnState` do storage **jen když existuje `afterTurn`
+> handler** (ověřeno čtením zdrojáku SDK 1.7.2 — save po routě jinak neproběhne;
+> oficiální sample to nezmiňuje). Hned za vytvoření `agentApp` přidej:
+>
+> ```ts
+> agentApp.onTurn("afterTurn", async () => true); // aktivuje ulozeni TurnState po kazdem turnu
+> ```
+
 Pošli tři zprávy v **Personal Chat**, pak se přepni do **Group Chat** a pošli další.
 
 **Checkpoint:** v Personal Chat čítač roste (1, 2, 3), v Group Chat začíná od 1 —
 nová konverzace = nový `conversation` scope. Žádný restart nebyl potřeba.
+(Čítač trčí na 1? → chybí ti ten `afterTurn` řádek z rámečku.)
 
 ### 6. Co do stavu nepatří
 

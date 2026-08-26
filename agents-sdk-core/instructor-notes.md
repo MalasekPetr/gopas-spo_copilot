@@ -90,6 +90,13 @@ konverzace = série turnů nad stavem.* Věta pro zákazníka: turn je jednotka 
   a odpověď je *ano i ne*, ne prosté „ne". Credits nezmizí — grounding přes Retrieval API
   se z nich platí dál. Odstěhuje se **jen inference**. Dělicí čára není typ agenta, ale
   **která služba se volá**; kdo si to splete opačně, postaví rozpočet špatně.
+- **„Agent si nepamatuje, co jsem napsal před chvílí"** — nahlásí to jako bug. Není:
+  handler posílá modelu jen system + aktuální zprávu, historie se neposílá (důkaz
+  v usage: prompt ~135 tokenů konstantně, změřeno 2026-08-26). Rozlišení na tabuli:
+  **TurnState = stav agenta (čítač roste) ≠ paměť modelu (žádná)**. Historie je
+  rozhodnutí, které stojí tokeny — naváže `prompt-orchestration` (D4) a kalkulátor
+  (parametr historie). Druhé číslo z téhož měření: **reasoning = 62–78 % completion**
+  — tři čtvrtiny výstupu, co se platí a není vidět.
 - `TurnState` a rozsahy: studenti dají do user scope věci, které patří do conversation
   (a naopak). Nechat je narazit v labu, pak vysvětlit.
 - Někdo uloží klíč do `appsettings.json`. Druhá příležitost té lekce (první byla v onboardingu)

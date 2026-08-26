@@ -32,7 +32,14 @@
   Vrátí `retrievalHits` s obsahem runbooku → tabule ŽIVĚ. Vrátí 402/403/licenční
   chybu → nech MOCK (GRAPH: ŽIVĚ tím není dotčené — na retrievalu nezávisí);
   lab rozdíl explicitně pojmenovává (semantic index + ACL trimming = hodnota
-  živé cesty). — otestovat před během
+  živé cesty).
+- **Změřeno na prvním běhu (2026-08-26): 403 „User does not have valid license".**
+  Retrieval API vyžaduje M365 Copilot licenci na volajícím uživateli — PAYG/kredity
+  tenant nestačí (Graph /me týmž tokenem prošel, takže flow i registrace OK).
+  Verdikt běhu: `GRAPH: ŽIVĚ · RETRIEVAL: MOCK`. **Použít ve výkladu jako živý
+  příklad tří peněženek**: kredity platí Copilot zážitky (D2), Azure inference
+  agenta (D3 ráno), ale Retrieval API z vlastního kódu chce per-user licenci.
+  Před dalším během ověřit, jestli mezitím nevznikl PAYG meter pro Retrieval API. — otestovat před během
 
 - **Re-verify: Copilot Retrieval API na PAYG studentským účtem.** Empiricky ověřeno
   2026-08-06, ale PAYG consumption je **preview** — podmínky, ceny i dostupnost se mohou

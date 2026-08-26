@@ -89,7 +89,7 @@ flowchart TB
 | 5 | **Instrumentace do Agent 365** | D4 `agent-365-governance` | práce navíc vs. agent, kterého IT pustí do produkce |
 | 6 | **Prahy pro promotion** dev → test → prod | D4 / D5 | přísné prahy brzdí vydávání, volné pustí regresi |
 | 7 | **Obranné vrstvy** — co v promptu, co v kódu, co ve scope | D3 `middleware-policy` | pohodlí vs. vynutitelnost |
-| 8 | **Nákladový strop** — tokeny na dotaz, měsíční strop, co se stane při jeho dosažení | D5 | kvalita odpovědi vs. cena |
+| 8 | **Nákladový strop** — tokeny na dotaz, měsíční strop, co se stane při jeho dosažení | D5 · podklad: [](../perf-cost-lifecycle/explainer-obhajoba-modelu-a-roi.md) | kvalita odpovědi vs. cena |
 
 - U každého rozhodnutí **jedna věta odůvodnění** a **jedna věta „co by ho změnilo"**.
   Druhá věta je test, jestli šlo o rozhodnutí, nebo jen o zápis toho, co vyšlo v labu.

@@ -195,6 +195,14 @@ a která položka poroste nejrychleji, když agent poroste.
 **Checkpoint:** máš větu ve tvaru *„při N uživatelích a M dotazech denně to vyjde
 na X EUR měsíčně, největší položka je …"* — podloženou vlastním měřením, ne odhadem.
 
+A pro obchodní stranu přidej `--roi`:
+
+
+
+Celý rozbor „proč tolik kol, proč reasoning, vyplatí se to" je v
+[`obhajoba modelu a ROI`](../perf-cost-lifecycle/explainer-obhajoba-modelu-a-roi.md) —
+včetně změřené tabulky `reasoning_effort` a pasti s deflekcí.
+
 > [!IMPORTANT] Vypiš i to, co se zhoršilo
 > Grounding, kola nástrojů i middleware stály latenci a tokeny. To je **zaplacená
 > cena, ne selhání** — a přesně tuhle větu chce slyšet sponzor. Agent je v pátek

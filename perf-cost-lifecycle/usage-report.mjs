@@ -106,5 +106,48 @@ for (const [k, m] of Object.entries(prices.models)) {
   const mark = k === modelKey ? "  <- tvuj" : "";
   console.log(`  ${pad(k, 14)} ${rpad(fmt(e), 9)} EUR/turn   ${rpad(fmt(e * USERS * DOTAZU * DNU, 2), 10)} EUR/mesic${mark}`);
 }
+// --- ROI: vyplati se to vubec? ----------------------------------------------
+if (args.includes("--roi")) {
+  const DEFLEKCE = Number(opt("deflekce", 10)) / 100;    // % dotazu vyresenych bez cloveka
+  const MINUT = Number(opt("minut", 12));                // kolik minut by to stalo technika
+  const SAZBA = Number(opt("sazba", 600));               // naklad technika Kc/hod (superhruby)
+  const KURZ = Number(opt("kurz", 25));                  // Kc za EUR
+  const HOSTING = Number(opt("hosting", 50));            // EUR/mesic za beh agenta
+  const VYVOJ_DNU = Number(opt("vyvoj-dnu", 20));        // clovekodnu na vyvoj a nasazeni
+  const VYVOJ_SAZBA = Number(opt("vyvoj-sazba", 12000)); // Kc/clovekoden
+
+  const turnuMesic = USERS * DOTAZU * DNU;
+  const nakladCelkem = mesic + HOSTING;
+  const usetrenoMin = turnuMesic * DEFLEKCE * MINUT;
+  const prinos = usetrenoMin / 60 * SAZBA / KURZ;
+  const cisty = prinos - nakladCelkem;
+  const vyvoj = VYVOJ_DNU * VYVOJ_SAZBA / KURZ;
+  const navratnost = cisty > 0 ? vyvoj / cisty : Infinity;
+  const prahDeflekce = nakladCelkem * (60 / SAZBA * KURZ) / (turnuMesic * MINUT);
+
+  console.log(`\n--- ROI (obhajoba pred sponzorem) ----------------------------`);
+  console.log(`  predpoklady: ${fmt(DEFLEKCE * 100, 0)} % vyreseno bez cloveka, ${MINUT} min/dotaz, ${SAZBA} Kc/hod, kurz ${KURZ}\n`);
+  console.log(`  NAKLADY  inference (namereno) : ${rpad(fmt(mesic, 2), 10)} EUR/mesic`);
+  console.log(`           hosting              : ${rpad(fmt(HOSTING, 2), 10)} EUR/mesic`);
+  console.log(`           celkem               : ${rpad(fmt(nakladCelkem, 2), 10)} EUR/mesic\n`);
+  console.log(`  PRINOS   usetreny cas         : ${rpad(Math.round(usetrenoMin / 60), 10)} hodin/mesic`);
+  console.log(`           v penezich           : ${rpad(fmt(prinos, 2), 10)} EUR/mesic\n`);
+  console.log(`  CISTY PRINOS                  : ${rpad(fmt(cisty, 2), 10)} EUR/mesic`);
+  console.log(`  pomer prinos/naklad           : ${rpad(fmt(prinos / nakladCelkem, 1) + "x", 10)}`);
+  console.log(`  vyvoj (${VYVOJ_DNU} dnu x ${VYVOJ_SAZBA} Kc)     : ${rpad(fmt(vyvoj, 2), 10)} EUR jednorazove`);
+  console.log(`  navratnost vyvoje             : ${navratnost === Infinity ? "NIKDY" : fmt(navratnost, 1) + " mesice"}\n`);
+  const fte = usetrenoMin / 60 / 160;
+  console.log(`  PRAH: provoz se zaplati uz pri ${fmt(prahDeflekce * 100, 2)} % dotazu vyresenych bez cloveka.`);
+  console.log(`  Pod tuhle hranici agent penize nevydelava — a je to prvni cislo,`);
+  console.log(`  ktere musis zmerit v pilotu, ne odhadnout v prezentaci.`);
+  console.log(``);
+  console.log(`  KONTROLA REALNOSTI: usetreny cas = ${fmt(fte, 1)} uvazku podpory (160 h/mesic).`);
+  if (fte > USERS / 50) {
+    console.log(`  !! To je na ${USERS} uzivatelu nepravdepodobne. Zkontroluj --dotazu a --deflekce:`);
+    console.log(`     vetsina dotazu na agenta by se NIKDY nestala tiketem. Deflekce se pocita`);
+    console.log(`     z tiketu, ktere by jinak vznikly — ne ze vsech dotazu na agenta.`);
+  }
+}
+
 console.log(`\nPozor: cisla plati pro NAMERENY vzorek. Kratsi dotazy v provozu = min tokenu,`);
 console.log(`delsi historie a vic kol = vic. Rozsah si osahej v cost-visual.html.\n`);

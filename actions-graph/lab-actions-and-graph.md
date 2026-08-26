@@ -36,38 +36,32 @@ v prohlížeči a nech otevřený vedle Playgroundu — během labu do něj bude
 > němu. Lekce o validaci drží — jen eskalaci neuvidíš v prohlížeči a přijdeš
 > o srovnání `Zadavatel` vs. `Created By` v kroku 10.
 
-### 2. Graph helper s rozlišenými chybovými větvemi
+### 2. Zkopíruj instalatérství a přečti si ho
 
-Do `src/agent.ts` nad handlery. Tři chybové větve, **každá jinak** — to je jádro kroku:
+Volání Graphu s retry a rozlišenými chybovými větvemi je **rozšíření toho, co už
+umíš** z prvního labu — stejný `classifyError` a backoff, jen nad Graphem. Nepiš to
+znovu, zkopíruj:
 
-```ts
-async function graphGet(path: string, attempts = 3): Promise<{ ok: boolean; data?: any; userMessage?: string }> {
-  const token = labToken();
-  if (!token) return { ok: false, userMessage: "Nemám přístup k adresáři (chybí token)." };
-
-  for (let i = 1; ; i++) {
-    const res = await fetch(`https://graph.microsoft.com/v1.0${path}`, {
-      headers: { Authorization: `Bearer ${token}` },
-      signal: AbortSignal.timeout(10_000),
-    });
-    if (res.status === 429 && i < attempts) {
-      // transientni: respektuj Retry-After, uzivatel se o retry nedozvi
-      const wait = Number(res.headers.get("retry-after") ?? "1") * 1000;
-      console.warn(`[graph] 429, cekam ${wait} ms (pokus ${i}/${attempts})`);
-      await new Promise((r) => setTimeout(r, wait));
-      continue;
-    }
-    // permanentni vetve: opakovani nezmeni opravneni ani existenci objektu
-    if (res.status === 403) return { ok: false, userMessage: "Na tuhle informaci nemáš oprávnění." };
-    if (res.status === 404) return { ok: false, userMessage: "Takový objekt neexistuje." };
-    if (!res.ok) return { ok: false, userMessage: "Adresář teď neodpovídá, zkus to prosím později." };
-    return { ok: true, data: await res.json() };
-  }
-}
+```powershell
+copy <klon-repa>\actions-graph\solution\graph-helpers.ts src\
 ```
 
-**Checkpoint:** kompiluje. Umíš říct, proč se 403 a 404 **neretryují**: opakování
-nezmění oprávnění ani existenci objektu — retry by jen pálil čas a tokeny.
+a v `src/agent.ts` nahoře:
+
+```ts
+import { graphGet, resolveTicketList } from "./graph-helpers";
+```
+
+**Přečti si ho** — jsou v něm dvě věci, na které se budeš ptát:
+
+| Kód | Proč tak |
+|---|---|
+| `429` → čeká `Retry-After` a opakuje | transientní: opakování má smysl |
+| `403` a `404` → **neopakuje** | permanentní: opakování nezmění oprávnění ani existenci |
+| chyba se vrací jako `userMessage`, ne výjimka | model ji přeformuluje uživateli; stack trace patří do terminálu |
+| `resolveTicketList` cachuje ID | dvě volání navíc u každého tiketu zdarma |
+
+**Checkpoint:** projekt kompiluje s importem. Umíš říct, proč se 403 neretryuje.
 
 ### 3. Definuj nástroje a jejich vykonání
 
@@ -90,7 +84,7 @@ const tools = [
 
 async function executeTool(name: string, args: any, context: TurnContext): Promise<string> {
   if (name === "lookup_user") {
-    const r = await graphGet(args.upn ? `/users/${encodeURIComponent(args.upn)}` : "/me");
+    const r = await graphGet(args.upn ? `/users/${encodeURIComponent(args.upn)}` : "/me", labToken());
     return JSON.stringify(r.ok ? r.data : { error: r.userMessage });
   }
   return JSON.stringify({ error: `neznámý nástroj: ${name}` });
@@ -206,22 +200,11 @@ Tím se z týdne, který data jen četl, stává agent, který **mění stav ve 
 
 ### 8. Naivní create_ticket — schválně špatně
 
-Nejdřív helper, který si jednou dohledá ID webu a listu (žádné GUIDy natvrdo):
+Konstantu s cestou k webu si dej nahoru; `resolveTicketList` už máš v helperu
+z kroku 2:
 
 ```ts
 const SITE_PATH = "<tenant>.sharepoint.com:/sites/hr-demo";
-let ticketTarget: { siteId: string; listId: string } | undefined;
-
-async function resolveTicketList(token: string) {
-  if (ticketTarget) return ticketTarget;
-  const h = { Authorization: `Bearer ${token}` };
-  const site = await (await fetch(`https://graph.microsoft.com/v1.0/sites/${SITE_PATH}`, { headers: h })).json();
-  const lists = await (await fetch(`https://graph.microsoft.com/v1.0/sites/${site.id}/lists?$select=displayName,id`, { headers: h })).json();
-  const list = (lists.value ?? []).find((l: any) => l.displayName === "Tikety");
-  if (!list) throw new Error("list Tikety nenalezen");
-  ticketTarget = { siteId: site.id, listId: list.id };
-  return ticketTarget;
-}
 ```
 
 A do `executeTool` větev **bez jakékoli validace** — všechny parametry z návrhu modelu:
@@ -230,7 +213,7 @@ A do `executeTool` větev **bez jakékoli validace** — všechny parametry z n�
 if (name === "create_ticket") {
   const token = labToken();
   if (!token) return JSON.stringify({ error: "chybí token, nemohu založit tiket" });
-  const { siteId, listId } = await resolveTicketList(token);
+  const { siteId, listId } = await resolveTicketList(SITE_PATH, token);
   const res = await fetch(`https://graph.microsoft.com/v1.0/sites/${siteId}/lists/${listId}/items`, {
     method: "POST",
     headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },

@@ -103,10 +103,10 @@ zájmu skupiny: M365 strana nejdřív, kód až od D3.
 
 | # | Blok | Slug | Typ | min |
 |---|---|---|---|---|
-| 1 | Action handlers & integrace s Microsoft Graph | `actions-graph` | P | 80 |
-| 2 | Prompt & systémová orchestrace | `prompt-orchestration` | P | 55 |
-| 3 | Bezpečnost & middleware — útok a obrana jako kód *(sloučený blok)* | `middleware-policy` | P | 130 |
-| 4 | SharePoint Copilot Apps *(Public Preview)* | `spfx-copilot-apps` | P | 45 |
+| 1 | Action handlers & integrace s Microsoft Graph | `actions-graph` | P | 90 |
+| 2 | Prompt & systémová orchestrace | `prompt-orchestration` | P | 60 |
+| 3 | Bezpečnost & middleware — útok a obrana jako kód *(sloučený blok)* | `middleware-policy` | P | 120 |
+| 4 | SharePoint Copilot Apps *(Public Preview)* | `spfx-copilot-apps` | P | 40 |
 
 > [!NOTE] Blok 1 navazuje přímo na včerejšek: identity výklad je odučen, `.lab-token`
 > studenti mají — výklad části A se zkracuje na mechaniku akcí. Blok 2 dá agentovi
@@ -117,13 +117,13 @@ zájmu skupiny: M365 strana nejdřív, kód až od D3.
 > závěr a **most k SPFx kurzům** — multi-agent zmínku v middleware nahrazuje
 > odkaz na D5.
 
-## Den 5 — Multi-agent, governance, kvalita a capstone (215 min, konec 13:00)
+## Den 5 — Multi-agent, governance, kvalita a capstone (210 min, konec 13:00)
 
 | # | Blok | Slug | Typ | min |
 |---|---|---|---|---|
 | 1 | Microsoft Agent Framework & multi-agent (A2A) — *kompakt: výklad + instruktorské demo* | `agent-framework` | P | 45 |
 | 2 | Agent 365, Entra Agent ID & instrumentace *(vč. hostingu v kostce)* | `agent-365-governance` | P | 55 |
-| 3 | Evaluace & kvalita | `evaluation-quality` | P | 55 |
+| 3 | Evaluace & kvalita *(část C jako demo)* | `evaluation-quality` | P | 50 |
 | 4 | Capstone architektura & roadmapa | `capstone` | P | 60 |
 
 > [!WARNING] Nejkratší den — 9:00 až 13:00 **bez pauzy na oběd**

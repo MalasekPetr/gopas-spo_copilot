@@ -1,6 +1,6 @@
 # Bezpečnost & middleware — útok a obrana jako kód
 
-> Typ: povinný · Den: 4 · Odhad: **130 min** (45 výklad + 85 lab) · Publikum: **vývojáři / architekti**
+> Typ: povinný · Den: 4 · Odhad: **120 min** (45 výklad + 75 lab) · Publikum: **vývojáři / architekti**
 > Multi-agent scope zmínku nahrazuje odkaz na D5 (`agent-framework` se učí až po tomto bloku).
 > Prostředí: viz [`../../environment.md`](../environment.md) · Názvosloví: [`../../GLOSSARY.md`](../GLOSSARY.md)
 
@@ -78,16 +78,17 @@ flowchart LR
 
 ### 3. Proč obrana v promptu nedrží
 
-- V [`../prompt-orchestration/`](../prompt-orchestration/) (část D labu) měl agent
-  v systémovém promptu explicitně napsáno, co nesmí — a **obejití přesto uspělo**. Není to
-  chyba studenta ani špatně napsaný prompt; je to vlastnost mechanismu.
+- V [`../prompt-orchestration/`](../prompt-orchestration/) (část D labu) se změřilo obojí:
+  proti **útoku ze zprávy uživatele prompt obstál** (3/3 odmítnuto), ale proti **injektáži
+  v obsahu runbooku selhal**. To není chyba studenta ani špatně napsaný prompt; je to
+  vlastnost mechanismu — a přesně proto se dnešní blok zabývá obsahem, ne dotazem.
 - **Instrukce v promptu je vstup do modelu, ne kontrola nad ním.** Konkuruje jí každý další
   token v kontextu — včetně toho útočníkova. Vyhrává statisticky, ne deterministicky.
 - Tři úrovně síly obrany, které studenti slévají dohromady:
 
 | Vrstva | Povaha | Jde přemluvit? |
 |---|---|---|
-| **Prompt** | doporučení pro model | **ano** |
+| **Prompt** | doporučení pro model | **ano — a hlavně ho obejde obsah, ne dotaz** |
 | **Middleware** | kód, který se vykoná | ne — ale musíš ho napsat správně |
 | **Oprávnění / scope** | hranice mimo agenta | **ne** |
 
@@ -107,9 +108,10 @@ flowchart LR
   normalizace → odmítnutí mimo scope → redakce PII → **teprve pak model**.
 - **Krátký obvod je nosná schopnost**: pre-processing musí umět turn ukončit **bez volání
   modelu** a vrátit připravenou odpověď. Nejlevnější obrana v celém kurzu.
-- **Pipeline musí obalit všechny agenty.** Po [`../agent-framework/`](../agent-framework/)
-  jsou dva — middleware nasazený jen kolem resolveru nechává triage nechráněný, a triage
-  je přitom první, kdo vidí útočníkův text. Ověřuje se **logem, ne dojmem**.
+- **Pipeline musí obalit každý turn, ne jen finální odpověď.** Dnešní agent má jednu
+  smyčku, ale kola uvnitř turnu volají nástroje — a výsledek nástroje je další vstup,
+  kterému nesmíš věřit. Až přibude druhý agent ([`../agent-framework/`](../agent-framework/),
+  D5), platí totéž pro oba. Ověřuje se **logem, ne dojmem**.
 - Middleware je testovatelný **bez modelu**: vstup dovnitř, verdikt ven. Tím se z obrany
   stává regresní test — vstup do [`../../evaluation-quality/`](../evaluation-quality/).
 

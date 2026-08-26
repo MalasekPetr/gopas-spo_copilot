@@ -1,6 +1,6 @@
 # SharePoint Copilot Apps — interaktivní UX v Copilot canvasu (Public Preview)
 
-> Typ: povinný · Den: 4 · Odhad: **45 min** (15 výklad + 30 lab) · Publikum: **vývojáři / architekti**
+> Typ: povinný · Den: 4 · Odhad: **40 min** (15 výklad + 25 lab) · Publikum: **vývojáři / architekti**
 > Prostředí: viz [`../../environment.md`](../environment.md) · Názvosloví: [`../../GLOSSARY.md`](../GLOSSARY.md)
 
 Agent celý včerejšek tvaroval **text**. SharePoint Copilot Apps (SPFx 1.24, Public Preview) jsou

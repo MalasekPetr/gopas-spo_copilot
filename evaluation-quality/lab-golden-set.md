@@ -9,7 +9,8 @@ Postavit golden set a regresní běh, kterým **dokážeš**, že Support Asiste
 změřitelně vyrostl — a který zachytí, kdyby ho příští změna zhoršila.
 
 **Jak lab číst:** každý krok končí **Checkpointem** — nesedí-li, nepokračuj.
-Části A, B a E jsou jádro; část C stojí tokeny, část D je nejzajímavější.
+Části A, B, D a E děláš ty; **část C jede jako instruktorské demo** (stojí tokeny
+a nic se v ní neučíš prsty).
 
 ## Předpoklady
 
@@ -74,7 +75,12 @@ node --test solution/
 **Checkpoint:** **100 %, bez tolerance** — je to deterministické. Zapiš dobu běhu
 (bude to zlomek sekundy). Kontrast proti části C je součást pointy.
 
-## Část C — evaluace odpovědí (10 min)
+## Část C — evaluace odpovědí *(instruktorské demo, 8 min)*
+
+> [!NOTE] Tuhle část jede instruktor na plátně, ty se díváš
+> Běh judge stojí tokeny a čas, a nic nového se v něm nenaučíš prsty — kód níž
+> si přečti, ale nespouštěj. Runner i s výsledky máš v `solution/`, takže si ho
+> můžeš pustit doma. **Tvoje ruce potřebuje část D a E.**
 
 ### 4. Runner s LLM judge
 
@@ -105,15 +111,17 @@ Runner projde případy, zavolá agenta, výsledek pošle judgeovi a agreguje
 **pass rate, groundedness (má citaci ze skutečných podkladů), správnost volby
 nástroje, latenci p50/p95 a tokeny na případ**.
 
-**Checkpoint:** běh doběhne a vypíše tabulku. Zapiš čas a součet tokenů — porovnej
-s částí B.
+**Co si všimnout:** kolik to trvalo a kolik to stálo tokenů — porovnej s částí B,
+kde deterministické testy doběhly za zlomek sekundy zadarmo. To je ta cena za to,
+že hodnotíš odpovědi, ne funkce.
 
 ### 5. Změř rozptyl
 
 Pusť **tentýž běh 3×** beze změny agenta.
 
-**Checkpoint:** máš zapsáno, kolik případů dopadlo pokaždé stejně a které plavaly.
-Nestabilní případy vypiš jmenovitě — z těch se nedá nic vyvodit, dokud je neupřesníš.
+**Co si všimnout:** které případy dopadly pokaždé stejně a které plavaly.
+Z nestabilních se nedá nic vyvodit, dokud je neupřesníš — a to je informace
+o rubrice, ne o modelu.
 
 > [!IMPORTANT] Judge není orákulum — změřeno (2026-08-26)
 > Na jednoznačném případu dal judge **5× ze 5 stejný verdikt**. Ale u tenké odpovědi
@@ -224,7 +232,7 @@ včetně změřené tabulky `reasoning_effort` a pasti s deflekcí.
 - [ ] Golden set má 12 případů, všech pět tříd, aspoň tři negativní.
 - [ ] Každý případ má kritérium „nesmí".
 - [ ] Deterministické testy procházejí 100 %; zapsaná doba běhu.
-- [ ] Naměřený pass rate, groundedness, latence, tokeny — a **rozptyl ze tří běhů**.
+- [ ] Viděl jsi běh judge a rozptyl ze tří běhů (demo) a umíš říct, proč rozptyl vzniká.
 - [ ] Prahy včetně sloupce „co udělám, když nesplněno".
 - [ ] Záměrné zhoršení bylo **zachyceno** a víš, která třída spadla.
 - [ ] U spadlých případů určená chybující vrstva.

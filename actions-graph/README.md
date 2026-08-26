@@ -1,6 +1,6 @@
 # Action handlers & integrace s Microsoft Graph
 
-> Typ: povinný · Den: 4 · Odhad: **80 min** (30 výklad + 50 lab) · Publikum: **vývojáři / architekti**
+> Typ: povinný · Den: 4 · Odhad: **90 min** (30 výklad + 60 lab) · Publikum: **vývojáři / architekti**
 > Identity výklad (app registrace, permissions, tokeny) **odučen na D3** — část A jede rychleji, `.lab-token` studenti mají.
 > Prostředí: viz [`../../environment.md`](../environment.md) · Názvosloví: [`../../GLOSSARY.md`](../GLOSSARY.md)
 

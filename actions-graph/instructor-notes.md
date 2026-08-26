@@ -25,7 +25,6 @@
   SharePoint z tokenu (`user.15`), zatímco `Zadavatel` nese to, co zapsal kód
   (persona z Playgroundu). Ten rozdíl je pointa kroku 10 a znovu kroku 15.
 - **Před během smaž testovací tikety z listu**, ať studenti začínají na prázdném.
-
 - **Mechanismus tabule (od 2026-08-26):** lab má cesty MOCK (výchozí, funguje vždy)
   a ŽIVĚ. Ráno napiš na tabuli `GRAPH: MOCK/ŽIVĚ` a `RETRIEVAL: MOCK/ŽIVĚ` podle toho,
   co níže stihneš ověřit. **Bez ohlášení jedou studenti MOCK** — lab je na tom postavený
@@ -35,10 +34,11 @@
   z terminálu do F5 procesů nedoteče (stejná lekce jako fnm). Kód labů čte token
   při každém volání, takže výroba/smazání souboru nepotřebuje restart.
 - **App registrace pro ŽIVĚ cestu** (~10 min, v adresáři `spdemo.online` — správný
-  browser profil!): Entra → App registrations → New: název `spo-copilot-lab`,
+  browser profil!): Entra → App registrations → New: název `spo-copilot-app` (první běh: 4407c56b-…),
   single tenant, bez redirect URI. Pak: Authentication → **Allow public client
   flows: Yes** (device code). API permissions → delegated `User.Read`,
-  `Files.Read.All`, `Sites.Read.All` → **Grant admin consent**. Client ID nadiktuješ
+  `Files.Read.All`, `Sites.Read.All`, **`Sites.ReadWrite.All`** (zápis tiketů)
+  → **Grant admin consent**. Client ID nadiktuješ
   studentům (není tajemství). Pro část D app-only: tamtéž application permission
   `Sites.Read.All` + client secret s platností do konce týdne — **po kurzu smazat
   celou registraci**.
@@ -64,7 +64,7 @@
 - **Studenti vezmou žadatele z návrhu modelu.** Skoro všichni. Nechat je to udělat, pak jim
   to v části C rozbít. Je to nejlépe zapamatovatelná lekce dne a bez toho pokusu nefunguje.
 - „Model přece nebude lhát o parametrech" — ukázat, že nejde o lhaní modelu, ale o **prompt
-  injection přes obsah** (naváže `security-risk` v D5). Model je jen kanál.
+  injection přes obsah** (naváže `middleware-policy` odpoledne). Model je jen kanál.
 - Záměna **autorizace agenta** a **autorizace akce**. Agent smí volat Graph ≠ tenhle uživatel
   smí tuhle věc. Autorizace patří do akce.
 - App-only se studentům zalíbí, protože „funguje". Zdůraznit, že to je přesně ta pohodlnost,
@@ -78,5 +78,5 @@
   rozšiřují na Graph (429/Retry-After, 403, 404).
 - Dopředu: `middleware-policy` (výstupní filtry — druhá polovina obrany),
   `agent-365-governance` (Entra Agent ID, audit akcí, instrumentace),
-  `security-risk` (prompt injection míří přesně na tyto akce).
+  (`security-risk` je sloučený do `middleware-policy`).
 - Governance nit: tady začíná. Hranice oprávnění → middleware → Agent 365 → scope minimalizace.

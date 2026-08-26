@@ -8,7 +8,14 @@
   se studenty je rozhodnutí autora (2026-08-06) — klíčová vazba na SPFx kurzy.
 - Deploy (část C) zůstává instruktorské demo — admin krok, ne studentský.
 
-## Go/no-go — otestovat před během
+## Go/no-go
+
+- **Lab nově čte list `Tikety`** (rozhodnutí 2026-08-26) — komponenta vykresluje tikety
+  z dopoledního labu. Ověřit den předem na jednom stroji, jestli `pageContext`
+  a `spHttpClient` v Copilot Workbenchi fungují; **když ne, krok 5 je volitelný**
+  a lab jede na statických datech z kroku 4 se stejnou pointou.
+- **Před během nechat v listu aspoň jeden tiket** pro studenty, kteří ráno nedokončili —
+  jinak jim karta vyjde prázdná. — otestovat před během
 
 - **Preview generator (`@next`) se instaluje v onboardingu dne 1**, ne až tady —
   instalace u 20 strojů uprostřed dne 3 je časová past. Přidat do onboarding checklistu

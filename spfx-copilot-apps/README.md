@@ -118,13 +118,16 @@ ne až tady — viz go/no-go v [`instructor-notes.md`](instructor-notes.md).
 
 ## Lab
 
-Viz [`lab-first-copilot-app.md`](lab-first-copilot-app.md). Samostudium navíc:
+Viz [`lab-first-copilot-app.md`](lab-first-copilot-app.md) — komponenta vykreslí **tikety,
+které ráno založil vlastní agent studenta** (list `Tikety`), včetně sloupců `Zadavatel`
+(zapsal kód) a `Created By` (ví platforma). Samostudium navíc:
 [GitHub — spfx-copilot-apps samples](https://github.com/pnp/spfx-copilot-apps).
 
 ## Nosná linka
 
-Support Asistent včera dostal middleware — a tady je vidět, **kam jeho výstup může
-dorůst**: eskalace z dotazu 3 ([`../../scenario-support-agent.md`](../scenario-support-agent.md))
+Support Asistent dnes dopoledne dostal akce a odpoledne middleware — a tady je vidět,
+**kam jeho výstup může dorůst**: tikety, které založil, se z řádků v listu stanou kartou
+v Copilot canvasu. Interaktivní eskalace z dotazu 3 ([`../../scenario-support-agent.md`](../scenario-support-agent.md))
 jako interaktivní schvalovací karta místo textu. Student si první Copilot App postaví
 sám; napojení na vlastního agenta zůstává jako roadmapa do capstonu.
 

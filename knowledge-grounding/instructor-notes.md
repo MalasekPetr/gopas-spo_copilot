@@ -20,10 +20,14 @@
   ```powershell
   $env:LAB_CLIENT_ID = "<client-id>"
   $token = node actions-graph/solution/device-auth.mjs "User.Read Files.Read.All Sites.Read.All"
-  curl.exe -s -X POST "https://graph.microsoft.com/beta/copilot/retrieval" `
-    -H "Authorization: Bearer $token" -H "Content-Type: application/json" `
-    -d '{\"queryString\":\"access denied upload\",\"dataSource\":\"sharePoint\",\"maximumNumberOfResults\":3}'
+  $body = @{ queryString = "access denied upload"; dataSource = "sharePoint"; maximumNumberOfResults = 3 } | ConvertTo-Json
+  Invoke-RestMethod -Method Post -Uri "https://graph.microsoft.com/beta/copilot/retrieval" `
+    -Headers @{ Authorization = "Bearer $token" } -ContentType "application/json" -Body $body
   ```
+
+  (Ne curl.exe s inline JSONem — pwsh 7 předává `\"` doslova a API vrátí BadRequest
+  „Unable to read JSON payload"; nalezeno naživo 2026-08-26. Kódu labu se to netýká,
+  fetch posílá JSON korektně.)
 
   Vrátí `retrievalHits` s obsahem runbooku → tabule ŽIVĚ. Vrátí 402/403/licenční
   chybu → nech MOCK (GRAPH: ŽIVĚ tím není dotčené — na retrievalu nezávisí);

@@ -40,26 +40,26 @@ Bodů 1–2 dosáhne i deklarativní agent. Body 3–5 jsou důvod, proč tenhle
 
 ## Jak agent roste
 
+Dny podle reality prvního běhu (po třetí rekalibraci 2026-08-26):
+
 | Den | Modul | Přírůstek |
 |---|---|---|
-| 1 | [`no-code-showcase/`](no-code-showcase/) | **baseline**: Support Asistent v agent builderu, sdílený skupině Students — zůstává živý celý týden jako měřítko ([návod](no-code-showcase/guide-agent-builder.md)) |
-| 1 | [`declarative-agents/`](declarative-agents/) | **deklarativní Support Asistent v1** (instructions + knowledge) a jeho změřený strop |
-| 2 | [`agents-sdk-core/`](agents-sdk-core/) | scaffold, `AgentApplication`, echo turn → LLM turn v Agents Playgroundu |
-| 2 | [`knowledge-grounding/`](knowledge-grounding/) | grounding nad knihovnou `Runbooky` (custom engine) |
-| 2 | [`actions-graph/`](actions-graph/) | akce nad Graphem + `CreateTicket` s validací parametrů |
+| 1 | [`onboarding/`](onboarding/) | **projekt se rodí**: scaffold z Toolkitu, echo agent v Agents Playgroundu — bez modelu |
+| 1 | [`no-code-showcase/`](no-code-showcase/) | **srovnávací baseline**: Support Asistent v agent builderu, sdílený skupině Students — žije celý týden jako měřítko ([návod](no-code-showcase/guide-agent-builder.md)) |
+| 2 | [`declarative-agents/`](declarative-agents/) | **deklarativní Support Asistent v1** (instructions + knowledge) a jeho změřený strop — druhý srovnávací artefakt |
 | 2 | [`data-hygiene/`](data-hygiene/) | hygienický checklist tenantu — proč agentovi smí zákazník věřit |
-| 3 | [`prompt-orchestration/`](prompt-orchestration/) | systémový prompt, tool-call loop, „neznám" chování |
-| 3 | [`agent-framework/`](agent-framework/) | rozdělení na **triage** + **resolver** agenta |
-| 3 | [`middleware-policy/`](middleware-policy/) | redakční middleware, filtrování výstupů |
-| 4 | [`spfx-copilot-apps/`](spfx-copilot-apps/) | první vlastní Copilot App (scaffold + Workbench); vize: eskalace (dotaz 3) jako interaktivní karta |
-| 4 | [`event-driven-hosting/`](event-driven-hosting/) | hosting, timeout a retry chování; manifest, verzování, **publikace do Teams / M365 Copilotu** |
-| 4 | [`marketplace-agents/`](marketplace-agents/) | rozhodnutí store ANO/NE s odůvodněním — do roadmapy |
-| 4 | [`agent-365-governance/`](agent-365-governance/) | **instrumentace do Agent 365**, Entra Agent ID |
-| 5 | [`orchestry-governance/`](orchestry-governance/) | rozhodnutí first-party vs. third-party governance — do architektury |
-| 5 | [`evaluation-quality/`](evaluation-quality/) | golden set + regresní běh |
-| 5 | [`security-risk/`](security-risk/) | prompt injection přes obsah runbooku — a obrana |
-| 5 | [`perf-cost-lifecycle/`](perf-cost-lifecycle/) | cache, token budget, promotion dev → test |
-| 5 | [`capstone/`](capstone/) | prezentace celku, KPI a evaluační matice |
+| 2 | [`marketplace-agents/`](marketplace-agents/) | rozhodnutí store ANO/NE s odůvodněním — do roadmapy |
+| 3 | [`agents-sdk-core/`](agents-sdk-core/) | echo turn → **LLM turn**: model, `systemPrompt`, `TurnState`, `usage`, **chybové větve s retry** — baseline 4 dotazů |
+| 3 | [`knowledge-grounding/`](knowledge-grounding/) | grounding nad `Runbooky` **s citacemi**; ŽIVÝ semantic index s ACL přes `.lab-token` |
+| 4 | [`actions-graph/`](actions-graph/) | **akce**: tool-call smyčka (kola), Graph, `CreateTicket` s validací a žadatelem z identity |
+| 4 | [`prompt-orchestration/`](prompt-orchestration/) | anatomie promptu, měřená baseline — a úspěšný průstřel (záměr) |
+| 4 | [`middleware-policy/`](middleware-policy/) | útok a obrana jako kód: middleware pipeline, scope — *(pohltilo `security-risk`)* |
+| 4 | [`spfx-copilot-apps/`](spfx-copilot-apps/) | **jiný projekt**: první Copilot App (scaffold + Workbench); vize: eskalace (dotaz 3) jako interaktivní karta |
+| 5 | [`agent-framework/`](agent-framework/) | rozhodnutí **triage + resolver** a A2A — kompakt, do capstone rozhodnutí č. 3 |
+| 5 | [`agent-365-governance/`](agent-365-governance/) | **instrumentace do Agent 365**, Entra Agent ID *(vč. hostingu v kostce)* |
+| 5 | [`evaluation-quality/`](evaluation-quality/) | golden set nad baseline dotazy + regresní běh |
+| 5 | [`capstone/`](capstone/) | projekt se už nerozšiřuje — **prezentuje se**: blueprint, KPI, model hrozby, náklady |
+| — | samostudium | [`event-driven-hosting/`](event-driven-hosting/) (hosting, publikace), [`perf-cost-lifecycle/`](perf-cost-lifecycle/) (kalkulátory se používají živě), [`orchestry-governance/`](orchestry-governance/), [`opt-custom-retrieval/`](opt-custom-retrieval/) |
 
 ```mermaid
 flowchart LR

@@ -184,6 +184,11 @@ mezi oběma checkpointy je přesně rozdíl mezi kulisou a auditovatelným zdroj
 > ```
 >
 > Přihlas se kódem na microsoft.com/devicelogin **svým** účtem `user.NN`.
+> **Kdo se kde přihlašuje:** skript se nepřihlašuje nikam — jen si vyžádá párovací
+> kód (anonymně, client ID je veřejné) a čeká. Jediná autentizace je TVOJE
+> přihlášení v prohlížeči; kdo kód zadá, ten propůjčí aplikaci svou identitu.
+> Z toho plyne reálný útok — **device code phishing**: kód, který ti pošle někdo
+> cizí, NIKDY nezadávej — token jako ty by dostal on.
 > Soubor `.lab-token` je přepínač: existuje → agent volá živé API (kód ho čte
 > při každém dotazu, žádný restart není potřeba); smaž ho → zpět na MOCK.
 >

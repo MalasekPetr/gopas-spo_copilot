@@ -17,9 +17,10 @@ v projektu.
 
 ```powershell
 winget install Schniz.fnm
-# nový terminál, pak aktivace v profilu PowerShellu:
-Add-Content $PROFILE 'fnm env --use-on-cd | Out-String | Invoke-Expression'
-# nový terminál znovu:
+# NOVY terminal (winget menil PATH), pak aktivace v profilu pro vsechny hosty:
+if (-not (Test-Path $PROFILE.CurrentUserAllHosts)) { New-Item -ItemType File -Path $PROFILE.CurrentUserAllHosts -Force }
+Add-Content $PROFILE.CurrentUserAllHosts 'fnm env --use-on-cd | Out-String | Invoke-Expression'
+# NOVY terminal znovu:
 fnm install 22
 fnm default 22
 node --version   # v22.x
@@ -28,8 +29,21 @@ npm --version
 
 - **Nový terminál po každém kroku s profilem** — bez toho `fnm` ani `node` nejsou v PATH
   a vypadá to jako rozbitá instalace.
+- **Pozor: `$PROFILE` bez přípony je per-host** — profil zapsaný v samostatném
+  PowerShellu VS Code terminál nečte. Proto `$PROFILE.CurrentUserAllHosts`.
 - Když na stroji už je systémový Node z MSI: nevadí, fnm ho ve svém shellu zastíní.
   Ověř, že `node --version` po aktivaci vrací 22.
+
+> [!TIP] Profil nejde nastavit? Neřeš ho a jeď dál
+> V každém terminálu, kde má běžet node, stačí ručně:
+>
+> ```powershell
+> fnm env --use-on-cd | Out-String | Invoke-Expression
+> ```
+>
+> Funguje bez profilu i bez execution policy. Když profil při startu terminálu hlásí
+> „running scripts is disabled": `Set-ExecutionPolicy RemoteSigned -Scope CurrentUser`
+> (bez admin práv) a nový terminál. Když nic z toho — fallback níže (Node MSI).
 
 ## 2. VS Code — rozšíření a terminál (~5 min)
 

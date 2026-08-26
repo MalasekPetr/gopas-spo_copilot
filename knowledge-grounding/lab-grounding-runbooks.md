@@ -89,17 +89,27 @@ v předchozím labu.
 
 ### 5. Zapoj grounding krok před volání modelu
 
-V message handleru **před** `callModel` sestav podklady a předej je jako
-**kontextovou zprávu — ne do systémového promptu**:
+Dvě změny, každá patří jinam — a to rozdělení je pointa kroku:
+
+**a) Instrukce chování → systémový prompt.** Rozšiř `systemPrompt` o pravidla práce
+s podklady (vlož za druhou větu):
+
+```ts
+"Když v konverzaci dostaneš zprávu začínající 'Podklady z runbooků', odpověz PŘÍMO z nich:",
+"shrň postup a pod odpověď vypiš citace ve tvaru [číslo] název — odkaz.",
+"Doplňující otázky pokládej jen když podklady žádný použitelný postup neobsahují.",
+```
+
+**b) Data → kontextová zpráva.** V message handleru **před** `callModel` sestav
+podklady — jen data, žádné instrukce:
 
 ```ts
 const userText = context.activity.text ?? "";
 const hits = await retrieve(userText);
 const knowledge = hits.length
-  ? "Podklady z runbooků. Odpovídej VÝHRADNĚ z nich a pod odpověď vypiš citace " +
-    "ve tvaru [číslo] název — odkaz:\n\n" +
+  ? "Podklady z runbooků:\n\n" +
     hits.map((h, i) => `[${i + 1}] ${h.title} — ${h.url}\n${h.text}`).join("\n\n")
-  : "K dotazu nebyl nalezen žádný runbook. Řekni, že odpověď neznáš, a nabídni eskalaci na technika.";
+  : "Podklady z runbooků: žádný runbook k dotazu nenalezen.";
 
 const result = await callModel([
   { role: "system", content: systemPrompt },
@@ -108,13 +118,22 @@ const result = await callModel([
 ]);
 ```
 
-Proč ne do systémového promptu: systémový prompt je **stabilní instrukce chování**
-(a cache-uje se), podklady jsou **proměnlivá data per turn**. Míchat je znamená
-rozbít caching a ztratit hranici mezi „kdo jsem" a „co zrovna vím".
+Proč to rozdělení: systémový prompt je **stabilní instrukce chování** (a cache-uje
+se), podklady jsou **proměnlivá data per turn**. Míchat je znamená rozbít caching
+a ztratit hranici mezi „kdo jsem" a „co zrovna vím".
+
+> [!WARNING] Instrukce v datové zprávě model poslouchá špatně — změřeno (2026-08-26)
+> První verze labu měla „odpovídej výhradně z podkladů, cituj" uvnitř knowledge
+> zprávy. Výsledek: model podklady ignoroval a **spustil výslech** („Kde se to
+> děje? Přes web nebo aplikaci? …"). Po přesunu instrukcí do systémového promptu
+> odpověděl postupem z runbooku s citacemi — stejný model, stejné chunky, stejná
+> otázka. Váha instrukce závisí na tom, **kde** stojí. K tomu se vrátíme
+> u vrstev instrukcí v [`../prompt-orchestration/`](../prompt-orchestration/).
 
 **Checkpoint:** pošli dotaz 1 („Nejde mi upload, hlásí access denied.") → odpověď
-vychází z runbooku a **pod ní jsou citace s odkazem**. V terminálu mocku vidíš
-`[retrieval] "…" -> N chunku`.
+**shrnuje postup z runbooku** (Members vs. Visitors, checkout/metadata) a **pod ní
+jsou citace s odkazem** — žádné doptávání. V terminálu mocku vidíš
+`[retrieval] "…" -> 2 chunku`.
 
 ### 6. Ověř citaci proklikem
 

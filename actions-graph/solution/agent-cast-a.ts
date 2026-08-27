@@ -1,14 +1,12 @@
 // ============================================================================
-// VYSTUPNI STAV PO LABU: prompt-orchestration (den 4, blok 2)
+// MEZISTAV: actions-graph, konec CASTI A (pred casti B)
 //
-// Systemovy prompt uz neni seznam prani, ale KONTRAKT po blocich, doplneny
-// jednim few-shot prikladem na FORMAT (nikdy na domenu). Tool-call smycka ma
-// strop kol a po jeho vycerpani se agent ozve misto ticha.
+// Agent uz cte z Graphu: nastroj lookup_user, tool-call smycka (kola uvnitr
+// turnu) a callModel rozsireny o nastroje. JESTE NEZAPISUJE - create_ticket,
+// validace parametru a zadavatel z identity prijdou v casti B.
 //
-// Startovni cara pro: middleware-policy (den 4, blok 3)
-// Vyzaduje v src/: graph-helpers.ts (z ../../actions-graph/solution/).
-//
-// Predchozi stav:     ../../actions-graph/solution/agent.ts
+// Cely vystupni stav labu: ./agent.ts
+// Predchozi stav:          ../../knowledge-grounding/solution/agent.ts
 // ============================================================================
 
 import { ActivityTypes } from "@microsoft/agents-activity";
@@ -18,7 +16,7 @@ import * as fs from "fs";
 import { appendFileSync } from "fs";
 import * as path from "path";
 import config from "./config";
-import { graphGet, resolveTicketList } from "./graph-helpers";
+import { graphGet } from "./graph-helpers";
 import { TurnState } from "@microsoft/agents-hosting";
 
 const client = new AzureOpenAI({
@@ -30,34 +28,17 @@ const client = new AzureOpenAI({
   maxRetries: 0,     // retry pisu sam v kroku 15
 });
 
-// Few-shot priklad je na FORMAT, nikdy na domenu: 'runbook-x.md' je schvalne
-// zjevne vymysleny nazev. Skutecny obsah runbooku by si model zamichal mezi fakta.
-const priklad = `Příklad formátu odpovědi:
-1. Ověř oprávnění Contribute.
-2. Zkontroluj povinné sloupce.
-
-Zdroje:
-[1] runbook-x.md — https://…`;
-
 const systemPrompt = [
-  // 1. ROLE
   "Jsi IT support asistent firmy. Odpovídáš česky, stručně a věcně.",
-  // 2. SCOPE
-  "Řešíš výhradně IT podporu: postupy z firemních runbooků a zakládání tiketů.",
-  // 3. PRACE S PODKLADY
-  "Když dostaneš zprávu začínající 'Podklady z runbooků', odpověz PŘÍMO z nich.",
+  "Odpovídáš výhradně na dotazy k IT podpoře podložené firemními runbooky.",
+  "Když v konverzaci dostaneš zprávu začínající 'Podklady z runbooků', odpověz PŘÍMO z nich:",
+  "shrň postup a pod odpověď vypiš citace ve tvaru [číslo] název — odkaz.",
   "Doplňující otázky pokládej jen když podklady žádný použitelný postup neobsahují.",
-  // 4. FORMAT
-  "Formát odpovědi: číslovaný postup, maximálně 6 kroků, pak řádek 'Zdroje:' a citace ve tvaru [1] název — odkaz.",
-  // 5. NEZNALOST
-  "Když odpověď v podkladech není, řekni to jednou větou a nabídni eskalaci na technika.",
+  "Když odpověď v runbookách není, řekni to a nabídni eskalaci na technika.",
   "Nikdy si nedomýšlej postup ani čísla.",
-  // 6. KDY VOLAT NASTROJ
   "Na dotazy k identitě — kdo jsem, moje pozice, můj e-mail, profil kolegy — nehledej v runbookách, ale použij nástroj lookup_user.",
-  "Nástroj create_ticket volej jen když uživatel potvrdí, že runbook nepomohl, nebo když žádný runbook neexistuje.",
-  // 7. HRANICE
   "Dotazy mimo IT podporu — mzdy, personalistika, údaje o kolezích — odmítni.",
-].join(" ") + "\n\n" + priklad;
+].join(" ");
 
 function isSupportsFilesEnabled(): boolean {
   const candidates = [
@@ -111,7 +92,7 @@ function classifyError(err: unknown): "transient" | "permanent" {
 
 // --- ucetni kniha spotreby ---------------------------------------------------
 // V KAZDEM DALSIM LABU PREPIS - podle toho se report rozpadne po fazich tydne
-const LAB = "prompt-orchestration";
+const LAB = "actions-graph";
 
 // kontext jednoho turnu; korelacni ID putuje celym zpracovanim
 type TurnLog = { turnId: string; q: string; kolo: number };
@@ -171,9 +152,6 @@ function labToken(): string | undefined {
 
 // Knihovna, na kterou grounding omezujeme. Scoping = mene sumu, min tokenu, nizsi cena.
 const RUNBOOKY_PATH = "https://<tenant>.sharepoint.com/sites/hr-demo/Runbooky";
-
-// web, kam se zapisuji tikety (list Tikety)
-const SITE_PATH = "<tenant>.sharepoint.com:/sites/hr-demo";
 
 type Chunk = { title: string; url: string; text: string };
 
@@ -252,8 +230,7 @@ async function retrieve(query: string, tl: TurnLog): Promise<Chunk[]> {
 
 
 // --- Nastroje agenta ---------------------------------------------------------
-// Pravidlo: co si model NESMI vybrat, nedavej mu do schematu. Proto tu neni
-// requester - bere se z identity volajiciho, ne z navrhu modelu.
+// Zatim jediny nastroj: cteni z adresare. Zapis (create_ticket) prijde v casti B.
 const tools = [
   {
     type: "function" as const,
@@ -266,62 +243,15 @@ const tools = [
       },
     },
   },
-  {
-    type: "function" as const,
-    function: {
-      name: "create_ticket",
-      description: "Založí tiket podpory, když runbook nepomohl a je potřeba technik.",
-      parameters: {
-        type: "object",
-        properties: {
-          title: { type: "string", description: "krátký nadpis tiketu" },
-          priority: { type: "string", description: "P1, P2 nebo P3" },
-          description: { type: "string" },
-        },
-        required: ["title", "priority", "description"],
-      },
-    },
-  },
 ];
 
 async function executeTool(name: string, args: any, context: TurnContext): Promise<string> {
-  const token = labToken();
-
   if (name === "lookup_user") {
-    const r = await graphGet(args.upn ? `/users/${encodeURIComponent(args.upn)}` : "/me", token);
+    // chyba z Graphu se vraci JAKO OBSAH tool zpravy, ne jako vyjimka -
+    // model ji umi srozumitelne preformulovat uzivateli
+    const r = await graphGet(args.upn ? `/users/${encodeURIComponent(args.upn)}` : "/me", labToken());
     return JSON.stringify(r.ok ? r.data : { error: r.userMessage });
   }
-
-  if (name === "create_ticket") {
-    // VALIDACE pred zapisem: nevalidni vstup nesmi vest k volani API vubec
-    const errors: string[] = [];
-    if (!["P1", "P2", "P3"].includes(args.priority)) errors.push("priority musí být P1, P2 nebo P3");
-    if (!args.title?.trim()) errors.push("title je povinný");
-    if ((args.title ?? "").length > 120) errors.push("title max 120 znaků");
-    if (!args.description?.trim()) errors.push("description je povinný");
-    if ((args.description ?? "").length > 2000) errors.push("description max 2000 znaků");
-    if (errors.length) return JSON.stringify({ error: "validace selhala", details: errors });
-
-    if (!token) return JSON.stringify({ error: "chybí token, nemohu založit tiket" });
-    const { siteId, listId } = await resolveTicketList(SITE_PATH, token);
-    const res = await fetch(`https://graph.microsoft.com/v1.0/sites/${siteId}/lists/${listId}/items`, {
-      method: "POST",
-      headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
-      body: JSON.stringify({ fields: {
-        Title: args.title,
-        Priorita: args.priority,
-        Popis: args.description,
-        // ZADATEL Z IDENTITY, ne z navrhu modelu. Created By navic doplni
-        // SharePoint z tokenu - to je to, co vi platforma.
-        Zadavatel: context.activity.from?.name ?? "unknown",
-      }}),
-      signal: AbortSignal.timeout(15_000),
-    });
-    const d: any = await res.json();
-    if (!res.ok) return JSON.stringify({ error: `zápis selhal: ${d.error?.code}` });
-    return JSON.stringify({ id: d.id, url: d.webUrl });
-  }
-
   return JSON.stringify({ error: `neznámý nástroj: ${name}` });
 }
 
@@ -377,13 +307,6 @@ agentApp.onActivity(ActivityTypes.Message, async (context: TurnContext, state: T
         const outcome = await executeTool(tc.function.name, JSON.parse(tc.function.arguments || "{}"), context);
         messages.push({ role: "tool", tool_call_id: tc.id, content: outcome });
       }
-    }
-
-    // strop kol vycerpan a model porad chce nastroj -> ozvi se, neztichni
-    if (result!.choices[0].message.tool_calls?.length) {
-      await context.sendActivity("Nepodařilo se mi to dotáhnout do konce, zkus to prosím přeformulovat nebo eskaluj na technika.");
-      console.log(`<<< TURN end (vycerpana kola)`);
-      return;
     }
 
     const u = result!.usage;

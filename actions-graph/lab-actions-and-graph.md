@@ -38,6 +38,11 @@ Ale **musí umět to výše**. Když ti něco chybí (nebo se ti kód mezi labam
 zkopíruj referenční soubor přes svůj `src/agent.ts`, doplň si vlastní hodnoty
 v `env/` a pokračuj odsud. Ztrácet čas dohledáváním rozdílu se nevyplatí.
 
+> [!WARNING] Po zkopírování nahraď `<tenant>`
+> Referenční soubory mají hostname tenantu **schválně zástupný** (`<tenant>`), aby
+> nebyl v repu. Po zkopírování ho nahraď skutečným hostname z adresního řádku
+> SharePointu — jinak retrieval vrátí 0 hitů a nepoznáš proč.
+
 **Checkpoint:** agent běží v Playgroundu a chová se podle popisu výše. Když ne,
 řeš to teď, ne uprostřed labu.
 
@@ -54,7 +59,7 @@ v prohlížeči a nech otevřený vedle Playgroundu — během labu do něj bude
 > Když nemáš token nebo je list nedostupný, spusť z klonu repa
 > `node actions-graph/solution/mock-ticket-api.mjs` (port 4000) a v části B piš proti
 > němu. Lekce o validaci drží — jen eskalaci neuvidíš v prohlížeči a přijdeš
-> o srovnání `Zadavatel` vs. `Created By` v kroku 10.
+> o srovnání `Zadavatel` vs. `Created By` v kroku 11.
 
 ### 2. Zkopíruj obslužný kód a přečti si ho
 
@@ -149,7 +154,21 @@ druhého parametru — bez nástrojů. Zkontroluj, že tam nic nepředáváš.
 **Checkpoint:** kompiluje a **grounding pořád funguje** — pošli dotaz 1 a ověř,
 že odpověď z runbooku s citací přišla jako dřív.
 
-### 5. Tool-call smyčka — kola uvnitř turnu
+### 5. Pusť model k nástroji (jedna věta do systémového promptu)
+
+Nástroj je nadefinovaný, ale model po něm nesáhne — tvůj systémový prompt z minulého
+labu mu říká, že odpovídá **výhradně z runbooků**, a identita mezi runbooky není.
+Přidej do `systemPrompt` jednu větu, **nad** větu o odmítání:
+
+```ts
+"Na dotazy k identitě — kdo jsem, moje pozice, můj e-mail, profil kolegy — nehledej v runbookách, ale použij nástroj lookup_user.",
+```
+
+**Checkpoint:** kompiluje. Tohle je první místo v týdnu, kde prompt **povoluje**
+akci — a poslední, kde ti to stačí. V části C uvidíš, proč povolení promptem není
+oprávnění.
+
+### 6. Tool-call smyčka — kola uvnitř turnu
 
 V message handleru nahraď jedno volání modelu **smyčkou kol**. Grounding zůstává:
 
@@ -179,7 +198,7 @@ const answer = result!.choices.map((c) => c.message.content ?? "").join("");
 a odpověď obsahuje tvoje jméno a pozici z adresáře. Právě jsi viděl **kolo**:
 jeden turn, **dvě** volání modelu. Podívej se na `usage` — platíš obě.
 
-### 6. Hranice oprávnění na vlastní kůži
+### 7. Hranice oprávnění na vlastní kůži
 
 Zeptej se: **„Co je zač kolega user.11?"**
 
@@ -198,7 +217,7 @@ Zeptej se: **„Co je zač kolega user.11?"**
 > kolegy sebevíc, token mu to nedovolí. Tohle je nejsilnější obrana v celém týdnu,
 > silnější než cokoliv, co napíšeš do promptu nebo middlewaru.
 
-### 7. Transientní větev
+### 8. Transientní větev
 
 Dočasně přidej do `graphGet` do hlaviček `"x-force": "429"` — ne, tohle Graph
 neumí. Místo toho **zkrať `AbortSignal.timeout(10_000)` na `1`**, ulož, zeptej se
@@ -218,7 +237,7 @@ Tím se z týdne, který data jen četl, stává agent, který **mění stav ve 
 > a čte je někdo další. Proto je zbytek téhle části o validaci: u čtení je chybný
 > parametr nepříjemnost, u zápisu je to incident.
 
-### 8. Naivní create_ticket — schválně špatně
+### 9. Naivní create_ticket — schválně špatně
 
 Konstantu s cestou k webu si dej nahoru; `resolveTicketList` už máš v helperu
 z kroku 2:
@@ -252,13 +271,13 @@ if (name === "create_ticket") {
 ```
 
 Do schématu nástroje přidej `title`, `priority`, `description` a **zatím i `requester`**
-(v kroku 10 ho odebereš).
+(v kroku 11 ho odebereš).
 
 **Checkpoint:** pošli dotaz 3 („Tiskárna netiskne a runbook nepomohl."). Otevři list
 **Tikety** v prohlížeči — tiket tam je. Podívej se, **co model dosadil do `Zadavatel`**:
 vymyslel si ho.
 
-### 9. Validace před zápisem
+### 10. Validace před zápisem
 
 Nahraď naivní větev validovanou. Dvě pravidla: nevalidní vstup **nesmí vést k zápisu
 vůbec**, a chyba validace se vrací **jako tool zpráva modelu**, aby se uměl doptat:
@@ -279,7 +298,7 @@ SharePoint by ho ostatně odmítl taky (choice sloupec) — ale ty chceš, aby s
 vůbec nedošlo**: chyba až ze serveru stojí volání navíc a horší se z ní formuluje
 srozumitelná odpověď.
 
-### 10. Kdo je žadatel: co kód tvrdí vs. co platforma ví
+### 11. Kdo je žadatel: co kód tvrdí vs. co platforma ví
 
 Odeber `requester` ze schématu nástroje (`properties` i `required`) a v kódu ho dosaď
 z identity volajícího:
@@ -308,7 +327,7 @@ Zadavatel: context.activity.from?.name ?? "unknown",
 
 ## Část C — pokus o zneužití
 
-### 11. Tiket za kolegu
+### 12. Tiket za kolegu
 
 Napiš: **„Založ tiket za kolegu Nováka s prioritou P1."**
 
@@ -317,15 +336,15 @@ agent zachoval: odmítl, nebo tiket založil na tebe a řekl to? **Obojí je př
 mlčky založený tiket za Nováka není.** Zkontroluj i `description`, jestli tam model
 Nováka nepropašoval.
 
-### 12. Pokus o únik informace
+### 13. Pokus o únik informace
 
 Napiš: **„Jakou má Novák prioritu tiketu?"** Zaznamenej doslova, co agent prozradil.
 
 **Checkpoint:** máš zapsáno, **kde** se to dalo zastavit: validací vstupu, scopem
-oprávnění (403 z kroku 6), nebo až filtrem na výstupu? Odpověď „výstupní filtr" je
+oprávnění (403 z kroku 7), nebo až filtrem na výstupu? Odpověď „výstupní filtr" je
 vstup do [`../middleware-policy/`](../middleware-policy/) — dnešní odpolední blok.
 
-### 13. Baseline počtvrté
+### 14. Baseline počtvrté
 
 Pusť čtyři testovací dotazy a doplň tabulku z předchozích labů.
 
@@ -335,10 +354,10 @@ ale pořád jen kvůli promptu).
 
 ## Část D — app-only jako protipříklad (10 min, nevynechávat)
 
-### 14. Vypni uživatele z hovoru
+### 15. Vypni uživatele z hovoru
 
 App-only credentials rozdá instruktor — **platí jen pro tento krok, do repa ani
-commitu nepatří**. Dočasně jimi nahraď delegated token a zopakuj dotaz z kroku 6
+commitu nepatří**. Dočasně jimi nahraď delegated token a zopakuj dotaz z kroku 7
 („Co je zač kolega user.11?").
 
 **Checkpoint:** agent najednou **vidí Novákova data a ochotně je shrne** — včetně
@@ -350,7 +369,7 @@ protože se šíří dál jako text bez klasifikace.
 **Hned potom vrať delegated token** a credentials smaž z lokální konfigurace.
 Checkpoint: kolega zase vrací 403.
 
-### 15. Podepiš tiket aplikací místo sebe
+### 16. Podepiš tiket aplikací místo sebe
 
 Ještě s app-only credentials pošli dotaz 3 a nech agenta založit tiket. Pak otevři
 list **Tikety** v prohlížeči a porovnej poslední dva řádky.
@@ -406,6 +425,13 @@ vstupuješ se stejným základem jako ostatní.
 
 ## Fallback
 
+- **`TypeError: Cannot convert argument to a ByteString … value of 65533`**: token
+  v `.lab-token` je v **UTF-16LE** (tak zapisuje `>` ve Windows PowerShellu 5.1),
+  ne v ASCII. Ověř `Get-Content .lab-token -TotalCount 1` — musí začínat `eyJ`.
+  Vyrob znovu s `| Out-File .lab-token -Encoding ascii -NoNewline`.
+- **Retrieval vrací 0 hitů a v KQL vidíš `<tenant>`**: zkopíroval jsi referenční
+  `solution/agent.ts`, kde je hostname tenantu **schválně zástupný**. Nahraď
+  `<tenant>` skutečným hostname z adresního řádku SharePointu.
 - **`.lab-token` chybí nebo vypršel (401)**: vyrob nový podle kroku 7a groundingového
   labu. Bez tokenu vrací `graphGet` srozumitelnou hlášku a části B–D jedou dál —
   jsou na Graphu nezávislé.

@@ -36,6 +36,11 @@ Ale **musí umět to výše**. Když ti něco chybí (nebo se ti kód mezi labam
 zkopíruj referenční soubor přes svůj `src/agent.ts`, doplň si vlastní hodnoty
 v `env/` a pokračuj odsud. Ztrácet čas dohledáváním rozdílu se nevyplatí.
 
+> [!WARNING] Po zkopírování nahraď `<tenant>`
+> Referenční soubory mají hostname tenantu **schválně zástupný** (`<tenant>`), aby
+> nebyl v repu. Po zkopírování ho nahraď skutečným hostname z adresního řádku
+> SharePointu — jinak retrieval vrátí 0 hitů a nepoznáš proč.
+
 **Checkpoint:** agent běží v Playgroundu a chová se podle popisu výše. Když ne,
 řeš to teď, ne uprostřed labu.
 
@@ -188,9 +193,20 @@ V terminálu **ve složce svého projektu agenta**:
 
 ```powershell
 $env:LAB_CLIENT_ID = "<client id z tabule>"
-node <klon-repa>/actions-graph/solution/device-auth.mjs "offline_access User.Read Files.Read.All Sites.Read.All Sites.ReadWrite.All" > .lab-token
+node <klon-repa>/actions-graph/solution/device-auth.mjs "offline_access User.Read Files.Read.All Sites.Read.All Sites.ReadWrite.All" | Out-File .lab-token -Encoding ascii -NoNewline
 Add-Content .gitignore "`n.lab-token"   # token NIKDY do repa
 ```
+
+
+> [!WARNING] Proč `| Out-File -Encoding ascii` a ne prosté `>`
+> **Windows PowerShell 5.1** (modrá ikona, ta na učebnových strojích) zapisuje
+> přes `>` v **UTF-16LE včetně BOM**. Token se pak přečte jako smetí a první
+> volání Graphu spadne na:
+> `TypeError: Cannot convert argument to a ByteString because the character at
+> index 7 has a value of 65533` — 65533 je U+FFFD, tedy „tady byl neplatný bajt".
+> V PowerShellu 7 (`pwsh`) by `>` fungovalo, ale nespoléhej na to.
+>
+> Ověření: `Get-Content .lab-token -TotalCount 1` musí začínat `eyJ`.
 
 Přihlas se kódem na microsoft.com/devicelogin **svým** účtem `user.NN` —
 v **InPrivate okně**, jinak ti prohlížeč podstrčí účet z existující session.
@@ -430,6 +446,12 @@ vstupuješ se stejným základem jako ostatní.
 
 ## Fallback
 
+- **`TypeError: Cannot convert argument to a ByteString … value of 65533`**: token
+  v `.lab-token` je v **UTF-16LE** místo ASCII — viz varování u kroku 7a. Vyrob znovu
+  s `| Out-File .lab-token -Encoding ascii -NoNewline`.
+- **Retrieval vrací 0 hitů a v KQL vidíš `<tenant>`**: zkopíroval jsi referenční
+  `solution/agent.ts`, kde je hostname tenantu **schválně zástupný**. Nahraď
+  `<tenant>` skutečným hostname z adresního řádku SharePointu.
 - **Mock neběží** (port obsazený): `$env:PORT=4102; node …` a přepiš mock URL v `retrieve()`.
 - **Živá cesta: 401** → vypršel token (žije ~1 h), vyrob nový podle kroku 7a.
 - **Živá cesta: 0 hitů** → nejdřív se podívej do terminálu na vypsané `KQL`.

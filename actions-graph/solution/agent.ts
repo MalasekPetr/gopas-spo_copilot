@@ -36,6 +36,7 @@ const systemPrompt = [
   "Doplňující otázky pokládej jen když podklady žádný použitelný postup neobsahují.",
   "Když odpověď v runbookách není, řekni to a nabídni eskalaci na technika.",
   "Nikdy si nedomýšlej postup ani čísla.",
+  "Na dotazy k identitě — kdo jsem, moje pozice, můj e-mail, profil kolegy — nehledej v runbookách, ale použij nástroj lookup_user.",
   "Dotazy mimo IT podporu — mzdy, personalistika, údaje o kolezích — odmítni.",
 ].join(" ");
 
@@ -140,7 +141,13 @@ async function callModel(
 // (respektuje ACL volajiciho); jinak lokalni mock. Soubor, ne env promenna -
 // F5 spousti vlastni shelly a env z terminalu nevidi.
 function labToken(): string | undefined {
-  return fs.existsSync(".lab-token") ? fs.readFileSync(".lab-token", "utf8").trim() : undefined;
+  if (!fs.existsSync(".lab-token")) return undefined;
+  const raw = fs.readFileSync(".lab-token");
+  // Windows PowerShell 5.1 zapisuje pres '>' v UTF-16LE. Cteni jako utf8 by
+  // z tokenu udelalo U+FFFD a fetch by hlavicku Authorization odmitl
+  // ("Cannot convert argument to a ByteString"). Detekujeme BOM a dekodujeme spravne.
+  const text = raw[0] === 0xff && raw[1] === 0xfe ? raw.toString("utf16le") : raw.toString("utf8");
+  return text.replace(/^\uFEFF/, "").trim() || undefined;
 }
 
 // Knihovna, na kterou grounding omezujeme. Scoping = mene sumu, min tokenu, nizsi cena.

@@ -34,6 +34,8 @@
 - **Kalkulačka v části D je jediný artefakt kurzu mimo repo.** Je publikovaná jako
   soukromá stránka — **před blokem ji musíš nasdílet** (menu Sdílet na stránce),
   jinak ji studenti neotevřou. Odkaz: https://claude.ai/code/artifact/4f481142-dcf1-47e4-9590-844063a94314
+  Záloha: zdroj je v repu jako [`../../perf-cost-lifecycle/roi-calculator.html`](../perf-cost-lifecycle/roi-calculator.html),
+  dá se otevřít z klonu i bez internetu (jen fonty se nenačtou).
 - V části D nejdřív nech všechny zadat **svoje** parametry a teprve pak ukaž tři
   naměřená čísla z kurzu (78,5 % reasoning / 12× rozptyl / 0,2 % cache). V opačném
   pořadí si je jen opíšou a nepřekvapí je to.

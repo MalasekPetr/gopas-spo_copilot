@@ -5,6 +5,15 @@
 
 Co agent stojí, jak to snížit, a jak ho dostat z dev do prod a zpátky, když se to pokazí.
 
+> [!NOTE] Dva kalkulátory, jeden vizuální jazyk
+> - [`cost-visual.html`](cost-visual.html) — **plánování dopředu**: presety, what-if,
+>   „co když 2000 uživatelů". Odkazovaný z [`../../actions-graph/explainer-deterministic-first.md`](../actions-graph/explainer-deterministic-first.md).
+> - [`roi-calculator.html`](roi-calculator.html) — **vyhodnocení zpětně**: načte studentův
+>   `usage-log.jsonl` a dopočítá návratnost. Publikovaná verze: [odkaz](https://claude.ai/code/artifact/4f481142-dcf1-47e4-9590-844063a94314).
+>
+> Sdílejí tokeny i barvy řad (`--c-in` / `--c-out` / `--c-reason`), ale mají **dvě
+> kopie výpočtu i ceníku**. Po kurzu sloučit do jedné stránky se dvěma režimy.
+
 > [!NOTE] Kde se tenhle modul v kurzu vrací
 > Nákladová část žije v **capstone, část D** — studenti tam počítají provoz a ROI
 > svého zadání v [kalkulačce](https://claude.ai/code/artifact/4f481142-dcf1-47e4-9590-844063a94314).

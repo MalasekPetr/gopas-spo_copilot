@@ -1,0 +1,877 @@
+<title>Kolik stojí váš agent</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&family=Zilla+Slab:wght@500;600;700&display=swap">
+
+<style>
+  /* Tokeny prevzate z perf-cost-lifecycle/cost-visual.html - jeden vizualni jazyk
+     pro oba kalkulatory kurzu. Doplneny jen semanticke --good / --bad. */
+  :root {
+    --ground:#F4F6F7; --surface:#FFFFFF; --surface-2:#EDF1F2; --line:#D3DCDF;
+    --ink:#101A1D; --ink-2:#3D4E53; --muted:#66787E;
+    --accent:#00849E; --accent-soft:#E2F0F3;
+    --c-in:#00849E; --c-out:#CE7C00; --c-reason:#96407A;
+    --good:#1E7A5F; --bad:#B4432C;
+    --shadow:0 1px 2px rgba(16,26,29,.06), 0 8px 24px rgba(16,26,29,.05);
+    --r:10px;
+    --f-display:"Zilla Slab", Georgia, serif;
+    --f-sans:"IBM Plex Sans", system-ui, -apple-system, sans-serif;
+    --f-mono:"IBM Plex Mono", ui-monospace, Consolas, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ground:#131A1D; --surface:#1A2327; --surface-2:#212C31; --line:#2E3C42;
+      --ink:#E8EEF0; --ink-2:#BCCBD0; --muted:#8B9EA4;
+      --accent:#0093AE; --accent-soft:#10333B;
+      --c-in:#0093AE; --c-out:#C0821F; --c-reason:#A85A82;
+      --good:#4FB396; --bad:#DE8168;
+      --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px rgba(0,0,0,.3);
+    }
+  }
+  :root[data-theme="dark"] {
+    --ground:#131A1D; --surface:#1A2327; --surface-2:#212C31; --line:#2E3C42;
+    --ink:#E8EEF0; --ink-2:#BCCBD0; --muted:#8B9EA4;
+    --accent:#0093AE; --accent-soft:#10333B;
+    --c-in:#0093AE; --c-out:#C0821F; --c-reason:#A85A82;
+    --good:#4FB396; --bad:#DE8168;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px rgba(0,0,0,.3);
+  }
+
+  *{box-sizing:border-box}
+  body{
+    margin:0; background:var(--ground); color:var(--ink);
+    font-family:var(--f-sans); font-size:15px; line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1180px; margin:0 auto; padding:28px 22px 72px}
+
+  /* ---------- header ---------- */
+  .masthead{
+    display:flex; flex-wrap:wrap; align-items:flex-end; justify-content:space-between;
+    gap:16px 24px; padding-bottom:22px; margin-bottom:24px; border-bottom:1px solid var(--line);
+  }
+  h1{
+    font-family:var(--f-display); font-weight:700; font-size:clamp(28px,4vw,40px);
+    letter-spacing:-.01em; margin:0; text-wrap:balance; line-height:1.1;
+  }
+  h1 em{font-style:normal; color:var(--accent)}
+  .standfirst{color:var(--muted); font-size:13.5px; margin:6px 0 0; max-width:62ch}
+  .stamp{
+    font-family:var(--f-mono); font-size:11.5px; color:var(--muted);
+    text-align:right; line-height:1.7; letter-spacing:.01em; white-space:nowrap;
+  }
+  .stamp b{display:block; color:var(--accent); font-weight:600}
+
+  /* ---------- layout ---------- */
+  .deck{display:grid; grid-template-columns:minmax(0,1.3fr) minmax(0,1fr); gap:20px; align-items:start}
+  @media (max-width:920px){
+    .deck{grid-template-columns:1fr}
+    .deck > aside{order:-1}
+  }
+  section{margin-top:46px}
+  h2{
+    font-family:var(--f-display); font-weight:600; font-size:clamp(21px,3vw,28px);
+    line-height:1.15; margin:0 0 6px; text-wrap:balance; letter-spacing:-.005em;
+  }
+  .kicker{
+    font-size:11px; font-weight:600; letter-spacing:.09em; text-transform:uppercase;
+    color:var(--accent); margin:0 0 8px;
+  }
+  .lede{color:var(--ink-2); font-size:14px; max-width:64ch; margin:0 0 20px}
+
+  /* ---------- panely ---------- */
+  .panel{
+    background:var(--surface); border:1px solid var(--line); border-radius:var(--r);
+    padding:18px 18px 20px; box-shadow:var(--shadow);
+  }
+  .panel + .panel{margin-top:18px}
+  .panel > h3{
+    font-family:var(--f-sans); font-size:11px; font-weight:600; letter-spacing:.09em;
+    text-transform:uppercase; color:var(--muted); margin:0 0 14px;
+  }
+
+  .field{display:flex; flex-direction:column; gap:5px; margin-bottom:15px}
+  .field:last-child{margin-bottom:0}
+  .field > label{
+    font-size:13px; color:var(--ink-2);
+    display:flex; justify-content:space-between; align-items:baseline; gap:10px;
+  }
+  .field .hint{font-size:11.5px; color:var(--muted)}
+  .field .val{
+    font-family:var(--f-mono); font-size:13px; font-weight:600; color:var(--ink);
+    font-variant-numeric:tabular-nums;
+  }
+  .row{display:grid; grid-template-columns:1fr 1fr; gap:9px 12px}
+  @media (max-width:520px){ .row{grid-template-columns:1fr} }
+
+  input[type="number"], select{
+    width:100%; font-family:var(--f-mono); font-size:12.5px; padding:7px 9px;
+    border:1px solid var(--line); border-radius:6px; background:var(--surface-2);
+    color:var(--ink); font-variant-numeric:tabular-nums;
+  }
+  select{font-family:var(--f-sans); font-size:13px}
+  input:focus-visible, select:focus-visible, button:focus-visible{
+    outline:2px solid var(--accent); outline-offset:2px;
+  }
+
+  input[type=range]{
+    -webkit-appearance:none; appearance:none; width:100%; height:22px;
+    background:transparent; cursor:pointer; display:block;
+  }
+  input[type=range]::-webkit-slider-runnable-track{height:4px; background:var(--surface-2); border-radius:99px}
+  input[type=range]::-moz-range-track{height:4px; background:var(--surface-2); border-radius:99px}
+  input[type=range]::-webkit-slider-thumb{
+    -webkit-appearance:none; width:16px; height:16px; border-radius:50%;
+    background:var(--accent); border:2px solid var(--surface); margin-top:-6px;
+    box-shadow:0 0 0 1px var(--line);
+  }
+  input[type=range]::-moz-range-thumb{
+    width:16px; height:16px; border-radius:50%; background:var(--accent);
+    border:2px solid var(--surface); box-shadow:0 0 0 1px var(--line);
+  }
+  input[type=range]:focus-visible{outline:2px solid var(--accent); outline-offset:4px; border-radius:4px}
+
+  .seg{display:flex; gap:4px; background:var(--surface-2); padding:4px; border-radius:8px}
+  .seg button{
+    flex:1; border:0; background:transparent; color:var(--ink-2); cursor:pointer;
+    font-family:var(--f-mono); font-size:12px; padding:7px 6px; border-radius:6px;
+    transition:background .12s, color .12s;
+  }
+  .seg button[aria-pressed="true"]{background:var(--surface); color:var(--ink); font-weight:600; box-shadow:var(--shadow)}
+
+  /* ---------- import ---------- */
+  .drop{
+    display:flex; align-items:center; gap:14px; width:100%;
+    border:1.5px dashed var(--line); border-radius:8px; padding:14px 16px;
+    background:var(--surface-2); cursor:pointer;
+    transition:border-color .12s, background .12s;
+  }
+  .drop:hover, .drop.over{border-color:var(--accent); background:var(--accent-soft)}
+  .drop input{display:none}
+  .drop .mark{
+    flex:0 0 auto; width:32px; height:32px; display:grid; place-items:center;
+    border-radius:50%; background:var(--surface); color:var(--accent);
+    border:1px solid var(--line); font-size:15px;
+  }
+  .drop .txt{display:flex; flex-direction:column; gap:2px; min-width:0}
+  .drop .txt b{font-size:13.5px; color:var(--ink); font-weight:600}
+  .drop .txt span{font-size:12px; color:var(--muted); line-height:1.45}
+
+  .privacy{font-size:11.5px; line-height:1.55; color:var(--muted); margin:11px 0 0}
+  .privacy b{color:var(--ink-2)}
+  .err{color:var(--bad); font-size:12.5px; margin:9px 0 0}
+
+  .imported{margin-top:18px; display:none}
+  .imported.on{display:block}
+  .imported .head{
+    display:flex; justify-content:space-between; align-items:center; gap:12px;
+    padding-bottom:9px; margin-bottom:14px; border-bottom:1px solid var(--line);
+  }
+  .imported .head span{
+    font-size:11px; font-weight:600; letter-spacing:.09em; text-transform:uppercase;
+    color:var(--accent);
+  }
+  .imported .head button{
+    font-family:var(--f-sans); font-size:12px; padding:5px 10px;
+    border:1px solid var(--line); border-radius:6px;
+    background:var(--surface); color:var(--ink-2); cursor:pointer;
+    transition:border-color .12s, color .12s;
+  }
+  .imported .head button:hover{border-color:var(--accent); color:var(--ink)}
+
+  .stats{display:grid; grid-template-columns:repeat(3,1fr); gap:9px}
+  .stats div{background:var(--surface-2); border-radius:8px; padding:11px 13px}
+  .stats b{
+    display:block; font-family:var(--f-mono); font-size:19px; font-weight:600;
+    color:var(--ink); font-variant-numeric:tabular-nums; line-height:1.15;
+  }
+  .stats span{display:block; font-size:11px; color:var(--muted); margin-top:2px; line-height:1.35}
+  @media (max-width:460px){ .stats{grid-template-columns:1fr} }
+
+  .spread{display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:12px}
+  @media (max-width:460px){ .spread{grid-template-columns:1fr} }
+  .sp{padding:11px 13px; border-radius:8px; background:var(--surface-2); border-left:3px solid var(--line)}
+  .sp.max{border-left-color:var(--c-reason)}
+  .sp.min{border-left-color:var(--good)}
+  .sp .lbl{font-size:10.5px; letter-spacing:.07em; text-transform:uppercase; color:var(--muted)}
+  .sp .amt{
+    display:block; font-family:var(--f-mono); font-size:15px; font-weight:600;
+    color:var(--ink); font-variant-numeric:tabular-nums; margin:3px 0 2px;
+  }
+  .sp .meta{font-size:11.5px; color:var(--muted); display:block}
+  .sp .meta q{
+    font-family:var(--f-mono); color:var(--ink-2); quotes:"\201E" "\201C";
+    display:block; margin-top:2px; overflow-wrap:anywhere;
+  }
+  .spread-note{
+    margin:12px 0 0; padding:11px 13px; border-radius:8px; background:var(--accent-soft);
+    font-size:13px; color:var(--ink-2); line-height:1.5;
+  }
+  .spread-note b{color:var(--ink); font-family:var(--f-mono)}
+
+  /* ---------- odecet ---------- */
+  .readout{
+    position:sticky; top:18px;
+    background:var(--surface); border:1px solid var(--line); border-radius:var(--r);
+    padding:22px 24px 20px; box-shadow:var(--shadow);
+  }
+  @media (max-width:920px){ .readout{position:static} }
+  .readout .cap{
+    font-size:11px; font-weight:600; letter-spacing:.09em; text-transform:uppercase;
+    color:var(--muted); margin:0 0 2px;
+  }
+  .bignum{
+    font-family:var(--f-mono); font-weight:600; font-size:clamp(38px,6.5vw,60px);
+    line-height:1; letter-spacing:-.02em; color:var(--ink);
+    font-variant-numeric:tabular-nums; margin:0;
+    display:flex; align-items:baseline; gap:10px;
+  }
+  .bignum .unit{font-size:.32em; font-weight:500; color:var(--muted); letter-spacing:0; margin:0}
+  .subnum{
+    font-family:var(--f-mono); font-size:12px; color:var(--muted);
+    margin:8px 0 0; font-variant-numeric:tabular-nums;
+  }
+
+  .ledger{margin-top:18px; padding-top:14px; border-top:1px solid var(--line)}
+  .ledger dl{display:grid; grid-template-columns:1fr auto; margin:0}
+  .ledger dt, .ledger dd{padding:7px 0; border-bottom:1px solid var(--line); margin:0; font-size:13px}
+  .ledger dt{color:var(--ink-2)}
+  .ledger dd{
+    font-family:var(--f-mono); font-variant-numeric:tabular-nums; text-align:right;
+    color:var(--ink); font-weight:600;
+  }
+  .ledger .strong dt, .ledger .strong dd{font-size:14px; padding-top:12px; border-bottom:0}
+  .ledger .strong dt{color:var(--ink); font-weight:600}
+  .ledger .strong dd{color:var(--accent)}
+  .pos{color:var(--good) !important}
+  .neg{color:var(--bad) !important}
+
+  /* ---------- pruhy ---------- */
+  .bar{display:flex; height:38px; border-radius:6px; overflow:hidden; gap:2px; margin:12px 0 12px}
+  .bar > span{display:block; min-width:2px; transition:width .18s ease}
+  .legend{display:flex; flex-wrap:wrap; gap:8px 20px; font-size:12.5px; color:var(--ink-2)}
+  .legend i{display:inline-block; width:11px; height:11px; border-radius:3px; margin-right:7px}
+  .legend b{font-family:var(--f-mono); font-weight:600; color:var(--ink); font-variant-numeric:tabular-nums}
+
+  .versus{display:grid; gap:12px; margin:18px 0 4px}
+  .vrow{display:grid; grid-template-columns:200px minmax(0,1fr); gap:14px; align-items:center}
+  @media (max-width:560px){ .vrow{grid-template-columns:1fr; gap:4px} }
+  .vrow .lbl{font-size:13px; color:var(--ink-2)}
+  .vtrack{background:var(--surface-2); border-radius:6px; height:34px; display:flex; align-items:center; gap:10px; padding-right:12px}
+  .vfill{height:34px; border-radius:6px; transition:width .18s ease; min-width:4px; flex:none}
+  .vval{
+    font-family:var(--f-mono); font-size:12.5px; font-weight:600; color:var(--ink);
+    white-space:nowrap; font-variant-numeric:tabular-nums;
+  }
+
+  /* ---------- dukazy ---------- */
+  .facts{display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:12px}
+  .fact{background:var(--surface); border:1px solid var(--line); border-radius:var(--r); padding:18px 18px 20px; box-shadow:var(--shadow)}
+  .fact .n{
+    font-family:var(--f-mono); font-size:34px; font-weight:600; line-height:1;
+    color:var(--accent); font-variant-numeric:tabular-nums; letter-spacing:-.02em;
+  }
+  .fact .t{font-size:13px; color:var(--ink-2); margin-top:9px; line-height:1.5}
+  .fact .t b{color:var(--ink); font-weight:600}
+
+  .tablewrap{overflow-x:auto; border:1px solid var(--line); border-radius:var(--r); background:var(--surface)}
+  .imported .tablewrap{margin-top:12px}
+  table{border-collapse:collapse; width:100%; font-size:13px; min-width:540px}
+  .imported table{min-width:0}
+  th,td{text-align:left; padding:9px 14px; border-bottom:1px solid var(--line)}
+  th.num,td.num{text-align:right}
+  th{font-size:11px; letter-spacing:.05em; text-transform:uppercase; color:var(--muted); font-weight:600}
+  td.num{font-family:var(--f-mono); font-variant-numeric:tabular-nums}
+  tbody tr:last-child td{border-bottom:0}
+
+  .note{
+    margin-top:16px; padding:11px 13px; border-radius:8px; background:var(--accent-soft);
+    font-size:13px; color:var(--ink-2); line-height:1.55; max-width:78ch;
+  }
+  .note b{color:var(--ink)}
+
+  footer{
+    margin-top:48px; padding-top:18px; border-top:1px solid var(--line);
+    font-size:12px; color:var(--muted); line-height:1.7;
+    display:flex; flex-wrap:wrap; gap:6px 26px; justify-content:space-between;
+  }
+  code{font-family:var(--f-mono); font-size:.92em; background:var(--surface-2); padding:1px 5px; border-radius:4px}
+
+  @media (prefers-reduced-motion: reduce){ *{transition:none !important} }
+</style>
+
+<div class="wrap">
+
+  <header class="masthead">
+    <div>
+      <h1>Kolik stojí <em>váš</em> agent</h1>
+      <p class="standfirst">Zadejte parametry svého nasazení. Výchozí hodnoty nejsou odhad — jsou to čísla naměřená na Support Asistentovi během tohoto kurzu.</p>
+    </div>
+    <div class="stamp">
+      Změřeno 27. 8. 2026<br>
+      <b>47 turnů · 95 volání modelu</b>
+      gpt-5-mini · westeurope
+    </div>
+  </header>
+
+  <div class="deck">
+
+    <div>
+      <div class="panel">
+        <h3>Vlastní data</h3>
+
+        <label class="drop" id="drop" for="file">
+          <span class="mark" aria-hidden="true">&darr;</span>
+          <span class="txt">
+            <b>Přetáhni sem <code>usage-log.jsonl</code></b>
+            <span>Nebo klikni a vyber soubor. Kalkulačka z něj vezme skutečné tokeny, kola i cache tvého agenta.</span>
+          </span>
+          <input type="file" id="file" accept=".jsonl,.json,.txt,application/json,text/plain">
+        </label>
+
+        <p class="privacy">Soubor se <b>nikam neodesílá</b> — čte se v tvém prohlížeči. Log ale obsahuje prvních 60 znaků dotazů, tedy i to, co do agenta psali lidé. Nesdílej ho dál.</p>
+        <p class="err" id="err" hidden></p>
+
+        <div class="imported" id="imported">
+          <div class="head">
+            <span>Načteno z tvého logu</span>
+            <button type="button" id="reset">Zpět na data z kurzu</button>
+          </div>
+
+          <div class="stats">
+            <div><b id="stTurns">—</b><span>turnů</span></div>
+            <div><b id="stCalls">—</b><span>volání modelu</span></div>
+            <div><b id="stReas">—</b><span>výstupu je reasoning</span></div>
+          </div>
+
+          <div class="tablewrap">
+            <table>
+              <thead><tr><th>Modul</th><th class="num">Turnů</th><th class="num">Kol/turn</th><th class="num">In/turn</th><th class="num">Out/turn</th></tr></thead>
+              <tbody id="impRows"></tbody>
+            </table>
+          </div>
+
+          <div class="spread">
+            <div class="sp max">
+              <span class="lbl">Nejdražší turn</span>
+              <b class="amt" id="spMaxAmt">—</b>
+              <span class="meta" id="spMaxMeta"></span>
+            </div>
+            <div class="sp min">
+              <span class="lbl">Nejlevnější turn</span>
+              <b class="amt" id="spMinAmt">—</b>
+              <span class="meta" id="spMinMeta"></span>
+            </div>
+          </div>
+
+          <p class="spread-note" id="spNote"></p>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h3>Model a provoz</h3>
+
+        <div class="field">
+          <label for="model">Model</label>
+          <select id="model">
+            <option value="gpt-5-nano">gpt-5-nano (Global)</option>
+            <option value="gpt-5-mini" selected>gpt-5-mini (DataZone)</option>
+            <option value="gpt-5">gpt-5 (DataZone)</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="effort">Reasoning effort<span class="hint">mění počet výstupních tokenů</span></label>
+          <div class="seg" id="effort" role="group" aria-label="Reasoning effort">
+            <button type="button" data-effort="low">low</button>
+            <button type="button" data-effort="default" aria-pressed="true">default</button>
+            <button type="button" data-effort="high">high</button>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="field">
+            <label for="users">Uživatelů <span class="val" id="usersV">200</span></label>
+            <input type="range" id="users" min="10" max="5000" step="10" value="200">
+          </div>
+          <div class="field">
+            <label for="perday">Dotazů / uživatel / den <span class="val" id="perdayV">1,0</span></label>
+            <input type="range" id="perday" min="0.1" max="10" step="0.1" value="1">
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="days">Pracovních dnů v měsíci <span class="val" id="daysV">21</span></label>
+          <input type="range" id="days" min="1" max="31" step="1" value="21">
+        </div>
+      </div>
+
+      <div class="panel">
+        <h3>Tokeny na turn</h3>
+
+        <div class="row">
+          <div class="field">
+            <label for="tin">Vstup <span class="hint">in</span></label>
+            <input type="number" id="tin" min="0" step="10" value="1065">
+          </div>
+          <div class="field">
+            <label for="tout">Výstup <span class="hint">out, včetně reasoning</span></label>
+            <input type="number" id="tout" min="0" step="10" value="1284">
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="cache">Cache hit na vstupu <span class="val" id="cacheV">21 %</span></label>
+          <input type="range" id="cache" min="0" max="95" step="1" value="21">
+        </div>
+
+        <div class="field">
+          <label for="kola">Kol na turn <span class="val" id="kolaV">2,02</span></label>
+          <input type="range" id="kola" min="1" max="6" step="0.01" value="2.02">
+          <span class="hint">Informativní: naměřený průměr. Tokeny výše už všechna kola zahrnují.</span>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h3>Návratnost</h3>
+
+        <div class="field">
+          <label for="defl">Podíl dotazů, které agent vyřeší bez člověka <span class="val" id="deflV">40 %</span></label>
+          <input type="range" id="defl" min="0" max="100" step="1" value="40">
+        </div>
+
+        <div class="row">
+          <div class="field">
+            <label for="handle">Minut na tiket <span class="hint">člověk</span></label>
+            <input type="number" id="handle" min="1" step="1" value="12">
+          </div>
+          <div class="field">
+            <label for="rate">Sazba Kč / hod <span class="hint">interní náklad</span></label>
+            <input type="number" id="rate" min="0" step="50" value="650">
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="field">
+            <label for="build">Vývoj <span class="hint">člověkodnů</span></label>
+            <input type="number" id="build" min="0" step="1" value="15">
+          </div>
+          <div class="field">
+            <label for="daily">Sazba Kč / MD <span class="hint">vývoj a provoz</span></label>
+            <input type="number" id="daily" min="0" step="500" value="12000">
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="fx">Kurz Kč / USD <span class="val" id="fxV">23,00</span></label>
+          <input type="range" id="fx" min="15" max="30" step="0.5" value="23">
+        </div>
+      </div>
+    </div>
+
+    <aside class="readout" aria-live="polite">
+      <p class="cap">Provoz modelu za měsíc</p>
+      <p class="bignum"><span id="outMonth">—</span><span class="unit">Kč</span></p>
+      <p class="subnum" id="outMonthUsd">—</p>
+
+      <div class="ledger">
+        <dl>
+          <dt>Turnů za měsíc</dt><dd id="outTurns">—</dd>
+          <dt>Cena za jeden turn</dt><dd id="outTurn">—</dd>
+          <dt>Provoz za rok</dt><dd id="outYear">—</dd>
+        </dl>
+        <dl>
+          <dt>Ušetřená práce / měsíc</dt><dd class="pos" id="outSave">—</dd>
+          <dt>Čistý přínos / měsíc</dt><dd class="pos" id="outNet">—</dd>
+          <dt>Jednorázový vývoj</dt><dd id="outBuild">—</dd>
+        </dl>
+        <dl class="strong" style="margin-top:6px">
+          <dt id="paybackLbl">Návratnost vývoje</dt><dd id="outPayback">—</dd>
+        </dl>
+      </div>
+
+      <p class="subnum" id="outFte">—</p>
+    </aside>
+  </div>
+
+  <section>
+    <p class="kicker">Rozpad účtu</p>
+    <h2>Za co ve skutečnosti platíte</h2>
+    <p class="lede">U reasoning modelu nejde o vstup. Drtivou většinu faktury tvoří výstupní tokeny — a jejich větší část jsou <b>reasoning tokeny, které uživatel nikdy neuvidí</b>.</p>
+
+    <div class="bar" id="splitBar">
+      <span style="background:var(--c-in); width:8%"></span>
+      <span style="background:var(--c-out); width:14%"></span>
+      <span style="background:var(--c-reason); width:78%"></span>
+    </div>
+    <div class="legend">
+      <span><i style="background:var(--c-in)"></i>Vstup <b id="lgIn">—</b></span>
+      <span><i style="background:var(--c-out)"></i>Viditelný výstup <b id="lgOut">—</b></span>
+      <span><i style="background:var(--c-reason)"></i>Reasoning <b id="lgReas">—</b></span>
+    </div>
+
+    <p class="note"><b>Praktický důsledek:</b> optimalizace promptu na kratší vstup vám ušetří jednotky procent. Snížení <code>reasoning_effort</code> nebo výměna modelu vám ušetří násobky. Než začnete zkracovat systémový prompt, změřte, kam peníze opravdu tečou.</p>
+  </section>
+
+  <section>
+    <p class="kicker">Agent vs. člověk</p>
+    <h2>Co se vyplatí a od kdy</h2>
+
+    <div class="versus">
+      <div class="vrow">
+        <div class="lbl">Provoz agenta / měsíc</div>
+        <div class="vtrack"><div class="vfill" id="vAgent" style="background:var(--c-out); width:6%"></div><span class="vval" id="vAgentV">—</span></div>
+      </div>
+      <div class="vrow">
+        <div class="lbl">Ušetřená lidská práce / měsíc</div>
+        <div class="vtrack"><div class="vfill" id="vHuman" style="background:var(--good); width:100%"></div><span class="vval" id="vHumanV">—</span></div>
+      </div>
+    </div>
+
+    <p class="note" id="realityNote"><b>Kontrola reality:</b> —</p>
+  </section>
+
+  <section>
+    <p class="kicker">Naměřeno v učebně</p>
+    <h2>Tři čísla, která překvapí</h2>
+
+    <div class="facts">
+      <div class="fact">
+        <div class="n">78,5 %</div>
+        <div class="t">celé faktury spolkly <b>reasoning tokeny</b> — text, který se nikomu nezobrazil</div>
+      </div>
+      <div class="fact">
+        <div class="n">12×</div>
+        <div class="t">rozdíl v ceně mezi nejlevnějším a nejdražším během <b>téhož dotazu</b> („Tiskárna netiskne…")</div>
+      </div>
+      <div class="fact">
+        <div class="n">0,2 %</div>
+        <div class="t">ušetřila <b>cache</b>, přestože pokryla 21 % vstupu — vstup je prostě levný</div>
+      </div>
+    </div>
+
+    <p class="lede" style="margin-top:26px">Naměřeno na 47 turnech a 95 voláních modelu během dne 3 a 4, model <code>gpt-5-mini</code>:</p>
+
+    <div class="tablewrap">
+      <table>
+        <thead>
+          <tr><th>Modul</th><th class="num">Turnů</th><th class="num">Kol</th><th class="num">Kol / turn</th><th class="num">In / turn</th><th class="num">Out / turn</th><th class="num">USD / turn</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>knowledge-grounding</td><td class="num">6</td><td class="num">8</td><td class="num">1,33</td><td class="num">270</td><td class="num">492</td><td class="num">0,00102</td></tr>
+          <tr><td>actions-graph</td><td class="num">35</td><td class="num">75</td><td class="num">2,14</td><td class="num">1 172</td><td class="num">1 383</td><td class="num">0,00290</td></tr>
+          <tr><td>middleware-policy</td><td class="num">6</td><td class="num">12</td><td class="num">2,00</td><td class="num">1 237</td><td class="num">1 495</td><td class="num">0,00313</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p class="note"><b>Proč skok mezi prvním a druhým modulem:</b> nástroje. Grounding potřeboval jedno až dvě kola, agent s nástroji dvě až tři — a každé kolo nese celou dosavadní konverzaci znovu na vstupu. <b>Cena neroste s délkou odpovědi, ale s počtem kol.</b></p>
+  </section>
+
+  <section>
+    <p class="kicker">Obhajoba</p>
+    <h2>Jak z toho udělat argument</h2>
+    <p class="lede">Věta „použili jsme reasoning model, protože je to agent" není obhajoba. Tohle je:</p>
+
+    <div class="tablewrap">
+      <table>
+        <thead>
+          <tr><th><code>reasoning_effort</code></th><th class="num">Reasoning tokenů</th><th class="num">Výstup celkem</th><th>Citace 4/4</th><th>Odmítnutí mzdy 4/4</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><b>low</b></td><td class="num">80</td><td class="num">277</td><td>ano</td><td>ano</td></tr>
+          <tr><td>default</td><td class="num">560</td><td class="num">770</td><td>ano</td><td>ano</td></tr>
+          <tr><td>high</td><td class="num">2 112</td><td class="num">2 306</td><td>ano</td><td>ne</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p class="note"><b>Na téhle úloze <code>low</code> stačí a je 2,8× levnější na výstupu.</b> Ale pozor na detail, kvůli kterému se to nedá zobecnit: dokud prompt říkal vágní „s citací", <code>low</code> citaci zahodil. Teprve když prompt formát vynutil explicitně, držel 4/4. <b>Reasoning kompenzoval nepřesný prompt</b> — a vy jste to platili. Napište do architektury: „reasoning na úrovni X, protože bez něj selhává třída případů Y."</p>
+  </section>
+
+  <footer>
+    <span>Ceny z <code>prices-snapshot.json</code> · pořízeno 25. 8. 2026 · region westeurope · USD za 1M tokenů</span>
+    <span>Kurz SPO_COPILOT · GOPAS</span>
+  </footer>
+</div>
+
+<script>
+  const PRICES = {
+    "gpt-5-nano": { in: 0.0439, cached: 0.0044, out: 0.3514 },
+    "gpt-5-mini": { in: 0.2416, cached: 0.0242, out: 1.9330 },
+    "gpt-5":      { in: 1.2081, cached: 0.1208, out: 9.6648 }
+  };
+
+  // Namereny podil reasoningu na vystupu (D3+D4): 51 328 / 60 327
+  let REASONING_SHARE = 0.851;
+  // Namerene vystupni tokeny na turn pri default effortu
+  const OUT_BASE = 1284;
+  // Prepocet z tabulky effortu (277 / 770 / 2306 out na jedno volani)
+  const EFFORT = { low: 277 / 770, default: 1, high: 2306 / 770 };
+
+  const $ = id => document.getElementById(id);
+  const kc = n => n.toLocaleString("cs-CZ", { maximumFractionDigits: 0 }) + " Kč";
+  const num = (n, d = 0) => n.toLocaleString("cs-CZ", { minimumFractionDigits: d, maximumFractionDigits: d });
+  const usd = n => "$" + n.toLocaleString("en-US", { minimumFractionDigits: n < 1 ? 5 : 2, maximumFractionDigits: n < 1 ? 5 : 2 });
+
+  const IDS = ["model","users","perday","days","tin","tout","cache","kola","defl","handle","rate","build","daily","fx"];
+  let effort = "default";
+
+  function save() {
+    try {
+      const s = { effort };
+      IDS.forEach(i => s[i] = $(i).value);
+      localStorage.setItem("kalkulacka-agent", JSON.stringify(s));
+    } catch (e) { /* privatni okno, zablokovane uloziste - nevadi */ }
+  }
+
+  function load() {
+    try {
+      const raw = localStorage.getItem("kalkulacka-agent");
+      if (!raw) return;
+      const s = JSON.parse(raw);
+      IDS.forEach(i => { if (s[i] !== undefined) $(i).value = s[i]; });
+      if (s.effort) effort = s.effort;
+      document.querySelectorAll("#effort button").forEach(b =>
+        b.setAttribute("aria-pressed", String(b.dataset.effort === effort)));
+    } catch (e) { /* poskozeny nebo nedostupny zaznam - jedeme s vychozimi */ }
+  }
+
+  function compute() {
+    const p = PRICES[$("model").value];
+    const users = +$("users").value;
+    const perday = +$("perday").value;
+    const days = +$("days").value;
+    const tin = Math.max(0, +$("tin").value || 0);
+    const tout = Math.max(0, +$("tout").value || 0);
+    const cache = +$("cache").value / 100;
+    const defl = +$("defl").value / 100;
+    const handle = Math.max(0, +$("handle").value || 0);
+    const rate = Math.max(0, +$("rate").value || 0);
+    const build = Math.max(0, +$("build").value || 0);
+    const daily = Math.max(0, +$("daily").value || 0);
+    const fx = +$("fx").value;
+
+    // popisky ovladacu
+    $("usersV").textContent = num(users);
+    $("perdayV").textContent = num(perday, 1);
+    $("daysV").textContent = num(days);
+    $("cacheV").textContent = num(cache * 100) + " %";
+    $("kolaV").textContent = num(+$("kola").value, 2);
+    $("deflV").textContent = num(defl * 100) + " %";
+    $("fxV").textContent = num(fx, 2);
+
+    // naklady modelu
+    const cIn = tin * (1 - cache) * p.in / 1e6;
+    const cCached = tin * cache * p.cached / 1e6;
+    const cOut = tout * p.out / 1e6;
+    const perTurnUsd = cIn + cCached + cOut;
+
+    const turns = users * perday * days;
+    const monthUsd = perTurnUsd * turns;
+    const monthKc = monthUsd * fx;
+
+    // navratnost
+    const savedTickets = turns * defl;
+    const savedMinutes = savedTickets * handle;
+    const savedKc = savedMinutes / 60 * rate;
+    const netKc = savedKc - monthKc;
+    const buildKc = build * daily;
+    const paybackM = netKc > 0 ? buildKc / netKc : Infinity;
+
+    // odecet
+    $("outMonth").textContent = num(monthKc);
+    $("outMonthUsd").textContent = usd(monthUsd) + " · " + num(turns) + " turnů";
+    $("outTurns").textContent = num(turns);
+    $("outTurn").textContent = usd(perTurnUsd);
+    $("outYear").textContent = kc(monthKc * 12);
+    $("outSave").textContent = kc(savedKc);
+
+    const net = $("outNet");
+    net.textContent = kc(netKc);
+    net.className = netKc >= 0 ? "pos" : "neg";
+    $("outBuild").textContent = kc(buildKc);
+
+    const pb = $("outPayback");
+    if (!isFinite(paybackM)) {
+      pb.textContent = "nikdy";
+      pb.className = "neg";
+      $("paybackLbl").textContent = "Návratnost vývoje";
+    } else if (paybackM < 0.05) {
+      pb.textContent = "okamžitě";
+      pb.className = "pos";
+    } else {
+      pb.textContent = num(paybackM, 1) + " měsíce";
+      pb.className = paybackM <= 12 ? "pos" : "neg";
+    }
+
+    // FTE prepocet - 21 dni po 8 hodinach
+    const fte = savedMinutes / 60 / (21 * 8);
+    $("outFte").textContent = "Ušetřený čas odpovídá " + num(fte, 2) + " úvazku (" + num(savedMinutes / 60) + " hod / měsíc).";
+
+    // rozpad uctu
+    const visibleOut = cOut * (1 - REASONING_SHARE);
+    const reasOut = cOut * REASONING_SHARE;
+    const tot = cIn + cCached + cOut || 1;
+    const pIn = (cIn + cCached) / tot * 100, pVis = visibleOut / tot * 100, pReas = reasOut / tot * 100;
+    const bar = $("splitBar").children;
+    bar[0].style.width = pIn + "%";
+    bar[1].style.width = pVis + "%";
+    bar[2].style.width = pReas + "%";
+    $("lgIn").textContent = num(pIn, 1) + " %";
+    $("lgOut").textContent = num(pVis, 1) + " %";
+    $("lgReas").textContent = num(pReas, 1) + " %";
+
+    // agent vs clovek
+    const max = Math.max(monthKc, savedKc, 1);
+    const va = $("vAgent"), vh = $("vHuman");
+    va.style.width = Math.max(monthKc / max * 78, 2) + "%";
+    vh.style.width = Math.max(savedKc / max * 78, 2) + "%";
+    $("vAgentV").textContent = kc(monthKc);
+    $("vHumanV").textContent = kc(savedKc);
+
+    // kontrola reality
+    const r = $("realityNote");
+    if (savedKc <= 0) {
+      r.innerHTML = "<b>Kontrola reality:</b> při nulové deflection agent nešetří nic — platíte provoz za nástroj, který nikoho neodlehčil. Buď zvyšte podíl vyřešených dotazů, nebo přiznejte, že přínos leží jinde než v úspoře práce.";
+    } else if (fte < 0.25) {
+      r.innerHTML = "<b>Kontrola reality:</b> ušetřený čas je <b>" + num(fte, 2) + " úvazku</b>. To se v praxi neprojeví jako propuštěný člověk, ale jako kratší fronta. Tak to i prodávejte — jinak vás zákazník po roce chytí za slovo.";
+    } else {
+      r.innerHTML = "<b>Kontrola reality:</b> ušetřený čas odpovídá <b>" + num(fte, 2) + " úvazku</b>. Aby se úspora projevila v rozpočtu, musí ten čas někdo skutečně přesunout jinam — samo se to nestane.";
+    }
+
+    save();
+  }
+
+  // ---------- import usage-log.jsonl ----------
+  const KURZ = { tin: 1065, tout: 1284, cache: 21, kola: 2.02, share: 0.851 };
+
+  function chyba(msg) {
+    const e = $("err");
+    e.textContent = msg;
+    e.hidden = !msg;
+  }
+
+  function zpracuj(text) {
+    const radky = text.split(/\r?\n/).map(r => r.trim()).filter(Boolean);
+    const zaznamy = [];
+    let spatnych = 0;
+    for (const r of radky) {
+      try {
+        const o = JSON.parse(r);
+        if (typeof o.in === "number" && typeof o.out === "number" && o.turn) zaznamy.push(o);
+        else spatnych++;
+      } catch (e) { spatnych++; }
+    }
+    if (!zaznamy.length) {
+      chyba("V souboru nejsou žádné použitelné řádky. Čekám JSONL, kde každý řádek má pole turn, in, out. To je přesně formát usage-log.jsonl z kroku 8 groundingového labu.");
+      return;
+    }
+    chyba(spatnych ? `Přeskočeno ${spatnych} nečitelných řádků, zbytek načten.` : "");
+
+    // seskupeni po turnech
+    const turny = new Map();
+    for (const z of zaznamy) {
+      if (!turny.has(z.turn)) turny.set(z.turn, { lab: z.lab || "—", q: z.q || "", kola: 0, in: 0, out: 0, reas: 0, cached: 0 });
+      const t = turny.get(z.turn);
+      t.kola++; t.in += z.in; t.out += z.out; t.reas += (z.reasoning || 0); t.cached += (z.cached || 0);
+    }
+    const T = [...turny.values()];
+    const soucet = (f) => T.reduce((a, x) => a + f(x), 0);
+
+    const inT = soucet(x => x.in) / T.length;
+    const outT = soucet(x => x.out) / T.length;
+    const kolaT = soucet(x => x.kola) / T.length;
+    const cachePct = soucet(x => x.in) ? soucet(x => x.cached) / soucet(x => x.in) * 100 : 0;
+    const share = soucet(x => x.out) ? soucet(x => x.reas) / soucet(x => x.out) : KURZ.share;
+
+    $("tin").value = Math.round(inT);
+    $("tout").value = Math.round(outT);
+    $("cache").value = Math.round(cachePct);
+    $("kola").value = kolaT.toFixed(2);
+    REASONING_SHARE = share;
+
+    // model z logu, pokud ho zname
+    const m = zaznamy.find(z => z.model && PRICES[z.model]);
+    if (m) $("model").value = m.model;
+
+    // souhrn
+    $("stTurns").textContent = num(T.length);
+    $("stCalls").textContent = num(zaznamy.length);
+    $("stReas").textContent = num(share * 100, 1) + " %";
+
+    // po modulech
+    const laby = [...new Set(T.map(x => x.lab))];
+    $("impRows").innerHTML = laby.map(l => {
+      const t = T.filter(x => x.lab === l);
+      const a = (f) => t.reduce((s2, x) => s2 + f(x), 0) / t.length;
+      return `<tr><td>${l}</td><td class="num">${num(t.length)}</td><td class="num">${num(a(x => x.kola), 2)}</td><td class="num">${num(a(x => x.in))}</td><td class="num">${num(a(x => x.out))}</td></tr>`;
+    }).join("");
+
+    // nejdrazsi a nejlevnejsi turn -> rozptyl
+    const p = PRICES[$("model").value];
+    const cena = t => ((t.in - t.cached) * p.in + t.cached * p.cached + t.out * p.out) / 1e6;
+    const dle = [...T].sort((a, b) => cena(a) - cena(b));
+    const lev = dle[0], drah = dle[dle.length - 1];
+    const nasobek = cena(lev) > 0 ? cena(drah) / cena(lev) : 0;
+    $("spMaxAmt").textContent = usd(cena(drah));
+    $("spMaxMeta").innerHTML = `${drah.kola} ${sklon(drah.kola)}<q>${escapeHtml(drah.q.slice(0, 52))}</q>`;
+    $("spMinAmt").textContent = usd(cena(lev));
+    $("spMinMeta").innerHTML = `${lev.kola} ${sklon(lev.kola)}<q>${escapeHtml(lev.q.slice(0, 52))}</q>`;
+    $("spNote").innerHTML = `Rozptyl <b>${num(nasobek, 1)}×</b> mezi nejlevnějším a nejdražším turnem. Rozpočet se plánuje z rozdělení, ne z průměru.`;
+
+    $("imported").classList.add("on");
+    compute();
+  }
+
+  function sklon(n) {
+    return n === 1 ? "kolo" : (n >= 2 && n <= 4 ? "kola" : "kol");
+  }
+
+  function escapeHtml(t) {
+    return t.replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+  }
+
+  const drop = $("drop");
+  $("file").addEventListener("change", e => {
+    const f = e.target.files && e.target.files[0];
+    if (f) f.text().then(zpracuj).catch(() => chyba("Soubor se nepodařilo přečíst."));
+  });
+  ["dragenter", "dragover"].forEach(ev =>
+    drop.addEventListener(ev, e => { e.preventDefault(); drop.classList.add("over"); }));
+  ["dragleave", "drop"].forEach(ev =>
+    drop.addEventListener(ev, e => { e.preventDefault(); drop.classList.remove("over"); }));
+  drop.addEventListener("drop", e => {
+    const f = e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0];
+    if (f) f.text().then(zpracuj).catch(() => chyba("Soubor se nepodařilo přečíst."));
+  });
+
+  $("reset").addEventListener("click", () => {
+    $("tin").value = KURZ.tin;
+    $("tout").value = KURZ.tout;
+    $("cache").value = KURZ.cache;
+    $("kola").value = KURZ.kola;
+    REASONING_SHARE = KURZ.share;
+    $("imported").classList.remove("on");
+    chyba("");
+    compute();
+  });
+
+  document.querySelectorAll("#effort button").forEach(b => {
+    b.addEventListener("click", () => {
+      effort = b.dataset.effort;
+      document.querySelectorAll("#effort button").forEach(x =>
+        x.setAttribute("aria-pressed", String(x === b)));
+      $("tout").value = Math.round(OUT_BASE * EFFORT[effort]);
+      compute();
+    });
+  });
+
+  IDS.forEach(i => {
+    $(i).addEventListener("input", compute);
+    $(i).addEventListener("change", compute);
+  });
+
+  load();
+  compute();
+</script>

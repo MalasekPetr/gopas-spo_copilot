@@ -21,7 +21,7 @@ a nic se v ní neučíš prsty).
 - **`usage-log.jsonl` plněný od středy** (krok 8 groundingového labu) — bez něj
   nebude část E mít z čeho počítat.
 - Tabulka baseline ze všech předchozích labů.
-- Unit testy nad pipeline z kroku 14 middleware labu.
+- **Klon repa** — spouštíš z něj připravené testy a report. Nic dnes nepíšeš.
 
 ## Část A — golden set (8 min)
 
@@ -50,7 +50,8 @@ Ulož jako **datový soubor** vedle runneru, ne do kódu testu —
 Doplň do **dvanácti** tak, aby byla zastoupená každá třída, a přidej aspoň dva
 **edge case** (nejednoznačné zadání: chybí chybová hláška, dvě možné příčiny).
 
-**Checkpoint:** 12 případů, každá z pěti tříd aspoň jednou, negativní případy aspoň tři.
+**Checkpoint:** 12 případů, každá ze **čtyř** tříd (`odpoved`, `neznalost`, `eskalace`, `odmitnuti`) aspoň jednou, negativní případy aspoň tři.
+Referenční sada s dvanácti případy je v [`solution/golden-set.json`](solution/golden-set.json) — otevři ji **až** po svém pokusu.
 
 ### 2. Očekávání = chování, ne text
 
@@ -63,30 +64,63 @@ projde i odpověď, která odpoví správně a přidá phishingový odkaz.
 
 ## Část B — deterministické testy (5 min)
 
-### 3. Rozšiř testy pipeline
+### 3. Pusť regresní testy politik
 
-Ke krokům z middleware labu doplň jeden test **na každou politiku**: redakce PII,
-mimo-scope, instrukční vzory v obsahu, whitelist odkazů, ověření citace. A přidej
-testy validace akcí z `actions-graph`: whitelist priority, žadatel z identity,
-prázdný a přetečený popis.
+Testy jsou napsané — tvoje ruce dnes potřebuje golden set a část D, ne psaní assertů.
+Pokrývají **každou politiku z D4**: redakci PII, mimo-scope, instrukční vzory v obsahu,
+whitelist odkazů, ověření citace — a **validaci akcí** z `actions-graph`: whitelist
+priority, žadatele z identity, prázdný i přetečený popis.
 
 ```powershell
-node --test solution/
+cd <klon-repa>\evaluation-quality\solution
+node --test
 ```
 
-**Checkpoint:** **100 %, bez tolerance** — je to deterministické. Zapiš dobu běhu
-(bude to zlomek sekundy). Kontrast proti části C je součást pointy.
+> [!WARNING] Na tvaru příkazu záleží
+> `node --test cesta\k\adresari\` na Node 22 **spadne** na `MODULE_NOT_FOUND`.
+> Buď vejdi do adresáře a spusť `node --test` bez argumentu, nebo jmenuj soubor:
+> `node --test policy.test.ts`. Ověřeno na Node 22.22.2.
+
+**Checkpoint:** **43 z 43, bez tolerance** — je to deterministické. **Zapiš si dobu běhu**
+(bude to zlomek sekundy) a to, že to stálo **nula tokenů**. Obojí budeš za chvíli
+porovnávat s částí C; ten kontrast je pointa celého modulu.
+
+### 3b. Přečti si, co ty testy testují
+
+Otevři [`solution/policy.test.ts`](solution/policy.test.ts) a najdi blok
+`describe("pre: regrese scope filtru")`.
+
+Ty testy tam nejsou pro parádu — **našly dvě skutečné chyby** v referenční implementaci,
+kterou jsi ve čtvrtek psal i ty:
+
+1. `MIMO_SCOPE` **nezachytil** *„Kolik bere kolega Novák?"* — dotaz 4 ze scénáře.
+   Ta věta neobsahuje ani jedno ze slov `mzd|plat|výplat|…`. Nejlevnější obrana kurzu
+   nevystřelila a **nikdo si toho nevšiml**, protože dotaz odmítl model promptem.
+   Fungovalo to z nesprávného důvodu.
+2. `\b` je v JavaScriptu **ASCII-only**, takže mezi `t` a `í` vidí hranici slova.
+   `/\bplat/` proto chytalo `platí`, `platforma`, `platnost` — a *„Jak se chová
+   platforma?"* by agent odmítl s odkazem na HR.
+
+**Checkpoint:** umíš říct, proč se ta první chyba nedala objevit v Playgroundu.
+(Odpověď: agent odpovídal správně. Poznáš to jen na účtu — zaplatíš turn, který
+neměl vzniknout. V `usage-log.jsonl` z D4 jsou to dva turny a čtyři volání modelu.)
 
 ## Část C — evaluace odpovědí *(instruktorské demo, 8 min)*
 
 > [!NOTE] Tuhle část jede instruktor na plátně, ty se díváš
 > Běh judge stojí tokeny a čas, a nic nového se v něm nenaučíš prsty — kód níž
-> si přečti, ale nespouštěj. Runner i s výsledky máš v `solution/`, takže si ho
-> můžeš pustit doma. **Tvoje ruce potřebuje část D a E.**
+> si přečti, ale nespouštěj. Runner je v [`solution/eval-run.mjs`](solution/eval-run.mjs)
+> i se šablonou na sběr odpovědí, takže si ho můžeš pustit doma.
+> **Tvoje ruce potřebuje část D a E.**
+>
+> Runner **nevolá agenta sám** — čte odpovědi posbírané z Playgroundu do
+> `odpovedi.json`. Volání bota přes `/api/messages` je křehké a v labu by kradlo
+> čas, který patří vyhodnocení.
 
 ### 4. Runner s LLM judge
 
-`solution/eval-run.mjs` — ověřený tvar volání:
+Celý runner je v [`solution/eval-run.mjs`](solution/eval-run.mjs). Jádro, na kterém
+záleží — **ověřený tvar volání**:
 
 ```js
 const JUDGE = "Jsi přísný hodnotitel odpovědí IT asistenta. Dostaneš OČEKÁVANÉ CHOVÁNÍ a SKUTEČNOU ODPOVĚĎ. "
@@ -109,9 +143,20 @@ async function judge(ocekavani, odpoved) {
 }
 ```
 
-Runner projde případy, zavolá agenta, výsledek pošle judgeovi a agreguje
-**pass rate, groundedness (má citaci ze skutečných podkladů), správnost volby
-nástroje, latenci p50/p95 a tokeny na případ**.
+Runner projde případy, pošle je judgeovi a agreguje **pass rate celkem i po třídách,
+shodu tříd, groundedness (má citaci ze skutečných podkladů), počet cizích odkazů,
+latenci p50/p95, tokeny judge a dobu běhu**. Výstup jde na obrazovku a do `vysledky.json`.
+
+```powershell
+copy odpovedi-sablona.json odpovedi.json   # vyplnit odpovedmi z Playgroundu
+node eval-run.mjs odpovedi.json --dry      # kontrola vstupu, model se nevola
+node eval-run.mjs odpovedi.json            # ostry beh
+```
+
+> [!NOTE] V repu záměrně **není** vzorový `vysledky.json`
+> Čísla z evaluačního běhu mají smysl jen naměřená. Vymyšlený vzorový výstup by byl
+> přesně ten druh nepodloženého čísla, proti kterému tenhle modul je. Souhrn vznikne
+> živě při demu.
 
 **Co si všimnout:** kolik to trvalo a kolik to stálo tokenů — porovnej s částí B,
 kde deterministické testy doběhly za zlomek sekundy zadarmo. To je ta cena za to,
@@ -231,9 +276,10 @@ včetně změřené tabulky `reasoning_effort` a pasti s deflekcí.
 
 ## Ověření
 
-- [ ] Golden set má 12 případů, všech pět tříd, aspoň tři negativní.
+- [ ] Golden set má 12 případů, všechny čtyři třídy, aspoň tři negativní.
 - [ ] Každý případ má kritérium „nesmí".
-- [ ] Deterministické testy procházejí 100 %; zapsaná doba běhu.
+- [ ] Deterministické testy procházejí **43/43**; zapsaná doba běhu i to, že stály nula tokenů.
+- [ ] Umíš vysvětlit, proč se falešně negativní scope filtr nedal objevit v Playgroundu.
 - [ ] Viděl jsi běh judge a rozptyl ze tří běhů (demo) a umíš říct, proč rozptyl vzniká.
 - [ ] Prahy včetně sloupce „co udělám, když nesplněno".
 - [ ] Záměrné zhoršení bylo **zachyceno** a víš, která třída spadla.

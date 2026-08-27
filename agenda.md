@@ -2,7 +2,7 @@
 
 Jediný zdroj pravdy o pořadí modulů. Moduly leží v jedné rovině bez prefixu dne
 (`onboarding/`, `agents-sdk-core/`, …) — **den je metadata a žije výhradně tady**.
-Denní briefingy (prerekvizity rána, kompresní ventily dne) jsou v [`dny/`](dny/).
+Denní briefingy (prerekvizity rána, kompresní ventily dne) jsou v [`dny/`](./day-5/).
 
 > [!IMPORTANT] Přestavba složek 2026-08-25 večer — studenti musí udělat `git pull`
 > Původní struktura `day-N/<modul>` po dvou rekalibracích u 8 z 24 modulů lhala o dni
@@ -16,12 +16,12 @@ Fokus kurzu: **blízké okolí Microsoft 365** — vlastní vektorizace, hlubok�
 AI témata jsou vedlejší koleje, ne jádro.
 
 Po dvou rekalibracích (2026-08-24 a 25) je pět modulů vyřazeno do samostudia a dva bloky
-sloučeny — přehled a důvody v [`self-study.md`](self-study.md).
+sloučeny — přehled a důvody v [`self-study.md`](./self-study.md).
 
 > [!IMPORTANT] Osnova je restrukturalizovaná proti webu
 > Publikovaná katalogová osnova má 15 bloků a je obsahově zastaralá (retirované certifikace,
 > „Graph konektory", chybí Agent Framework / Agent 365 / Foundry / MCP / A2A). Tato agenda drží
-> stack 2026. Návrh nové webové osnovy je v [`marketing/`](marketing/) a **musí být na webu
+> stack 2026. Návrh nové webové osnovy je v [`marketing/`](./marketing/) a **musí být na webu
 > před prvním během**. Mapování „publikovaný blok → modul" je tam v delta tabulce.
 
 > [!WARNING] Timing — publikovaná čísla jsou nominální
@@ -138,7 +138,7 @@ zájmu skupiny: M365 strana nejdřív, kód až od D3.
 > a A2A přehled zůstávají (capstone rozhodnutí č. 3 je potřebuje). Blok 2 pohltil
 > i hosting v kostce. **Demo vlastního retrievalu padá** zpět do samostudia —
 > zájem skupiny z velké části pokryl ŽIVÝ semantic index s ACL na D3
-> (plný text v [`opt-custom-retrieval/`](opt-custom-retrieval/)).
+> (plný text v [`opt-custom-retrieval/`](./day-3/opt-custom-retrieval/)).
 
 > [!IMPORTANT] Etalon po dvou měřeních — kapacita je ~310 min/den
 > | Den | Plán | Odučeno | Poznámka |
@@ -166,14 +166,14 @@ zájmu skupiny: M365 strana nejdřív, kód až od D3.
 **Middleware a capstone nejsou ventily.** Bezpečnostní blok je jádro D4;
 při skluzu D5 se zkracují bloky 1–3, ne závěr týdne.
 
-Do samostudia bylo vyřazeno šest modulů — viz [`self-study.md`](self-study.md). Žádný
+Do samostudia bylo vyřazeno šest modulů — viz [`self-study.md`](./self-study.md). Žádný
 povinný modul ani capstone na nich nesmí záviset; to je podmínka, která je udržela
 vyřaditelné.
 
 ## Nosná linka — jeden agent celý týden
 
 Kurz nebuduje sérii nesouvisejících ukázek, ale **jednoho agenta**, který každý blok
-něco získá. Scénář: [`scenario-support-agent.md`](scenario-support-agent.md).
+něco získá. Scénář: [`scenario-support-agent.md`](./scenario-support-agent.md).
 
 ```mermaid
 flowchart LR

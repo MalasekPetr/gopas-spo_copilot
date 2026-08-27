@@ -146,7 +146,7 @@ Zajišťuje `onboarding`. Bez tohoto nic dalšího nepojede:
 >
 > **Navíc** k tomu jdou tokeny modelu z instruktorského Foundry deploymentu (výše). To je
 > **druhá, oddělená** nákladová položka — přesně ten teaching point, který kurz učí
-> (viz [`GLOSSARY.md`](GLOSSARY.md), sekce „tři různé peněženky").
+> (viz [`GLOSSARY.md`](./GLOSSARY.md), sekce „tři různé peněženky").
 
 ## Otevřené položky před prvním během
 
@@ -167,4 +167,4 @@ Zajišťuje `onboarding`. Bez tohoto nic dalšího nepojede:
 - [x] **Demo data pro nosný scénář nasazená** (2026-08-25) — knihovna `Runbooky` a list
       `Zaměstnanci` na `/sites/hr-demo`. Provisionováno skriptem `New-HRAgentData.ps1`
       z repa `gopas-goc224`, ne `New-SupportAgentData.ps1` — ten v `scripts/` zatím
-      neexistuje (viz [`scripts/`](scripts/)).
+      neexistuje (viz [`scripts/`](./scripts/)).

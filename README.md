@@ -8,26 +8,26 @@ v instruktorských demech Agent Frameworku).
 > Repo drží **restrukturalizovanou osnovu odpovídající stacku 2026**. Publikovaná katalogová
 > osnova je obsahově zastaralá (jmenuje retirované certifikace AI-102/AZ-204, „Graph konektory"
 > a neobsahuje Microsoft Agent Framework, Agent 365 ani Microsoft Foundry). Návrh nové webové
-> osnovy včetně 301 redirectu je v [`marketing/`](marketing/) — **musí být na webu před prvním
+> osnovy včetně 301 redirectu je v [`marketing/`](./marketing/) — **musí být na webu před prvním
 > během kurzu**.
 
 ## Jak repo číst
 
-- **Pořadí modulů** je definované v [`agenda.md`](agenda.md) — složky jsou pojmenované **slugy**,
+- **Pořadí modulů** je definované v [`agenda.md`](./agenda.md) — složky jsou pojmenované **slugy**,
   ne čísly, aby vkládání dalších modulů nerozhazovalo číslování.
 - **Závazné názvosloví** (produkty, SDK, certifikace, přejmenování) je v
-  [`GLOSSARY.md`](GLOSSARY.md) — jediný zdroj pravdy.
+  [`GLOSSARY.md`](./GLOSSARY.md) — jediný zdroj pravdy.
 - **Konvence** (MD styl, Mermaid, currency-markery, prefixy souborů, kód v materiálech) jsou
-  v [`CONVENTIONS.md`](CONVENTIONS.md).
-- **Šablony** modulu a labu jsou v [`_templates/`](_templates/).
+  v [`CONVENTIONS.md`](./CONVENTIONS.md).
+- **Šablony** modulu a labu jsou v [`_templates/`](./_templates/).
 - **Prostředí kurzu** (tenant, PAYG, model endpoint, matice požadavků per blok) je
-  v [`environment.md`](environment.md).
+  v [`environment.md`](./environment.md).
 
 ## Nosná linka týdne
 
 Kurz není 16 nesouvisejících přednášek — celý týden se buduje **jeden agent**. Scénář a jeho
 postupné rozšiřování je v
-[`scenario-support-agent.md`](scenario-support-agent.md).
+[`scenario-support-agent.md`](./scenario-support-agent.md).
 
 ## Struktura
 
@@ -57,9 +57,9 @@ gopas-spo_copilot/
 
 Fáze 2 — **obsah dopsán** (2026-08-24). Všechny moduly, laby i diagramy jsou rozpracované
 do plné hloubky; v repu nezůstaly žádné TODO placeholdery kromě šablon v
-[`_templates/`](_templates/). Rozvržení dnů je po prvním běhu rekalibrované — viz
-[`agenda.md`](agenda.md) a [`self-study.md`](self-study.md).
+[`_templates/`](./_templates/). Rozvržení dnů je po prvním běhu rekalibrované — viz
+[`agenda.md`](./agenda.md) a [`self-study.md`](./self-study.md).
 
 Model endpoint pro custom engine agenty: **instruktorský Foundry deployment** (rozhodnuto
-2026-08-24, viz [`environment.md`](environment.md)) — Business Basic + Copilot Credits
+2026-08-24, viz [`environment.md`](./environment.md)) — Business Basic + Copilot Credits
 nedává inference endpoint pro vlastní kód.

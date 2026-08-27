@@ -1,8 +1,8 @@
 # marketing/
 
 Materiály pro veřejnou webovou stránku kurzu SPO_COPILOT — **ne kurzovní obsah**.
-Tři jazykové mutace: [`cs.md`](cs.md) (gopas.cz), [`en.md`](en.md) (gopas.eu),
-[`sk.md`](sk.md) (gopas.sk). Každý soubor je samostatný a obsahuje i pokyny pro editora.
+Tři jazykové mutace: [`cs.md`](./cs.md) (gopas.cz), [`en.md`](./en.md) (gopas.eu),
+[`sk.md`](./sk.md) (gopas.sk). Každý soubor je samostatný a obsahuje i pokyny pro editora.
 
 > [!IMPORTANT] Tohle není nice-to-have
 > Repo drží **restrukturalizovanou** osnovu odpovídající stacku 2026. Publikovaná katalogová

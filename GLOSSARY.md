@@ -29,7 +29,7 @@ odkazují sem.
 > [!IMPORTANT] Retirované certifikace
 > Katalogová osnova kurzu jmenuje **AI-102 a AZ-204** jako „další kroky". Obě jsou
 > k datu psaní **retirované**. Správné pokračování: **AI-103** (AI Apps and Agents Developer)
-> a **AI-200** (Cloud Developer). Řeší [`capstone/`](capstone/).
+> a **AI-200** (Cloud Developer). Řeší [`capstone/`](./day-5/capstone/).
 
 ## Vrstvy stacku — co je co (a co čím není)
 
@@ -50,9 +50,9 @@ odkazují sem.
   Nepotřebuje vlastní hosting ani model endpoint.
 - **Custom engine agent** — vlastní orchestrace, vlastní model, vlastní hosting. Staví se
   přes **Agents SDK** (pro-code), Copilot Studio (low-code) nebo Foundry.
-  **Potřebuje inference endpoint** — viz [`environment.md`](environment.md).
+  **Potřebuje inference endpoint** — viz [`environment.md`](./environment.md).
 
-Rozhodovací osa je nosný obsah [`agent-landscape/`](agent-landscape/).
+Rozhodovací osa je nosný obsah [`agent-landscape/`](./day-1/agent-landscape/).
 
 ## Agents SDK — klíčové pojmy
 
@@ -116,7 +116,7 @@ Nejdůležitější rozlišení pro modul o ingestion strategii. Katalogová osn
   je **rozhodnutí**, ne výchozí stav. Cena: vlastní ACL model, vlastní refresh, vlastní
   relevance ladění.
 - Proto je vlastní retrieval v tomto kurzu **volitelný modul**
-  [`opt-custom-retrieval/`](opt-custom-retrieval/), ne povinné jádro.
+  [`opt-custom-retrieval/`](./day-3/opt-custom-retrieval/), ne povinné jádro.
 
 ## Protokoly
 
@@ -151,14 +151,14 @@ Nejdůležitější rozlišení pro modul o ingestion strategii. Katalogová osn
 > **Copilot Studio agenti se do Agent 365 registry registrují automaticky. Pro-code agenti
 > se musí explicitně instrumentovat.** To je přesně ta práce, kterou tato audience dělá —
 > a důvod, proč „low-code je governed, pro-code je divočina" je mýtus, pokud instrumentaci
-> uděláš. Řeší [`agent-365-governance/`](agent-365-governance/).
+> uděláš. Řeší [`agent-365-governance/`](./day-5/agent-365-governance/).
 
 **Dva control plany, nezaměňovat**: **Foundry Control Plane** (infrastruktura a agenti v Azure)
 vs. **Agent 365** (agenti napříč původem, z pohledu IT/security v M365). Sync mezi nimi existuje.
 
 **Third-party alternativa**: **Orchestry** (orchestry.com) — governance vrstva nad M365
 od třetí strany; nemá pod kontrolou Entra Agent ID (identita zůstává first-party doména).
-Jediné non-Microsoft téma kurzu, srovnávací blok [`orchestry-governance/`](orchestry-governance/) —
+Jediné non-Microsoft téma kurzu, srovnávací blok [`orchestry-governance/`](./day-2/orchestry-governance/) —
 rozsah agent governance ověřovat u vendora před během.
 
 ## Licence, kredity a inference — tři různé peněženky
@@ -172,7 +172,7 @@ rozsah agent governance ověřovat u vendora před během.
 > [!IMPORTANT] Nosný teaching point kurzu
 > **Copilot Credits ≠ inference endpoint.** Custom engine agent postavený na Agents SDK si
 > model přináší vlastní — Copilot Credits mu ho nezaplatí. Tohle je nejčastější rozpočtové
-> nedorozumění u zákazníků a přímý důsledek pro architekturu. Viz [`environment.md`](environment.md).
+> nedorozumění u zákazníků a přímý důsledek pro architekturu. Viz [`environment.md`](./environment.md).
 
 ## Nástroje a jejich licenční dotyk
 
@@ -192,7 +192,7 @@ rozsah agent governance ověřovat u vendora před během.
 V tomto kurzu: **TypeScript primárně** (publikum jsou SPFx vývojáři); C# jen tam, kde
 Microsoft JS SDK nemá — Agent Framework (D3, instruktorské demo) a
 Microsoft.Extensions.AI.Evaluation (D5, zmínka); Python jen zmínkou — viz
-[`CONVENTIONS.md`](CONVENTIONS.md).
+[`CONVENTIONS.md`](./CONVENTIONS.md).
 
 ## Hosting — endpoint agenta a orchestrace okolo
 

@@ -43,8 +43,8 @@ Pořadí modulů v běhu drží **`agenda.md`** — je to jediný zdroj pravdy o
   sourozenec (den nehraje roli):
 
   ```md
-  jiný modul:      [`../agent-framework/`](../agent-framework/)
-  soubor v kořeni: [`../agenda.md`](../agenda.md)
+  jiný modul:      [`../agent-framework/`](day-5/agent-framework/)
+  soubor v kořeni: [`../agenda.md`](agenda.md)
   ```
 
 - V instruktorských poznámkách (sekce Vazby) stačí backtick slug bez odkazu.
@@ -54,7 +54,7 @@ Pořadí modulů v běhu drží **`agenda.md`** — je to jediný zdroj pravdy o
 
 - Nadpisy `##` / `###`, žádné přeskoky úrovní.
 - Krátké odstavce, odrážky pro výčty.
-- Odkazy na názvosloví vždy proti [`GLOSSARY.md`](GLOSSARY.md) — nepsat názvy produktů, SDK
+- Odkazy na názvosloví vždy proti [`GLOSSARY.md`](./GLOSSARY.md) — nepsat názvy produktů, SDK
   ani certifikací „od oka". Tento obor má za sebou vlnu přejmenování a špatné jméno v materiálu
   je viditelná chyba lektora.
 
@@ -101,7 +101,7 @@ Každý modul má na konci:
 ## Terminologie — turn, kolo, konverzace
 
 Tři pojmy, které se v materiálech **nesmí zaměňovat**; záměna je nejčastější zdroj
-chybných nákladových odhadů (viz [`GLOSSARY.md`](GLOSSARY.md)):
+chybných nákladových odhadů (viz [`GLOSSARY.md`](./GLOSSARY.md)):
 
 | Pojem | Význam | Nepoužívat |
 |---|---|---|
@@ -127,7 +127,7 @@ chybných nákladových odhadů (viz [`GLOSSARY.md`](GLOSSARY.md)):
   `AbortSignal` propagovaný skrz, striktní `tsconfig`.
 - **Žádné tenant ID, ClientId, cert thumbprinty, subscription ID, API klíče ani connection
   stringy natvrdo v kódu** — vždy konfigurace / proměnné prostředí / user secrets
-  (viz [`environment.md`](environment.md)). Repo je public.
+  (viz [`environment.md`](./environment.md)). Repo je public.
 - Ukázky volání modelu, Graphu a nástrojů ukazují **i chybové a retry větve, ne jen happy
   path** — to je nosný pedagogický bod kurzu (inženýrská robustnost, ne demo-ware).
   Konkrétně: klasifikace transientní vs permanentní chyby, timeout, a co agent odpoví

@@ -6,7 +6,7 @@ architekturou, kterou umí obhájit před zákazníkem.
 
 > [!IMPORTANT] Data
 > Výhradně **fiktivní kurzovní data**. Instruktorský model endpoint znamená inference mimo
-> studentský tenant (viz [`environment.md`](environment.md)) — reálná zákaznická
+> studentský tenant (viz [`environment.md`](./environment.md)) — reálná zákaznická
 > ani personální data do labů nikdy nepatří.
 
 ## Zadání (fiktivní zákazník)
@@ -29,9 +29,9 @@ Bodů 1–2 dosáhne i deklarativní agent. Body 3–5 jsou důvod, proč tenhle
 
 | Artefakt | Kde | Vzniká |
 |---|---|---|
-| Knihovna `Runbooky` (4 postupy) | `/sites/hr-demo` | seed skript, viz [`scripts/`](scripts/) |
+| Knihovna `Runbooky` (4 postupy) | `/sites/hr-demo` | seed skript, viz [`scripts/`](./scripts/) |
 | Zaměstnanci (list) | `/sites/hr-demo` | seed skript |
-| Mock ticket API | lokálně | součást `solution/` v [`actions-graph/`](actions-graph/) |
+| Mock ticket API | lokálně | součást `solution/` v [`actions-graph/`](./day-4/actions-graph/) |
 
 > [!NOTE] Název webu `/sites/hr-demo` je záměrný
 > Web se sdílí se seed skripty kurzu GOC224 (reuse provisioning artefaktů) — proto HR
@@ -44,22 +44,22 @@ Dny podle reality prvního běhu (po třetí rekalibraci 2026-08-26):
 
 | Den | Modul | Přírůstek |
 |---|---|---|
-| 1 | [`onboarding/`](onboarding/) | **projekt se rodí**: scaffold z Toolkitu, echo agent v Agents Playgroundu — bez modelu |
-| 1 | [`no-code-showcase/`](no-code-showcase/) | **srovnávací baseline**: Support Asistent v agent builderu, sdílený skupině Students — žije celý týden jako měřítko ([návod](no-code-showcase/guide-agent-builder.md)) |
-| 2 | [`declarative-agents/`](declarative-agents/) | **deklarativní Support Asistent v1** (instructions + knowledge) a jeho změřený strop — druhý srovnávací artefakt |
-| 2 | [`data-hygiene/`](data-hygiene/) | hygienický checklist tenantu — proč agentovi smí zákazník věřit |
-| 2 | [`marketplace-agents/`](marketplace-agents/) | rozhodnutí store ANO/NE s odůvodněním — do roadmapy |
-| 3 | [`agents-sdk-core/`](agents-sdk-core/) | echo turn → **LLM turn**: model, `systemPrompt`, `TurnState`, `usage`, **chybové větve s retry** — baseline 4 dotazů |
-| 3 | [`knowledge-grounding/`](knowledge-grounding/) | grounding nad `Runbooky` **s citacemi**; ŽIVÝ semantic index s ACL přes `.lab-token` |
-| 4 | [`actions-graph/`](actions-graph/) | **akce**: tool-call smyčka (kola), Graph, `CreateTicket` s validací a žadatelem z identity |
-| 4 | [`prompt-orchestration/`](prompt-orchestration/) | anatomie promptu, měřená baseline — a úspěšný průstřel (záměr) |
-| 4 | [`middleware-policy/`](middleware-policy/) | útok a obrana jako kód: middleware pipeline, scope — *(pohltilo `security-risk`)* |
-| 4 | [`spfx-copilot-apps/`](spfx-copilot-apps/) | **jiný projekt**: první Copilot App (scaffold + Workbench); vize: eskalace (dotaz 3) jako interaktivní karta |
-| 5 | [`agent-framework/`](agent-framework/) | rozhodnutí **triage + resolver** a A2A — kompakt, do capstone rozhodnutí č. 3 |
-| 5 | [`agent-365-governance/`](agent-365-governance/) | **instrumentace do Agent 365**, Entra Agent ID *(vč. hostingu v kostce)* |
-| 5 | [`evaluation-quality/`](evaluation-quality/) | golden set nad baseline dotazy + regresní běh |
-| 5 | [`capstone/`](capstone/) | projekt se už nerozšiřuje — **prezentuje se**: blueprint, KPI, model hrozby, náklady |
-| — | samostudium | [`event-driven-hosting/`](event-driven-hosting/) (hosting, publikace), [`perf-cost-lifecycle/`](perf-cost-lifecycle/) (kalkulátory se používají živě), [`orchestry-governance/`](orchestry-governance/), [`opt-custom-retrieval/`](opt-custom-retrieval/) |
+| 1 | [`onboarding/`](./day-1/onboarding/) | **projekt se rodí**: scaffold z Toolkitu, echo agent v Agents Playgroundu — bez modelu |
+| 1 | [`no-code-showcase/`](./day-1/no-code-showcase/) | **srovnávací baseline**: Support Asistent v agent builderu, sdílený skupině Students — žije celý týden jako měřítko ([návod](./day-1/no-code-showcase/guide-agent-builder.md)) |
+| 2 | [`declarative-agents/`](./day-2/declarative-agents/) | **deklarativní Support Asistent v1** (instructions + knowledge) a jeho změřený strop — druhý srovnávací artefakt |
+| 2 | [`data-hygiene/`](./day-2/data-hygiene/) | hygienický checklist tenantu — proč agentovi smí zákazník věřit |
+| 2 | [`marketplace-agents/`](./day-2/marketplace-agents/) | rozhodnutí store ANO/NE s odůvodněním — do roadmapy |
+| 3 | [`agents-sdk-core/`](./day-3/agents-sdk-core/) | echo turn → **LLM turn**: model, `systemPrompt`, `TurnState`, `usage`, **chybové větve s retry** — baseline 4 dotazů |
+| 3 | [`knowledge-grounding/`](./day-3/knowledge-grounding/) | grounding nad `Runbooky` **s citacemi**; ŽIVÝ semantic index s ACL přes `.lab-token` |
+| 4 | [`actions-graph/`](./day-4/actions-graph/) | **akce**: tool-call smyčka (kola), Graph, `CreateTicket` s validací a žadatelem z identity |
+| 4 | [`prompt-orchestration/`](./day-4/prompt-orchestration/) | anatomie promptu, měřená baseline — a úspěšný průstřel (záměr) |
+| 4 | [`middleware-policy/`](./day-4/middleware-policy/) | útok a obrana jako kód: middleware pipeline, scope — *(pohltilo `security-risk`)* |
+| 4 | [`spfx-copilot-apps/`](./day-4/spfx-copilot-apps/) | **jiný projekt**: první Copilot App (scaffold + Workbench); vize: eskalace (dotaz 3) jako interaktivní karta |
+| 5 | [`agent-framework/`](./day-5/agent-framework/) | rozhodnutí **triage + resolver** a A2A — kompakt, do capstone rozhodnutí č. 3 |
+| 5 | [`agent-365-governance/`](./day-5/agent-365-governance/) | **instrumentace do Agent 365**, Entra Agent ID *(vč. hostingu v kostce)* |
+| 5 | [`evaluation-quality/`](./day-5/evaluation-quality/) | golden set nad baseline dotazy + regresní běh |
+| 5 | [`capstone/`](./day-5/capstone/) | projekt se už nerozšiřuje — **prezentuje se**: blueprint, KPI, model hrozby, náklady |
+| — | samostudium | [`event-driven-hosting/`](./day-5/event-driven-hosting/) (hosting, publikace), [`perf-cost-lifecycle/`](./day-5/perf-cost-lifecycle/) (kalkulátory se používají živě), [`orchestry-governance/`](./day-2/orchestry-governance/), [`opt-custom-retrieval/`](./day-3/opt-custom-retrieval/) |
 
 ```mermaid
 flowchart LR

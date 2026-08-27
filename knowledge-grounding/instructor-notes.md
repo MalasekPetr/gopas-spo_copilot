@@ -59,9 +59,13 @@
   omezení na `.doc/.docx/.pptx/.pdf/.aspx/.one` se týká jen *semantic* retrievalu,
   ne lexikálního.
 
-  **Co přesně v naší registraci chybí, není dodiagnostikované.** Naše tokeny nesou
-  `Files.Read.All` i `Sites.Read.All` (obojí dokumentace vyžaduje), `aud` je Graph,
-  `ver: 1.0`, `appidacr: 0` (public client bez credentialu).
+  > [!IMPORTANT] DOŘEŠENO týž večer: příčinou byla chybějící hlavička
+  > Nebyla to registrace ani účet. **Retrieval API vyžaduje `Accept-Language`
+  > s konkrétním jazykovým tagem** — bez ní (a s `*`) vrací `200` a prázdno
+  > za ~0,5 s, bez chyby. Prohlížeč ji posílá vždy, Node `fetch` nikdy.
+  > Celé měření: [`../../perf-cost-lifecycle/mereni-retrieval-vs-search.md`](../perf-cost-lifecycle/mereni-retrieval-vs-search.md).
+  >
+  > Požadavek **není v dokumentaci** — je to změřené chování, ne kontrakt.
 
   **Didaktické pointy:** (1) tři peněženky naživo; (2) *„200 s prázdnem je horší
   diagnóza než 403"* — a teď na mnohem lepším příkladu: tentýž uživatel, tentýž

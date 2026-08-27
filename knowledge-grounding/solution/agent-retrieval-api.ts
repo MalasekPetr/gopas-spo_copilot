@@ -190,6 +190,11 @@ async function retrieve(query: string, tl: TurnLog): Promise<Chunk[]> {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+      // POVINNE (zmereno 27. 8.): bez Accept-Language s KONKRETNIM jazykovym tagem
+      // vraci Retrieval API 200 a prazdne retrievalHits za ~0,5 s, bez chyby.
+      // Hodnota "*" nestaci. Prohlizec hlavicku posila vzdy, Node fetch nikdy -
+      // proto to same volani chodi z Graph Exploreru a ne z agenta.
+      "Accept-Language": "cs-CZ,cs;q=0.9,en;q=0.8",
       ...(token ? { Authorization: `Bearer ${token}` } : {}),
     },
     body: JSON.stringify(body),

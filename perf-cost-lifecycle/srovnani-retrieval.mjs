@@ -134,7 +134,11 @@ async function cestaB(dotaz) {
   const t0 = Date.now();
   const r = await fetch("https://graph.microsoft.com/v1.0/copilot/retrieval", {
     method: "POST",
-    headers: { Authorization: `Bearer ${TR.t}`, "Content-Type": "application/json" },
+    headers: {
+      Authorization: `Bearer ${TR.t}`,
+      "Content-Type": "application/json",
+      "Accept-Language": "cs-CZ,cs;q=0.9,en;q=0.8", // POVINNE - bez ni 200 + prazdno
+    },
     body: JSON.stringify({ queryString: dotaz, dataSource: "sharePoint", maximumNumberOfResults: 3 }),
     signal: AbortSignal.timeout(60_000),
   });

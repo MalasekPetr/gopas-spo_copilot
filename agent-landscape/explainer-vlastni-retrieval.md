@@ -112,6 +112,13 @@ Filtr na knihovnu (`filterExpression`) je v **beta** tvaru. Kdyby API vrátilo
 BadRequest, pošli dotaz bez něj a zúž až výsledky podle `webUrl` — v kódu je to
 poznamenané.
 
+> [!TIP] Naměřené srovnání obou cest
+> [`../../perf-cost-lifecycle/mereni-retrieval-vs-search.md`](../perf-cost-lifecycle/mereni-retrieval-vs-search.md)
+> — výkon, cena i kvalita odpovědí na týchž dotazech. Včetně dvou nálezů, které
+> se hodí do výkladu: povinná hlavička `Accept-Language`, kterou API nereklamuje,
+> a fakt, že na `.md` souborech je Retrieval API **jen lexikální** — sémantický
+> retrieval platí jen pro `.doc/.docx/.pptx/.pdf/.aspx/.one`.
+
 ## Rozhodovací pravidlo
 
 > Vlastní retrieval si stavím, když **data nejsou v M365**, když potřebuju **vlastní ranking

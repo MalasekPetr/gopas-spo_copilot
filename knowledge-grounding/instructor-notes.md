@@ -33,21 +33,40 @@
   chybu → nech MOCK (GRAPH: ŽIVĚ tím není dotčené — na retrievalu nezávisí);
   lab rozdíl explicitně pojmenovává (semantic index + ACL trimming = hodnota
   živé cesty).
-- **Změřená licenční matice Retrieval API (beta, 2026-08-26)** — stejná app
-  registrace, tenant i dotaz, liší se jen účet:
+- **Retrieval API: rozhoduje APLIKACE, ktera se pta — ne ucet.**
+  Přeměřeno 2026-08-27 večer, stejný tenant, stejný dotaz `access denied upload`,
+  stejné tělo `{ queryString, dataSource: "sharePoint" }`:
 
-  | Účet | Licence | Výsledek |
+  | Volající aplikace | Účet | Výsledek |
   |---|---|---|
-  | admin | žádná | **403** „User does not have valid license" |
-  | user.NN | PAYG meter (Copilot Credits) | **200 + data** ✅ |
-  | lektor | M365 Copilot Premium | **200 + 0 hitů** (⁉ anomálie) |
+  | naše registrace `4407c56b…` (device code, public client) | `petr.malasek@spdemo.online` | **200 + 0 hitů** |
+  | naše registrace `4407c56b…` | `user.15@spdemo.online` | **200 + 0 hitů** |
+  | **Graph Explorer** (registrace Microsoftu) | `petr.malasek@spdemo.online` | **200 + data** ✅ |
 
-  Třetí řádek je nevysvětlená beta anomálie: účet vidí obsah přes Graph i M365
-  search, Copilot Chat mu groundí — jen Retrieval API vrací prázdno. Ověřit
-  s odstupem / po update API. **Didaktické pointy:** (1) tři peněženky naživo;
-  (2) „200 s prázdnem je horší diagnóza než 403 — nauč agenta rozlišovat
-  ‚nemám data' od ‚nemám právo'." **Instruktorské demo jet se studentským
-  tokenem**, ne s lektorským účtem.
+  Poslední řádek vrátil `access-denied-pri-uploadu.md` s celým extraktem
+  a `relevanceScore 0.686`.
+
+  > [!IMPORTANT] Oprava dřívějšího záznamu
+  > Matice z 26. 8. připisovala prázdnou odpověď **lektorskému účtu** a označovala
+  > ji za licenční anomálii. **Nebyla to vlastnost účtu.** `petr.malasek` jako plný
+  > uživatel netrpí žádnou anomálií — přes Graph Explorer data dostane. Proměnná je
+  > **volající aplikace**, a tu tehdejší měření nezměnilo, protože jelo jen přes
+  > naši registraci.
+
+  Změřením vyloučeno jako příčina: účet a jeho licence, `filterExpression`
+  (s ním i bez), `dataSource`, verze API (`beta` i `v1.0`), jazyk i šířka dotazu,
+  a **typ souboru** — vrácený hit je `.md` (`resourceType: listItem`), takže
+  omezení na `.doc/.docx/.pptx/.pdf/.aspx/.one` se týká jen *semantic* retrievalu,
+  ne lexikálního.
+
+  **Co přesně v naší registraci chybí, není dodiagnostikované.** Naše tokeny nesou
+  `Files.Read.All` i `Sites.Read.All` (obojí dokumentace vyžaduje), `aud` je Graph,
+  `ver: 1.0`, `appidacr: 0` (public client bez credentialu).
+
+  **Didaktické pointy:** (1) tři peněženky naživo; (2) *„200 s prázdnem je horší
+  diagnóza než 403"* — a teď na mnohem lepším příkladu: tentýž uživatel, tentýž
+  dotaz, tentýž tenant, a odpověď závisí na tom, **která aplikace se ptá**. Přesně
+  ten druh chyby, který se v produkci hledá hodiny.
 - **Delegated oprávnění Files/Sites.Read.All vyžadují Grant admin consent na
   registraci** — bez něj každý ne-admin narazí na „Need admin approval"
   (změřeno). Jednorázová akce admina, pokrývá celý tenant. — otestovat před během

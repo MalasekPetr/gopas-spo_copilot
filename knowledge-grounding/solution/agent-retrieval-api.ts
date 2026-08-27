@@ -11,12 +11,16 @@
 //   - stahovani obsahu souboru /drives/{id}/items/{id}/content
 //   - useknuti na 3000 znaku (chunky uz jsou nakrajene)
 //
-// Co za to platis: LICENCI. Zmereno 2026-08-26 na kurzovnim tenantu:
-//   admin (bez licence)          -> 403 "User does not have valid license"
-//   user.NN (PAYG meter)         -> 200 + data
-//   lektor (M365 Copilot Premium)-> 200 + 0 hitu  (nevysvetlena beta anomalie)
+// Co za to platis: LICENCI (Copilot add-on, nebo PAYG meter - preview).
 //
-// Demo proto jet STUDENTSKYM tokenem, ne lektorskym.
+// POZOR, zmereno 2026-08-27: o vysledku rozhoduje APLIKACE, ktera se pta.
+// Pres registraci kurzu (4407c56b..., device code, public client) vraci API
+// 200 a {"retrievalHits":[]} obema uctum. Pres Graph Explorer tentyz ucet
+// (petr.malasek) data DOSTANE. Ucet ani licence tedy neni pricina; co presne
+// v nasi registraci chybi, neni dodiagnostikovane.
+//
+// Dokumentovane pozadavky: Files.Read.All a Sites.Read.All (obe mame).
+// Endpoint je podle dokumentace v1.0; beta funguje take.
 //
 // Predchozi stav: ./agent.ts (varianta s Graph Search)
 // ============================================================================

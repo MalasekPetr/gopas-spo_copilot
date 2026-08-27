@@ -91,18 +91,22 @@ V repu jsou obě varianty a liší se **jedinou funkcí**:
 3. **Chování na 403 vs. 200 s nulou hitů.** Varianta rozlišuje obojí ve zvláštní větvi —
    *„nemám právo"* je jiná diagnóza než *„nemám data"*, a agent to musí umět říct.
 
-> [!WARNING] Kterou identitou demo poběží, se dohodni předem
-> Naměřeno 26. 8. na kurzovním tenantu, stejná registrace i dotaz, liší se jen účet:
+> [!IMPORTANT] O výsledku rozhoduje aplikace, ne účet — změřeno 27. 8.
+> Tentýž tenant, tentýž dotaz, tentýž účet `petr.malasek@spdemo.online`:
 >
-> | Účet | Licence | Výsledek |
-> |---|---|---|
-> | admin | žádná | **403** „User does not have valid license" |
-> | `user.NN` | PAYG meter | **200 + data** |
-> | lektor | M365 Copilot Premium | **200 + 0 hitů** — nevysvětlená beta anomálie |
+> | Volající aplikace | Výsledek |
+> |---|---|
+> | registrace kurzu `4407c56b…` (device code) | **200 + 0 hitů** |
+> | **Graph Explorer** | **200 + data** — `access-denied-pri-uploadu.md`, skóre 0,686 |
 >
-> **Demo tedy jet studentským tokenem.** S lektorským účtem uvidíš prázdno a demo
-> vypadá jako rozbité, přestože API funguje. Tohle je zároveň nejlepší možná ukázka
-> třetí peněženky — licencuje se **per uživatel**, ne per aplikace.
+> Dřívější záznam připisoval prázdnou odpověď lektorskému účtu a mluvil o licenční
+> anomálii. **Byl špatně** — `petr.malasek` jako plný uživatel žádnou anomálií
+> netrpí. Proměnná je volající aplikace; co přesně naší registraci chybí, zatím
+> nevíme.
+>
+> **Pro výklad je to lepší materiál, než byla ta domnělá anomálie:** *„200 s prázdnem
+> je horší diagnóza než 403"* teď stojí na příkladu, kde se nemění ani uživatel, ani
+> dotaz, ani data — jen aplikace, která se ptá.
 
 Filtr na knihovnu (`filterExpression`) je v **beta** tvaru. Kdyby API vrátilo
 BadRequest, pošli dotaz bez něj a zúž až výsledky podle `webUrl` — v kódu je to

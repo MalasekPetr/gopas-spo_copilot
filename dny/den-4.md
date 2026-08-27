@@ -2,16 +2,23 @@
 
 Dopoledne dostane agent **akce s validací** (pointa custom engine cesty) a **prompt
 s měřenou baseline**; odpoledne se obojí rozbije útokem a opraví middlewarem.
-Závěr dne je vizuální most k SPFx.
+Závěr dne je vizuální most k SPFx — **volitelně**, když zbude čas.
 
 | Pořadí | Blok | Slug | Typ | min |
 |---|---|---|---|---|
 | 1 | Action handlers & integrace s Microsoft Graph | [`actions-graph`](../actions-graph/) | P | 80 |
 | 2 | Prompt & systémová orchestrace | [`prompt-orchestration`](../prompt-orchestration/) | P | 55 |
 | 3 | Bezpečnost & middleware — útok a obrana jako kód | [`middleware-policy`](../middleware-policy/) | P | 130 |
-| 4 | SharePoint Copilot Apps *(Public Preview)* | [`spfx-copilot-apps`](../spfx-copilot-apps/) | P | 45 |
+| 4 | SharePoint Copilot Apps *(Public Preview)* — **volitelný** | [`spfx-copilot-apps`](../spfx-copilot-apps/) | V | 45 |
 
-Reálná zátěž **310 min** — přesně na etalonu, žádná rezerva.
+Reálná zátěž **265 min** bez bloku 4 (etalon ~310) — blok 4 je volitelný a jede jen
+při náskoku.
+
+> [!NOTE] Změřeno v prvním běhu (2026-08-27)
+> Bloky 1–3 zabraly celý den a blok 4 **neproběhl**. Nebyl to skluz, ale realita:
+> `actions-graph` s živým Graphem a `middleware-policy` s žebříkem útoků nejdou
+> odbýt. Proto je blok 4 nově **volitelný** — plánuj den na 265 min a SPFx nabídni
+> jako samostudium s hotovým řešením v modulu.
 
 > [!WARNING] Ranní prerekvizity
 > - **Mocky bloku 1**: `mock-ticket-api` (4000) a `mock-graph` (4001) — studenti
@@ -22,8 +29,8 @@ Reálná zátěž **310 min** — přesně na etalonu, žádná rezerva.
 >   neopakovat.
 
 > [!TIP] Ventily dne (v pořadí)
-> Část D `actions-graph` jako demo (−10) · MOCK místo ŽIVĚ (−5) · část C labu
-> `prompt-orchestration` (−10) · lab `spfx-copilot-apps` jako demo (−15).
+> Blok 4 `spfx-copilot-apps` vypustit celý (−45, je volitelný) · část D `actions-graph`
+> jako demo (−10) · MOCK místo ŽIVĚ (−5) · část C labu `prompt-orchestration` (−10).
 > **Middleware se nezkracuje** — je to bezpečnostní jádro týdne; jet po poledni.
 
 Nosná linka dnes: `CreateTicket` s validací (eskalace dotazu 3), systémový prompt

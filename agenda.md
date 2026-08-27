@@ -11,7 +11,7 @@ Denní briefingy (prerekvizity rána, kompresní ventily dne) jsou v [`dny/`](dn
 > Staré odkazy `day-N/…` v poznámkách studentů už nevedou nikam; modul se najde podle
 > názvu v kořeni repa.
 
-**5 dní · 16 povinných bloků · 3–4 bloky/den.** P = povinný, V = volitelný / samostudium.
+**5 dní · 15 povinných bloků + 1 volitelný · 3–4 bloky/den.** P = povinný, V = volitelný / samostudium.
 Fokus kurzu: **blízké okolí Microsoft 365** — vlastní vektorizace, hluboký Azure a obecná
 AI témata jsou vedlejší koleje, ne jádro.
 
@@ -106,7 +106,7 @@ zájmu skupiny: M365 strana nejdřív, kód až od D3.
 | 1 | Action handlers & integrace s Microsoft Graph | `actions-graph` | P | 90 |
 | 2 | Prompt & systémová orchestrace | `prompt-orchestration` | P | 60 |
 | 3 | Bezpečnost & middleware — útok a obrana jako kód *(sloučený blok)* | `middleware-policy` | P | 120 |
-| 4 | SharePoint Copilot Apps *(Public Preview)* | `spfx-copilot-apps` | P | 40 |
+| 4 | SharePoint Copilot Apps *(Public Preview)* — **volitelný** | `spfx-copilot-apps` | V | 40 |
 
 > [!NOTE] Blok 1 navazuje přímo na včerejšek: identity výklad je odučen, `.lab-token`
 > studenti mají — výklad části A se zkracuje na mechaniku akcí. Blok 2 dá agentovi
@@ -156,7 +156,8 @@ zájmu skupiny: M365 strana nejdřív, kód až od D3.
 
 1. `actions-graph` — část D jako demo (10 min), ne hands-on; MOCK cesta místo ŽIVĚ šetří dalších ~5.
 2. `prompt-orchestration` — část C labu zkrátit (−10).
-3. `spfx-copilot-apps` — lab jako instruktorské demo (−15); most na SPFx kurzy zůstává.
+3. `spfx-copilot-apps` — **volitelný blok, vypadává celý** (−40). Modul zůstává jako
+   samostudium s hotovým řešením; most na SPFx kurzy se udrží jednou větou ve výkladu.
 4. `agent-framework` — demo zkrátit na čistý výklad (−15).
 5. `evaluation-quality` — část C labu jeden běh místo tří (−10).
 

@@ -74,6 +74,13 @@ Nech dvojice odpovědět na každou za sebe a teprve pak komentuj. Zdroj:
 > **Podklad pro instruktora:** [`explainer-vlastni-retrieval.md`](explainer-vlastni-retrieval.md)
 > — čtyřminutový výklad postavený na **jejich vlastním** `retrieve()`, včetně čtyř otázek,
 > kterými se to odučí bez jediného diagramu. Přečti si ho před blokem.
+>
+> **A slíbené demo se dá splnit doslova:** v repu je varianta agenta přes **Copilot
+> Retrieval API** ([`../../knowledge-grounding/solution/agent-retrieval-api.ts`](../knowledge-grounding/solution/agent-retrieval-api.ts))
+> — tentýž agent, jiná `retrieve()`. Sémantické hledání, **bez přepisu dotazu a bez
+> stahování obsahu**. Studenti na tom uvidí o **jedno kolo na turn míň** ve vlastním
+> `usage-log.jsonl`. Recept a licenční matice jsou v explaineru; **demo jet studentským
+> tokenem**, s lektorským účtem vrací API prázdno.
 
 Ve středu jste viděli, co dostanete zadarmo: **semantic index vyhledá nad tenantem a vynutí
 oprávnění volajícího**. Nic z toho jste neprogramovali. Vlastní retrieval si stavíte, jen když

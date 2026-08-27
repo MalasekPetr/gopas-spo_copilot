@@ -65,6 +65,49 @@ U security trimmingu je chyba **incident**. Když někdo ztratí přístup k dok
 vektorový index o tom neví — semantic index to ví okamžitě, protože oprávnění vyhodnocuje
 při dotazu, ne při indexaci.
 
+## Živé demo: tentýž agent na dvou retrievalech
+
+Slib z úterý se dá splnit líp než výkladem — **ukázat to na jejich vlastním agentovi**.
+V repu jsou obě varianty a liší se **jedinou funkcí**:
+
+| | [`solution/agent.ts`](../knowledge-grounding/solution/agent.ts) | [`solution/agent-retrieval-api.ts`](../knowledge-grounding/solution/agent-retrieval-api.ts) |
+|---|---|---|
+| Hledá | Graph Search, **lexikálně** (KQL) | Copilot Retrieval API, **sémanticky** |
+| Přepis dotazu na klíčová slova | **ano** — `buildSearchQuery()`, volání modelu navíc | **není potřeba** |
+| Stažení obsahu souboru | ano, pak `.slice(0, 3000)` | **ne** — API vrací rovnou chunky |
+| Licence | funguje pod Business Basic | **vyžaduje Copilot licenci nebo PAYG meter** |
+
+> [!NOTE] Mock byl podle Retrieval API modelovaný od začátku
+> `mock-retrieval.mjs` vrací `retrievalHits → extracts`, tedy tvar Retrieval API.
+> Přepnutí na živé API je proto **změna URL a hlavičky, ne přepis kódu**. Řekni to
+> nahlas — je to ukázka toho, k čemu je mock dobrý, když se navrhne podle cílového API.
+
+**Co nechat studenty změřit** (obojí mají v `usage-log.jsonl`, sloupec `kolo`):
+
+1. **Počet kol na turn.** Graph Search varianta potřebuje kolo navíc na přepis dotazu.
+   Na dotaz 1 to je 2 kola vs. 1. To je **přímá úspora, kterou vidí na účtu.**
+2. **Hity na „Kdo jsem?"** Lexikální cesta trefila runbook o resetu hesla (obecná slova
+   *identita, uživatel, účet*). Sémantická cesta by mu měla dát nízké skóre.
+3. **Chování na 403 vs. 200 s nulou hitů.** Varianta rozlišuje obojí ve zvláštní větvi —
+   *„nemám právo"* je jiná diagnóza než *„nemám data"*, a agent to musí umět říct.
+
+> [!WARNING] Kterou identitou demo poběží, se dohodni předem
+> Naměřeno 26. 8. na kurzovním tenantu, stejná registrace i dotaz, liší se jen účet:
+>
+> | Účet | Licence | Výsledek |
+> |---|---|---|
+> | admin | žádná | **403** „User does not have valid license" |
+> | `user.NN` | PAYG meter | **200 + data** |
+> | lektor | M365 Copilot Premium | **200 + 0 hitů** — nevysvětlená beta anomálie |
+>
+> **Demo tedy jet studentským tokenem.** S lektorským účtem uvidíš prázdno a demo
+> vypadá jako rozbité, přestože API funguje. Tohle je zároveň nejlepší možná ukázka
+> třetí peněženky — licencuje se **per uživatel**, ne per aplikace.
+
+Filtr na knihovnu (`filterExpression`) je v **beta** tvaru. Kdyby API vrátilo
+BadRequest, pošli dotaz bez něj a zúž až výsledky podle `webUrl` — v kódu je to
+poznamenané.
+
 ## Rozhodovací pravidlo
 
 > Vlastní retrieval si stavím, když **data nejsou v M365**, když potřebuju **vlastní ranking
@@ -99,13 +142,16 @@ chunking, embeddingy, hybrid ranking a security trimming do hloubky, 105 minut �
 
 ## Zdroje (Microsoft)
 
-[Semantic index for Copilot](https://learn.microsoft.com/en-us/microsoftsearch/semantic-index-for-copilot) · [Microsoft Graph Search API](https://learn.microsoft.com/en-us/graph/search-concept-overview) · [KQL syntax reference](https://learn.microsoft.com/en-us/sharepoint/dev/general-development/keyword-query-language-kql-syntax-reference) · [Azure AI Search — hybrid search](https://learn.microsoft.com/en-us/azure/search/hybrid-search-overview)
+[Semantic index for Copilot](https://learn.microsoft.com/en-us/microsoftsearch/semantic-index-for-copilot) · [Microsoft Graph Search API](https://learn.microsoft.com/en-us/graph/search-concept-overview) · [KQL syntax reference](https://learn.microsoft.com/en-us/sharepoint/dev/general-development/keyword-query-language-kql-syntax-reference) · [Azure AI Search — hybrid search](https://learn.microsoft.com/en-us/azure/search/hybrid-search-overview) · [Copilot Retrieval API (beta)](https://learn.microsoft.com/en-us/graph/api/copilotroot-retrieval) · [PAYG pro Retrieval API](https://learn.microsoft.com/en-us/microsoft-365/copilot/extensibility/api/ai-services/retrieval/paygo-retrieval)
 
 ## Stav produktu / delta
 
 > [!WARNING] Ověřit k datu běhu — stav k 2026-08-27
-> Rozdělení fází v tabulce odpovídá tomu, co skupina napsala v `knowledge-grounding`
-> (Graph Search API + stažení obsahu). Kdyby budoucí běh použil **Copilot Retrieval API**
-> místo Graph Search, řádek „Pochopení dotazu" se přesune na platformu — Retrieval API
-> vrací sémantické chunky a přepis dotazu na klíčová slova nepotřebuje. Tím zmizí i
-> příznak č. 1 a č. 2, a výklad se musí přepsat.
+> Tabulka fází popisuje variantu, kterou skupina napsala: **Graph Search + stažení obsahu**.
+> U varianty s **Copilot Retrieval API** ([`agent-retrieval-api.ts`](../knowledge-grounding/solution/agent-retrieval-api.ts))
+> se řádek „Pochopení dotazu" přesouvá na platformu a příznaky č. 1 a č. 2 mizí —
+> proto se obě cesty ukazují vedle sebe, ne jedna místo druhé.
+>
+> Co ověřit před dalším během: **PAYG consumption pro Retrieval API je preview**, ceny
+> i dostupnost se mohou změnit bez oznámení. Tvar `filterExpression` je beta.
+> A ta anomálie s lektorským účtem (200 + 0 hitů) nebyla vysvětlená — přeměřit.

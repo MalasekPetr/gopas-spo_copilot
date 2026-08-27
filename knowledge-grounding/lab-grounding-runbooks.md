@@ -422,6 +422,15 @@ relevance).
 navíc: **co za tebe dnes udělal semantic index / mock a co by sis musel postavit
 sám** — v části A jsi viděl rozdíl na vlastní oči.
 
+> [!TIP] Druhá živá cesta: Copilot Retrieval API
+> Tenhle lab groundí přes **Graph Search** — funguje pod Business Basic a přenese se
+> do každého zákaznického tenantu. Varianta přes **Copilot Retrieval API** je
+> v [`solution/agent-retrieval-api.ts`](solution/agent-retrieval-api.ts): hledá
+> sémanticky, takže **nepotřebuje přepis dotazu na klíčová slova ani stahování obsahu**
+> — ale vyžaduje Copilot licenci nebo PAYG meter.
+> Obě cesty se porovnávají na D5 v bloku 0, viz
+> [`../../agent-landscape/explainer-vlastni-retrieval.md`](../agent-landscape/explainer-vlastni-retrieval.md).
+
 ## Výstupní stav
 
 Referenční podoba `src/agent.ts` po tomto labu: [`solution/agent.ts`](solution/agent.ts).

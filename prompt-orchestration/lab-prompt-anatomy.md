@@ -71,13 +71,35 @@ nebo zdůvodnil, proč tam zůstává.
 
 ### 3. Přidej jeden few-shot příklad
 
-Jen na **formát**, ne na doménu — data chodí retrievalem:
+Modelu můžeš chování **popsat**, nebo mu ho **ukázat**. Popis si vyloží po svém (jak
+dlouhý je „strukturovaný"? kde přesně mají být zdroje?), ukázku napodobí. Jedna ukázka
+udělá s konzistencí formátu víc než tři věty instrukcí — a stojí míň tokenů.
+
+Příklad drž **mimo pole vět**, aby v něm mohla být skutečná odřádkování:
 
 ```ts
-"Příklad formátu odpovědi: '1. Ověř oprávnění Contribute.\\n2. Zkontroluj povinné sloupce.\\n\\nZdroje:\\n[1] runbook-x.md — https://…'",
+const priklad = `Příklad formátu odpovědi:
+1. Ověř oprávnění Contribute.
+2. Zkontroluj povinné sloupce.
+
+Zdroje:
+[1] runbook-x.md — https://…`;
+
+const systemPrompt = [
+  // ... vety z kroku 2 ...
+].join(" ") + "\n\n" + priklad;
 ```
 
-**Checkpoint:** odpovědi mají teď konzistentní tvar napříč dotazy 1–3.
+> [!IMPORTANT] Příklad je na FORMÁT, nikdy na doménu
+> V ukázce je schválně `runbook-x.md` — **zjevně vymyšlený** název. Kdybys do příkladu
+> dal skutečný obsah runbooku, model nemá jak poznat, že je to jen ukázka: zamíchá si ji
+> mezi fakta a použije ji jako znalost i u dotazu, kde ten runbook vůbec nepadl.
+>
+> Dělicí čára je tatáž jako u groundingu: **formát je stabilní a patří do promptu,
+> data jsou proměnlivá a chodí retrievalem každý turn.**
+
+**Checkpoint:** odpovědi mají teď konzistentní tvar napříč dotazy 1–3 — číslovaný
+postup, prázdný řádek, `Zdroje:` a citace. Porovnej dva různé dotazy vedle sebe.
 
 ### 4. Změř znovu a přiřaď rozdíly
 

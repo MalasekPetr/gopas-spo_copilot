@@ -176,6 +176,11 @@ kde by se napojil.
 ## Lab
 Viz [`lab-grounding-runbooks.md`](lab-grounding-runbooks.md).
 
+> [!NOTE] Kam tenhle modul pokračuje
+> Co v `retrieve()` udělala **platforma** a co **student** se rozebírá na D5 v bloku 0:
+> [`../../agent-landscape/explainer-vlastni-retrieval.md`](../agent-landscape/explainer-vlastni-retrieval.md).
+> Je to podklad k rozhodnutí „stavět vlastní retrieval, nebo pronajmout index".
+
 ## Nosná linka
 Support Asistent přestává vymýšlet: dotazy 1 a 2 ze
 [`../../scenario-support-agent.md`](../scenario-support-agent.md)

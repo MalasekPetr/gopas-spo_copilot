@@ -4,6 +4,12 @@
 > Zájem skupiny o retrieval z velké části pokryl **ŽIVÝ semantic index s ACL** odučený v `knowledge-grounding` (D3).
 > Prostředí: viz [`../../environment.md`](../environment.md) · Názvosloví: [`../../GLOSSARY.md`](../GLOSSARY.md)
 
+> [!NOTE] Kde se téma v kurzu odučí
+> Rozhodovací část („stavět, nebo pronajmout?") jede v **bloku 0 dne 5** —
+> [`../../agent-landscape/explainer-vlastni-retrieval.md`](../agent-landscape/explainer-vlastni-retrieval.md)
+> to vykládá na kódu, který studenti sami napsali v `knowledge-grounding`.
+> Tenhle modul je hloubka pod tím rozhodnutím, ne jeho náhrada.
+
 > [!IMPORTANT] Proč je tento modul volitelný
 > Katalogová osnova staví vlastní vektorizaci a RAG design jako **povinné jádro**. V kontextu
 > Microsoft 365 to je zastaralé rámování: retrieval nad tenant obsahem dělá **semantic index**

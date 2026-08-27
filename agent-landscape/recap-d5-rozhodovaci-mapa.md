@@ -70,6 +70,10 @@ Nech dvojice odpovědět na každou za sebe a teprve pak komentuj. Zdroj:
 > [!IMPORTANT] Tohle je odpověď na dotaz skupiny z úterý
 > V úterý padla otázka na vlastní vektorizaci a slíbil se k ní návrat. Odpověď **není
 > tutoriál na chunking** — je to rozhodnutí, a proto patří sem, do mapy.
+>
+> **Podklad pro instruktora:** [`explainer-vlastni-retrieval.md`](explainer-vlastni-retrieval.md)
+> — čtyřminutový výklad postavený na **jejich vlastním** `retrieve()`, včetně čtyř otázek,
+> kterými se to odučí bez jediného diagramu. Přečti si ho před blokem.
 
 Ve středu jste viděli, co dostanete zadarmo: **semantic index vyhledá nad tenantem a vynutí
 oprávnění volajícího**. Nic z toho jste neprogramovali. Vlastní retrieval si stavíte, jen když

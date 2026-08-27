@@ -11,8 +11,8 @@
 | [`roi-calculator.html`](roi-calculator.html) | D5 capstone, část D |
 | [`cost-visual.html`](cost-visual.html) | samostudium |
 
-Obojí HTML se otevře dvojklikem z klonu a jede offline (bez sítě se nenačtou jen fonty).
-Publikované verze jsou soukromé — sdílení je rozhodnutí instruktora.
+Všechna tři HTML se otevřou dvojklikem z klonu a jedou offline (bez sítě se nenačtou
+jen fonty). **Studentům se rozdávají z repa** — žádný externí odkaz, žádné sdílení.
 
 ## Go/no-go
 

@@ -113,6 +113,65 @@ chování, fakticky selhání retrievalu. Golden set to nerozliší, protože ru
 u těchhle případů říká „přiznej, že nevíš" — proto se v evaluaci měří
 **groundedness zvlášť**, ne jen pass rate.
 
+## Tři endpointy, které nejsou zaměnitelné
+
+Rešerše dokumentace (Petr Malášek, 27. 8.) upřesnila, že „hledání v Microsoftu 365"
+znamená **tři různá API s různým chováním**. Zaměňovat je je nejčastější zdroj zmatku:
+
+| Endpoint | Co dělá | Zdroje | Poznámka |
+|---|---|---|---|
+| `POST /v1.0/search/query` | Microsoft Search index, **lexikální** (KQL) | SharePoint, OneDrive, Exchange… | tohle používá lab |
+| `POST /v1.0/copilot/retrieval` | Copilot **hybridní** index, vrací chunky | SharePoint, OneDrive, Copilot connectors | sémantika **jen pro podporované přípony** |
+| `POST /beta/copilot/search` | Copilot Search API, hybridní | zatím **jen OneDrive** | vlastní seznam přípon (`.html`, `.json`, `.csv`, `.xml`, `.png`, `.jpg`) — `.md` v něm také **není** |
+
+**Nelze použít širší seznam jednoho endpointu jako argument pro druhý.**
+
+## „Copilot přece Markdown umí" — dvojí význam slova *podporováno*
+
+Microsoft má samostatnou dokumentaci formátů pro **Copilot Chat, Pages, Notebooks
+a Create**, kde `.md` podporovaný **je** — pro nahrání souboru do konverzace, shrnutí,
+tvorbu dokumentu. To je ale **jiný mechanismus**: zpracování konkrétně přiloženého
+souboru, ne tenantní sémantické indexování souboru ležícího v SharePointu.
+
+> **Z „upload and summarize .md" nevyplývá sémantický retrieval přes
+> `/copilot/retrieval`.** Dvě různé věci, dvě různá „supported".
+
+Potvrzuje to i samostatná dokumentace **Semantic indexing for Microsoft Copilot**:
+mezi sémanticky indexovanými typy jsou Word, PowerPoint, PDF, `.aspx`, OneNote
+a data z Copilot connectors. `.md` tam **není**.
+
+## Tři cesty k sémantickému groundingu nad Markdownem
+
+Pokud sémantiku nad Markdownem opravdu chceš, existují tři realistické varianty —
+a je to **architektonické rozhodnutí, ne konfigurace**:
+
+**1. Publikační kopie v podporovaném formátu** (`.docx` nebo `.pdf`).
+Zdroj zůstane `.md` kvůli gitu a diffům, vedle něj se generuje rendition pro retrieval.
+Cena: duplicita, kterou musí něco udržovat — a **pozor, Graph Search cesta pak začne
+stahovat PDF a číst ho jako text**. Nutná pojistka v KQL (`AND filetype:md`), případně
+`FileExtension:"md"` ve `filterExpression` u Retrieval API.
+
+**2. Synchronizovaný Copilot connector.** Connector si Markdown přečte, převede na
+čistý text a uloží do `externalItem.content` — a **ten už sémanticky indexovaný je**.
+Původní přípona přestává být rozhodující, protože do indexu nevstupuje soubor, ale
+text. Retrieval API se pak volá s `dataSource: "externalItem"`.
+Pozor, connectory se liší: **Enterprise Websites** connector `.md` uvádí a deklaruje
+Semantic Search; **File Share** connector `.md` v seznamu extrahovaných typů **nemá**.
+Federované MCP connectory obsah vůbec nesynchronizují, takže se jich sémantické
+indexování netýká.
+
+**3. Zůstat u lexikálního retrievalu a psát obsah pro něj.** Konzistentní odborné
+termíny, synonyma přímo v textu, výstižné názvy souborů a nadpisy. Tohle je
+mimochodem přesně to, co v kurzu děláte — jen se to dosud nejmenovalo rozhodnutím.
+
+> [!IMPORTANT] Formulace, které se vyhnout
+> Věta typu *„Copilot čte a indexuje Markdown výborně"* je pro raw `.md`
+> v SharePointu **zavádějící**. Přesněji:
+>
+> *„Microsoft Copilot umí Markdown přímo zpracovat a synchronizované Copilot
+> connectory jej mohou sémanticky indexovat. Soubory `.md` uložené přímo
+> v SharePointu nebo OneDrivu však Retrieval API aktuálně vyhledává pouze lexikálně."*
+
 ## Co z toho platí pro kurz
 
 1. Živá cesta labu (**Graph Search**) je i po tomhle měření správná volba: funguje

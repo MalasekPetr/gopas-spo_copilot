@@ -112,6 +112,14 @@ Filtr na knihovnu (`filterExpression`) je v **beta** tvaru. Kdyby API vrátilo
 BadRequest, pošli dotaz bez něj a zúž až výsledky podle `webUrl` — v kódu je to
 poznamenané.
 
+> [!NOTE] Tři cesty k sémantickému groundingu nad Markdownem
+> Když zákazník řekne „máme dokumentaci v Markdownu a chceme nad ní agenta", jsou
+> to tři možnosti, ne jedna: **publikační kopie v `.docx`/`.pdf`**, **synchronizovaný
+> Copilot connector** (Markdown se ingestuje jako text do `externalItem.content`,
+> a ten už sémanticky indexovaný je), nebo **zůstat u lexikálního** a psát obsah
+> pro něj. Rozhodnutí padá při zakládání knihovny, ne při ladění promptu.
+> Podrobně i se zdroji: [`../../perf-cost-lifecycle/mereni-retrieval-vs-search.md`](../perf-cost-lifecycle/mereni-retrieval-vs-search.md).
+
 > [!TIP] Naměřené srovnání obou cest
 > [`../../perf-cost-lifecycle/mereni-retrieval-vs-search.md`](../perf-cost-lifecycle/mereni-retrieval-vs-search.md)
 > — výkon, cena i kvalita odpovědí na týchž dotazech. Včetně dvou nálezů, které

@@ -76,7 +76,7 @@
    ```powershell
    $env:APPONLY_CLIENT_ID = "<client id>"
    $env:APPONLY_SECRET    = "<secret>"
-   node <klon-repa>/actions-graph/solution/app-only-auth.mjs > .lab-token-apponly
+   node <klon-repa>/actions-graph/solution/app-only-auth.mjs | Out-File .lab-token-apponly -Encoding ascii -NoNewline
    ```
 
    Skript vypíše na stderr **role v tokenu** — když je seznam prázdný, chybí admin

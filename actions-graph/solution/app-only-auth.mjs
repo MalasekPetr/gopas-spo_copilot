@@ -5,10 +5,11 @@
 // Spuštění (PowerShell, ve složce projektu agenta):
 //   $env:APPONLY_CLIENT_ID = "<client id registrace spo-copilot-apponly>"
 //   $env:APPONLY_SECRET    = "<client secret>"
-//   node <klon-repa>/actions-graph/solution/app-only-auth.mjs > .lab-token-apponly
+//   node <klon-repa>/actions-graph/solution/app-only-auth.mjs | Out-File .lab-token-apponly -Encoding ascii -NoNewline
 //
 // Token jde na stdout, instrukce a diagnostika na stderr — proto to jde
-// přesměrovat rovnou do souboru.
+// přesměrovat rovnou do souboru. NE přes `>` — Windows PowerShell 5.1 by zapsal
+// UTF-16LE a token by byl nečitelný (viz .lab-token ve středu).
 //
 // POZOR: tenhle token nese oprávnění APLIKACE nad celým tenantem. Nepatří
 // do repa, nerozdává se studentům a po demu se maže i s registrací.

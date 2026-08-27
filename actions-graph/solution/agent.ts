@@ -151,10 +151,10 @@ function labToken(): string | undefined {
 }
 
 // Knihovna, na kterou grounding omezujeme. Scoping = mene sumu, min tokenu, nizsi cena.
-const RUNBOOKY_PATH = "https://<tenant>.sharepoint.com/sites/hr-demo/Runbooky";
+const RUNBOOKY_PATH = "https://ms365x17157302.sharepoint.com/sites/hr-demo/Runbooky";
 
 // web, kam se zapisuji tikety (list Tikety)
-const SITE_PATH = "<tenant>.sharepoint.com:/sites/hr-demo";
+const SITE_PATH = "ms365x17157302.sharepoint.com:/sites/hr-demo";
 
 type Chunk = { title: string; url: string; text: string };
 

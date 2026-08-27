@@ -34,10 +34,11 @@ Ale **musí umět to výše**. Když ti něco chybí (nebo se ti kód mezi labam
 zkopíruj referenční soubor přes svůj `src/agent.ts`, doplň si vlastní hodnoty
 v `env/` a pokračuj odsud. Ztrácet čas dohledáváním rozdílu se nevyplatí.
 
-> [!WARNING] Po zkopírování nahraď `<tenant>`
-> Referenční soubory mají hostname tenantu **schválně zástupný** (`<tenant>`), aby
-> nebyl v repu. Po zkopírování ho nahraď skutečným hostname z adresního řádku
-> SharePointu — jinak retrieval vrátí 0 hitů a nepoznáš proč.
+> [!NOTE] `<tenant>` v ukázkách kódu
+> V úryvcích **v této dokumentaci** je hostname tenantu psaný jako `<tenant>` —
+> při opisování ho nahraď skutečným z adresního řádku SharePointu (najdeš ho
+> i v [`environment.md`](../environment.md)). Soubory v `solution/` mají hostname
+> už doplněný, ty stačí zkopírovat.
 
 **Checkpoint:** agent běží v Playgroundu a chová se podle popisu výše. Když ne,
 řeš to teď, ne uprostřed labu.

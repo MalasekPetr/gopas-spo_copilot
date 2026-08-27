@@ -38,10 +38,11 @@ Ale **musí umět to výše**. Když ti něco chybí (nebo se ti kód mezi labam
 zkopíruj referenční soubor přes svůj `src/agent.ts`, doplň si vlastní hodnoty
 v `env/` a pokračuj odsud. Ztrácet čas dohledáváním rozdílu se nevyplatí.
 
-> [!WARNING] Po zkopírování nahraď `<tenant>`
-> Referenční soubory mají hostname tenantu **schválně zástupný** (`<tenant>`), aby
-> nebyl v repu. Po zkopírování ho nahraď skutečným hostname z adresního řádku
-> SharePointu — jinak retrieval vrátí 0 hitů a nepoznáš proč.
+> [!NOTE] `<tenant>` v ukázkách kódu
+> V úryvcích **v této dokumentaci** je hostname tenantu psaný jako `<tenant>` —
+> při opisování ho nahraď skutečným z adresního řádku SharePointu (najdeš ho
+> i v [`environment.md`](../environment.md)). Soubory v `solution/` mají hostname
+> už doplněný, ty stačí zkopírovat.
 
 **Checkpoint:** agent běží v Playgroundu a chová se podle popisu výše. Když ne,
 řeš to teď, ne uprostřed labu.
@@ -429,9 +430,9 @@ vstupuješ se stejným základem jako ostatní.
   v `.lab-token` je v **UTF-16LE** (tak zapisuje `>` ve Windows PowerShellu 5.1),
   ne v ASCII. Ověř `Get-Content .lab-token -TotalCount 1` — musí začínat `eyJ`.
   Vyrob znovu s `| Out-File .lab-token -Encoding ascii -NoNewline`.
-- **Retrieval vrací 0 hitů a v KQL vidíš `<tenant>`**: zkopíroval jsi referenční
-  `solution/agent.ts`, kde je hostname tenantu **schválně zástupný**. Nahraď
-  `<tenant>` skutečným hostname z adresního řádku SharePointu.
+- **Retrieval vrací 0 hitů a v KQL vidíš `<tenant>`**: opsal jsi úryvek
+  z dokumentace, kde je hostname zástupný. Nahraď `<tenant>` skutečným hostname
+  z adresního řádku SharePointu.
 - **`.lab-token` chybí nebo vypršel (401)**: vyrob nový podle kroku 7a groundingového
   labu. Bez tokenu vrací `graphGet` srozumitelnou hlášku a části B–D jedou dál —
   jsou na Graphu nezávislé.

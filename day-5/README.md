@@ -41,7 +41,7 @@ Nejedou v bloku, ale patří ke dni — student je má po ruce ve stejné složc
 
 > [!IMPORTANT] Slib skupině z úterý — uzavřený v bloku 0
 > V úterý padl dotaz na **vlastní vektorizaci** a slíbilo se 30min demo na dnešek
-> ([`den-2.md`](../day-2/README.md)). Při třetí rekalibraci demo padlo. Otázka ale nezmizela:
+> ([`day-2`](../day-2/README.md)). Při třetí rekalibraci demo padlo. Otázka ale nezmizela:
 > odpovídá na ni **šestá otázka v bloku 0** — *kdy si retrieval stavět sám a co za to
 > platíš* — jako rozhodnutí, ne jako tutoriál. Plný text zůstává v
 > [`../opt-custom-retrieval/`](../day-3/opt-custom-retrieval/) k samostudiu.

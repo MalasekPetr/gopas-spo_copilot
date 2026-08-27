@@ -13,8 +13,12 @@ v instruktorských demech Agent Frameworku).
 
 ## Jak repo číst
 
-- **Pořadí modulů** je definované v [`agenda.md`](./agenda.md) — složky jsou pojmenované **slugy**,
-  ne čísly, aby vkládání dalších modulů nerozhazovalo číslování.
+- **Začni dnem, ne modulem.** Každý den má vlastní briefing: [`day-1/`](./day-1/README.md) ·
+  [`day-2/`](./day-2/README.md) · [`day-3/`](./day-3/README.md) · [`day-4/`](./day-4/README.md) ·
+  [`day-5/`](./day-5/README.md). Je v něm tabulka bloků včetně volitelných, timing
+  a kompresní ventily.
+- **Pořadí modulů** napříč týdnem drží [`agenda.md`](./agenda.md) — složky jsou pojmenované
+  **slugy**, ne čísly, aby vkládání dalších modulů nerozhazovalo číslování.
 - **Závazné názvosloví** (produkty, SDK, certifikace, přejmenování) je v
   [`GLOSSARY.md`](./GLOSSARY.md) — jediný zdroj pravdy.
 - **Konvence** (MD styl, Mermaid, currency-markery, prefixy souborů, kód v materiálech) jsou
@@ -33,33 +37,42 @@ postupné rozšiřování je v
 
 ```text
 gopas-spo_copilot/
-├─ README.md          # tento soubor
-├─ CONVENTIONS.md      # jak psát materiály
-├─ GLOSSARY.md         # závazné názvosloví
-├─ agenda.md           # 5denní pořadí bloků (single source of order)
-├─ environment.md      # tenant, PAYG, model endpoint, matice požadavků
-├─ _templates/         # module.md, lab.md
-├─ dny/                # denní briefingy (den-1.md … den-5.md)
-├─ <modul>/            # každý modul = složka se slugem v kořeni; den a pořadí drží agenda
-├─ marketing/          # NÁVRH nové osnovy pro web (cs / en / sk)
-└─ scripts/            # provozní skripty kurzu (lifecycle studentů, seed dat)
+├─ README.md              # tento soubor
+├─ CONVENTIONS.md         # jak psát materiály
+├─ GLOSSARY.md            # závazné názvosloví
+├─ agenda.md              # 5denní pořadí bloků (single source of order)
+├─ environment.md         # tenant, PAYG, model endpoint, matice požadavků
+├─ scenario-support-agent.md  # nosná linka týdne — agent, který se staví celý týden
+├─ self-study.md          # co se neodučí a kde to student najde
+├─ _templates/            # module.md, lab.md
+├─ day-1/ … day-5/        # obsah po dnech; každý modul = složka se slugem
+│   ├─ README.md          # denní briefing: tabulka bloků, timing, ventily
+│   └─ <modul>/           # README, instructor-notes, lab-*, solution/
+├─ marketing/             # NÁVRH nové osnovy pro web (cs / en / sk)
+└─ scripts/               # provozní skripty kurzu (lifecycle studentů, seed dat)
 ```
 
 ## Legenda
 
 - **Povinný** modul — součást každého běhu.
-- **Volitelný** modul (slug s prefixem `opt-`) — spouští se dle času / potřeb skupiny.
+- **Volitelný** modul — v tabulce dne označený **V**. Nejede v bloku, ale patří ke dni
+  a student ho má ve stejné složce. Část z nich má prefix `opt-`, část se do samostudia
+  přesunula až po rekalibraci (`security-risk`, `event-driven-hosting`,
+  `orchestry-governance`, `perf-cost-lifecycle`).
 - Currency-markery v textu:
   - `> [!WARNING] Ověřit k datu běhu` — fast-moving fakt (ceny, preview, verze SDK, retirement dat).
   - `> [!IMPORTANT]` — lineage / přejmenování / breaking change, na které studenty upozornit.
 
 ## Stav
 
-Fáze 2 — **obsah dopsán** (2026-08-24). Všechny moduly, laby i diagramy jsou rozpracované
-do plné hloubky; v repu nezůstaly žádné TODO placeholdery kromě šablon v
-[`_templates/`](./_templates/). Rozvržení dnů je po prvním běhu rekalibrované — viz
-[`agenda.md`](./agenda.md) a [`self-study.md`](./self-study.md).
+**Po prvním běhu** (týden od 2026-08-24). Obsah je kompletní, rozvržení dnů
+rekalibrované třikrát podle skutečně odučeného času — viz [`agenda.md`](./agenda.md)
+a briefingy jednotlivých dnů. Co se neodučilo a kde to student najde, je
+v [`self-study.md`](./self-study.md).
 
-Model endpoint pro custom engine agenty: **instruktorský Foundry deployment** (rozhodnuto
-2026-08-24, viz [`environment.md`](./environment.md)) — Business Basic + Copilot Credits
+Struktura `day-N/<modul>/` zavedena 2026-08-27 (dřív byly moduly v kořeni).
+**Studenti s klonem si musí udělat `git pull`** — cesty se změnily.
+
+Model endpoint pro custom engine agenty: **instruktorský Foundry deployment**
+(viz [`environment.md`](./environment.md)) — Business Basic + Copilot Credits
 nedává inference endpoint pro vlastní kód.

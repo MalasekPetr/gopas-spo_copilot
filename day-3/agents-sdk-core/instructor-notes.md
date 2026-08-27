@@ -42,27 +42,9 @@
   blokované politikou; mít offline **Node 22 LTS MSI** jako fallback. Ověřit aktuální
   název npm balíčku `atk` CLI a VS Code rozšíření (obojí se v lineage přejmenovávalo).
 
-## Demo: aktivita vs. turn (k části A, kroku 2)
+## Demo: aktivita vs. turn
 
-Do obou handlerů `console.log(">>> TURN start | aktivita: ${type} | text: ${text}")`
-a `"<<< TURN end"`. Pak v Playgroundu:
-
-1. **Restart konverzace** → turn s `conversationUpdate | text: undefined`. Nahlas:
-   *proběhl celý turn a nikdo nic nenapsal* — tentýž `undefined`, kvůli kterému se
-   opravoval `activity.text ?? ""`.
-2. **„ahoj"** → druhý turn, uvnitř jedno volání modelu.
-3. Mezera mezi logy = prostor pro **kola**: dnes jedno volání, od `actions-graph` víc.
-   Jeden turn ≠ jedno volání modelu — platí se každé kolo.
-4. **„Kdo je Alex Wilber?"** — padne hned po startu. Simulovaná persona z Microsoft demo
-   dat; Playground simuluje uživatele a kanály (Personal/Group/Channel), ne tenant.
-   Dvě dema zadarmo: čítač z části B se testuje **přepnutím Personal → Group Chat**
-   (nová konverzace = scope od nuly, bez restartu); a Alex bez tokenů je důvod, proč
-   delegated Graph v Playgroundu nepojede (`actions-graph`, mock endpoint).
-
-Tabule: *aktivita = co přišlo (podstatné jméno) · turn = co se s tím dělo (děj) ·
-konverzace = série turnů nad stavem.* Věta pro zákazníka: turn je jednotka zpracování
-(latence, tokeny za kola), aktivita jednotka doručení. Typ parametru se jmenuje
-`TurnContext` — jméno je odpověď.
+Scénář dema k části A je v [`demo-aktivita-vs-turn.md`](demo-aktivita-vs-turn.md).
 
 ## Tripwires
 
@@ -103,15 +85,3 @@ konverzace = série turnů nad stavem.* Věta pro zákazníka: turn je jednotka 
   — tady už s `git status` u tabule.
 - Nezabíhat do promptového ladění — to je [`../../prompt-orchestration/`](../../day-4/prompt-orchestration/).
   Systémový prompt tady záměrně minimální.
-
-## Vazby
-
-- Zpět: toolchain a scaffold z `onboarding`; rozhodnutí „custom engine" z `agent-landscape`;
-  změřený strop deklarativního agenta ze včerejška (`declarative-agents`) je motivace
-  celého bloku — otevřít jím.
-- Dopředu: knowledge (`knowledge-grounding`), akce (`actions-graph`), prompt
-  (`prompt-orchestration`) — všechno se zapojuje do tohoto projektu.
-  Chybové větve z části D se vracejí v `event-driven-hosting` (timeout patterny)
-  a `perf-cost-lifecycle` (odolnost).
-- Baseline čtyř testovacích dotazů z labu se používá po každém přírůstku celý týden —
-  studenti si ji mají uložit.

@@ -2,7 +2,9 @@
 
 Jediný zdroj pravdy o pořadí modulů. Moduly leží v jedné rovině bez prefixu dne
 (`onboarding/`, `agents-sdk-core/`, …) — **den je metadata a žije výhradně tady**.
-Denní briefingy (prerekvizity rána, kompresní ventily dne) jsou v [`dny/`](./day-5/).
+Denní briefingy (prerekvizity rána, kompresní ventily dne) jsou v README jednotlivých dnů:
+[`day-1`](./day-1/README.md) · [`day-2`](./day-2/README.md) · [`day-3`](./day-3/README.md) ·
+[`day-4`](./day-4/README.md) · [`day-5`](./day-5/README.md).
 
 > [!IMPORTANT] Přestavba složek 2026-08-25 večer — studenti musí udělat `git pull`
 > Původní struktura `day-N/<modul>` po dvou rekalibracích u 8 z 24 modulů lhala o dni

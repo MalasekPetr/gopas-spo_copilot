@@ -33,44 +33,13 @@
   chybu → nech MOCK (GRAPH: ŽIVĚ tím není dotčené — na retrievalu nezávisí);
   lab rozdíl explicitně pojmenovává (semantic index + ACL trimming = hodnota
   živé cesty).
-- **Retrieval API: rozhoduje APLIKACE, ktera se pta — ne ucet.**
-  Přeměřeno 2026-08-27 večer, stejný tenant, stejný dotaz `access denied upload`,
-  stejné tělo `{ queryString, dataSource: "sharePoint" }`:
-
-  | Volající aplikace | Účet | Výsledek |
-  |---|---|---|
-  | naše registrace `4407c56b…` (device code, public client) | `petr.malasek@spdemo.online` | **200 + 0 hitů** |
-  | naše registrace `4407c56b…` | `user.15@spdemo.online` | **200 + 0 hitů** |
-  | **Graph Explorer** (registrace Microsoftu) | `petr.malasek@spdemo.online` | **200 + data** ✅ |
-
-  Poslední řádek vrátil `access-denied-pri-uploadu.md` s celým extraktem
-  a `relevanceScore 0.686`.
-
-  > [!IMPORTANT] Oprava dřívějšího záznamu
-  > Matice z 26. 8. připisovala prázdnou odpověď **lektorskému účtu** a označovala
-  > ji za licenční anomálii. **Nebyla to vlastnost účtu.** `petr.malasek` jako plný
-  > uživatel netrpí žádnou anomálií — přes Graph Explorer data dostane. Proměnná je
-  > **volající aplikace**, a tu tehdejší měření nezměnilo, protože jelo jen přes
-  > naši registraci.
-
-  Změřením vyloučeno jako příčina: účet a jeho licence, `filterExpression`
-  (s ním i bez), `dataSource`, verze API (`beta` i `v1.0`), jazyk i šířka dotazu,
-  a **typ souboru** — vrácený hit je `.md` (`resourceType: listItem`), takže
-  omezení na `.doc/.docx/.pptx/.pdf/.aspx/.one` se týká jen *semantic* retrievalu,
-  ne lexikálního.
-
-  > [!IMPORTANT] DOŘEŠENO týž večer: příčinou byla chybějící hlavička
-  > Nebyla to registrace ani účet. **Retrieval API vyžaduje `Accept-Language`
-  > s konkrétním jazykovým tagem** — bez ní (a s `*`) vrací `200` a prázdno
-  > za ~0,5 s, bez chyby. Prohlížeč ji posílá vždy, Node `fetch` nikdy.
-  > Celé měření: [`../../perf-cost-lifecycle/mereni-retrieval-vs-search.md`](../../day-5/perf-cost-lifecycle/mereni-retrieval-vs-search.md).
-  >
-  > Požadavek **není v dokumentaci** — je to změřené chování, ne kontrakt.
-
-  **Didaktické pointy:** (1) tři peněženky naživo; (2) *„200 s prázdnem je horší
-  diagnóza než 403"* — a teď na mnohem lepším příkladu: tentýž uživatel, tentýž
-  dotaz, tentýž tenant, a odpověď závisí na tom, **která aplikace se ptá**. Přesně
-  ten druh chyby, který se v produkci hledá hodiny.
+- **Retrieval API: příčinou prázdných odpovědí byla chybějící hlavička.**
+  Ne licence, ne účet, ne typ souboru. `Accept-Language` s konkrétním jazykovým tagem
+  je povinná; bez ní vrací API `200` a prázdno za ~0,5 s, bez chyby. Skutečné hledání
+  trvá 1–3 s — to je poznávací znamení.
+  Celé měření vč. srovnání tří endpointů:
+  [`../../day-5/perf-cost-lifecycle/mereni-retrieval-vs-search.md`](../../day-5/perf-cost-lifecycle/mereni-retrieval-vs-search.md).
+  **Matice z 26. 8. o „anomálii lektorského účtu" byla mylná** — účet s ní nemá nic společného.
 - **Delegated oprávnění Files/Sites.Read.All vyžadují Grant admin consent na
   registraci** — bez něj každý ne-admin narazí na „Need admin approval"
   (změřeno). Jednorázová akce admina, pokrývá celý tenant. — otestovat před během
@@ -102,12 +71,3 @@
   a odpovědnost za to, že agent neukáže, co nemá. To je celý `opt-custom-retrieval`.
 - Nezabíhat do prompt ladění „aby nehalucinoval" — to je [`../prompt-orchestration/`](../../day-4/prompt-orchestration/)
   a pořádně až [`../../middleware-policy/`](../../day-4/middleware-policy/).
-
-## Vazby
-
-- Zpět: agent z `agents-sdk-core` (volá model, má ošetřené chyby).
-- Zpět též: `declarative-agents` (knowledge deklarativně v manifestu — včera; teď to samé
-  kódem, srovnání se nabízí samo).
-- Dopředu: `actions-graph` (MCP jako nástroj, hranice oprávnění), `opt-custom-retrieval`
-  (kdy si retrieval dělat sám), `security-risk` (obsah v knowledge zdroji
-  jako vektor prompt injection — dotaz 4 se sem vrací).

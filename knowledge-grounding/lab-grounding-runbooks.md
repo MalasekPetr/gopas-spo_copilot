@@ -19,6 +19,26 @@ Mock zůstává použitelný i potom: je to testovací cesta bez závislosti na 
   (včetně `callModel` s retry z části D).
 - Účet `user.NN@spdemo.online` s přístupem na `/sites/hr-demo`.
 
+## Startovní čára — srovnej si ji
+
+Tenhle lab navazuje na **`agents-sdk-core` (lab První agent)**. Než uděláš první krok, porovnej svůj
+`src/agent.ts` s referenční výstupní podobou předchozího labu:
+[`../agents-sdk-core/solution/agent.ts`](../agents-sdk-core/solution/agent.ts).
+
+Tvůj agent už musí umět:
+
+- volat model přes `callModel` (včetně retry a explicitního timeoutu),
+- držet stav turnu v `TurnState` (počítadlo se zvyšuje),
+- odpovědět smysluplnou hláškou, když volání modelu selže.
+
+Nemusíš mít soubor znak po znaku stejný — komentáře a formulace promptu se liší.
+Ale **musí umět to výše**. Když ti něco chybí (nebo se ti kód mezi labama rozjel),
+zkopíruj referenční soubor přes svůj `src/agent.ts`, doplň si vlastní hodnoty
+v `env/` a pokračuj odsud. Ztrácet čas dohledáváním rozdílu se nevyplatí.
+
+**Checkpoint:** agent běží v Playgroundu a chová se podle popisu výše. Když ne,
+řeš to teď, ne uprostřed labu.
+
 ## Část A — co je v indexu (bez kódu)
 
 ### 1. Najdi obsah, ne soubor
@@ -384,6 +404,18 @@ relevance).
 [`../opt-custom-retrieval/`](../opt-custom-retrieval/) i do capstonu. A jedna
 navíc: **co za tebe dnes udělal semantic index / mock a co by sis musel postavit
 sám** — v části A jsi viděl rozdíl na vlastní oči.
+
+## Výstupní stav
+
+Referenční podoba `src/agent.ts` po tomto labu: [`solution/agent.ts`](solution/agent.ts).
+
+Agent po tomto labu odpovídá **z runbooků, s citací zdroje**, a když odpověď
+v podkladech není, řekne to. Obsahuje obě retrievalové cesty (MOCK i živý Graph Search)
+a účetní knihu spotřeby — `logUsage` zapisující do `usage-log.jsonl`.
+
+Soubor je **startovní čára následujícího modulu** — ten se na něj odkazuje. Když ti
+během labu něco nevyšlo, zkopíruj ho přes svůj `src/agent.ts` a do dalšího bloku
+vstupuješ se stejným základem jako ostatní.
 
 ## Ověření
 

@@ -21,6 +21,26 @@ Graph čteme i **zapisujeme naživo**: profil z adresáře a eskalaci do SharePo
   `offline_access User.Read Files.Read.All Sites.Read.All Sites.ReadWrite.All`
   (zápis do listu). Client ID z tabule, InPrivate okno, tvůj `user.NN`.
 
+## Startovní čára — srovnej si ji
+
+Tenhle lab navazuje na **`knowledge-grounding` (lab Grounding nad knihovnou Runbooky)**. Než uděláš první krok, porovnej svůj
+`src/agent.ts` s referenční výstupní podobou předchozího labu:
+[`../knowledge-grounding/solution/agent.ts`](../knowledge-grounding/solution/agent.ts).
+
+Tvůj agent už musí umět:
+
+- najít podklady v knihovně `Runbooky` (`retrieve`, query rewriting, MOCK i živá cesta),
+- odpovědět z podkladů a **odcitovat zdroj**,
+- zapisovat spotřebu každého kola do `usage-log.jsonl` (`logUsage`).
+
+Nemusíš mít soubor znak po znaku stejný — komentáře a formulace promptu se liší.
+Ale **musí umět to výše**. Když ti něco chybí (nebo se ti kód mezi labama rozjel),
+zkopíruj referenční soubor přes svůj `src/agent.ts`, doplň si vlastní hodnoty
+v `env/` a pokračuj odsud. Ztrácet čas dohledáváním rozdílu se nevyplatí.
+
+**Checkpoint:** agent běží v Playgroundu a chová se podle popisu výše. Když ne,
+řeš to teď, ne uprostřed labu.
+
 ## Část A — první akce nad Graphem
 
 ### 1. Ověř přístup k listu Tikety
@@ -360,6 +380,18 @@ zatímco `Zadavatel` může být pořád cokoliv, co kód zapsal.
 > Na začátku `src/agent.ts` změň `const LAB = "actions-graph";`. Zapisování do
 > `usage-log.jsonl` běží samo uvnitř `callModel`, ale štítek fáze si musíš přepnout ty —
 > jinak ti v pátek vyjde celý týden pod jedním jménem a křivka se rozpadne.
+
+## Výstupní stav
+
+Referenční podoba `src/agent.ts` po tomto labu: [`solution/agent.ts`](solution/agent.ts).
+
+Agent po tomto labu **jedná**: čte profil z Graphu a zakládá tikety do
+SharePoint listu s validovanými parametry a zadavatelem z identity volajícího.
+Jedno volání modelu nahradila **tool-call smyčka** — kola uvnitř jednoho turnu.
+
+Soubor je **startovní čára následujícího modulu** — ten se na něj odkazuje. Když ti
+během labu něco nevyšlo, zkopíruj ho přes svůj `src/agent.ts` a do dalšího bloku
+vstupuješ se stejným základem jako ostatní.
 
 ## Ověření
 

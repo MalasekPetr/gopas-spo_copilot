@@ -15,7 +15,9 @@ a nic se v ní neučíš prsty).
 ## Předpoklady
 
 - Agent po [`../middleware-policy/`](../middleware-policy/lab-middleware-pipeline.md):
-  grounding, akce, pipeline s pre/post.
+  grounding, akce, pipeline s pre/post. **Srovnej si startovní čáru** proti
+  [`../middleware-policy/solution/agent.ts`](../middleware-policy/solution/agent.ts) —
+  golden set se pouští proti téhle podobě agenta.
 - **`usage-log.jsonl` plněný od středy** (krok 8 groundingového labu) — bez něj
   nebude část E mít z čeho počítat.
 - Tabulka baseline ze všech předchozích labů.

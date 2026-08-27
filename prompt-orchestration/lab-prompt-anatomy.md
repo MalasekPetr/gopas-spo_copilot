@@ -17,6 +17,26 @@ napíšeš lépe.
   z runbooků, tool-call smyčka, `create_ticket` s validací.
 - Tabulka baseline ze všech předchozích labů.
 
+## Startovní čára — srovnej si ji
+
+Tenhle lab navazuje na **`actions-graph` (lab Akce, validace parametrů a hranice oprávnění)**. Než uděláš první krok, porovnej svůj
+`src/agent.ts` s referenční výstupní podobou předchozího labu:
+[`../actions-graph/solution/agent.ts`](../actions-graph/solution/agent.ts).
+
+Tvůj agent už musí umět:
+
+- grounding z runbooků s citacemi,
+- **tool-call smyčku** — `lookup_user` a `create_ticket` v kolech uvnitř turnu,
+- validaci parametrů **před** zápisem a zadavatele z identity, ne z návrhu modelu.
+
+Nemusíš mít soubor znak po znaku stejný — komentáře a formulace promptu se liší.
+Ale **musí umět to výše**. Když ti něco chybí (nebo se ti kód mezi labama rozjel),
+zkopíruj referenční soubor přes svůj `src/agent.ts`, doplň si vlastní hodnoty
+v `env/` a pokračuj odsud. Ztrácet čas dohledáváním rozdílu se nevyplatí.
+
+**Checkpoint:** agent běží v Playgroundu a chová se podle popisu výše. Když ne,
+řeš to teď, ne uprostřed labu.
+
 ## Část A — baseline (nepřeskakovat)
 
 ### 1. Změř současný stav
@@ -209,6 +229,18 @@ věří**, a v HTML komentáři, který v runbooku nikdo nevidí.
 > Na začátku `src/agent.ts` změň `const LAB = "prompt-orchestration";`. Zapisování do
 > `usage-log.jsonl` běží samo uvnitř `callModel`, ale štítek fáze si musíš přepnout ty —
 > jinak ti v pátek vyjde celý týden pod jedním jménem a křivka se rozpadne.
+
+## Výstupní stav
+
+Referenční podoba `src/agent.ts` po tomto labu: [`solution/agent.ts`](solution/agent.ts).
+
+Systémový prompt po tomto labu už není seznam přání, ale **kontrakt po blocích**,
+doplněný jedním few-shot příkladem na *formát* (nikdy na doménu). Tool-call smyčka má
+strop kol a po jeho vyčerpání se agent ozve, místo aby ztichl.
+
+Soubor je **startovní čára následujícího modulu** — ten se na něj odkazuje. Když ti
+během labu něco nevyšlo, zkopíruj ho přes svůj `src/agent.ts` a do dalšího bloku
+vstupuješ se stejným základem jako ostatní.
 
 ## Ověření
 

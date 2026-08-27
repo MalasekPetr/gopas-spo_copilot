@@ -20,6 +20,25 @@ Lab je samostatně proveditelný; instruktor ho jede společně, ale nečekej na
 - Tři hodnoty od instruktora: **klíč**, **endpoint**, **deployment name**.
 - Prostředí podle [`guide-dev-environment.md`](guide-dev-environment.md) (Node 22, Toolkit).
 
+## Startovní čára — srovnej si ji
+
+Tenhle lab začíná u **prázdného scaffoldu z Toolkitu**, ne u hotového agenta.
+
+Máš-li scaffold z pondělí ([`../onboarding/lab-toolchain-scaffold.md`](../onboarding/lab-toolchain-scaffold.md)),
+otevři ho a jdi na krok 1. Nemáš-li ho — nebo si nejsi jistý, co v něm je — vyrob
+si ho teď znovu, jsou to tři minuty:
+
+1. VS Code → ikona **Microsoft 365 Agents Toolkit** v Activity Baru →
+   **Create a New Agent/App** → šablona custom engine agenta, jazyk **TypeScript**
+   (přesný název šablony podle aktuální verze Toolkitu, instruktor promítá).
+2. Spusť **F5** → **Agents Playground**. Bez tenantu, bez tunelu, bez registrace bota.
+   Pošli zprávu — musí přijít echo.
+3. Otevři `src/agent.ts`. Tohle je startovní čára celého týdne: echo agent,
+   žádný model, žádné znalosti, žádné akce.
+
+**Checkpoint:** Playground odpovídá echem a `src/agent.ts` má pár desítek řádků.
+Nesedí-li to, dál nepokračuj.
+
 ## Část A — spuštění a orientace
 
 ### 1. Otevři projekt a oprav dvě známé chyby v Problems
@@ -354,6 +373,17 @@ nepomůže), v chatu rovnou srozumitelná věta. **Vrať `config.azureOpenAIKey`
 
 Skutečné 429 sám nevyrobíš — vyrobí ho celá třída najednou proti capacity
 deploymentu, a spadne do stejné transientní větve jako timeout.
+
+## Výstupní stav
+
+Referenční podoba `src/agent.ts` po tomto labu: [`solution/agent.ts`](solution/agent.ts).
+
+Agent po tomto labu volá model, drží stav v `TurnState` a **korektně odpoví
+i když model selže nebo vyprší timeout**. Žádné znalosti, žádné akce — to přijde dál.
+
+Soubor je **startovní čára následujícího modulu** — ten se na něj odkazuje. Když ti
+během labu něco nevyšlo, zkopíruj ho přes svůj `src/agent.ts` a do dalšího bloku
+vstupuješ se stejným základem jako ostatní.
 
 ## Ověření
 

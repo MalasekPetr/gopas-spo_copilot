@@ -19,6 +19,26 @@ jediná hranice, kterou nejde přemluvit.
 - **Injektáž v lokální kopii runbooku** z kroku 9 předchozího labu — necháváš ji tam.
 - Agent běží na **MOCK** retrievalu (útoky se do knihovny v tenantu nevkládají).
 
+## Startovní čára — srovnej si ji
+
+Tenhle lab navazuje na **`prompt-orchestration` (lab Systémový prompt jako kontrakt)**. Než uděláš první krok, porovnej svůj
+`src/agent.ts` s referenční výstupní podobou předchozího labu:
+[`../prompt-orchestration/solution/agent.ts`](../prompt-orchestration/solution/agent.ts).
+
+Tvůj agent už musí umět:
+
+- systémový prompt jako **kontrakt po blocích** + few-shot na formát,
+- tool-call smyčku se stropem kol a hláškou po jeho vyčerpání,
+- grounding, citace a `create_ticket` s validací z předchozích labů.
+
+Nemusíš mít soubor znak po znaku stejný — komentáře a formulace promptu se liší.
+Ale **musí umět to výše**. Když ti něco chybí (nebo se ti kód mezi labama rozjel),
+zkopíruj referenční soubor přes svůj `src/agent.ts`, doplň si vlastní hodnoty
+v `env/` a pokračuj odsud. Ztrácet čas dohledáváním rozdílu se nevyplatí.
+
+**Checkpoint:** agent běží v Playgroundu a chová se podle popisu výše. Když ne,
+řeš to teď, ne uprostřed labu.
+
 ## Část A — žebřík útoků (25 min)
 
 Každý stupeň je odpověď na obranu, kterou jsi právě nasadil. Zapisuj si výsledky do
@@ -325,6 +345,21 @@ protože jsou to obyčejné funkce.
 > Na začátku `src/agent.ts` změň `const LAB = "middleware-policy";`. Zapisování do
 > `usage-log.jsonl` běží samo uvnitř `callModel`, ale štítek fáze si musíš přepnout ty —
 > jinak ti v pátek vyjde celý týden pod jedním jménem a křivka se rozpadne.
+
+## Výstupní stav
+
+Referenční podoba `src/agent.ts` po tomto labu: [`solution/agent.ts`](solution/agent.ts).
+
+Kolem turnu je po tomto labu **pipeline**: `pre()` redaguje PII a odmítá
+mimo-scope dotazy ještě před voláním modelu, `post()` kontroluje odchozí odkazy proti
+whitelistu a citace proti tomu, co retrieval opravdu vrátil. Obrana je **v kódu**, ne
+v promptu — prompt brání proti záměru, kód brání proti výsledku. Tohle je finální
+podoba Support Asistenta.
+
+Tenhle agent je **předmětem testování** v modulu `evaluation-quality` — golden set
+se pouští proti němu. Když ti během labu něco nevyšlo, zkopíruj referenční soubor
+přes svůj `src/agent.ts`, ať do posledního bloku vstupuješ se stejným základem
+jako ostatní.
 
 ## Ověření
 

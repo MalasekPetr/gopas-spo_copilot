@@ -240,6 +240,14 @@ Tím se z týdne, který data jen četl, stává agent, který **mění stav ve 
 
 ### 9. Naivní create_ticket — schválně špatně
 
+**Nejdřív zase pusť model k nástroji**, jinak zopakuješ krok 5. Prompt zatím říká
+jen *„nabídni eskalaci na technika"* — a nabídnout není totéž co udělat. Doplň do
+`systemPrompt` pod větu o nedomýšlení:
+
+```ts
+"Když uživatel eskalaci potvrdí nebo sám řekne, že runbook nepomohl, tiket rovnou založ nástrojem create_ticket — nezůstávej u nabídky.",
+```
+
 Konstantu s cestou k webu si dej nahoru; `resolveTicketList` už máš v helperu
 z kroku 2:
 

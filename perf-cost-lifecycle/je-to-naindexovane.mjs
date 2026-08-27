@@ -81,7 +81,7 @@ for (const q of VETY) {
 // --- verdikt -----------------------------------------------------------------
 console.log("\n── Verdikt");
 if (semanticky >= 2) {
-  console.log(`   HOTOVO. ${semanticky}/${VETY.length} prirozenych ceskych vet nasoo PDF.`);
+  console.log(`   HOTOVO. ${semanticky}/${VETY.length} prirozenych ceskych vet naslo PDF.`);
   console.log("   Semanticky retrieval na podporovanem typu funguje - hypoteza potvrzena.");
   console.log("   Ted ma smysl pustit srovnani-retrieval.mjs znovu, uz s fer podminkami.");
 } else if (pdf.length) {

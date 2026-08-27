@@ -104,7 +104,9 @@ async function cestaA(dotaz) {
     { role: "user", content: dotaz },
   ], "prepis");
   const words = r.text.trim().replace(/[".,'\n]/g, " ").split(/\s+/).filter(Boolean);
-  const kql = words.length ? `(${words.join(" OR ")}) AND path:"${RUNBOOKY_PATH}"` : "";
+  // filetype:md je POJISTKA: od 27. 8. jsou v knihovne i PDF renditiony a Graph
+  // Search by je stahoval pres .text() jako binarni smeti do promptu.
+  const kql = words.length ? `(${words.join(" OR ")}) AND filetype:md AND path:"${RUNBOOKY_PATH}"` : "";
   let http = 1;
 
   let hits = [];

@@ -113,18 +113,115 @@ chování, fakticky selhání retrievalu. Golden set to nerozliší, protože ru
 u těchhle případů říká „přiznej, že nevíš" — proto se v evaluaci měří
 **groundedness zvlášť**, ne jen pass rate.
 
-## Tři endpointy, které nejsou zaměnitelné
+## Po převodu runbooků do PDF (27. 8. večer)
 
-Rešerše dokumentace (Petr Malášek, 27. 8.) upřesnila, že „hledání v Microsoftu 365"
-znamená **tři různá API s různým chováním**. Zaměňovat je je nejčastější zdroj zmatku:
+Runbooky byly zduplikovány do `.pdf` renditionů vedle původních `.md`.
+**Sémantický index je pobral za necelých 13 minut** (18:39 nic → 18:52 hotovo),
+ne za dny, jak varují diskuse o propagaci.
 
-| Endpoint | Co dělá | Zdroje | Poznámka |
+Retrieval API na přirozené české věty: **4 ze 4** (předtím 2 ze 4, z toho jedna
+odpověď navíc špatná):
+
+| Dotaz | Před (jen `.md`) | Po (s `.pdf`) |
+|---|---|---|
+| „Nejde mi upload, hlásí access denied." | 0 hitů | `access-denied-pri-uploadu-v2.0.pdf` |
+| „Jaká je SLA na P1?" | `incident-p1-sla.md` | `incident-p1-sla-v1.0.pdf` + `.md` |
+| „Tiskárna netiskne a runbook nepomohl." | 0 hitů | 3 hity, správný runbook první |
+| „Jak si mám resetovat heslo?" | `access-denied-pri-uploadu.md` ✘ | `reset-hesla-v1.0.pdf` ✔ |
+
+Poslední řádek je ten rozhodující: **dřív vracel špatný dokument, teď správný.**
+Hypotéza „na `.md` je to lexikální" je tím potvrzená z druhé strany.
+
+> [!WARNING] Převod formátu rozbije druhou cestu, pokud ji nezajistíš
+> Graph Search filtruje jen `path:`, takže od téhle chvíle vrací i PDF — a agent
+> na ně zavolá `.text()`, což je binární smetí poslané modelu jako podklad.
+> Nutná pojistka: `AND filetype:md` v KQL. V `srovnani-retrieval.mjs` je doplněná.
+
+## Dva běhy téže sady — co je stabilní a co ne
+
+Sada projela dvakrát za sebou, stejné dotazy, stejný prompt, stejný model:
+
+| Metrika | běh 1 | běh 2 | rozdíl |
 |---|---|---|---|
-| `POST /v1.0/search/query` | Microsoft Search index, **lexikální** (KQL) | SharePoint, OneDrive, Exchange… | tohle používá lab |
-| `POST /v1.0/copilot/retrieval` | Copilot **hybridní** index, vrací chunky | SharePoint, OneDrive, Copilot connectors | sémantika **jen pro podporované přípony** |
-| `POST /beta/copilot/search` | Copilot Search API, hybridní | zatím **jen OneDrive** | vlastní seznam přípon (`.html`, `.json`, `.csv`, `.xml`, `.png`, `.jpg`) — `.md` v něm také **není** |
+| USD / dotaz — Graph Search | 0,00219 | 0,00223 | +2 % |
+| USD / dotaz — Retrieval API | 0,00203 | 0,00198 | −2 % |
+| Latence turnu — Graph Search | 9 849 ms | 10 166 ms | +3 % |
+| Latence turnu — Retrieval API | 8 840 ms | 8 494 ms | −4 % |
+| Hitů — Graph Search | 1,75 | 1,75 | 0 % |
+| Hitů — Retrieval API | 1,25 | 1,00 | −20 % |
+
+**Cena a latence kolísají do 4 %.** Na ty se dá stavět rozpočet.
+
+Verdikty LLM soudce ale ne:
+
+| Dotaz | běh 1 | běh 2 |
+|---|---|---|
+| K2 | lepší **A** | lepší **B** |
+| K3 | remíza | lepší **B** |
+| K4 | remíza | lepší **B** |
+
+**Tři ze čtyř verdiktů se otočily.** Souhrn skočil z „A 1× · B 0× · remíza 2×"
+na „A 1× · B 3× · remíza 0×".
+
+> [!IMPORTANT] Jeden běh golden setu není měření, je to vzorek
+> Tohle je nejsilnější argument pro krok „Změř rozptyl" v
+> [`../../evaluation-quality/lab-golden-set.md`](../evaluation-quality/lab-golden-set.md) —
+> a není z cvičení, ale z produkčního nástroje na reálných datech.
+> **Prahy pro vydání se nastavují z rozdělení, ne z jednoho čísla.**
+
+Jediný verdikt stabilní přes oba běhy: **K4 „Kdo jsem?"** — Retrieval API vrátilo
+0 hitů pokaždé (správně, identita v runboocích není), Graph Search pokaždé tahal
+`reset-hesla.md` a `incident-p1-sla.md`. Sémantika tu falešnou shodu odfiltruje
+spolehlivě; lexikální hledání ne.
+
+## Tři endpointy — naměřeno, ne odvozeno z dokumentace
+
+| | `/v1.0/search/query` | `/v1.0/copilot/retrieval` | `/beta/copilot/search` |
+|---|---|---|---|
+| Najde naše `.md` | ano | ano (lexikálně) | ano (lexikálně) |
+| Najde naše `.pdf` | ano | **ano, sémanticky** | **ne** |
+| Přirozená česká věta | ne — nutný přepis na klíčová slova | **ano** (na `.pdf`) | **ne** |
+| `Accept-Language` povinná | ne | **ano** | ne |
+| Scoping | KQL `path:` | `filterExpression` | `dataSources.oneDrive.filterExpression` |
+| Tvar odpovědi | metadata, obsah si stahuješ sám | `extracts[].text` — čistý text | `preview` — **se značkováním** |
+
+Poznámky ke Copilot Search API, všechny změřené 27. 8.:
+
+- **Vrací SharePoint, ne jen OneDrive**, přestože dokumentace mluví o „OneDrive for
+  work or school". Vlastní příklad odpovědi v dokumentaci ostatně ukazuje
+  `contoso.sharepoint.com/sites/IT/` — stránka si protiřečí sama.
+- **Klíč se jmenuje `oneDrive`, ale cesta do SharePointu ve `filterExpression`
+  se uplatní.** `dataSources.sharePoint` neexistuje — vrátí `200` a nulu za 112 ms,
+  tedy tiše ignoruje. Další případ mlčící chyby.
+- **PDF nevidí vůbec.** Dotaz „reset hesla runbook" vrátil `reset-hesla.md`,
+  ne `reset-hesla-v1.0.pdf`; `filterExpression: "filetype:pdf"` vrátil nulu.
+  **Dva Copilot endpointy, dva různé pohledy na tentýž obsah.**
+- **Bez scopingu sáhne i mimo knihovnu** — do výsledků se připletla Loop komponenta
+  z `contentstorage`.
+- **`preview` obsahuje značkování shod** (`<c0>…</c0>`, `<ddd/>`). Kdo ho pošle rovnou
+  do promptu, posílá modelu smetí. Retrieval API vrací v `extracts[].text` čistý text.
+
+**Pro scénář tohoto kurzu je Search API nejslabší ze tří:** nevidí PDF, nerozumí
+české větě a nemá čím to vyvážit.
+
+## Co o těch endpointech říká dokumentace
+
+Rešerše (Petr Malášek, 27. 8.) k tabulce výše doplňuje, co Microsoft deklaruje —
+a kde se to od naměřeného liší:
+
+| Endpoint | Deklarované zdroje | Deklarovaná sémantika |
+|---|---|---|
+| `POST /v1.0/search/query` | SharePoint, OneDrive, Exchange… | žádná, lexikální KQL |
+| `POST /v1.0/copilot/retrieval` | SharePoint, OneDrive, Copilot connectors | jen `.doc`, `.docx`, `.pptx`, `.pdf`, `.aspx`, `.one` |
+| `POST /beta/copilot/search` | **jen OneDrive for work or school** | vlastní seznam (`.html`, `.json`, `.csv`, `.xml`, `.png`, `.jpg`) — `.md` v něm **není** |
 
 **Nelze použít širší seznam jednoho endpointu jako argument pro druhý.**
+
+Dvě místa, kde měření dokumentaci neodpovídá:
+
+- Search API má deklarované **jen OneDrive**, ale vrací obsah ze SharePointu —
+  a totéž ukazuje i příklad odpovědi přímo v dokumentaci (`contoso.sharepoint.com/sites/IT/`).
+- Requirement na `Accept-Language` u Retrieval API **není dokumentovaný vůbec**.
 
 ## „Copilot přece Markdown umí" — dvojí význam slova *podporováno*
 
@@ -174,15 +271,37 @@ mimochodem přesně to, co v kurzu děláte — jen se to dosud nejmenovalo rozh
 
 ## Co z toho platí pro kurz
 
-1. Živá cesta labu (**Graph Search**) je i po tomhle měření správná volba: funguje
-   pod Business Basic, na `.md` obsahu má vyšší recall a nezávisí na preview API.
-2. Retrieval API má reálné výhody — **polovina volání modelu, polovina latence** —
-   ale jen na podporovaných typech souborů.
-3. Přepis dotazu na klíčová slova (`buildSearchQuery`) není daň za špatnou volbu,
-   ale **kompenzace lexikálního indexu**, kterou by sémantický retrieval odstranil.
-   Tady ji odstranit nešlo, protože obsah je `.md`.
+1. **Živá cesta labu (Graph Search) zůstává správná volba.** Funguje pod Business
+   Basic, nezávisí na preview API a na `.md` obsahu má vyšší recall. Retrieval API
+   navíc skrývá past (`Accept-Language`), na kterou by studenti narazili bez šance
+   ji odhalit.
+
+2. **Retrieval API má reálné a měřitelné výhody** — jedno volání modelu místo dvou,
+   poloviční latence retrievalu — **ale jen na podporovaných typech souborů**.
+   Na `.md` je to lexikální hledání s jiným endpointem.
+
+3. **Přepis dotazu na klíčová slova (`buildSearchQuery`) je kompenzace lexikálního
+   indexu, ne daň za špatný návrh.** A dá se odstranit — ale ne změnou kódu.
+   Odstraní ho **změna formátu obsahu**, což je rozhodnutí o architektuře, ne
+   o implementaci. Doloženo: po převodu runbooků do `.pdf` začalo Retrieval API
+   odpovídat na přirozené české věty 4/4 bez jediného volání modelu navíc.
+
+4. **Formát obsahu je vstup do architektury agenta.** Rozhoduje se při zakládání
+   knihovny, ne při ladění promptu. Tři možnosti — publikační rendition, Copilot
+   connector, nebo zůstat u lexikálního — jsou popsané výš.
+
+5. **Mlčící chyba je dražší než hlasitá.** V tomhle jediném měření se vyskytla
+   třikrát: chybějící `Accept-Language` (200 + prázdno), neplatný `filterExpression`
+   (dokumentace: „executes with no scoping"), a `dataSources.sharePoint`
+   (200 + prázdno za 112 ms). Ani jedna z nich neřekla, co je špatně.
+   **Agent, který takhle mlčí, se pozná až na účtu nebo na stížnosti uživatele.**
+
+6. **Jeden běh evaluace není měření.** Cena a latence kolísaly do 4 %, ale tři ze
+   čtyř verdiktů LLM soudce se mezi dvěma běhy otočily. Prahy pro vydání se
+   nastavují z rozdělení, ne z jednoho čísla.
 
 ## Reprodukce
+
 
 ```powershell
 cd C:\Repos\GOPAS\PMApp

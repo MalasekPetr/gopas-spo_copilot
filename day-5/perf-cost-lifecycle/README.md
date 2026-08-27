@@ -16,15 +16,12 @@ Co agent stojí, jak to snížit, a jak ho dostat z dev do prod a zpátky, když
 > | [`cost-visual.html`](./cost-visual.html) | plánovací kalkulačka, presety a what-if | samostudium |
 > | [`mereni-retrieval-vs-search.md`](./mereni-retrieval-vs-search.md) | úplné měření se surovými čísly a reprodukcí | podklad pro instruktora |
 >
-> Publikované verze (soukromé, sdílení je na instruktorovi):
-> [tekuté písky](https://claude.ai/code/artifact/5cc334dd-3965-4f0d-b1dd-1dad6b2db3ce) · [kalkulačka](https://claude.ai/code/artifact/4f481142-dcf1-47e4-9590-844063a94314)
->
 > Všechny tři HTML sdílejí tokeny a typografii — kurz má jeden vizuální jazyk.
 > `roi-calculator` a `cost-visual` mají **dvě kopie výpočtu i ceníku**; po kurzu sloučit.
 
 > [!NOTE] Kde se tenhle modul v kurzu vrací
 > Nákladová část žije v **capstone, část D** — studenti tam počítají provoz a ROI
-> svého zadání v [kalkulačce](https://claude.ai/code/artifact/4f481142-dcf1-47e4-9590-844063a94314).
+> svého zadání v [kalkulačce](roi-calculator.html).
 > Naměřená data a obhajoba modelu: [`explainer-obhajoba-modelu-a-roi.md`](./explainer-obhajoba-modelu-a-roi.md).
 
 > [!IMPORTANT] Modul se neodučí — jeho nástroje ale v kurzu jsou

@@ -83,7 +83,8 @@ flowchart TB
 - **Blueprint bez ceny za provoz není blueprint.** Číslo musí být odvozené z měření
   (`usage-log.jsonl` z D3/D4), ne z pocitu — a musí nést **datum a verzi ceníku**,
   protože ceny modelů se mění po týdnech.
-- Nástroj: [**kalkulačka nákladů a návratnosti**](https://claude.ai/code/artifact/4f481142-dcf1-47e4-9590-844063a94314). Výchozí hodnoty jsou
+- Nástroj: [**kalkulačka nákladů a návratnosti**](../perf-cost-lifecycle/roi-calculator.html)
+  — otevře se dvojklikem z klonu, jede offline. Výchozí hodnoty jsou
   naměřené na Support Asistentovi během kurzu, ne modelové.
 - Tři věci z měření, které se studentům nechtějí věřit — a mění, kde se optimalizuje:
 

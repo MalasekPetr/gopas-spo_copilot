@@ -15,7 +15,7 @@ zadání z praxe studenta — a obhájit ho před skupinou.
 - **Vlastní zadání z praxe** je vítanou alternativou Support Asistenta — často je hodnotnější.
 - **Kalkulačka nákladů a návratnosti** — otevřená ve druhém okně, používá se v části D.
   Otevři si ji **z klonu repa**: [`../../perf-cost-lifecycle/roi-calculator.html`](../perf-cost-lifecycle/roi-calculator.html)
-  (dvojklik, funguje offline). Publikovaná verze: [odkaz](https://claude.ai/code/artifact/4f481142-dcf1-47e4-9590-844063a94314).
+  (dvojklik, funguje offline — bez internetu se nenačtou jen fonty).
 
 ## Kroky
 
@@ -66,7 +66,9 @@ zadání z praxe studenta — a obhájit ho před skupinou.
 Blueprint bez čísla za provoz je zbožné přání. Tady mu ho dáš — a co je důležitější,
 dáš mu **měření pod tím**, ne odhad.
 
-9. Otevři [**kalkulačku nákladů a návratnosti**](https://claude.ai/code/artifact/4f481142-dcf1-47e4-9590-844063a94314) a přepiš do ní parametry
+9. Otevři **kalkulačku nákladů a návratnosti** z klonu repa —
+   [`../perf-cost-lifecycle/roi-calculator.html`](../perf-cost-lifecycle/roi-calculator.html)
+   — a přepiš do ní parametry
    svého zadání: počet uživatelů, dotazů na uživatele a den, model. Výchozí hodnoty
    tokenů jsou naměřené na Support Asistentovi v tomto kurzu — máš-li vlastní čísla
    z golden setu, použij je.

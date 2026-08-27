@@ -1,54 +1,39 @@
 # Instructor notes — Výkon, náklady & lifecycle
 
-## Timing
+> Modul se **neodučí jako blok** (samostudium od 2026-08-25), ale jeho materiály se
+> v kurzu používají — viz [`README.md`](README.md), přehled se sloupcem „kdy".
 
-- **Elastický blok, 95–120 min.** Druhý kompresní ventil kurzu (po `opt-custom-retrieval`).
-- Při zkrácení: výklad + části A–C labu (měřím, optimalizuji, dokazuji). Lifecycle části
-  (D, E) u tabule jako společný návrh — výstupem je jednostránkový plán do capstonu.
-- Nechat dost času na capstone po tomhle bloku; studenti odcházejí dřív a capstone je
-  hodnotový závěr celého kurzu.
+## Kde se materiály použijí
 
-## Go/no-go — otestovat před během
+| Materiál | Kdy |
+| --- | --- |
+| [`tekute-pisky-retrievalu.html`](tekute-pisky-retrievalu.html) | D5 blok 0 — výstup z projektu, studenti si ho odnášejí |
+| [`roi-calculator.html`](roi-calculator.html) | D5 capstone, část D |
+| [`cost-visual.html`](cost-visual.html) | samostudium |
 
-- **Neuvádět žádnou cenu z hlavy.** Ceny modelů, sazby Copilot Credits a data deprecace
-  se mění po měsících. Ověřit na aktuálních stránkách a doplnit do výkladu jako
-  „stav k <měsíc>".
-- **Modul se neodučí, ale jeho nástroje ano** — `cost-visual.html` v otvíráku nákladů
-  na D3 (`actions-graph`, princip „co nemusí dělat model") a `cost-calculator.mjs`
-  u nákladového stropu v capstonu na D5. **Před během spustit
-  `node cost-calculator.mjs --refresh-prices`**, aby snapshot nesl aktuální datum; ve třídě
-  pak stačí `--offline` a nezávisíš na síti. Vizuál má ceny natvrdo v sobě — otevřít ho
-  jednou dopředu a ověřit, že souhlasí s čerstvým snapshotem, jinak studenti uvidí dvě
-  různá čísla pro totéž.
-- Ověřit, jestli **model na kurzovním endpointu podporuje prompt caching** — část B5 na tom
-  závisí.
-- Ideálně zajistit **druhý model** na endpointu pro část E. Je to nejsilnější moment bloku
-  (golden set zachytí, co výměna modelu rozbila). Když to nejde, připravit vlastní naměřená
-  data z výměny.
-- Ověřit, že studenti mají golden set a naměřené hodnoty z D4 — bez nich část C nemá smysl.
+Obojí HTML se otevře dvojklikem z klonu a jede offline (bez sítě se nenačtou jen fonty).
+Publikované verze jsou soukromé — sdílení je rozhodnutí instruktora.
+
+## Go/no-go
+
+- **Neuvádět žádnou cenu z hlavy.** Ceny modelů i sazby Credits se mění po měsících.
+  Před během spustit `node cost-calculator.mjs --refresh-prices`, ve třídě pak `--offline`.
+- **Vizuál má ceny natvrdo v sobě** — otevřít ho jednou dopředu a ověřit shodu s čerstvým
+  snapshotem, jinak studenti uvidí dvě různá čísla pro totéž.
+- Studenti musí mít `usage-log.jsonl` z D3–D4, jinak kalkulačka počítá s cizími čísly.
 
 ## Tripwires
 
 - **Optimalizace bez měření.** Studenti zúží knowledge, ušetří 40 % tokenů a nevšimnou si,
-  že agent přestal odpovídat na třetinu dotazů. Proto je část C povinná — a proto v tomto
-  kurzu evaluace (D4) **předchází** optimalizaci.
-- **Cache odpovědí bez ACL.** Nejnebezpečnější chyba bloku: stejný dotaz, jiný uživatel,
-  jiná oprávněná odpověď. Studenti nacachují první odpověď a rozdají ji všem. Je to
-  bezpečnostní incident vyrobený optimalizací — a přímá návaznost na `security-risk`.
-- **Systémový prompt se platí v každém turnu.** Studenti to nevědí a píšou dlouhé prompty.
-  Ukázat na naměřených číslech z části A.
-- **Rostoucí historie** je nejčastější zdroj plýtvání v produkci — a nikdo si toho nevšimne,
-  dokud nepřijde faktura.
-- „Rollback vrátí všechno." Nevrátí: data, konverzace, založené tikety. Část D11.
-- **Čtyři nezávislé verze** (manifest / kód / prompt / model) — studenti počítají s jednou.
-  Výměna modelu je verze, kterou **nekontrolujete vy**, a to je celý argument pro golden set.
-
-## Vazby
-
-- Zpět: `evaluation-quality` (golden set je předpoklad — nejsilnější vazba v kurzu),
-  `agent-framework` (naměřená cena multi-agentu), `prompt-orchestration` (kontext = tokeny;
-  výměna modelu rozbíjí prompty), `event-driven-hosting` (náklady v nečinnosti, cold start),
-  `event-driven-hosting` (verzování, rollback, publikace), `security-risk` (zúžený scope má nákladový dopad;
-  cache bez ACL je bezpečnostní chyba), `opt-custom-retrieval` (reindex při změně embedding
-  modelu jako lifecycle událost — pokud modul jel).
-- Dopředu: `capstone` (nákladový model, lifecycle plán a KPI patří do blueprintu).
+  že agent přestal odpovídat na třetinu dotazů. Proto v tomhle kurzu evaluace **předchází**
+  optimalizaci.
+- **Levnější varianta může být levnější tím, že přestala odpovídat.** Změřeno: Copilot
+  Search API vyšlo nejlevnější a nejrychlejší, protože v osmi měřeních z osmi nenašlo nic.
+  Cena za turn je metrika, kterou lze vylepšit rozbitím funkce.
+- **Cache odpovědí bez ACL** — stejný dotaz, jiný uživatel, jiná oprávněná odpověď.
+  Bezpečnostní incident vyrobený optimalizací.
+- **Systémový prompt se platí v každém turnu**, a rostoucí historie je nejčastější zdroj
+  plýtvání v produkci. Nikdo si toho nevšimne, dokud nepřijde faktura.
+- **Čtyři nezávislé verze** — manifest, kód, prompt, model. Výměna modelu je verze,
+  kterou **nekontrolujete vy**, a to je celý argument pro golden set.
+- „Rollback vrátí všechno." Nevrátí data, konverzace ani založené tikety.

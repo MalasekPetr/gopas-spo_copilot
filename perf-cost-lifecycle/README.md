@@ -5,6 +5,11 @@
 
 Co agent stojí, jak to snížit, a jak ho dostat z dev do prod a zpátky, když se to pokazí.
 
+> [!NOTE] Kde se tenhle modul v kurzu vrací
+> Nákladová část žije v **capstone, část D** — studenti tam počítají provoz a ROI
+> svého zadání v [kalkulačce](https://claude.ai/code/artifact/4f481142-dcf1-47e4-9590-844063a94314).
+> Naměřená data a obhajoba modelu: [`explainer-obhajoba-modelu-a-roi.md`](explainer-obhajoba-modelu-a-roi.md).
+
 > [!IMPORTANT] Modul se neodučí — jeho nástroje ale v kurzu jsou
 > Vyřazen do samostudia při druhé rekalibraci (2026-08-25); jádro (token budget, nákladový
 > strop) je složené do [`../capstone/`](../capstone/). **Kalkulátory v této složce se

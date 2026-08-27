@@ -31,12 +31,18 @@
   rozhoduje podle nákladu na dotaz a podílu vyřešených bez člověka. Bez toho projekt
   nedostane peníze — to je věta, kterou si mají odnést.
 - „Budeme to sledovat" místo „měří se takhle, z téhle telemetrie". Část C8.
+- **Kalkulačka v části D je jediný artefakt kurzu mimo repo.** Je publikovaná jako
+  soukromá stránka — **před blokem ji musíš nasdílet** (menu Sdílet na stránce),
+  jinak ji studenti neotevřou. Odkaz: https://claude.ai/code/artifact/4f481142-dcf1-47e4-9590-844063a94314
+- V části D nejdřív nech všechny zadat **svoje** parametry a teprve pak ukaž tři
+  naměřená čísla z kurzu (78,5 % reasoning / 12× rozptyl / 0,2 % cache). V opačném
+  pořadí si je jen opíšou a nepřekvapí je to.
 - **Vlastní zadání z praxe je lepší než Support Asistent.** Aktivně to nabízet — studenti
   se často stydí. Blueprint pro reálný projekt je hodnota, kterou si odnesou do práce.
 - Studenti chtějí v capstonu **stavět**. Není to stavba; je to obhajoba. Když je čas navíc,
   jde do prezentací a otázek, ne do kódu.
 - U prezentací se držet formátu: jedna otázka od publika, jedna od instruktora.
-  Bez struktury to sklouzne do monologů a nezbyde čas na část F.
+  Bez struktury to sklouzne do monologů a nezbyde čas na část G.
 
 ## Otázka, kterou se ptát u každé prezentace
 

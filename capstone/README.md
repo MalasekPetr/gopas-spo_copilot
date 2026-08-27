@@ -78,6 +78,25 @@ flowchart TB
 - Ke každému KPI patří **jak a odkud se měří** (které pole telemetrie, který běh, která
   statistika helpdesku) a **práh**: kdy vydat, kdy opravit, kdy zastavit.
 
+### Náklady a návratnost
+
+- **Blueprint bez ceny za provoz není blueprint.** Číslo musí být odvozené z měření
+  (`usage-log.jsonl` z D3/D4), ne z pocitu — a musí nést **datum a verzi ceníku**,
+  protože ceny modelů se mění po týdnech.
+- Nástroj: [**kalkulačka nákladů a návratnosti**](https://claude.ai/code/artifact/4f481142-dcf1-47e4-9590-844063a94314). Výchozí hodnoty jsou
+  naměřené na Support Asistentovi během kurzu, ne modelové.
+- Tři věci z měření, které se studentům nechtějí věřit — a mění, kde se optimalizuje:
+
+  | Naměřeno | Důsledek |
+  |---|---|
+  | **78,5 %** faktury jsou reasoning tokeny | zkracování promptu je optimalizace nesprávného sloupce |
+  | **12×** rozdíl v ceně téhož dotazu mezi běhy | rozpočet se plánuje z rozdělení, ne z průměru |
+  | **0,2 %** ušetřila cache při 21% pokrytí vstupu | u reasoning modelu je vstup levný, cache je skoro k ničemu |
+
+- **Kontrola reality u ROI:** úspora se přepočítává na úvazky. Když vyjde 0,2 FTE,
+  neprojeví se v rozpočtu jako propuštěný člověk, ale jako kratší fronta — a tak se
+  to má i prodávat. Podklad: [`../../perf-cost-lifecycle/explainer-obhajoba-modelu-a-roi.md`](../perf-cost-lifecycle/explainer-obhajoba-modelu-a-roi.md).
+
 ### Rozhodnutí, která musí být v dokumentu
 
 | # | Rozhodnutí | Odkud | Kompromis, který se váží |
@@ -89,7 +108,7 @@ flowchart TB
 | 5 | **Instrumentace do Agent 365** | D4 `agent-365-governance` | práce navíc vs. agent, kterého IT pustí do produkce |
 | 6 | **Prahy pro promotion** dev → test → prod | D4 / D5 | přísné prahy brzdí vydávání, volné pustí regresi |
 | 7 | **Obranné vrstvy** — co v promptu, co v kódu, co ve scope | D3 `middleware-policy` | pohodlí vs. vynutitelnost |
-| 8 | **Nákladový strop** — tokeny na dotaz, měsíční strop, co se stane při jeho dosažení | D5 · podklad: [](../perf-cost-lifecycle/explainer-obhajoba-modelu-a-roi.md) | kvalita odpovědi vs. cena |
+| 8 | **Nákladový strop** — tokeny na dotaz, měsíční strop, co se stane při jeho dosažení | D5 · část D + podklad: [`explainer-obhajoba-modelu-a-roi.md`](../perf-cost-lifecycle/explainer-obhajoba-modelu-a-roi.md) | kvalita odpovědi vs. cena |
 
 - U každého rozhodnutí **jedna věta odůvodnění** a **jedna věta „co by ho změnilo"**.
   Druhá věta je test, jestli šlo o rozhodnutí, nebo jen o zápis toho, co vyšlo v labu.

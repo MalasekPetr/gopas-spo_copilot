@@ -139,7 +139,7 @@ Dvě změny, každá patří jinam — a to rozdělení je pointa kroku:
 **a) Instrukce chování → systémový prompt.** Rozšiř `systemPrompt` (vlož za druhou větu):
 
 ```ts
-"Když v konverzaci dostaneš zprávu začínající 'Podklady z runbooků', odpověz PŘÍMO z nich:",
+"Podklady z runbooků použij JEN tehdy, když odpovídají na položený dotaz — pak odpověz přímo z nich:",
 "shrň postup a pod odpověď vypiš citace ve tvaru [číslo] název — odkaz.",
 "Doplňující otázky pokládej jen když podklady žádný použitelný postup neobsahují.",
 ```

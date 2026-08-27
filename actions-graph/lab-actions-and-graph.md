@@ -356,9 +356,10 @@ zatímco `Zadavatel` může být pořád cokoliv, co kód zapsal.
 > `"x-auth-mode": "app-only"` — mock začne odpovídat, jako by volala aplikace bez
 > uživatele. Pointa drží, jen na fiktivních datech.
 
-> [!NOTE] Nezapomeň přepnout štítek v logu
-> V `logUsage(...)` změň parametr `lab` na `"actions-graph"`, ať se páteční
-> report rozpadne po fázích týdne a je z něj vidět, co který přírůstek stál.
+> [!IMPORTANT] Přepiš konstantu `LAB` — hned teď, než začneš
+> Na začátku `src/agent.ts` změň `const LAB = "actions-graph";`. Zapisování do
+> `usage-log.jsonl` běží samo uvnitř `callModel`, ale štítek fáze si musíš přepnout ty —
+> jinak ti v pátek vyjde celý týden pod jedním jménem a křivka se rozpadne.
 
 ## Ověření
 

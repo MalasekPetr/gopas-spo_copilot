@@ -205,9 +205,10 @@ věří**, a v HTML komentáři, který v runbooku nikdo nevidí.
 **Uklidit:** injektáž v runbooku **nech tam**. Následující blok ji potřebuje jako
 živý útok, proti kterému budeš stavět middleware.
 
-> [!NOTE] Nezapomeň přepnout štítek v logu
-> V `logUsage(...)` změň parametr `lab` na `"prompt-orchestration"`, ať se páteční
-> report rozpadne po fázích týdne a je z něj vidět, co který přírůstek stál.
+> [!IMPORTANT] Přepiš konstantu `LAB` — hned teď, než začneš
+> Na začátku `src/agent.ts` změň `const LAB = "prompt-orchestration";`. Zapisování do
+> `usage-log.jsonl` běží samo uvnitř `callModel`, ale štítek fáze si musíš přepnout ty —
+> jinak ti v pátek vyjde celý týden pod jedním jménem a křivka se rozpadne.
 
 ## Ověření
 

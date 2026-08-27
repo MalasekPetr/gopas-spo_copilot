@@ -92,10 +92,8 @@ Do `src/agent.ts` nad handlery. Dvě funkce, obě smí turn **zastavit**:
 ```ts
 type Verdict = { ok: true } | { ok: false; reason: string; userMessage: string };
 
-// korelacni ID: jeden turn = jedna stopa v logu
-function newTurnId(): string {
-  return Math.random().toString(36).slice(2, 10);
-}
+// korelacni ID uz mas z groundingu jako tl.turnId - pouzij ho i tady,
+// at ma turn stejnou stopu v logu spotreby i v logu middleware
 
 function logStep(turnId: string, krok: string, verdikt: string, ms: number) {
   // logujeme ROZHODNUTI, ne data - zadne PII, zadny obsah promptu
@@ -120,7 +118,7 @@ async function post(turnId: string, answer: string, hits: Chunk[]): Promise<Verd
 A v message handleru je obal kolem orchestrace:
 
 ```ts
-const turnId = newTurnId();
+const turnId = tl.turnId;   // z TurnLog z groundingoveho labu
 const verdictPre = await pre(turnId, userText);
 if (!verdictPre.ok) {
   await context.sendActivity(verdictPre.userMessage);
@@ -323,9 +321,10 @@ test("cizi odkaz v odpovedi je zablokovan", async () => {
 [`../evaluation-quality/`](../evaluation-quality/) — obrany se testují bez modelu,
 protože jsou to obyčejné funkce.
 
-> [!NOTE] Nezapomeň přepnout štítek v logu
-> V `logUsage(...)` změň parametr `lab` na `"middleware-policy"`, ať se páteční
-> report rozpadne po fázích týdne a je z něj vidět, co který přírůstek stál.
+> [!IMPORTANT] Přepiš konstantu `LAB` — hned teď, než začneš
+> Na začátku `src/agent.ts` změň `const LAB = "middleware-policy";`. Zapisování do
+> `usage-log.jsonl` běží samo uvnitř `callModel`, ale štítek fáze si musíš přepnout ty —
+> jinak ti v pátek vyjde celý týden pod jedním jménem a křivka se rozpadne.
 
 ## Ověření
 

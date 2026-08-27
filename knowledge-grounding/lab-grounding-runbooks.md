@@ -269,17 +269,24 @@ do knihovny**. Zpět na MOCK: smaž `.lab-token`. Token žije ~1 h — při 401 
 `console.log` s `usage` je hezký, ale zmizí. Od téhle chvíle si agent vede **účetní
 knihu** — jeden řádek na každé volání modelu. V pátek z ní spočítáš, co bude provoz stát.
 
+**a) Konstanta fáze a zapisovač.** Nahoru do `src/agent.ts`:
+
 ```ts
 import { appendFileSync } from "fs";
 
-// jeden turn = jeden pruchod handlerem; kola uvnitr sdili turnId
-function logUsage(turnId: string, lab: string, q: string, kolo: number, u: any) {
+// V KAZDEM DALSIM LABU PREPIS - podle toho se pak report rozpadne po fazich tydne
+const LAB = "knowledge-grounding";
+
+// kontext jednoho turnu, ktery se propisuje do logu
+type TurnLog = { turnId: string; q: string; kolo: number };
+
+function logUsage(tl: TurnLog, u: any) {
   appendFileSync("usage-log.jsonl", JSON.stringify({
     ts: new Date().toISOString(),
-    turn: turnId,
-    lab,                                   // ktera faze tydne - kvuli krivce
-    q: q.slice(0, 60),
-    kolo,
+    turn: tl.turnId,
+    lab: LAB,
+    q: tl.q.slice(0, 60),
+    kolo: tl.kolo,
     model: "gpt-5-mini",
     in: u?.prompt_tokens ?? 0,
     out: u?.completion_tokens ?? 0,
@@ -289,13 +296,33 @@ function logUsage(turnId: string, lab: string, q: string, kolo: number, u: any) 
 }
 ```
 
-Zavolej ho **po každém** volání modelu — tedy i uvnitř `buildSearchQuery`, ne jen
-u finální odpovědi. Kolo, které nezapíšeš, v páteční kalkulaci chybí.
+**b) Zapisuj z jednoho místa — z `callModel`.** Tím nemůžeš na žádné kolo zapomenout:
+
+```ts
+async function callModel(messages: any[], opts: { tools?: any[]; tl?: TurnLog } = {}) {
+  // ... stavajici retry smycka ...
+  const r = await client.chat.completions.create({ messages, model: "", ...(opts.tools ? { tools: opts.tools } : {}) });
+  if (opts.tl) { opts.tl.kolo++; logUsage(opts.tl, r.usage); }   // <- jedine misto, kde se loguje
+  return r;
+}
+```
+
+**c) Protáhni kontext turnem.** V message handleru na začátku:
+
+```ts
+const tl: TurnLog = { turnId: Math.random().toString(36).slice(2, 10), q: userText, kolo: 0 };
+```
+
+a předávej ho do všech volání — `retrieve(userText, tl)` → `buildSearchQuery(userText, tl)`
+→ `callModel(messages, { tl })`. Je to trochu protahování, ale je to přesně to, co dělá
+skutečná telemetrie: **korelační ID putuje celým zpracováním**, jinak se v logu nedá nic
+spárovat. Globální proměnná by se při souběžných turnech prolnula.
 
 Do `.gitignore` přidej `usage-log.jsonl` (obsahuje dotazy uživatelů).
 
 **Checkpoint:** pošli dva dotazy a otevři `usage-log.jsonl` — jsou tam **čtyři řádky**
-(dvě kola na turn: přepis dotazu + odpověď). Pak z klonu repa:
+(dvě kola na turn: přepis dotazu + odpověď), obě kola jednoho turnu mají **stejné
+`turn`** a `kolo` jde 1, 2. Pak z klonu repa:
 
 ```powershell
 node perf-cost-lifecycle/usage-report.mjs <cesta>/usage-log.jsonl
@@ -304,13 +331,18 @@ node perf-cost-lifecycle/usage-report.mjs <cesta>/usage-log.jsonl
 Uvidíš první provozní čísla svého agenta. **Nech log běžet celý zbytek týdne** —
 každý další lab do něj přidá svou fázi a v pátek z toho vznikne křivka.
 
+> [!IMPORTANT] Jediné, co musíš v dalších labech udělat, je přepsat `LAB`
+> Zapisování je v `callModel`, takže nová volání se logují sama — i kola, která
+> přidají nástroje. Ale **konstantu `LAB` na začátku každého dalšího labu přepiš**,
+> jinak ti v pátek vyjde celý týden pod jedním štítkem a křivka se rozpadne.
+> Report tě na to upozorní, ale to už bude pozdě na opravu.
+
 > [!NOTE] Naměřeno na instruktorském běhu (2026-08-26)
 > 4 turny / 8 kol, **2,00 kola na turn** — přepis dotazu na klíčová slova zdvojnásobil
 > počet volání modelu. **71,9 % výstupních tokenů byl reasoning**, který v odpovědi
 > nevidíš. Při 200 uživatelích a 8 dotazech denně z toho vyšlo **81,50 EUR/měsíc**
 > na `gpt-5-mini` — a 11,85 EUR na `gpt-5-nano`. To je ta úvaha o volbě modelu
 > s konkrétním číslem místo dojmu.
-
 
 ## Část C — chování při neznámé odpovědi
 

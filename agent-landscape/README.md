@@ -58,6 +58,11 @@ flowchart TB
 
 ### Pět cest tvorby
 
+> [!NOTE] Tabulka má šest řádků, ale cest je pět
+> **Agent Framework není samostatná cesta** — běží uvnitř SDK aplikace. Je v tabulce proto,
+> že se studenti ptají, kam patří. Na D5 se k mapě vracíme jako k rozhodovacímu nástroji:
+> [`recap-d5-rozhodovaci-mapa.md`](recap-d5-rozhodovaci-mapa.md).
+
 | Cesta | Kdo ji vlastní | Co potřebuje | Kde běží | Governance |
 |---|---|---|---|---|
 | **Copilot agent builder** | koncový uživatel / business | M365 Copilot nebo PAYG | uvnitř M365 Copilotu | omezené sdílení, bez ALM |

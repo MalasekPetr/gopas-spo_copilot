@@ -117,19 +117,21 @@ zájmu skupiny: M365 strana nejdřív, kód až od D3.
 > závěr a **most k SPFx kurzům** — multi-agent zmínku v middleware nahrazuje
 > odkaz na D5.
 
-## Den 5 — Multi-agent, governance, kvalita a capstone (210 min, konec 13:00)
+## Den 5 — Multi-agent, governance, kvalita a capstone (220 min, konec 13:00)
 
 | # | Blok | Slug | Typ | min |
 |---|---|---|---|---|
-| 1 | Microsoft Agent Framework & multi-agent (A2A) — *kompakt: výklad + instruktorské demo* | `agent-framework` | P | 45 |
-| 2 | Agent 365, Entra Agent ID & instrumentace *(vč. hostingu v kostce)* | `agent-365-governance` | P | 55 |
+| 0 | Rekapitulace rozhodovací mapy — *otvírák, pair-share* | `agent-landscape` | P | 20 |
+| 1 | Microsoft Agent Framework & multi-agent (A2A) — *kompakt: výklad + instruktorské demo* | `agent-framework` | P | 35 |
+| 2 | Agent 365, Entra Agent ID & instrumentace *(vč. hostingu v kostce)* — *části B a C jako demo* | `agent-365-governance` | P | 40 |
 | 3 | Evaluace & kvalita *(část C jako demo)* | `evaluation-quality` | P | 50 |
-| 4 | Capstone architektura & roadmapa | `capstone` | P | 60 |
+| 4 | Capstone architektura & roadmapa *(vč. nákladů a ROI)* | `capstone` | P | 75 |
 
 > [!WARNING] Nejkratší den — 9:00 až 13:00 **bez pauzy na oběd**
-> Reálně ~220 min čistého času, plán 215 — rezerva 5 min. Blok 4 je hodnotový
-> závěr a **musí proběhnout** — když se skluz nedá dohnat, krátí se bloky 1–3,
-> ne capstone. Capstone drž na 60 a v pair-share formátu.
+> Reálně ~220 min čistého času, plán 220 — **rezerva žádná**. Chráněné jsou blok 0
+> a blok 4: blok 0 rámuje celý den a jeho výstup jde do capstonu, blok 4 je hodnotový
+> závěr a **musí proběhnout**. Skluz se bere z bloků 1–3. Capstone drž na 75
+> (60 + 15 na náklady a ROI) a v pair-share formátu.
 
 > [!NOTE] Třetí rekalibrace: `agent-framework` z D4 v kompaktní formě (45 min) —
 > lab `lab-multi-agent-triage` jde do samostudia, rozhodnutí triage/resolver

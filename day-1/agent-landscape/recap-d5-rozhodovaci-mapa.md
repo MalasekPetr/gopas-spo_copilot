@@ -19,20 +19,37 @@ A rozhodnutí, které z ní dnes plyne, jde do capstonu jako první řádek blue
 > Neopakuj pondělní výklad. Promítni tabulku, polož otázku a nech dvojice odpovídat.
 > Instruktor mluví jen u toho, co skupina nevysloví sama.
 
-## Šest cest, ne pět
+## Sedm řádků, šest cest
 
 | Cesta | Kdo ji vlastní | Kde běží | Tvrdý strop |
 |---|---|---|---|
 | **Copilot agent builder** | koncový uživatel | uvnitř M365 Copilotu | bez ALM, omezené sdílení |
 | **SharePoint agent** | **vlastník obsahu**, bez opuštění webu | u webu, žije s jeho oprávněními | Q&A nad obsahem, žádné akce, **jeden list a nic jiného** |
+| **Deklarativní agent (Agents Toolkit)** | **vývojář** — manifest v gitu | orchestrátor M365 Copilotu; infrastrukturu neřešíš | listy neumí; vlastní model ne — ale **jediná deklarativní cesta s ALM** |
 | **Copilot Studio** | business / citizen dev + IT | Power Platform | nejsilnější akce: konektory, MCP, autonomní triggery, DLP |
 | **Agents SDK — custom engine** | vývojový tým | **tvoje** infrastruktura | vlastní model a orchestrace = vlastní práce a vlastní účet |
 | **Agent Framework** | vývojový tým | **uvnitř** SDK aplikace | není samostatná cesta — orchestrační knihovna; jen C#/Python |
 | **Foundry Agent Service** | vývojový / platform tým | PaaS v Azure | Foundry Control Plane + Entra Agent ID |
 
-> [!IMPORTANT] Agent Framework není čtvrtá cesta
+> [!IMPORTANT] Agent Framework není cesta
 > Běží uvnitř SDK aplikace. Kdo ho v mapě uvádí jako sourozence custom enginu, plete
-> **vrstvu** s **produktem**. Proto má tabulka šest řádků, ale cest je pět.
+> **vrstvu** s **produktem**. Proto má tabulka sedm řádků, ale cest je šest.
+
+> [!TIP] Deklarativní agent z Toolkitu je příčka, kterou skupina nejčastěji přeskočí
+> Vypadá jako „Agent Builder pro vývojáře", ale má tři věci, které žádná jiná
+> deklarativní cesta nemá:
+>
+> - **repo-as-code** — manifest v gitu, PR review, CI/CD, provisioning. Agent Builder
+>   ani SharePoint agent ALM nemají vůbec.
+> - **řízení orchestrace deklarativně** — `behavior_overrides` (včetně potlačení obecných
+>   znalostí modelu), `default_response_mode`, `editorial_answers` (až 300 předdefinovaných
+>   Q&A párů), `user_overrides`, a `worker_agents` (preview) pro multi-agent. Orchestraci
+>   dělá Copilot, ale **tady ji řídíš** — a to bez řádku kódu.
+> - **nejjemnější scoping knowledge** — e-mail per složka a sdílené mailboxy, schůzky per ID,
+>   KQL filtr nad konektory, People s related content.
+>
+> Strop: **listy neumí** (manifest 1.7 zná `list_id` jako knihovnu, ne list) a vlastní model
+> nebo hosting si nevybereš. Detail v [`comparison-agent-paths.md`](comparison-agent-paths.md).
 
 **Skills jsou jiná osa.** Nejsou cesta tvorby agenta: `SKILL.md` je rozšíření chování něčeho,
 co už běží (viz [`../../skills/`](../../day-2/skills/)). Nemají runtime, akce ani manifest a řídí se
@@ -45,7 +62,8 @@ Nech dvojice odpovědět na každou za sebe a teprve pak komentuj. Zdroj:
 [`comparison-agent-paths.md`](./comparison-agent-paths.md).
 
 1. **Kdo to bude vlastnit?**
-   koncový uživatel → Builder · vlastník webu → SharePoint agent · maker → Studio · vývojový tým → SDK
+   koncový uživatel → Builder · vlastník webu → SharePoint agent · maker → Studio ·
+   vývojář, ale bez vlastního modelu → **deklarativní agent z Toolkitu** · vývojový tým → SDK
 
 2. **Potřebuješ akce?**
    konektory / MCP / autonomní triggery → Studio · vlastní API přes OpenAPI → Toolkit · žádné → Builder nebo SharePoint agent
@@ -133,7 +151,8 @@ není rozhodnutí, ale zvyk.
 
 ## Ověření
 
-- [ ] Student umí vyjmenovat pět cest a říct, proč je Agent Framework řádek navíc, ne cesta.
+- [ ] Student umí vyjmenovat šest cest a říct, proč je Agent Framework řádek navíc, ne cesta.
+- [ ] Student umí říct, co má deklarativní agent z Toolkitu navíc proti Agent Builderu.
 - [ ] Student umí říct, čím se liší Skills od cest tvorby.
 - [ ] Student odpoví na pátou otázku pro **vlastní** zadání z praxe, ne pro Support Asistenta.
 - [ ] Student umí jmenovat aspoň dvě podmínky, za kterých má smysl stavět vlastní retrieval.

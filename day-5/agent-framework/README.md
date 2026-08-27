@@ -1,7 +1,10 @@
 # Microsoft Agent Framework, workflows & multi-agent
 
-> Typ: povinný — **kompakt** · Den: 5 · Odhad: **45 min** (30 výklad + 15 instruktorské demo) · Publikum: **vývojáři / architekti**
-> Třetí rekalibrace (2026-08-26): lab [`lab-multi-agent-triage.md`](./lab-multi-agent-triage.md) jde do **samostudia**; rozhodnutí triage/resolver a A2A přehled zůstávají (capstone rozhodnutí č. 3).
+> Typ: povinný — **informativní blok** · Den: 5 · Odhad: **35 min** · Publikum: **vývojáři / architekti**
+> **Bez labu a bez dema** (rozhodnuto 2026-08-27). Blok dává mapu vrstev a rozhodnutí,
+> ne prsty na klávesnici: kde končí SDK a začíná orchestrace, kdy multi-agent ANO/NE,
+> co je A2A — a jako druhá polovina **Foundry Agent Service** jako PaaS větev.
+> Lab [`lab-multi-agent-triage.md`](./lab-multi-agent-triage.md) zůstává k samostudiu.
 > Prostředí: viz [`../../environment.md`](../../environment.md) · Názvosloví: [`../../GLOSSARY.md`](../../GLOSSARY.md)
 
 > [!IMPORTANT] Největší doplněk proti katalogové osnově
@@ -10,11 +13,12 @@
 > tým nad Agents SDK reálně používá, jakmile jeden prompt přestane stačit.
 
 > [!WARNING] Jazyková výjimka kurzu (stav k 2026-08)
-> Agent Framework existuje jen v **C# a Pythonu** — JS/TS SDK nemá. Framework se proto
-> ukazuje jako **instruktorské demo v C#**; studentský lab staví tutéž orchestraci
-> (triage + resolver) **ručně v TypeScriptu nad Agents SDK**. Rozdíl „co Framework dává
-> navíc" je závěrečná reflexe labu — a zároveň lekce rozhodovací osy: volba jazyka
-> zužuje dostupný stack.
+> Agent Framework existuje jen v **C# a Pythonu** — JS/TS SDK nemá. Pro kurz, který jede
+> v TypeScriptu, to je **rozhodovací fakt, ne technologie k osahání**: volba jazyka
+> zužuje dostupný stack. Proto je blok informativní a demo se nedělá — ukazovat C# kód
+> publiku, které v něm psát nebude, je ztráta času.
+> Kdo chce orchestraci vidět v TS, má ji v labu k samostudiu: staví se tam ručně
+> nad Agents SDK.
 
 ## Cíle
 - Vědět, kde končí Agents SDK a začíná orchestrace — a proč to jsou dvě vrstvy.
@@ -178,6 +182,49 @@ sequenceDiagram
   agenta B o data uživatele, čí oprávnění se uplatní?* Bez odpovědi je A2A přímá cesta
   k confused deputy problému ([`../middleware-policy/`](../../day-4/middleware-policy/)).
 
+### Foundry Agent Service — PaaS větev mapy
+
+> Popisná sekce, **bez dema a bez labu**. Cílem je, aby student uměl říct, kdy tuhle
+> cestu zákazníkovi nabídnout a co za ni platí — ne aby v ní uměl stavět.
+
+**Co to je.** Spravovaná služba v Azure, kde agenta **nehostuješ ty, ale platforma**.
+Dodáváš instrukce, nástroje a znalosti; Foundry řeší běh, škálování, stav konverzace
+a integrace. Proti custom enginu z Agents SDK je to posun o patro výš: neřešíš App Service,
+Container Apps ani vlastní endpoint.
+
+**Kdy to dává smysl.** Když platí aspoň jedno:
+
+- Agent má žít **mimo hranici Microsoftu 365** — vlastní web, aplikace, jiný kanál.
+- Potřebuješ **modely a nástroje z Azure ekosystému** (vlastní deploymenty, Azure AI Search,
+  vlastní data mimo tenant) a nechceš k nim stavět most z M365.
+- Máš **platformní tým**, který už Azure spravuje. Foundry Agent Service je jeho jazyk;
+  Agents SDK je jazyk vývojového týmu.
+
+**Co za to platíš.**
+
+- **Druhý control plane.** Foundry Control Plane a Agent 365 jsou dvě různá místa, kde se
+  na agenty díváš — Foundry z pohledu platformního týmu v Azure, Agent 365 z pohledu IT
+  a security v M365. Synchronizace existuje, ale je to rozhodnutí, ne samozřejmost.
+- **Azure subscription a její náklady** — inference, hosting, storage. To je jiná peněženka
+  než Copilot licence i než Copilot Credits.
+- **Identita agenta** se řeší přes Entra Agent ID, stejně jako u instrumentovaného
+  custom enginu — ale registruje se jinou cestou.
+
+**Vztah k tomu, co jsme stavěli.** Support Asistent je custom engine nad Agents SDK:
+vlastní hosting, vlastní model endpoint, vlastní instrumentace. Kdyby měl běžet
+i mimo Teams a M365 Copilot, je Foundry Agent Service první cesta, kterou zvážit —
+a rozhodnutí, které patří do capstonu jako varianta, ne jako plán B.
+
+> [!WARNING] Ověřit k datu běhu
+> Foundry se přejmenovává a mění rychle (Azure AI Studio → Azure AI Foundry → Microsoft
+> Foundry). Před během ověřit aktuální název služby, rozsah publikace agentů do M365
+> Copilotu a Teams, a jestli se něco nezměnilo na vztahu Foundry Control Plane ↔ Agent 365.
+> Základ Foundry pro tenhle kurz je v [`../../day-3/agents-sdk-core/explainer-foundry-basics.md`](../../day-3/agents-sdk-core/explainer-foundry-basics.md).
+
+**Věta do zákaznického rozhovoru:** *„Agents SDK když agent žije uvnitř Microsoftu 365
+a máte vývojový tým. Foundry Agent Service když má žít i mimo něj a máte platformní tým
+v Azure. Rozdíl není v tom, co agent umí, ale kdo ho bude provozovat."*
+
 ## Klíčové rozlišení
 - **Agents SDK** (transport/stav/routing) vs. **Agent Framework** (orchestrace) — SDK není orchestrátor.
 - **Řetězení promptů** (jeden agent, víc kol) vs. **multi-agent** (víc agentů, víc identit).
@@ -191,9 +238,12 @@ Hands-on (TS orchestrace), bez tenantu — potřebuje jen **model endpoint**; Fr
 je instruktorské demo v C# (jediné místo kurzu, kde instruktor potřebuje .NET SDK).
 Pozor: multi-agent násobí volání modelu, tedy tokeny. Nastavit v labu limit kol.
 
-## Lab
-Viz [`lab-multi-agent-triage.md`](./lab-multi-agent-triage.md). Referenční řešení v `solution/`.
+## Lab — samostudium
 
+[`lab-multi-agent-triage.md`](./lab-multi-agent-triage.md) staví triage + resolver ručně
+v TypeScriptu nad Agents SDK a **měří, co rozdělení stálo** (latence, tokeny, obtížnost
+debugu). V běhu se nejede — kdo si ho projde doma, přinese si do capstonu vlastní čísla
+místo převzatých.
 ## Nosná linka
 Support Asistent se rozděluje na **triage** (klasifikuje dotaz, rozhoduje o cestě) a
 **resolver** (odpovídá z runbooků nebo eskaluje). Student na svém agentovi uvidí, co tím

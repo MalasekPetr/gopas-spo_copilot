@@ -56,9 +56,9 @@ flowchart TB
   vrstva cílí jiné publikum a jiné vlastnictví řešení. Koexistence je záměr, ne dluh.
 - Konzultant, který zná jen jeden konec osy, neprodává řešení, ale svůj zvyk.
 
-### Pět cest tvorby
+### Šest cest tvorby
 
-> [!NOTE] Tabulka má šest řádků, ale cest je pět
+> [!NOTE] Tabulka má sedm řádků, ale cest je šest
 > **Agent Framework není samostatná cesta** — běží uvnitř SDK aplikace. Je v tabulce proto,
 > že se studenti ptají, kam patří. Na D5 se k mapě vracíme jako k rozhodovacímu nástroji:
 > [`recap-d5-rozhodovaci-mapa.md`](./recap-d5-rozhodovaci-mapa.md).
@@ -67,6 +67,7 @@ flowchart TB
 |---|---|---|---|---|
 | **Copilot agent builder** | koncový uživatel / business | M365 Copilot nebo PAYG | uvnitř M365 Copilotu | omezené sdílení, bez ALM |
 | **SharePoint agent** | **vlastník obsahu** — bez opuštění webu | Copilot licence (tvorba), PAYG (použití) | u webu; žije s ním i jeho oprávněními | RCD / Restricted SharePoint Search, SAM reporty |
+| **Deklarativní agent (Agents Toolkit)** | **vývojář** | VS Code + Toolkit; licence/PAYG pro použití | orchestrátor M365 Copilotu | **manifest v gitu**, RAI validace balíčku, admin approval |
 | **Copilot Studio** | business / citizen dev + IT | Studio licenci, Copilot Credits | Power Platform | PPAC, DLP, Managed Environments; **auto-registrace do Agent 365** |
 | **Agents SDK (custom engine)** | vývojový tým | model endpoint, hosting, CI/CD | tvoje infrastruktura (App Service, Container Apps…) | tvoje práce: instrumentace do Agent 365 |
 | **Agent Framework** | vývojový tým | běží **uvnitř** SDK aplikace | tam, kde SDK aplikace | dtto custom engine; jen C#/Python |
@@ -75,8 +76,10 @@ flowchart TB
 - **SharePoint agent** je pro tohle publikum nejbližší cesta: vzniká jedním klikem nad
   knihovnou, kterou už spravujete. Strop je ale tvrdý — Q&A nad obsahem, žádné akce,
   jeden list a nic jiného.
-- Deklarativní agent (Toolkit) je příčka mezi Studiem a custom enginem — stavíte ho
-  ráno druhého dne.
+- **Deklarativní agent (Toolkit)** je příčka mezi Studiem a custom enginem — stavíte ho
+  ráno druhého dne. Je to jediná deklarativní cesta s **ALM** (manifest v gitu, CI/CD)
+  a jediná, kde jde orchestraci **řídit deklarativně** (`behavior_overrides`,
+  `editorial_answers`, `worker_agents` v preview). Strop: neumí listy a nevybíráš model.
 
 > [!TIP] Podrobná rozdílová matice
 > [`comparison-agent-paths.md`](./comparison-agent-paths.md) srovnává agent builder,

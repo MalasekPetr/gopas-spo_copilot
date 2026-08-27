@@ -10,7 +10,7 @@ Plán **220 min**, přesně na stropu. Rezerva žádná — držet přechody mez
 >
 > | Blok | Bylo | Je | Co se z něj vyjmulo |
 > |---|---|---|---|
-> | 1 `agent-framework` | 45 | **35** | přehled A2A vzorů se zkracuje na jmenný seznam; lab byl už dřív v samostudiu |
+> | 1 `agent-framework` | 45 | **35** | **bez labu i bez dema** (2026-08-27); místo C# dema přibyla popisná sekce o Foundry Agent Service |
 > | 2 `agent-365-governance` | 55 | **40** | části B a C jako **instruktorské demo** — tak to ostatně vede i [`../environment.md`](../environment.md) |
 > | 3 `evaluation-quality` | 55 | **50** | část C (judge runner) byla demo už dřív; krok 3 je spuštění připravených testů, ne psaní |
 >
@@ -20,7 +20,7 @@ Plán **220 min**, přesně na stropu. Rezerva žádná — držet přechody mez
 | Pořadí | Blok | Slug | Typ | min |
 |---|---|---|---|---|
 | 0 | **Rekapitulace rozhodovací mapy** — otvírák | [`agent-landscape`](../day-1/agent-landscape/recap-d5-rozhodovaci-mapa.md) | P | 20 |
-| 1 | Agent Framework & multi-agent (A2A) — *kompakt* | [`agent-framework`](./agent-framework/) | P | 35 |
+| 1 | Agent Framework, A2A a **Foundry Agent Service** — *informativní, bez labu a dema* | [`agent-framework`](./agent-framework/) | P | 35 |
 | 2 | Agent 365, Entra Agent ID & instrumentace *(vč. hostingu v kostce)* | [`agent-365-governance`](./agent-365-governance/) | P | 40 |
 | 3 | Evaluace & kvalita | [`evaluation-quality`](./evaluation-quality/) | P | 50 |
 | 4 | Capstone architektura & roadmapa *(vč. nákladů a ROI)* | [`capstone`](./capstone/) | P | 75 |

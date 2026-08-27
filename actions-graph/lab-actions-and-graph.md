@@ -36,7 +36,7 @@ v prohlížeči a nech otevřený vedle Playgroundu — během labu do něj bude
 > němu. Lekce o validaci drží — jen eskalaci neuvidíš v prohlížeči a přijdeš
 > o srovnání `Zadavatel` vs. `Created By` v kroku 10.
 
-### 2. Zkopíruj instalatérství a přečti si ho
+### 2. Zkopíruj obslužný kód a přečti si ho
 
 Volání Graphu s retry a rozlišenými chybovými větvemi je **rozšíření toho, co už
 umíš** z prvního labu — stejný `classifyError` a backoff, jen nad Graphem. Nepiš to

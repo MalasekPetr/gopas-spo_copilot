@@ -1,4 +1,4 @@
-// Instalatérství pro lab actions-graph — zkopíruj do src/ a importuj.
+// Obslužný kód pro lab actions-graph — zkopíruj do src/ a importuj.
 //
 // Tyhle dvě funkce jsou ROZŠÍŘENÍ toho, co ses naučil v labu agents-sdk-core:
 // stejné rozlišení transientní/permanentní chyby a stejný retry s backoffem,

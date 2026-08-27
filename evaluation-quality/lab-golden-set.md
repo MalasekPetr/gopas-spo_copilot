@@ -16,7 +16,7 @@ a nic se v ní neučíš prsty).
 
 - Agent po [`../middleware-policy/`](../middleware-policy/lab-middleware-pipeline.md):
   grounding, akce, pipeline s pre/post.
-- **`usage-log.jsonl` plněný od středy** (krok 12 groundingového labu) — bez něj
+- **`usage-log.jsonl` plněný od středy** (krok 8 groundingového labu) — bez něj
   nebude část E mít z čeho počítat.
 - Tabulka baseline ze všech předchozích labů.
 - Unit testy nad pipeline z kroku 14 middleware labu.

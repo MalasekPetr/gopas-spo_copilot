@@ -168,7 +168,7 @@ V terminálu **ve složce svého projektu agenta**:
 
 ```powershell
 $env:LAB_CLIENT_ID = "<client id z tabule>"
-node <klon-repa>/actions-graph/solution/device-auth.mjs "offline_access User.Read Files.Read.All Sites.Read.All" > .lab-token
+node <klon-repa>/actions-graph/solution/device-auth.mjs "offline_access User.Read Files.Read.All Sites.Read.All Sites.ReadWrite.All" > .lab-token
 Add-Content .gitignore "`n.lab-token"   # token NIKDY do repa
 ```
 
@@ -264,7 +264,7 @@ async function buildSearchQuery(userText: string): Promise<string> {
 a v chatu odpověď z reálného runbooku, jejíž **citace je proklikávací odkaz
 do knihovny**. Zpět na MOCK: smaž `.lab-token`. Token žije ~1 h — při 401 vyrob nový.
 
-### 12. Zapisuj spotřebu do logu, ať se dá sečíst
+### 8. Zapisuj spotřebu do logu, ať se dá sečíst
 
 `console.log` s `usage` je hezký, ale zmizí. Od téhle chvíle si agent vede **účetní
 knihu** — jeden řádek na každé volání modelu. V pátek z ní spočítáš, co bude provoz stát.
@@ -314,7 +314,7 @@ každý další lab do něj přidá svou fázi a v pátek z toho vznikne křivka
 
 ## Část C — chování při neznámé odpovědi
 
-### 13. Baseline se posouvá
+### 9. Baseline se posouvá
 
 Pošli **čtyři testovací dotazy** ze scénáře a doplň tabulku z předchozího labu.
 
@@ -322,7 +322,7 @@ Pošli **čtyři testovací dotazy** ze scénáře a doplň tabulku z předchoz�
 si je agent vymýšlel. Dotaz 3 pořád jen slibuje (akce přijdou v dalším bloku),
 dotaz 4 odmítnut.
 
-### 14. Rozlož odmítnutí dotazu 4
+### 10. Rozlož odmítnutí dotazu 4
 
 U „Kolik bere kolega Novák?" zapiš nejen **že** agent odmítl, ale **proč**:
 odmítl kvůli instrukci v promptu, nebo jen proto, že retrieval nic nevrátil?
@@ -331,7 +331,7 @@ odmítl kvůli instrukci v promptu, nebo jen proto, že retrieval nic nevrátil?
 z logu mocku: vrátil pro dotaz 4 nějaké chunky?). Jsou to **dvě různě pevné
 obrany** a obě jsou měkké — zpevňuje se až middlewarem (příští den).
 
-### 15. Neznámé téma nesmí vést k vymýšlení
+### 11. Neznámé téma nesmí vést k vymýšlení
 
 Polož dotaz na téma, které v runboocích **není**: „Jak zažádám o firemní telefon?"
 
@@ -341,7 +341,7 @@ v [`../prompt-orchestration/`](../prompt-orchestration/).
 
 ## Část D — rozhodovací reflexe
 
-### 16. Dvě věty na papír
+### 12. Dvě věty na papír
 
 (a) Kde by v tomhle zadání dával smysl **federated** konektor místo synced — a proč
 (nápověda: ticketing, živá data, ACL v cizím systému). (b) Kdy by tady byla na místě

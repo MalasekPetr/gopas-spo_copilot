@@ -56,3 +56,18 @@ odpadl druhý rozjezd a XPIA má bezprostřední odpověď místo dvoudenní pau
 - Zvážit, jestli `opt-custom-retrieval` a `perf-cost-lifecycle` nemají být trvale mimo
   osnovu — pak upravit i [`marketing/`](marketing/).
 - Přeměřit timing dne 2 a doladit odhady v `instructor-notes.md`.
+
+## Co si odnášíš z projektu
+
+Dva materiály v [`perf-cost-lifecycle/`](perf-cost-lifecycle/), oba se otevřou
+dvojklikem z klonu a fungují offline:
+
+- [`tekute-pisky-retrievalu.html`](perf-cost-lifecycle/tekute-pisky-retrievalu.html)
+  — změřená odpověď na to, proč se agent choval, jak se choval. Použitelné
+  i jako podklad do zákaznického rozhovoru.
+- [`roi-calculator.html`](perf-cost-lifecycle/roi-calculator.html) — kalkulačka
+  nákladů a návratnosti. Přetáhni do ní svůj `usage-log.jsonl` a počítá
+  s **tvými** čísly.
+
+Kompletní měření se surovými daty a návodem na reprodukci:
+[`mereni-retrieval-vs-search.md`](perf-cost-lifecycle/mereni-retrieval-vs-search.md).

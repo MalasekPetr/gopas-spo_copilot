@@ -174,6 +174,59 @@ Jediný verdikt stabilní přes oba běhy: **K4 „Kdo jsem?"** — Retrieval AP
 `reset-hesla.md` a `incident-p1-sla.md`. Sémantika tu falešnou shodu odfiltruje
 spolehlivě; lexikální hledání ne.
 
+## Tři cesty vedle sebe (2 běhy × 4 dotazy)
+
+Nástroj [`srovnani-tri-api.mjs`](srovnani-tri-api.mjs), tytéž dotazy, tentýž prompt
+a model, dva běhy — protože jeden běh je vzorek, ne měření.
+
+| Metrika | Graph Search | Retrieval API | Copilot Search |
+|---|---|---|---|
+| Nalezených podkladů / dotaz | **1,75** | 1,00 | **0,00** |
+| Znaků podkladů / dotaz | **1 401** | 817 | **0** |
+| Volání modelu / dotaz | 2,00 | **1,00** | **1,00** |
+| HTTP volání / dotaz | 3,75 | **1,00** | **1,00** |
+| Latence retrievalu | 4 169 ms | 1 643 ms | **905 ms** |
+| Latence turnu | 10 140 ms | 8 155 ms | **5 331 ms** |
+| USD / dotaz | 0,00223 | 0,00170 | **0,00110** |
+| USD / měsíc (200 × 1/den) | $9,38 | $7,15 | **$4,62** |
+| Kvalita — splnilo | **8/8** | 6/8 | **3/8** |
+| Kvalita — nejlepší | 2× | **5×** | 1× |
+
+**Retrieval nebyl vůbec flaky** — všechny tři cesty vrátily v obou bězích identický
+počet hitů u každého dotazu. Kolísá hodnocení, ne vyhledávání.
+
+> [!IMPORTANT] Nejlevnější sloupec nenašel nic
+> Copilot Search vrátilo **0 hitů v osmi měřeních z osmi**. Je nejrychlejší a nejlevnější,
+> protože prázdný kontext znamená krátký prompt. Jeho jediné „nejlepší" je K4
+> („Kdo jsem?"), kde je správná odpověď *„na tohle runbooky nejsou"* — dalo ji
+> z nevědomosti, ne z rozpoznání.
+>
+> **Cena za turn je metrika, kterou lze vylepšit rozbitím funkce.** Než někomu ukážeš,
+> že nová varianta je o 40 % levnější, ověř, že pořád odpovídá.
+
+### Není Copilot Search rozbité? Není — jen nevhodné
+
+Doměřeno čistým retrievalem, bez volání modelu, tři tvary téhož dotazu:
+
+| Tvar dotazu | Retrieval API | Copilot Search |
+|---|---|---|
+| přirozená česká věta | **4** hity | 0 |
+| česká klíčová slova | **7** hitů | 2 |
+| anglická klíčová slova | 1 | 0 |
+
+Copilot Search **ožije** na klíčových slovech — ale i v nejlepším tvaru najde 2 tam,
+kde Retrieval API najde 7.
+
+Dvě věci, které z toho vypadly a mění dřívější závěry:
+
+**Čeština poráží angličtinu, a to výrazně.** Anglická klíčová slova jsou nejhorší tvar
+pro **obě** API. Dřívější poznámka „anglická klíčová slova fungují" platila jen pro
+dotaz K1, kde je „access denied" v textu doslova.
+
+**Retrieval API je na tvar dotazu citlivější, než tvrdí marketing.** 4 → 7 → 1 podle
+formulace. Přepis dotazu tedy nezmizí ani při sémantickém hledání — jen se přestane
+přepisovat do KQL a začne do jazyka. **Krok `buildSearchQuery` by i tady zlepšil recall.**
+
 ## Tři endpointy — naměřeno, ne odvozeno z dokumentace
 
 | | `/v1.0/search/query` | `/v1.0/copilot/retrieval` | `/beta/copilot/search` |

@@ -102,6 +102,25 @@ Kdo chce detail, má ho v [`../../opt-custom-retrieval/`](../opt-custom-retrieva
 105 minut čtení k samostudiu, včetně toho, proč je vlastní vektorizace v kontextu
 Microsoft 365 **rozhodnutí s cenovkou, ne výchozí stav**.
 
+## Co studenti dostanou do ruky
+
+**[`../../perf-cost-lifecycle/tekute-pisky-retrievalu.html`](../perf-cost-lifecycle/tekute-pisky-retrievalu.html)**
+— výstup z projektu, ne slajd. Je to změřená odpověď na čtyři otázky, které během
+týdne skutečně padly:
+
+- proč hledání trefovalo špatné runbooky (`.md` je lexikální, `.pdf` sémantický),
+- proč jsme na jeden dotaz volali model dvakrát (přepis dotazu je **kompenzace**),
+- co která ze tří cest stojí — a proč je nejlevnější ta, která nic nenašla,
+- kdy si stavět vlastní vektorizaci (sedm fází RAG a kdo je ve vašem kódu udělal).
+
+Poslední sekce je o tom, proč se tomu říká tekuté písky: **tři rozhraní, tři různé
+odpovědi na tentýž obsah**, a tři tiché chyby, které všechny vrátily `200`.
+
+> [!TIP] Jak to použít v bloku
+> **Neprocházej to celé.** Promítni dvě věci — tabulku `.md` vs. `.pdf` (0/4 → 4/4)
+> a hlášku o chybějící hlavičce `Accept-Language`, která vrací `200` a prázdno.
+> Dohromady tři minuty. Zbytek si přečtou; proto to dostanou jako soubor.
+
 ## Výstup do capstonu
 
 Každý student odchází z bloku s **jednou větou**, kterou si zapíše a v části B capstonu

@@ -13,9 +13,9 @@ zadání z praxe studenta — a obhájit ho před skupinou.
 - Artefakty z celého týdne: agent, manifest, middleware, telemetrie, golden set s naměřenými
   hodnotami, rozhodnutí o hostingu, model hrozby, nákladová a lifecycle tabulka.
 - **Vlastní zadání z praxe** je vítanou alternativou Support Asistenta — často je hodnotnější.
-- [**Kalkulačka nákladů a návratnosti**](https://claude.ai/code/artifact/4f481142-dcf1-47e4-9590-844063a94314) — otevřená ve druhém okně, používá se v části D.
-  Zdroj v repu: [`../../perf-cost-lifecycle/roi-calculator.html`](../perf-cost-lifecycle/roi-calculator.html)
-  (dá se otevřít i lokálně, když odkaz nefunguje).
+- **Kalkulačka nákladů a návratnosti** — otevřená ve druhém okně, používá se v části D.
+  Otevři si ji **z klonu repa**: [`../../perf-cost-lifecycle/roi-calculator.html`](../perf-cost-lifecycle/roi-calculator.html)
+  (dvojklik, funguje offline). Publikovaná verze: [odkaz](https://claude.ai/code/artifact/4f481142-dcf1-47e4-9590-844063a94314).
 
 ## Kroky
 

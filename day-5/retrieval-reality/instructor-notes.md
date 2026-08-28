@@ -37,8 +37,8 @@ do bloku 4** (evaluace). Nepřehazovat pořadí.
 ## Když chtějí zkusit naživo
 
 Nejrychlejší ukázka je v Graph Exploreru a trvá dvě minuty: totéž volání Retrieval API
-**s hlavičkou  a bez ní**. Bez ní  a prázdno za půl vteřiny,
-s ní data za tři. Nic přesvědčivějšího v tomhle bloku nemáš.
+**s hlavičkou `Accept-Language` a bez ní**. Bez ní `200` a prázdno za půl
+vteřiny, s ní data za tři. Nic přesvědčivějšího v tomhle bloku nemáš.
 
 Druhá dobrá je Copilot Search se stejným dotazem jako **česká věta** a jako **anglická
 klíčová slova** — věta nula, klíčová slova hit.

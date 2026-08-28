@@ -22,12 +22,6 @@ Nejedou v bloku, ale patří ke dni — student je má po ruce ve stejné složc
 Reálná zátěž **265 min** bez bloku 4 (etalon ~310) — blok 4 je volitelný a jede jen
 při náskoku.
 
-> [!NOTE] Změřeno v prvním běhu (2026-08-27)
-> Bloky 1–3 zabraly celý den a blok 4 **neproběhl**. Nebyl to skluz, ale realita:
-> `actions-graph` s živým Graphem a `middleware-policy` s žebříkem útoků nejdou
-> odbýt. Proto je blok 4 nově **volitelný** — plánuj den na 265 min a SPFx nabídni
-> jako samostudium s hotovým řešením v modulu.
-
 > [!WARNING] Ranní prerekvizity
 > - **Mocky bloku 1**: `mock-ticket-api` (4000) a `mock-graph` (4001) — studenti
 >   spouštějí z klonu repa; self-testy ověřit na učebním stroji.

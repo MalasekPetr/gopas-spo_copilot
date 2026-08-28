@@ -1,7 +1,7 @@
-# Den 3 — První agent v kódu a znalosti (~270 min, ODUČENO)
+# Den 3 — První agent v kódu a znalosti (~270 min)
 
 **První den s Azure.** Odučeny bloky 1–2 plus neplánovaný výklad identity aplikací;
-`actions-graph` se přesunul na start D4 (třetí rekalibrace).
+`actions-graph` otevírá den 4.
 
 | Pořadí | Blok | Slug | Typ | min |
 |---|---|---|---|---|

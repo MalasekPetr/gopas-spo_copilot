@@ -4,10 +4,9 @@
 > Prostředí: viz [`../../environment.md`](../../environment.md) · Názvosloví: [`../../GLOSSARY.md`](../../GLOSSARY.md)
 
 > [!NOTE] Referenční dokument, ne blok
-> Převzato z kurzu GOC224 (2026-08-24). Ve výkladu se neprochází — studenti ho dostanou
-> jako referenci. Je **detailnější než tabulka pěti cest** v README a jako jediný materiál
-> kurzu pokrývá **SharePoint agenty** jako plnohodnotnou cestu. Odkazy na dny níže patří
-> GOC224; v tomto kurzu odpovídají `data-hygiene` (RSS/RCD) a `agent-365-governance`.
+> Ve výkladu se neprochází — studenti ho dostanou jako referenci. Je **detailnější
+> než tabulka cest** v README a jako jediný materiál kurzu pokrývá **SharePoint agenty**
+> jako plnohodnotnou cestu.
 
 Čtyři cesty vedou ke stejnému cíli (deklarativní agent na orchestrátoru M365 Copilot — výjimka viz custom engine níže), ale **schopnosti se liší víc, než mapa cest naznačuje**. Tohle je rozdílová tabulka pro rozhodnutí „čím stavět".
 

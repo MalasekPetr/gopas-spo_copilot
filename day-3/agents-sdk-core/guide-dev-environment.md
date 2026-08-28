@@ -110,9 +110,8 @@ atk -h
 > VS Code rozšíření se v lineage Teams Toolkit → Agents Toolkit už měnily. Ověřit oba
 > před během; Node major verzi srovnat s aktuálním požadavkem šablon Toolkitu.
 
-> [!NOTE] Rozhodnutí po prvním běhu (2026-08-26): otočit pořadí kroků fnm
-> Aktivace přes profil stála na živém běhu tři kola oprav (per-host profil →
-> execution policy → F5 mimo shell). Jediná hodnota fnm pro tento kurz je instalace
-> bez admin práv — a tu dává rovnou trvalý user PATH na `aliases\default`.
-> Pro příští běh: **PATH zápis + restart VS Code jako primární krok**, profil
-> s use-on-cd jen jako volitelný bonus pro zájemce.
+> [!NOTE] Proč trvalý user PATH a ne aktivace přes profil
+> Jediná hodnota fnm pro tenhle kurz je instalace Node bez admin práv — a tu dává rovnou
+> trvalý user PATH na `aliases\default`. Aktivace přes profil má tři samostatné pasti
+> (per-host profil, execution policy, a hlavně **F5 spouští procesy mimo tvůj shell**),
+> takže se jí vyhneme úplně.

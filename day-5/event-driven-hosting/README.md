@@ -1,14 +1,12 @@
 # Událostmi řízená orchestrace, hosting & publikace
 
-> Typ: **samostudium** (vyřazeno z osnovy 2026-08-25) · Odhad: 60 min čtení · Publikum: **vývojáři / architekti**
+> Typ: **samostudium** · Odhad: 60 min čtení · Publikum: **vývojáři / architekti**
 > Prostředí: viz [`../../environment.md`](../../environment.md) · Názvosloví: [`../../GLOSSARY.md`](../../GLOSSARY.md)
 
 > [!IMPORTANT] Tento modul se v běhu neodučí
-> Vyřazen do samostudia při druhé rekalibraci (2026-08-25) — studenti nemají Azure
-> subscription, takže blok byl stejně jen instruktorské demo. **Hosting v kostce**
-> (kde běží endpoint agenta vs. orchestrace okolo něj) je složený do
-> [`../agent-365-governance/`](../agent-365-governance/); timeouty, retry a idempotence
-> zůstávají tady jako čtení. Přehled změn: [`../../self-study.md`](../../self-study.md).
+> Je k **samostudiu** — vyžadoval by Azure subscription, kterou studenti nemají.
+> **Hosting v kostce** (kde běží endpoint agenta vs. orchestrace okolo něj) je složený
+> do [`../agent-365-governance/`](../agent-365-governance/).
 
 Kde agent běží, když už neběží na notebooku — a jak se odtud dostane k uživatelům do kanálů.
 

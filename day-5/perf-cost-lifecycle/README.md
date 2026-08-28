@@ -1,6 +1,6 @@
 # Výkon, náklady & lifecycle
 
-> Typ: **samostudium** (vyřazeno z osnovy 2026-08-25) · Odhad: 70 min čtení · Publikum: **vývojáři / architekti**
+> Typ: **samostudium** · Odhad: 70 min čtení · Publikum: **vývojáři / architekti**
 > Prostředí: viz [`../../environment.md`](../../environment.md) · Názvosloví: [`../../GLOSSARY.md`](../../GLOSSARY.md)
 
 Co agent stojí, jak to snížit, a jak ho dostat z dev do prod a zpátky, když se to pokazí.
@@ -26,12 +26,10 @@ Co agent stojí, jak to snížit, a jak ho dostat z dev do prod a zpátky, když
 > svého zadání v [kalkulačce](roi-calculator.html).
 > Naměřená data a obhajoba modelu: [`explainer-obhajoba-modelu-a-roi.md`](./explainer-obhajoba-modelu-a-roi.md).
 
-> [!IMPORTANT] Modul se neodučí — jeho nástroje ale v kurzu jsou
-> Vyřazen do samostudia při druhé rekalibraci (2026-08-25); jádro (token budget, nákladový
-> strop) je složené do [`../capstone/`](../capstone/). **Kalkulátory v této složce se
-> používají živě**: [`cost-visual.html`](./cost-visual.html) na D3 v
-> [`../../actions-graph/`](../../day-4/actions-graph/) a
-> [`cost-calculator.mjs`](./cost-calculator.mjs) u nákladového stropu v capstonu.
+> [!IMPORTANT] Modul se neodučí jako blok — jeho nástroje ale v kurzu jsou
+> Je k **samostudiu**; jádro (token budget, nákladový strop) je složené do
+> [`../capstone/`](../capstone/). **Kalkulátory v této složce se používají živě** —
+> viz tabulka materiálů výš.
 
 ## Cíle
 - Rozumět **token ekonomice** agenta a vědět, kde se peníze reálně ztrácejí.

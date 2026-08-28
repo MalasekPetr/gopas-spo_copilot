@@ -1,6 +1,6 @@
 # Vlastní retrieval: chunking, embeddings, hybrid ranking
 
-> Typ: **samostudium** (demo vyřazeno při třetí rekalibraci 2026-08-26) · Odhad: 105 min čtení · Publikum: **vývojáři / architekti**
+> Typ: **samostudium** · Odhad: 105 min čtení · Publikum: **vývojáři / architekti**
 > Zájem skupiny o retrieval z velké části pokryl **ŽIVÝ semantic index s ACL** odučený v `knowledge-grounding` (D3).
 > Prostředí: viz [`../../environment.md`](../../environment.md) · Názvosloví: [`../../GLOSSARY.md`](../../GLOSSARY.md)
 

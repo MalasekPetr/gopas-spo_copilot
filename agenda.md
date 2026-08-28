@@ -6,18 +6,11 @@ Denní briefingy (prerekvizity rána, kompresní ventily dne) jsou v README jedn
 [`day-1`](./day-1/README.md) · [`day-2`](./day-2/README.md) · [`day-3`](./day-3/README.md) ·
 [`day-4`](./day-4/README.md) · [`day-5`](./day-5/README.md).
 
-> [!IMPORTANT] Přestavba složek 2026-08-25 večer — studenti musí udělat `git pull`
-> Původní struktura `day-N/<modul>` po dvou rekalibracích u 8 z 24 modulů lhala o dni
-> výuky, proto se prefix zahodil uprostřed týdne (rozhodnutí lektora). Kdo má repo
-> naklonované z pondělí, má po pullu jiné cesty — **ohlásit ráno D3 před blokem 1**.
-> Staré odkazy `day-N/…` v poznámkách studentů už nevedou nikam; modul se najde podle
-> názvu v kořeni repa.
-
 **5 dní · 15 povinných bloků + 1 volitelný · 3–4 bloky/den.** P = povinný, V = volitelný / samostudium.
 Fokus kurzu: **blízké okolí Microsoft 365** — vlastní vektorizace, hluboký Azure a obecná
 AI témata jsou vedlejší koleje, ne jádro.
 
-Po dvou rekalibracích (2026-08-24 a 25) je pět modulů vyřazeno do samostudia a dva bloky
+Pět modulů je k samostudiu a dva bloky
 sloučeny — přehled a důvody v [`self-study.md`](./self-study.md).
 
 > [!IMPORTANT] Osnova je restrukturalizovaná proti webu
@@ -33,7 +26,7 @@ sloučeny — přehled a důvody v [`self-study.md`](./self-study.md).
 > strop ~220 (konec ve 13:00 bez oběda). Skutečné timingy žijí v `instructor-notes.md`
 > jednotlivých modulů.
 
-## Den 1 — Mapa stacku a no-code/low-code (~4,1 h odučeno)
+## Den 1 — Mapa stacku a no-code/low-code
 
 | # | Blok | Slug | Typ |
 |---|---|---|---|
@@ -48,18 +41,7 @@ sloučeny — přehled a důvody v [`self-study.md`](./self-study.md).
 > a proč. Blok 3 osu materializuje naživo (agent builder + Copilot Studio). Celý den jede
 > **bez model endpointu** (jen tenant + PAYG).
 
-> [!IMPORTANT] Realita prvního běhu (2026-08-24)
-> Plánované byly čtyři bloky (360 min), odučily se **tři** (245 min) a naplnily celý den.
-> `declarative-agents` se přesunul na **start dne 2**. Z toho vznikl časový etalon, podle
-> kterého jsou přeplánované dny 2–5 (viz varování níže).
->
-> Volitelné položky nejsou bloky dne, ale materiál k samostudiu:
-> `opt-prompting-fundamentals` (převzato z GOC224 — anatomie promptu a **vrstvy instrukcí**;
-> tabulka vrstev je vytažená do `declarative-agents`, kde má okamžitou hodnotu) a
-> `comparison-agent-paths.md` (rozdílová matice čtyř cest **včetně SharePoint agentů** —
-> hodnotnější než tabulka pěti cest ve výkladu, dát studentům jako referenci).
-
-## Den 2 — Copilot v SharePointu, deklarativní strop a hygiena (~310 min, ODUČENO)
+## Den 2 — Copilot v SharePointu, deklarativní strop a hygiena (~310 min)
 
 **Bez Azure** — celý den jel na tenantu a PAYG. Rozhodnutí lektora 2026-08-25 podle
 zájmu skupiny: M365 strana nejdřív, kód až od D3.
@@ -84,22 +66,13 @@ zájmu skupiny: M365 strana nejdřív, kód až od D3.
 > která z přesunu udělá argument: *„Strop jste viděli. Odpověď na něj začneme psát zítra
 > ráno — dneškem jsme se ujistili, že tenant, do kterého ho pustíme, je uklizený."*
 
-## Den 3 — První agent v kódu a znalosti (~270 min, ODUČENO)
+## Den 3 — První agent v kódu a znalosti (~270 min)
 
 | # | Blok | Slug | Typ | min |
 |---|---|---|---|---|
 | 1 | Agents SDK — jádro: AgentApplication, aktivity, turny *(vč. Foundry v kostce a env setupu)* | `agents-sdk-core` | P | 150 |
 | 2 | Identita aplikací: app registrace, permissions, single/multi-tenant, Enterprise apps, tokeny *(neplánovaný blok)* | — | P | ~35 |
 | 3 | Grounding: Copilot connectors, semantic index, MCP *(vč. ŽIVÉHO Retrieval API)* | `knowledge-grounding` | P | 85 |
-
-> [!IMPORTANT] Realita třetí rekalibrace (2026-08-26)
-> Env setup (fnm sága: profil → policy → PATH pro F5) a ŽIVÉ napojení si vyžádaly
-> čas; před živým Retrieval API lektor zařadil **neplánovaný výklad identity
-> aplikací** — a to je investice, ne skluz: je to první polovina výkladu
-> `actions-graph`, který se proto na D4 zkracuje (90 → 80). **Změřeno na živo:**
-> Retrieval API vyžaduje licenci/PAYG meter per uživatel (admin 403, student 200);
-> studenti odcházeli s agentem groundovaným nad skutečným indexem s vlastním ACL.
-> `actions-graph` se přesouvá na start D4.
 
 ## Den 4 — Akce, prompt, bezpečnost a Copilot Apps (310 min)
 
@@ -135,27 +108,6 @@ zájmu skupiny: M365 strana nejdřív, kód až od D3.
 > a blok 4: blok 0 rámuje celý den a jeho výstup jde do capstonu, blok 4 je hodnotový
 > závěr a **musí proběhnout**. Skluz se bere z bloků 1–3. Capstone drž na 75
 > (60 + 15 na náklady a ROI) a v pair-share formátu.
-
-> [!NOTE] Třetí rekalibrace: `agent-framework` z D4 v kompaktní formě (45 min) —
-> lab `lab-multi-agent-triage` jde do samostudia, rozhodnutí triage/resolver
-> a A2A přehled zůstávají (capstone rozhodnutí č. 3 je potřebuje). Blok 2 pohltil
-> i hosting v kostce. **Demo vlastního retrievalu padá** zpět do samostudia —
-> zájem skupiny z velké části pokryl ŽIVÝ semantic index s ACL na D3
-> (plný text v [`opt-custom-retrieval/`](./day-3/opt-custom-retrieval/)).
-
-> [!IMPORTANT] Etalon po dvou měřeních — kapacita je ~310 min/den
-> | Den | Plán | Odučeno | Poznámka |
-> |---|---|---|---|
-> | D1 | 360 | **245** | jednorázová režie onboardingu u 20 strojů + seznamování |
-> | D2 | 260 | **~310** | vešel se navíc celý blok Normiqa Navigator |
->
-> **D1 byl výjimka, ne etalon.** Onboarding se neopakuje a diskusní bloky prvního dne
-> byly nejhustší v týdnu. Pracovní kapacita je **~310 min/den** — kromě D5, který končí
-> ve 13:00 bez oběda a má tvrdý strop ~220.
->
-> **D3 etalon potvrdil potřetí** (~270 min odučeného obsahu + režie prvního dne
-> s Azure: fnm sága, klíče, živé napojení). Po třetí rekalibraci: D4 = 310 přesně
-> na etalonu, D5 = 215 pod tvrdým stropem 220.
 
 ## Kompresní ventily — v tomto pořadí
 

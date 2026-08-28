@@ -27,7 +27,7 @@ Nejedou v bloku, ale patří ke dni — student je má po ruce ve stejné složc
 > a končí **přesně pojmenovaným stropem** deklarativní cesty. Blok 4 je rozšířený
 > o hloubku **SAM** — tři pilíře, RAC vs. RCD a licenční past.
 
-**Odučeno 2026-08-25, ~310 min** — vešel se navíc blok Normiqa Navigator (case study
+**~310 min** — včetně bloku Normiqa Navigator (case study
 z [`../marketplace-agents/`](./marketplace-agents/)). Kapacita dne se tím
 změřila podruhé: D1 byl s 245 min výjimka kvůli onboardingu, pracovní etalon je ~310.
 

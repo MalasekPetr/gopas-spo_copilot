@@ -56,22 +56,15 @@ gopas-spo_copilot/
 
 - **Povinný** modul — součást každého běhu.
 - **Volitelný** modul — v tabulce dne označený **V**. Nejede v bloku, ale patří ke dni
-  a student ho má ve stejné složce. Část z nich má prefix `opt-`, část se do samostudia
-  přesunula až po rekalibraci (`security-risk`, `event-driven-hosting`,
-  `orchestry-governance`, `perf-cost-lifecycle`).
+  a student ho má ve stejné složce. Část z nich má prefix `opt-`.
 - Currency-markery v textu:
   - `> [!WARNING] Ověřit k datu běhu` — fast-moving fakt (ceny, preview, verze SDK, retirement dat).
   - `> [!IMPORTANT]` — lineage / přejmenování / breaking change, na které studenty upozornit.
 
 ## Stav
 
-**Po prvním běhu** (týden od 2026-08-24). Obsah je kompletní, rozvržení dnů
-rekalibrované třikrát podle skutečně odučeného času — viz [`agenda.md`](./agenda.md)
-a briefingy jednotlivých dnů. Co se neodučilo a kde to student najde, je
-v [`self-study.md`](./self-study.md).
-
-Struktura `day-N/<modul>/` zavedena 2026-08-27 (dřív byly moduly v kořeni).
-**Studenti s klonem si musí udělat `git pull`** — cesty se změnily.
+Obsah je kompletní. Rozvržení dnů drží [`agenda.md`](./agenda.md) a briefingy
+jednotlivých dnů; co se neodučí a kde to student najde, je v [`self-study.md`](./self-study.md).
 
 Model endpoint pro custom engine agenty: **instruktorský Foundry deployment**
 (viz [`environment.md`](./environment.md)) — Business Basic + Copilot Credits

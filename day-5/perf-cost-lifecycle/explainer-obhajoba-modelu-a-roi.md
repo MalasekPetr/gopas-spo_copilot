@@ -15,7 +15,7 @@ Tenhle text je odpověď — postavená na číslech změřených na kurzovním 
 kolikrát za měsíc se člověk obrátí na podporu. To je vstup z byznysu, ne z architektury.
 
 Co ale architektura **ovlivňuje zásadně**, je kolik turnů spotřebuje *jeden* problém.
-Změřený příklad z prvního běhu kurzu:
+Změřený příklad:
 
 | Verze agenta | Chování na dotaz „Nejde mi upload, hlásí access denied." | Turnů na vyřešení |
 |---|---|---|

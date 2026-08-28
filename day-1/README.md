@@ -27,11 +27,6 @@ Nejedou v bloku, ale patří ke dni — student je má po ruce ve stejné složc
 Reálná zátěž **245 min** (90 + 105 + 50). Nejnepředvídatelnější je blok 1 — toolchain
 u 20 strojů (VS Code, Agents Toolkit, Node.js, přihlášení do M365).
 
-> [!IMPORTANT] Co se skutečně stalo v prvním běhu (2026-08-24)
-> Plánované byly čtyři bloky (360 min), odučily se tři (245 min) a naplnily celý den.
-> **`declarative-agents` se přesunul na start dne 2.** Z toho vznikl časový etalon,
-> podle kterého jsou přeplánované dny 2–5 — viz [`../agenda.md`](../agenda.md).
-
 ## Materiál k samostudiu
 
 - [`opt-prompting-fundamentals`](./opt-prompting-fundamentals/) — anatomie promptu,

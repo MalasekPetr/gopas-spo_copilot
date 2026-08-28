@@ -1,9 +1,9 @@
 # Bezpečnost & řízení rizik — sloučeno
 
 > [!IMPORTANT] Tento modul se samostatně neodučí
-> Rozhodnutím prvního běhu (2026-08-24) byl sloučen s `middleware-policy` do jednoho bloku
-> **„Bezpečnost & middleware — útok a obrana jako kód"**:
-> [`../../middleware-policy/`](../middleware-policy/) (den 4).
+> Je součástí bloku **„Bezpečnost & middleware — útok a obrana jako kód"**:
+> [`../middleware-policy/`](../middleware-policy/) (den 4). Tenhle text je hloubka
+> pod ním — model hrozby a obranné vrstvy k samostudiu.
 
 ## Proč
 
@@ -28,4 +28,4 @@ i pořadí, v jakém se to řeší v praxi.
 | Zdrojový materiál útoků a scope | [`lab-injection-and-scope.md`](./lab-injection-and-scope.md) — zůstává jako podklad |
 
 Složka zůstává v repu, aby nepřestaly fungovat odkazy z ostatních modulů a z glosáře.
-Přehled všech změn po rekalibraci: [`../../self-study.md`](../../self-study.md).
+Přehled materiálů k samostudiu: [`../../self-study.md`](../../self-study.md).

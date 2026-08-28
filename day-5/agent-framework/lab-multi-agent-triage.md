@@ -1,6 +1,6 @@
 # Lab · Triage + resolver — a co to stálo
 
-> Modul: `agent-framework` · Odhad: 75 min · Režim: **SAMOSTUDIUM** (třetí rekalibrace 2026-08-26 — v běhu se neodučí; blok jede jako výklad + instruktorské demo)
+> Modul: `agent-framework` · Odhad: 75 min · Režim: **SAMOSTUDIUM** — v běhu se nejede
 > Jazyk: TypeScript (orchestrace ručně nad Agents SDK; Agent Framework = instruktorské
 > demo v C# — JS SDK neexistuje) · Scénář: [`../../scenario-support-agent.md`](../../scenario-support-agent.md)
 

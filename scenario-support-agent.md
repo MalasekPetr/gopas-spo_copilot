@@ -40,7 +40,7 @@ Bodů 1–2 dosáhne i deklarativní agent. Body 3–5 jsou důvod, proč tenhle
 
 ## Jak agent roste
 
-Dny podle reality prvního běhu (po třetí rekalibraci 2026-08-26):
+Rozložení do dnů:
 
 | Den | Modul | Přírůstek |
 |---|---|---|

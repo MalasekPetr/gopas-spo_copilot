@@ -7,7 +7,7 @@
 Útok na **vlastního agenta studenta** — a hned potom obrana, která se skutečně vykoná.
 Nejsilnější „aha" moment kurzu.
 
-> [!IMPORTANT] Sloučený blok (rozhodnutí prvního běhu 2026-08-24)
+> [!IMPORTANT] Sloučený blok
 > Vznikl spojením `middleware-policy` a `security-risk` ([`../../security-risk/`](../security-risk/)).
 > Oba učily totéž z opačných stran: útok ukáže, že obrana v promptu nedrží — a middleware
 > je ta odpověď. Postavené odděleně to znamenalo stavět obranu dvakrát a nechat XPIA

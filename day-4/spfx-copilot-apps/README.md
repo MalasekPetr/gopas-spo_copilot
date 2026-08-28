@@ -9,10 +9,9 @@ komponenty renderované **přímo v Copilot canvasu**, postavené na **MCP Apps*
 hostované automaticky v tenantu. Pro SPFx vývojáře je to nejkratší cesta do světa agentů.
 
 > [!NOTE] Volitelný blok
-> V prvním běhu (2026-08-27) tenhle blok **neproběhl** — bloky 1–3 dne 4 zabraly
-> celý den. Modul je proto volitelný a je psaný tak, aby se dal projít samostatně:
-> lab má checkpointy a v `solution/` je hotové řešení. Ve výkladu stačí jedna věta
-> o tom, že Copilot Apps existují a kudy na ně — most na SPFx kurzy tím drží.
+> Jede jen při náskoku. Modul je psaný tak, aby se dal projít samostatně: lab má
+> checkpointy a v `solution/` je hotové řešení. Ve výkladu stačí jedna věta o tom,
+> že Copilot Apps existují a kudy na ně — most na SPFx kurzy tím drží.
 
 ## Cíle
 

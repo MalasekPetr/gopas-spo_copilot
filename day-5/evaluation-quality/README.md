@@ -1,6 +1,8 @@
 # Evaluace & kvalita
 
-> Typ: povinný · Den: 5 · Odhad: **50 min** (25 výklad + 25 lab, část C jako demo) · Publikum: **vývojáři / architekti**
+> Typ: povinný · Den: 5 · Odhad: **35 min** — výklad + **instruktorské ukázky**, bez labu · Publikum: **vývojáři / architekti**
+> Lab [`lab-golden-set.md`](./lab-golden-set.md) jde do samostudia (2026-08-28). Golden set
+> a prahy student píše až v capstonu, do KPI matice.
 > Prostředí: viz [`../../environment.md`](../../environment.md) · Názvosloví: [`../../GLOSSARY.md`](../../GLOSSARY.md)
 
 Jak dokázat, že je agent dobrý — a že ho poslední změna nezhoršila.
@@ -154,9 +156,18 @@ flowchart LR
 Hands-on, bez tenantu — potřebuje **model endpoint**. Deterministická část (regresní testy
 nad middleware) běží **bez modelu** a je tedy zdarma a rychlá; to je záměr a teaching point.
 
-## Lab
-Viz [`lab-golden-set.md`](./lab-golden-set.md). Referenční řešení v `solution/`.
+## Ukázky místo labu
 
+V běhu se nejede lab — jedou dvě instruktorské ukázky, obě z připravené
+[`solution/`](./solution/):
+
+1. **Deterministické testy politik** — `node --test` v `solution/`, **43/43 za ~0,3 s
+   a zadarmo**. Ukázat výsledek a nechat zaznít, že tohle je celá cena.
+2. **Běh LLM soudce** — `eval-run.mjs` nad golden setem. Kontrast proti bodu 1 je
+   pointa bloku: pomalé, placené, a **nedeterministické**.
+
+Lab [`lab-golden-set.md`](./lab-golden-set.md) zůstává k samostudiu — kdo si ho projde,
+přinese si do praxe vlastní golden set místo převzatého.
 ## Nosná linka
 Support Asistent získává **golden set a regresní běh**. Baseline ze
 [`../../prompt-orchestration/`](../../day-4/prompt-orchestration/) a měření z

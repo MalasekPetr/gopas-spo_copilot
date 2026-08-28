@@ -11,10 +11,12 @@ Co agent stojí, jak to snížit, a jak ho dostat z dev do prod a zpátky, když
 >
 > | Soubor | Co to je | Kdy |
 > |---|---|---|
-> | [`tekute-pisky-retrievalu.html`](./tekute-pisky-retrievalu.html) | **výstup z projektu** — změřená odpověď na čtyři otázky z týdne | D5, blok 0 |
 > | [`roi-calculator.html`](./roi-calculator.html) | kalkulačka nákladů a ROI, načte vlastní `usage-log.jsonl` | D5, capstone část D |
 > | [`cost-visual.html`](./cost-visual.html) | plánovací kalkulačka, presety a what-if | samostudium |
 > | [`mereni-retrieval-vs-search.md`](./mereni-retrieval-vs-search.md) | úplné měření se surovými čísly a reprodukcí | podklad pro instruktora |
+>
+> Výukový text nad tímhle měřením je samostatný blok:
+> [`../retrieval-reality/`](../retrieval-reality/README.md) (D5, blok 3).
 >
 > Všechny tři HTML sdílejí tokeny a typografii — kurz má jeden vizuální jazyk.
 > `roi-calculator` a `cost-visual` mají **dvě kopie výpočtu i ceníku**; po kurzu sloučit.

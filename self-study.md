@@ -62,9 +62,9 @@ odpadl druhý rozjezd a XPIA má bezprostřední odpověď místo dvoudenní pau
 Dva materiály v [`perf-cost-lifecycle/`](./day-5/perf-cost-lifecycle/), oba se otevřou
 dvojklikem z klonu a fungují offline:
 
-- [`tekute-pisky-retrievalu.html`](./day-5/perf-cost-lifecycle/tekute-pisky-retrievalu.html)
-  — změřená odpověď na to, proč se agent choval, jak se choval. Použitelné
-  i jako podklad do zákaznického rozhovoru.
+- [`day-5/retrieval-reality/`](./day-5/retrieval-reality/README.md) — změřená odpověď
+  na to, proč se agent choval, jak se choval. Odučí se v bloku 3 dne 5; text je
+  použitelný i jako podklad do zákaznického rozhovoru.
 - [`roi-calculator.html`](./day-5/perf-cost-lifecycle/roi-calculator.html) — kalkulačka
   nákladů a návratnosti. Přetáhni do ní svůj `usage-log.jsonl` a počítá
   s **tvými** čísly.

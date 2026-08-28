@@ -4,26 +4,34 @@ Nejkratší den: **9:00–13:00 bez pauzy na oběd**, tvrdý strop ~220 min.
 
 Plán **220 min**, přesně na stropu. Rezerva žádná — držet přechody mezi bloky krátké.
 
-> [!NOTE] Jak se den přerovnal (2026-08-27 večer)
-> Přibyl blok 0 (rekapitulace mapy, 20) a capstone dostal část D (náklady a ROI, +15).
-> Těch 35 minut se vzalo z bloků 1–3, ne z capstonu:
+**Žádný lab.** Den 5 je výklad, instruktorské ukázky a psaní blueprintu.
+Soubory `lab-*.md` v modulech dne zůstávají — jsou to **materiály k samostudiu**,
+ne plán bloku.
+
+> [!NOTE] Jak se den přerovnal (2026-08-28)
+> **V dni 5 se nejede žádný lab — jen výklad a instruktorské ukázky.** Studentské ruce
+> potřebuje jediná věc: capstone. Tím se uvolnil čas na nový blok 3 (tekuté písky
+> retrievalu) a capstone zůstává chráněný.
 >
-> | Blok | Bylo | Je | Co se z něj vyjmulo |
+> | Blok | Bylo | Je | Co se změnilo |
 > |---|---|---|---|
-> | 1 `agent-framework` | 45 | **35** | **bez labu i bez dema** (2026-08-27); místo C# dema přibyla popisná sekce o Foundry Agent Service |
-> | 2 `agent-365-governance` | 55 | **40** | části B a C jako **instruktorské demo** — tak to ostatně vede i [`../environment.md`](../environment.md) |
-> | 3 `evaluation-quality` | 55 | **50** | část C (judge runner) byla demo už dřív; krok 3 je spuštění připravených testů, ne psaní |
+> | 1 `agent-framework` | 45 | **35** | bez labu i bez dema; místo C# dema přibyl Foundry Agent Service |
+> | 2 `agent-365-governance` | 55 | **35** | celé jako instruktorské demo — tak to vede i [`../environment.md`](../environment.md) |
+> | 3 `retrieval-reality` | — | **25** | **nový**; uzavírá otázku z úterý o vlastní vektorizaci |
+> | 4 `evaluation-quality` | 55 | **35** | lab vypadl, zůstává výklad + demo běhu judge |
+> | 5 `capstone` | 60 | **70** | vč. části D (náklady a ROI); **bez prezentací** |
 >
 > **Blok 0 a capstone jsou chráněné.** Blok 0 rámuje celý den a jeho výstup (věta o volbě
-> cesty) je vstup do capstonu, část B.
+> cesty) je vstup do capstonu. Capstone je hodnotový závěr týdne.
 
 | Pořadí | Blok | Slug | Typ | min |
 |---|---|---|---|---|
 | 0 | **Rekapitulace rozhodovací mapy** — otvírák | [`agent-landscape`](../day-1/agent-landscape/recap-d5-rozhodovaci-mapa.md) | P | 20 |
-| 1 | Agent Framework, A2A a **Foundry Agent Service** — *informativní, bez labu a dema* | [`agent-framework`](./agent-framework/) | P | 35 |
-| 2 | Agent 365, Entra Agent ID & instrumentace *(vč. hostingu v kostce)* | [`agent-365-governance`](./agent-365-governance/) | P | 40 |
-| 3 | Evaluace & kvalita | [`evaluation-quality`](./evaluation-quality/) | P | 50 |
-| 4 | Capstone architektura & roadmapa *(vč. nákladů a ROI)* | [`capstone`](./capstone/) | P | 75 |
+| 1 | Agent Framework, A2A a **Foundry Agent Service** — *informativní* | [`agent-framework`](./agent-framework/) | P | 35 |
+| 2 | Agent 365, Entra Agent ID & instrumentace — *instruktorské demo* | [`agent-365-governance`](./agent-365-governance/) | P | 35 |
+| 3 | **Tekuté písky retrievalu** — co jsme naměřili | [`retrieval-reality`](./retrieval-reality/) | P | 25 |
+| 4 | Evaluace & kvalita — *instruktorské demo* | [`evaluation-quality`](./evaluation-quality/) | P | 35 |
+| 5 | Capstone architektura & roadmapa | [`capstone`](./capstone/) | P | 70 |
 
 ### Volitelné / samostudium
 
@@ -35,8 +43,9 @@ Nejedou v bloku, ale patří ke dni — student je má po ruce ve stejné složc
 | — | Výkon, náklady & lifecycle *(materiály pro capstone)* | [`perf-cost-lifecycle`](perf-cost-lifecycle/) | **V** | 70 min čtení |
 
 > [!WARNING] Blok 0 a capstone musí proběhnout
-> Při skluzu se krátí bloky 1–3. Capstone držet na **75** (60 + 15 na část D,
-> náklady a ROI) v pair-share formátu, ne jako sérii prezentací. Bez oběda klesá pozornost
+> Při skluzu se krátí bloky 1–4. Capstone držet na **70** (55 + 15 na část D,
+> náklady a ROI). **Prezentace se nedělají** — čas patří psaní a konzultaci
+> u jednotlivých stolů. Bez oběda klesá pozornost
 > rychleji — nejtěžší výklad (blok 1) je proto hned ráno.
 
 > [!IMPORTANT] Slib skupině z úterý — uzavřený v bloku 0

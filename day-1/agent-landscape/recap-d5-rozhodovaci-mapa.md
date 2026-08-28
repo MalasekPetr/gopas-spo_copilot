@@ -122,9 +122,8 @@ Microsoft 365 **rozhodnutí s cenovkou, ne výchozí stav**.
 
 ## Co studenti dostanou do ruky
 
-**[`../../perf-cost-lifecycle/tekute-pisky-retrievalu.html`](../../day-5/perf-cost-lifecycle/tekute-pisky-retrievalu.html)**
-— výstup z projektu, ne slajd. Je to změřená odpověď na čtyři otázky, které během
-týdne skutečně padly:
+Celý blok **[`../../day-5/retrieval-reality/`](../../day-5/retrieval-reality/README.md)**
+(blok 3 dnešního dne) je změřená odpověď na čtyři otázky, které během týdne skutečně padly:
 
 - proč hledání trefovalo špatné runbooky (`.md` je lexikální, `.pdf` sémantický),
 - proč jsme na jeden dotaz volali model dvakrát (přepis dotazu je **kompenzace**),

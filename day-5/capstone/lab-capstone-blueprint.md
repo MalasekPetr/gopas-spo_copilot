@@ -1,6 +1,6 @@
 # Lab · Capstone blueprint a prezentace
 
-> Modul: `capstone` · Odhad: **elastický 75–135 min** · Režim: **hands-on** (design dokument)
+> Modul: `capstone` · Odhad: **70 min** (elastický 70–120) · Režim: **hands-on** (design dokument)
 > Scénář: [`../../scenario-support-agent.md`](../../scenario-support-agent.md)
 
 ## Cíl
@@ -100,14 +100,20 @@ dáš mu **měření pod tím**, ne odhad.
    **nevratné** — založené tikety, odeslané zprávy uživatelům, zápisy do cizích systémů,
    obsah, který se dostal ven. U nevratných věcí platí prevence, ne rollback.
 
-### Část F — prezentace (dle času)
+### Část F — obhajoba u stolu (10 min)
 
-14. Odprezentuj blueprint před skupinou — **5 minut na osobu**, v pořadí: architektura,
-    tři nejdůležitější rozhodnutí, KPI s prahy, největší riziko a rollback. Pak **jedna
-    otázka od publika a jedna od instruktora** (typicky „co by tohle rozhodnutí změnilo?").
-    Při zkráceném režimu totéž ve dvojicích (pair-share) — formát otázek zůstává.
+Žádné prezentace před skupinou. Instruktor projde jednotlivé stoly a u každého
+blueprintu položí **jedinou otázku**:
 
-### Část G — další kroky (10 min)
+> *„Co by tohle rozhodnutí změnilo?“*
+
+Vyber si k ní **jedno** ze svých osmi rozhodnutí — to, u kterého si nejsi jistý.
+Cílem není obhájit se, ale zjistit, jestli rozhodnutí drží.
+
+**Checkpoint:** u vybraného rozhodnutí umíš pojmenovat konkrétní změnu zadání,
+objemu nebo omezení, která by tě dovedla k jiné volbě. „Nic by to nezměnilo"
+znamená, že to nebylo rozhodnutí, ale zvyk.
+### Část G — další kroky (5 min)
 
 15. Zapiš si certifikační cestu: **AI-103** (Azure AI Apps and Agents Developer Associate)
     a **AI-200** (Azure AI Cloud Developer Associate) — **ne** retirované AI-102 a AZ-204.
@@ -129,14 +135,14 @@ dáš mu **měření pod tím**, ne odhad.
 - [ ] Návratnost je přepočtená na **úvazky**, ne jen na koruny.
 - [ ] Volba modelu a `reasoning_effort` je obhájená **třídou případů**, ne obecnou větou.
 - [ ] Tři rizika s mitigací a rollback plán rozlišující vratné/nevratné.
-- [ ] Prezentováno (nebo pair-share při zkráceném režimu).
+- [ ] U jednoho rozhodnutí umíš říct, co konkrétně by ho změnilo.
 - [ ] Zapsaná jedna konkrétní věc do 14 dnů.
 
 ## Fallback
 
 **Elastický blok 60–120 min.** Při zkrácení:
 
-- Prezentace (část F) → **pair-share** ve dvojicích.
+- Při skluzu: část F zkrátit na otázku u tří vybraných stolů, ne u všech.
 - Blueprint → jednostránkový místo dvoustránkového.
 - **Jádro, které zůstává vždy**: části A (architektura), B (rozhodnutí s odůvodněním)
   a D (rollback plán). Bez těch tří capstone nemá hodnotu.

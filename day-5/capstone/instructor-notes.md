@@ -2,8 +2,12 @@
 
 ## Timing
 
-**75 min** (60 + 15 na část D, náklady a ROI). Rozpad: A 20 / B 20 / C 10 / D 15 / F+G 10.
+**70 min** (55 + 15 na část D). Rozpad: A 20 / B 15 / C 10 / D 15 / E 5 / F+G 5.
 Při skluzu se krátí C a G — **A, B a D nikdy nevypouštět**.
+
+**Bez prezentací** (rozhodnuto 2026-08-28). Místo nich obchází instruktor stoly
+a u každého blueprintu položí jednu otázku. Je to rychlejší, adresnější a nikdo
+nesedí a neposlouchá osm cizích architektur.
 
 ## Go/no-go
 
@@ -24,7 +28,7 @@ Při skluzu se krátí C a G — **A, B a D nikdy nevypouštět**.
   nákladu na dotaz a podílu vyřešených bez člověka.
 - „Budeme to sledovat" místo „měří se takhle, z téhle telemetrie". Část C8.
 - **Studenti chtějí v capstonu stavět.** Není to stavba, je to obhajoba. Čas navíc jde
-  do prezentací a otázek, ne do kódu.
+  do psaní a do otázek u stolu, ne do kódu.
 - **Vlastní zadání z praxe aktivně nabízet** — studenti se stydí, a přitom je to hodnota,
   kterou si odnesou do práce.
 
@@ -35,7 +39,7 @@ otevře se dvojklikem a jede offline. Nech nejdřív všechny zadat **svoje** pa
 a teprve pak ukaž tři naměřená čísla z kurzu (78,5 % reasoning · 12× rozptyl · 0,2 % cache).
 V opačném pořadí si je jen opíšou.
 
-## Otázka do každé prezentace
+## Otázka ke každému stolu
 
 *„Co by tohle rozhodnutí změnilo?"* — nejlepší diagnostický nástroj celého kurzu.
 Odhalí, jestli student rozhodnutí udělal, nebo popsal to, co mu vyšlo.

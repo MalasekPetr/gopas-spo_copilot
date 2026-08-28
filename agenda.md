@@ -123,11 +123,12 @@ zájmu skupiny: M365 strana nejdřív, kód až od D3.
 
 | # | Blok | Slug | Typ | min |
 |---|---|---|---|---|
-| 0 | Rekapitulace rozhodovací mapy — *otvírák, pair-share* | `agent-landscape` | P | 20 |
-| 1 | Microsoft Agent Framework & multi-agent (A2A) — *kompakt: výklad + instruktorské demo* | `agent-framework` | P | 35 |
-| 2 | Agent 365, Entra Agent ID & instrumentace *(vč. hostingu v kostce)* — *části B a C jako demo* | `agent-365-governance` | P | 40 |
-| 3 | Evaluace & kvalita *(část C jako demo)* | `evaluation-quality` | P | 50 |
-| 4 | Capstone architektura & roadmapa *(vč. nákladů a ROI)* | `capstone` | P | 75 |
+| 0 | Rekapitulace rozhodovací mapy — *otvírák* | `agent-landscape` | P | 20 |
+| 1 | Agent Framework, A2A a Foundry Agent Service — *informativní* | `agent-framework` | P | 35 |
+| 2 | Agent 365, Entra Agent ID & instrumentace — *instruktorské demo* | `agent-365-governance` | P | 35 |
+| 3 | Tekuté písky retrievalu — co jsme naměřili | `retrieval-reality` | P | 25 |
+| 4 | Evaluace & kvalita — *instruktorské demo* | `evaluation-quality` | P | 35 |
+| 5 | Capstone architektura & roadmapa *(vč. nákladů a ROI)* | `capstone` | P | 70 |
 
 > [!WARNING] Nejkratší den — 9:00 až 13:00 **bez pauzy na oběd**
 > Reálně ~220 min čistého času, plán 220 — **rezerva žádná**. Chráněné jsou blok 0

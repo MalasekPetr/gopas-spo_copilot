@@ -7,7 +7,6 @@
 
 | Materiál | Kdy |
 | --- | --- |
-| [`tekute-pisky-retrievalu.html`](tekute-pisky-retrievalu.html) | D5 blok 0 — výstup z projektu, studenti si ho odnášejí |
 | [`roi-calculator.html`](roi-calculator.html) | D5 capstone, část D |
 | [`cost-visual.html`](cost-visual.html) | samostudium |
 

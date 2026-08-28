@@ -183,8 +183,8 @@ artefakty z celého týdne.
 Viz [`lab-capstone-blueprint.md`](./lab-capstone-blueprint.md).
 
 ## Nosná linka
-Support Asistent je hotový. Student ho **prezentuje** — architekturu, rozhodnutí, KPI,
-model hrozby, náklady a lifecycle. To je deliverable, se kterým odchází ke zákazníkovi.
+Support Asistent je hotový. Student ho **sepíše a obhájí** — architekturu, rozhodnutí, KPI,
+model hrozby, náklady a lifecycle. Ne před skupinou, ale u svého stolu, na jednu otázku. To je deliverable, se kterým odchází ke zákazníkovi.
 
 ## Zdroje (Microsoft)
 - [Exam and assessment lab retirement](https://learn.microsoft.com/en-us/credentials/support/retired-certification-exams)

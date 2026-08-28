@@ -1,6 +1,8 @@
 # Agent 365, Entra Agent ID & instrumentace pro-code agenta
 
-> Typ: povinný · Den: 5 · Odhad: **55 min** (30 výklad + 25 lab, vč. hostingu v kostce a 5 min Orchestry) · Publikum: **vývojáři / architekti**
+> Typ: povinný · Den: 5 · Odhad: **35 min** — výklad + **instruktorské demo**, bez labu · Publikum: **vývojáři / architekti**
+> Lab [`lab-instrument-agent.md`](./lab-instrument-agent.md) jde do samostudia (2026-08-28);
+> v běhu se z něj jede část A (registry) jako demo a část D (protipříklad) ústně.
 > Prostředí: viz [`../../environment.md`](../../environment.md) · Názvosloví: [`../../GLOSSARY.md`](../../GLOSSARY.md)
 
 > [!IMPORTANT] Pro-code diferenciátor celého kurzu

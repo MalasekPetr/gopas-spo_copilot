@@ -2,20 +2,25 @@
 
 ## Timing
 
-**50 min**, blok 3. Části B a D nevyžadují model, takže se dají odjet i při únavě.
-Kompresní ventil: část C je demo (běh judge), ne hands-on.
+**35 min**, blok 4. **Bez labu** (2026-08-28) — dvě instruktorské ukázky:
+deterministické testy (43/43, ~0,3 s, zadarmo) a proti nim běh LLM soudce
+(pomalý, placený, nedeterministický). Ten kontrast je celý blok.
 
-**Část E (souhrnná tabulka týdne) nevynechávat.** Deset minut, a je to moment, kdy
-studenti poprvé vidí celý týden jako jednu křivku. Bez ní působí kurz jako série cvičení.
+**Souhrnnou tabulku týdne nevynechávat** — je to moment, kdy studenti poprvé vidí celý
+týden jako jednu křivku. Bez labu ji jedeš ty: pusť `usage-report.mjs` nad svým logem
+a promítni. Pět minut. Studenti si ji pak spočítají nad vlastním logem v capstonu.
 
 ## Go/no-go
 
-- **Připravená `solution/` složka** — testy politik a runner s judgem. Krok 3 je jeden
-  příkaz, ne psaní: `cd day-5/evaluation-quality/solution && node --test` → **43/43**.
-  Pozor: `node --test <adresář>/` na Node 22 spadne na `MODULE_NOT_FOUND`.
+- **Projet obě ukázky před blokem.** `cd day-5/evaluation-quality/solution && node --test`
+  → **43/43**. Pozor: `node --test <adresář>/` na Node 22 spadne na `MODULE_NOT_FOUND` —
+  musíš být uvnitř adresáře.
+- Pro běh soudce mít připravené `odpovedi.json` — sbírat odpovědi z Playgroundu
+  za běhu bloku není reálné.
 - Ověřit **aktuální sadu built-in evaluatorů** ve Foundry (názvy se mění) a hlavně to,
   jestli jde evaluovat agenta hostovaného **mimo** Foundry.
-- Studenti musí mít `usage-log.jsonl` z D3–D4, jinak část E nemá z čeho počítat.
+- Studenti musí mít `usage-log.jsonl` z D3–D4 — ne pro tenhle blok, ale pro capstone,
+  část D. Připomenout tady, ať to nezjistí až u kalkulačky.
 
 ## Tripwires
 

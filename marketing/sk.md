@@ -3,44 +3,54 @@
 > [!NOTE] Pre editora
 > Každý nadpis „##" nižšie zodpovedá jednému poľu na stránke kurzu; text pod ním vlož do daného
 > poľa. Bloky „Pre editora" samotné nie sú obsah stránky — nekopírovať na web.
+>
+> **Aktualizované po prvom behu (týždeň 2026-08-24).** Osnova nižšie zodpovedá tomu, čo sa
+> skutočne odučilo, nie pôvodnému plánu.
 
 ## Delta — čo sa mení proti aktuálne živej stránke a prečo
 
 > [!NOTE] Pre editora
-> Táto sekcia **nie je** obsah stránky. Je to odôvodnenie zmien pre schvaľovacie kolo.
+> Táto sekcia **nie je** obsah stránky. Je to odôvodnenie zmien pre schvaľovacie kolečko.
+
+### Vecné chyby, ktoré treba opraviť
 
 | Aktuálne na webe | Novo | Dôvod |
-|---|---|---|
-| „Ďalšie kroky: **AI-102, AZ-204**" | **AI-103, AI-200** | Obe skúšky sú retirované: AI-102 k 2026-06-30, AZ-204 k 2026-07-31. Odporúčať ich je vecná chyba. |
-| „**Graph** konektory & obohatenie metadátami" | „**Copilot connectors** — synced a federated (MCP)" | Microsoft produkt premenoval a rozdelil na dva typy s odlišnou architektúrou. |
-| „Kanály a adaptéry **Azure Bot Service**" | „Kanály, aktivity a turny v Agents SDK" | Rola Bot Service sa zúžila na registráciu kanála; nosná vrstva je Agents SDK. |
-| „Vektorizácia & RAG design" ako povinný blok | presunuté do **sprievodného materiálu** | Fokus kurzu je blízke okolie Microsoft 365: retrieval tam robí semantic index; vlastná vektorizácia je architektonické rozhodnutie, nie východiskový stav. |
-| „Sanitizácia výstupov a **watermarking**" | „**Prompt injection / XPIA**, prevencia exfiltrácie" | Watermarking textových odpovedí agenta nemá robustný obranný prínos; injection cez obsah je reálny a aktuálny model hrozby. |
-| „Responsible AI & governance" ako samostatný blok | zlúčené do **Bezpečnosť & middleware** + **Agent 365 a governance** | V pro-code kurze je guardrail kód v pipeline, nie samostatná prednáška. Compliance patrí ku governance vrstve. |
-| „Bezpečnosť" a „Middleware" ako dva bloky | **jeden blok „Bezpečnosť & middleware — útok a obrana ako kód"** | Oba učili to isté z opačných strán: útok ukáže, že obrana v prompte nedrží, a middleware je odpoveď. Spojené to má dramaturgiu útok → obrana → scope; oddelené to znamenalo stavať obranu dvakrát. |
-| — (chýba) | **SharePoint agenti** ako plnohodnotná cesta v rozhodovacej osi | Publikum kurzu spravuje SharePoint obsah; agent vzniknutý jedným klikom nad knižnicou je pre nich najbližší vstup — vrátane jeho stropu a zdieľania do Teams. |
-| — (chýba) | **no-code/low-code showcase a deklaratívne maximum** pred pro-code | Nová progresia kurzu: developer najprv naživo posúdi agent builder a Copilot Studio a vyčerpá deklaratívnu cestu — až tam, kde končí, siaha po SDK. Rozhodovacia kompetencia, za ktorú zákazník platí najviac. |
-| — (chýba) | **dátová hygiena SharePoint Online a Exchange Online** pred nasadením agenta | Agent oprávnenia neprelamuje, ale zviditeľňuje — oversharing a permission sprawl; SharePoint Advanced Management, Restricted Content Discovery, hygienický checklist. Prax kladie túto otázku pred grounding. |
-| — (chýba) | **Microsoft Agent Framework** (nástupca Semantic Kernel + AutoGen), multi-agent, A2A | Vrstva, ktorú pro-code tím nad Agents SDK reálne používa. |
-| — (chýba) | **SharePoint Copilot Apps** (SPFx 1.24, Public Preview) — interaktívne UX v Copilot canvase | MCP Apps model, hands-on blok; najkratší most medzi SPFx vývojom a svetom agentov. |
-| — (chýba) | **distribúcia agentov cez Microsoft Marketplace** vrát. reálnej case study *(sprievodný materiál)* | Podmienky publikácie, Partner Center, proces validácie — na skutočnom publikovanom listingu (Normiqa Navigator), nie na slajde. |
-| — (chýba) | **Agent 365, Entra Agent ID, instrumentácia pro-code agenta** | GA 2026-05-01. Najsilnejšia pro-code téma: low-code agenti sa registrujú automaticky, pro-code sa musia instrumentovať. |
-| — (chýba) | **third-party porovnanie governance (Orchestry)** — súčasť bloku Agent 365 | Agent 365 nie je jediná odpoveď; kurz dáva rozhodovací rámec „kedy first-party a kedy third-party". |
-| — (chýba) | **Microsoft Foundry**, Foundry Agent Service | Premenované z Azure AI Foundry (Ignite 2025); publikácia Foundry agentov do M365 Copilotu a Teams GA 06/2026. |
-| — (chýba) | pozicionovanie **Copilot Studio** v rozhodovacej osi | Zákazníci sa na Copilot Studio pýtajú; kurz musí dať rozhodovaciu kompetenciu, nie jednu cestu. |
+| --- | --- | --- |
+| Úroveň **„Mierne pokročilý"** | **Pokročilý** | Účastníci piaty deň píšu middleware pipeline, validujú zápisy do SharePointu cez Graph a obhajujú nákladový model. Mierne pokročilý účastník kurz neutiahne a odíde sklamaný. |
+| Predpoklady začínajú **C#** | **TypeScript primárne**, C# len ako výhoda | Celý týždeň sa píše v TypeScripte. C# sa objaví len v zmienke o Agent Frameworku. Poradie na stránke odrádza správne publikum a láka nesprávne. |
+| „Další kroky: **AI-102, AZ-204**" | **AI-103, AI-200** | Obe skúšky sú retirované: AI-102 k 2026-06-30, AZ-204 k 2026-07-31. |
 
-Štruktúra sa mení z 15 blokov na **16 vyučovaných blokov** (3–4 denne) plus **sprievodný
-materiál na samoštúdium**. Bloky sú oproti pôvodnému návrhu dlhšie a je ich menej —
-kalibrácia z prvého behu ukázala, že hustejší program ide na úkor hĺbky labov.
-Celkový rozsah zostáva 5 dní. Fokus kurzu: **blízke okolie Microsoft 365** — vlastná
-vektorizácia, hlboký Azure a všeobecné AI témy sú vedľajšie koľaje, nie jadro.
+### Obsahové zmeny
+
+| Aktuálne na webe | Novo | Dôvod |
+| --- | --- | --- |
+| „**Graph** konektory & obohatenie metadátami" | „**Copilot connectors** — synced a federated (MCP)" | Microsoft produkt premenoval a rozdelil na dva typy s odlišnou architektúrou. |
+| „Kanály a adaptéry **Azure Bot Service**" | „Kanály, aktivity a turny v Agents SDK" | Rola Bot Service sa zúžila na registráciu kanála. |
+| „**Vektorizácia & RAG design**" ako povinný blok (2,5 h) | sprievodný materiál + **meraný blok o retrievali** na D5 | Retrieval nad tenantom robí semantic index. Kurz namiesto teórie vektorizácie ukazuje **namerané porovnanie troch vyhľadávacích API** a rozhodnutie, kedy si retrieval stavať sám. |
+| „Sanitizácia výstupov a **watermarking**" | „**Prompt injection / XPIA**, prevencia exfiltrácie" | Watermarking textových odpovedí nemá robustný obranný prínos; injection cez obsah je reálny model hrozby. |
+| „**Responsible AI & governance**" ako samostatný blok (2,5 h) | rozpustené do **Bezpečnosť & middleware** + **Agent 365** | V pro-code kurze je guardrail kód v pipeline, nie samostatná prednáška. |
+| „Bezpečnosť" a „Middleware" ako dva bloky | **jeden blok „útok a obrana ako kód"** | Oba učili to isté z opačných strán. Spojené to má dramaturgiu útok → prečo prompt nedrží → middleware → scope. |
+| „Udalosťami riadená orchestrácia", „Nasadenie & riadenie životného cyklu" ako bloky | **sprievodný materiál** | Vyžadovalo by Azure subscription pre každého účastníka. Podstata („kde beží endpoint vs. orchestrácia") je zložená do bloku o Agent 365. |
+| — (chýba) | **Skills — rozšírenie Copilot in SharePoint** | Najnižšia priečka rozširovania Copilota: `SKILL.md`, žiadny runtime, riadi sa právami na súboroch. Publikum kurzu spravuje SharePoint obsah. |
+| — (chýba) | **SharePoint agenti** ako plnohodnotná cesta | Agent vzniknutý jedným klikom nad knižnicou je pre toto publikum najbližší vstup — vrátane jeho stropu. |
+| — (chýba) | **no-code/low-code showcase a deklaratívne maximum** pred pro-code | Vývojár najprv naživo posúdi Agent Builder a Copilot Studio a vyčerpá deklaratívnu cestu — až tam, kde končí, siaha k SDK. |
+| — (chýba) | **dátová hygiena SharePoint Online a Exchange Online** | Agent oprávnenia neprelamuje, ale zviditeľňuje. Prax kladie túto otázku pred grounding. |
+| — (chýba) | **identita aplikácií** — app registrácie, permissions, single/multi-tenant, tokeny | V prvom behu si to skupina vyžiadala ako samostatný výklad. Bez toho nemožno obhájiť hranicu oprávnení agenta. |
+| — (chýba) | **Microsoft Agent Framework**, A2A a **Foundry Agent Service** | Vrstva orchestrácie nad Agents SDK a PaaS vetva mapy ciest. |
+| — (chýba) | **SharePoint Copilot Apps** (SPFx, Public Preview) — *voliteľný blok* | Najkratší most medzi SPFx zručnosťami a svetom agentov. |
+| — (chýba) | **distribúcia cez Microsoft Marketplace** vr. case study | Podmienky publikácie, Partner Center, proces validácie — na skutočnom publikovanom listingu, nie na slide. |
+| — (chýba) | **Agent 365, Entra Agent ID, inštrumentácia pro-code agenta** | GA 2026-05-01. Low-code agenti sa registrujú automaticky, pro-code sa musia inštrumentovať. |
+| — (chýba) | **nameraný nákladový model a ROI** | Účastník odchádza s vlastnými číslami z týždňa, nie s odhadom. |
+
+Štruktúra sa mení z 15 modulov po 2,5 h na **denné bloky rôznej dĺžky** (3–6 denne) plus
+sprievodný materiál na samoštúdium. Rozsah zostáva 5 dní.
 
 ## URL
 
 `microsoft-365-agents-sdk-copilot-extensions-a-agent-365_spo_copilot`
 
 > [!NOTE] Pre editora
-> Nový slug. Nastaviť **301 redirect** z existujúceho
+> Nový slug. Nastaviť **301 redirect** zo súčasného
 > `microsoft-365-agents-sdk-a-copilot-extensions_spo_copilot`.
 
 ## Titulok kurzu
@@ -49,23 +59,32 @@ Microsoft 365 Agents SDK, Copilot Extensions a Agent 365
 
 ## Krátky popis (meta description / teaser)
 
-Pro-code kurz stavby, zabezpečenia a prevádzky agentov v blízkom okolí Microsoft 365 — od
-rozhodovacej osi a deklaratívneho maxima cez grounding, multi-agent orchestráciu a middleware
-až po SharePoint Copilot Apps, hosting, instrumentáciu do Agent 365, evaluáciu
-a nákladový model.
+Pro-code kurz stavby, zabezpečenia a prevádzky agentov v blízkom okolí Microsoft 365. Celý
+týždeň sa buduje jeden agent — od rozhodnutia, ktorou cestou vôbec ísť, cez grounding nad
+firemným obsahom a akcie nad Microsoft Graphom až po middleware, inštrumentáciu do
+Agent 365, evaluáciu a nákladový model podložený vlastným meraním.
 
 ## Popis kurzu
 
-Päťdenný pro-code kurz pre vývojárov a architektov, ktorí stavajú agentov v blízkom okolí
-Microsoft 365. Celý týždeň sa buduje **jeden agent** — od živého posúdenia no-code
-a low-code ciest (Copilot agent builder, Copilot Studio) a deklaratívneho maxima
-v Microsoft 365 Agents Toolkite, cez jadro Agents SDK a lokálny beh v Agents Playgrounde,
-grounding nad firemným obsahom (Copilot connectors, semantic index, Copilot Retrieval API,
-MCP), akcie nad Microsoft Graphom s korektnými hranicami oprávnení a dátovú hygienu tenantu,
-multi-agent orchestráciu v Microsoft Agent Frameworku a middleware vynucujúci politiky, až po
-interaktívne UX v Copilot canvase (SharePoint Copilot Apps), hosting a publikáciu do kanálov,
-**instrumentáciu do Agent 365** s Entra Agent ID, evaluáciu
-golden setom, obranu proti prompt injection a nákladový model.
+Päťdňový pro-code kurz pre vývojárov a architektov, ktorí stavajú agentov v blízkom okolí
+Microsoft 365. **Celý týždeň sa buduje jeden agent** — Support Asistent nad firemnými
+runbookmi — a každý deň mu pribudne jedna vrstva.
+
+Kurz začína tam, kde začína reálny projekt: **rozhodnutím, ktorou cestou ísť**. Účastníci
+naživo posúdia Skills, SharePoint agentov, Copilot agent builder a Copilot Studio, postavia
+deklaratívneho agenta v Microsoft 365 Agents Toolkite a **narazia na jeho strop** — až tam
+siahnu k Agents SDK. To rozhodnutie potom celý týždeň obhajujú.
+
+Nasleduje jadro Agents SDK a lokálny beh v Agents Playgrounde, identita aplikácií a hranice
+oprávnení, grounding nad firemným obsahom cez Microsoft Graph, akcie so zápisom do
+SharePointu a s validáciou parametrov, systémový prompt ako kontrakt, a **útok na vlastného
+agenta** — po ktorom je zrejmé, prečo obrana v prompte nestačí a ako vyzerá obrana v kóde.
+Posledný deň doplní multi-agent orchestráciu a Foundry Agent Service, inštrumentáciu do
+Agent 365 s Entra Agent ID, evaluáciu golden setom a obhajobu nákladov.
+
+**Všetko sa meria.** Agent od stredy loguje spotrebu tokenov; v piatok z toho účastník
+spočíta cenu za dotaz, mesačnú prevádzku a návratnosť svojho riešenia. Odchádza s vlastnými
+číslami, nie s odhadom — a s tým, čo sa s nimi dá povedať zákazníkovi.
 
 Kurz stavia na rozhodovacej kompetencii: kedy deklaratívny agent, kedy custom engine, kedy
 Copilot Studio a kedy Microsoft Foundry — a ako tú voľbu obhájiť pred zákazníkom aj pred
@@ -76,21 +95,21 @@ interným security tímom. Kód sa píše v **TypeScripte** (Node.js, Microsoft 
 - Solution architekti a AI engineers
 - Vývojári Microsoft 365 rozširujúci Copilota
 - Technologickí konzultanti navrhujúci podnikové AI integrácie
-- Platformoví inžinieri zabezpečujúci bezpečné zavedenie AI
+- Platformoví inžinieri zaisťujúci bezpečné zavedenie AI
 
 ## Predpoklady
 
-- Základy JavaScriptu (JS_PROG1) a TypeScriptu (JS_TS1) — **primárny jazyk kurzu**
-- Základy C# (úroveň kurzu GOC2125) — výhodou (inštruktorské demá Agent Frameworku)
+- **Základy JavaScriptu (JS_PROG1) a TypeScriptu (JS_TS1)** — primárny jazyk kurzu
 - REST a JSON
 - Základy Azure a Microsoft 365
-- Skúsenosť s Microsoft Graph (výhodou)
-- Skúsenosť s prompt engineeringom (výhodou)
+- Skúsenosť s Microsoft Graph — výhodou
+- Skúsenosť s prompt engineeringom — výhodou
+- Základy C# (úroveň GOC2125) — výhodou, len pre zmienky o Agent Frameworku
 
 ## Formát a dĺžka
 
 - 5 dní, inštruktorom vedený kurz s praktickými labmi
-- úroveň: pokročilí
+- úroveň: **pokročilý**
 - kód v **TypeScripte** (Node.js)
 
 > [!NOTE] Pre editora
@@ -101,97 +120,106 @@ interným security tímom. Kód sa píše v **TypeScripte** (Node.js, Microsoft 
 ### Deň 1 — Mapa stacku a no-code/low-code cesty
 
 - **Onboarding, prostredie & toolchain** — VS Code, Microsoft 365 Agents Toolkit, Node.js,
-  Agents Playground; tri modely účtovania (Copilot licencia, Copilot Credits, inference).
-- **Mapa ciest tvorby agentov & rozhodovacia os** — architektúra Copilotu; deklaratívny vs.
-  custom engine agent; Agents SDK, Agent Framework, Copilot Studio, Microsoft Foundry,
-  Agent Builder a **SharePoint agenti** — kedy čo a ako voľbu obhájiť pred zákazníkom.
-- **No-code a low-code cesty — showcase** — Copilot agent builder a Copilot Studio naživo
-  na rovnakom zadaní; pri každej ceste: kto hostuje, kto platí model, kto governuje
-  a čo sa nedá.
+  Agents Playground; tri modely účtovania (Copilot licencia, Copilot Credits, inferencia).
+- **Mapa ciest tvorby agentov & rozhodovacia os** — architektúra Copilota; deklaratívny vs.
+  custom engine agent; Agent Builder, SharePoint agenti, deklaratívny agent z Toolkitu,
+  Copilot Studio, Agents SDK a Foundry Agent Service — kedy čo a ako voľbu obhájiť.
+- **No-code a low-code cesty — showcase** — Agent Builder a Copilot Studio naživo na tom
+  istom zadaní; pri každej ceste: kto hostuje, kto platí model, kto governuje a čo nejde.
 
-### Deň 2 — Deklaratívny strop, prvý agent v kóde a hygiena
+### Deň 2 — Copilot v SharePointe a deklaratívny strop
 
-- **Deklaratívni agenti & Agents Toolkit** — scaffold a provisioning deklaratívneho agenta,
-  instructions ako orchestrácia bez kódu, vrstvy inštrukcií, schopnosti aktuálnej verzie
-  manifestu, TypeSpec; presne pomenovaný strop deklaratívnej cesty ako motivácia pre
-  custom engine.
-- **Agents SDK — jadro** — `AgentApplication`, `AgentApplicationOptions`, aktivity a turny,
-  `TurnState`, kanály; prvý bežiaci agent lokálne, vrátane ošetrenia chybových vetiev.
-- **Dátová hygiena v SharePoint Online a Exchange Online** — oversharing a permission
-  sprawl, SharePoint Advanced Management, Restricted Content Discovery, sensitivity labels;
+- **Skills — rozšírenie Copilot in SharePoint** — anatómia `SKILL.md`, tvorba v chate, review
+  a beh; governance bez admin vypínača (riadi sa právami na súboroch).
+- **SharePoint agenti** — agent nad knižnicou jedným klikom, jeho strop a zdieľanie do Teams.
+- **Deklaratívni agenti & Agents Toolkit** — scaffold a provisioning, instructions ako
+  orchestrácia bez kódu, schopnosti manifestu, ALM a repo-as-code; **presne pomenovaný strop
+  deklaratívnej cesty** ako motivácia pre custom engine.
+- **Dátová hygiena v SharePoint Online a Exchange Online** — oversharing a permission sprawl,
+  SharePoint Advanced Management, Restricted Content Discovery, sensitivity labels;
   hygienický checklist pred nasadením agenta.
+- **Agenti v Microsoft Marketplace** — org katalóg vs. Marketplace, Partner Center, validačný
+  proces a najčastejšie dôvody zamietnutia; case study reálneho publikovaného agenta.
 
-### Deň 3 — Znalosti, akcie a prompt
+### Deň 3 — Prvý agent v kóde a znalosti
 
-- **Grounding: Copilot connectors, semantic index, MCP** — princípy indexácie SharePoint
-  a OneDrive obsahu, synced vs. federated konektory, vynútenie oprávnení; zapojenie knowledge
-  do agenta cez **Copilot Retrieval API** — a kedy retrieval nerobiť sám.
-- **Action handlers & integrácia s Microsoft Graph** — smerovanie akcií, validácia parametrov,
-  hranice oprávnení (delegated vs. app-only), MCP ako nástroj.
-- **Prompt & systémová orchestrácia** — system/user/tool správy, few-shot, reťazenie promptov,
-  tool-call loop, evaluačné heuristiky a meraná baseline pre zvyšok týždňa.
+- **Agents SDK — jadro** — `AgentApplication`, aktivity a turny, `TurnState`, kanály; prvý
+  bežiaci agent lokálne vrátane ošetrenia chybových vetiev; Microsoft Foundry v kocke.
+- **Identita aplikácií** — app registrácie, delegated vs. application permissions,
+  single/multi-tenant, Enterprise applications, tokeny a scopes; hranica, ktorú žiadny
+  prompt neprehovorí.
+- **Grounding nad firemným obsahom** — Copilot connectors (synced vs. federated), semantic
+  index a vynútenie oprávnení, MCP; zapojenie knowledge do agenta **naživo nad firemnou
+  knižnicou** — a kedy retrieval nerobiť sám.
 
-### Deň 4 — Copilot Apps, multi-agent a bezpečnosť
+### Deň 4 — Akcie, prompt a bezpečnosť
 
-- **SharePoint Copilot Apps** *(Public Preview)* — interaktívne UX priamo v Copilot canvase;
-  SPFx 1.24, MCP Apps model, Copilot Workbench, hosting automaticky v tenante; najkratší
-  most medzi SPFx zručnosťami a svetom agentov.
-- **Microsoft Agent Framework, workflows & multi-agent** — orchestrácia nad Agents SDK,
-  vzory (sekvencia, fan-out, handoff, supervízor), A2A — a kedy viac agentov **nerobiť**.
+- **Action handlers & integrácia s Microsoft Graphom** — smerovanie akcií, **validácia
+  parametrov pred zápisom**, zápis do SharePointu, žiadateľ z identity volajúceho;
+  delegated vs. app-only a čo ktorá hranica znamená pre audit.
+- **Prompt & systémová orchestrácia** — systémový prompt ako kontrakt, few-shot na formát,
+  tool-call slučka a kolá vnútri turnu, meraná baseline pre zvyšok týždňa.
 - **Bezpečnosť & middleware — útok a obrana ako kód** — prompt injection a XPIA cez obsah,
-  prevencia exfiltrácie; middleware pipeline, pre/post processing, redakcia a filtrovanie
-  výstupov, safety filtre a ich strop, vzory mitigácie halucinácií; minimalizácia scope ako
-  jediná neprehovoriteľná hranica.
+  rebrík útokov na vlastného agenta; middleware pipeline, pre/post processing, redakcia PII,
+  whitelist odkazov a overenie citácií; minimalizácia scope ako jediná neprehovoriteľná
+  hranica.
+- **SharePoint Copilot Apps** *(Public Preview, voliteľný blok)* — interaktívne UX priamo
+  v Copilot canvase; SPFx, MCP Apps model, hosting automaticky v tenante.
 
-### Deň 5 — Hosting, governance, kvalita a capstone
+### Deň 5 — Orchestrácia, governance, kvalita a capstone
 
-- **Hosting & publikácia** — endpoint agenta (App Service / Azure Container Apps) vs.
-  orchestrácia okolo neho (Functions, Durable Functions, Logic Apps, Foundry Agent Service);
-  timeout a retry patterny, idempotencia; manifest ako verzovaný kontrakt a publikácia
-  do Microsoft 365 Copilotu a Teams.
-- **Agent 365, Entra Agent ID & instrumentácia pro-code agenta** — control plane pre agentov,
-  identita a lifecycle, Agent 365 SDK a CLI, registry a observability, compliance
-  a dohľadateľnosť, Foundry Control Plane vs. Agent 365; porovnanie s third-party governance
-  (Orchestry) a rámec „kedy first-party a kedy third-party".
-- **Evaluácia & kvalita** — kvalitatívne vs. kvantitatívne metriky, golden set, regresné
-  testy, human-in-the-loop, evaluácia a observability v Microsoft Foundry.
-- **Capstone architektúra & roadmapa** — prezentácia end-to-end riešenia, revízia KPI
-  a evaluačnej matice, token budget a rollback plán; ďalšie kroky: certifikácie **AI-103**
-  a **AI-200** (aktuálny Microsoft Certification Poster; AI-500 Multi-Agent AI Solutions
-  Expert ako pokročilá cesta).
+- **Rekapitulácia rozhodovacej mapy** — po štyroch dňoch praxe znova, tentoraz ako
+  rozhodovací nástroj: čo ktorá cesta stojí a čo konkrétne by voľbu zmenilo.
+- **Microsoft Agent Framework, A2A a Foundry Agent Service** — orchestrácia nad Agents SDK,
+  vzory a ich cena, kedy viac agentov **nerobiť**; PaaS vetva mapy a dva control plany.
+- **Agent 365, Entra Agent ID & inštrumentácia pro-code agenta** — control plane pre agentov,
+  identita a lifecycle, registry a observability, compliance a dohľadateľnosť; porovnanie
+  s third-party governance a rámec „kedy first-party a kedy third-party".
+- **Retrieval v praxi — čo sa dá odmerať** — tri rôzne vyhľadávacie rozhrania Microsoftu 365
+  a ako sa líšia na tom istom obsahu; prečo formát obsahu rozhoduje o kvalite groundingu; ako
+  spoznať mlčiacu chybu a prečo je drahšia než hlasná.
+- **Evaluácia & kvalita** — golden set a regresné testy, deterministické politiky vs.
+  hodnotenie odpovedí, rozptyl medzi behmi a prahy pre vydanie, human-in-the-loop.
+- **Capstone architektúra & roadmapa** — blueprint end-to-end riešenia, KPI a evaluačná
+  matica, **nákladový model a ROI z vlastných nameraných dát**, model hrozby a rollback plán;
+  ďalšie kroky: certifikácie **AI-103** a **AI-200**.
 
 ### Sprievodný materiál na samoštúdium
 
-Účastníci dostávajú navyše kompletné moduly, ktoré rozširujú vyučovanú látku a sú písané
-tak, aby sa dali prejsť samostatne:
+Účastníci dostávajú kompletné moduly, ktoré rozširujú vyučovanú látku a sú písané tak,
+aby sa dali prejsť samostatne:
 
-- **Vlastný retrieval** — chunking, embeddings, hybridný semantic ranking, kompromis
-  latencia vs. relevancia a cena vlastného ACL modelu.
-- **Agenti v Marketplace** — org katalóg vs. Microsoft Marketplace / Agent Store, Partner
-  Center, validačné politiky, proces review a najčastejšie dôvody zamietnutia; case study
-  skutočného publikovaného agenta (Normiqa Navigator).
-- **Výkon, náklady & lifecycle** — token ekonomika, cache vrstvy, optimalizácia retrievalu;
-  propagácia medzi prostrediami, verzovanie, rollback, governance výmen modelov.
-- **Porovnanie ciest tvorby agentov** — rozdielová matica Agent Builder / Copilot Studio /
-  Agents Toolkit / SharePoint agenti podľa jednotlivých schopností.
-- **Základy promptovania a agentná anatómia** — anatómia promptu, orchestrátor, vrstvy
-  inštrukcií (prompt, kontext, custom instructions, pamäť, Agent Instructions).
+- **Vlastný retrieval** — chunking, embeddings, hybridný ranking, security trimming
+  a kompromis latencia vs. relevancia.
+- **Hosting a publikácia** — endpoint agenta vs. orchestrácia okolo neho, timeout a retry
+  patterny, idempotencia, publikácia do kanálov.
+- **Výkon, náklady & lifecycle** — token ekonomika, cache vrstvy, verzovanie, rollback,
+  governance výmen modelov.
+- **Multi-agent lab** — ručná orchestrácia triage + resolver nad Agents SDK a meranie toho,
+  čo rozdelenie stálo.
+- **Porovnanie ciest tvorby agentov** — rozdielová matica po jednotlivých schopnostiach.
+- **Third-party governance** — porovnávací rámec k Agent 365.
+- **Základy promptovania a agentná anatómia** — anatómia promptu, vrstvy inštrukcií.
 
 ## Výstup kurzu
 
-Účastník odchádza s funkčným agentom postaveným na Microsoft 365 Agents SDK a s blueprintom
-jeho nasadenia: architektúra, rozhodnutia vrátane odôvodnenia, hygienický checklist tenantu,
-model hrozby a obranné vrstvy, KPI a evaluačná matica, nákladový model a rollback plán.
+Účastník odchádza s **funkčným agentom** postaveným na Microsoft 365 Agents SDK — grounding
+nad firemným obsahom, akcie so zápisom cez Graph, middleware vynucujúci politiky — a
+s **blueprintom jeho nasadenia**: architektúra, rozhodnutia vrátane odôvodnenia, hygienický
+checklist tenanta, model hrozby a obranné vrstvy, KPI a evaluačná matica, **nákladový model
+a ROI vypočítané z vlastných nameraných dát** a rollback plán.
 
 ## Pred publikáciou — kontrolný zoznam pre editora
 
-- [ ] Nastaviť **301 redirect** z existujúceho `microsoft-365-agents-sdk-a-copilot-extensions_spo_copilot`
+- [ ] Nastaviť **301 redirect** zo súčasného `microsoft-365-agents-sdk-a-copilot-extensions_spo_copilot`
       na nové URL uvedené vyššie.
+- [ ] Zmeniť úroveň z „Mierne pokročilý" na **„Pokročilý"**.
+- [ ] Preradiť **TypeScript pred C#** v predpokladoch.
+- [ ] **Odstrániť zmienky o AI-102 a AZ-204** — obe skúšky sú retirované.
 - [ ] Doplniť cenu kurzu (obchodné oddelenie GOPAS).
-- [ ] **Odstrániť zo stránky zmienky o AI-102 a AZ-204** — obe skúšky sú retirované.
 - [ ] Overiť aktuálnosť názvov produktov (Microsoft Foundry, Copilot connectors, Agent 365)
-      — Microsoft ich mení v rade mesiacov.
-- [ ] Overiť k dátumu publikácie stav **SharePoint Copilot Apps** (SPFx 1.24, Public Preview —
-      aj pracovný názov sa môže zmeniť) a status skúšky AI-500 (beta).
+      — Microsoft ich mení v rádoch mesiacov.
+- [ ] Overiť k dátumu publikácie stav **SharePoint Copilot Apps** (Public Preview) a status
+      skúšky AI-500 (beta).
 - [ ] Skontrolovať, že žiadny blok „Pre editora" ani delta tabuľka nezostal skopírovaný
       do publikovaného textu.

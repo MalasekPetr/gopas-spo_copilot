@@ -4,38 +4,47 @@
 > Each "##" heading below corresponds to one field on the course page; the text under it is
 > the content for that field. "Editor note" blocks themselves are not page content — do not
 > copy them to the website.
+>
+> **Updated after the first delivery (week of 2026-08-24).** The outline below reflects what
+> was actually taught, not the original plan.
 
 ## Delta — what changes versus the currently live page, and why
 
 > [!NOTE] Editor note
 > This section is **not** page content. It is the rationale for the approval round.
 
-| Currently on the page | New | Reason |
-|---|---|---|
-| "Next steps: **AI-102, AZ-204**" | **AI-103, AI-200** | Both exams are retired: AI-102 on 2026-06-30, AZ-204 on 2026-07-31. Recommending them is factually wrong. |
-| "**Graph** connectors & metadata enrichment" | "**Copilot connectors** — synced and federated (MCP)" | Microsoft renamed the product and split it into two types with different architectures. |
-| "Channels and **Azure Bot Service** adapters" | "Channels, activities and turns in the Agents SDK" | The role of Bot Service narrowed to channel registration; the architectural layer is the Agents SDK. |
-| "Vectorization & RAG design" as a required block | moved to **accompanying material** | The course focus is the near surroundings of Microsoft 365: the semantic index handles retrieval there; custom vectorization is an architectural decision, not the default. |
-| "Output sanitization and **watermarking**" | "**Prompt injection / XPIA**, exfiltration prevention" | Watermarking an agent's text responses offers no robust defensive value; injection through content is the real, current threat model. |
-| "Responsible AI & governance" as a standalone block | merged into **Security & middleware** + **Agent 365 and governance** | In a pro-code course a guardrail is code in a pipeline, not a separate lecture. Compliance belongs with the governance layer. |
-| "Security" and "Middleware" as two blocks | **one block: "Security & middleware — attack and defence as code"** | Both taught the same thing from opposite sides: the attack shows that a prompt-based defence does not hold, and middleware is the answer. Combined, the dramaturgy is attack → defence → scope; separated, the defence had to be built twice. |
-| — (missing) | **SharePoint agents** as a full path on the decision axis | The course audience manages SharePoint content; an agent created with one click over a library is their closest entry point — including its ceiling and sharing into Teams. |
-| — (missing) | **no-code/low-code showcase and the declarative maximum** before pro-code | New course progression: the developer first assesses agent builder and Copilot Studio live and exhausts the declarative path — only where it ends do they reach for the SDK. The decision competence customers pay the most for. |
-| — (missing) | **data hygiene in SharePoint Online and Exchange Online** before deploying an agent | An agent does not break permissions — it exposes them: oversharing and permission sprawl; SharePoint Advanced Management, Restricted Content Discovery, a hygiene checklist. In practice this question comes before grounding. |
-| — (missing) | **Microsoft Agent Framework** (successor to Semantic Kernel + AutoGen), multi-agent, A2A | The layer a pro-code team actually uses on top of the Agents SDK. |
-| — (missing) | **SharePoint Copilot Apps** (SPFx 1.24, Public Preview) — interactive UX in the Copilot canvas | MCP Apps model, hands-on block; the shortest bridge between SPFx development and the agent world. |
-| — (missing) | **agent distribution via Microsoft Marketplace** incl. a real case study *(accompanying material)* | Publishing conditions, Partner Center, the validation process — on a real published listing (Normiqa Navigator), not a slide. |
-| — (missing) | **Agent 365, Entra Agent ID, instrumenting a pro-code agent** | GA 2026-05-01. The strongest pro-code topic: low-code agents register automatically, pro-code agents must be instrumented. |
-| — (missing) | **third-party governance comparison (Orchestry)** — part of the Agent 365 block | Agent 365 is not the only answer; the course provides a decision framework for "when first-party and when third-party". |
-| — (missing) | **Microsoft Foundry**, Foundry Agent Service | Renamed from Azure AI Foundry (Ignite 2025); publishing Foundry agents into M365 Copilot and Teams GA 06/2026. |
-| — (missing) | positioning **Copilot Studio** on the decision axis | Customers ask about Copilot Studio; the course must build decision competence, not teach a single path. |
+### Factual errors that need fixing
 
-The structure changes from 15 blocks to **16 taught blocks** (3–4 per day) plus
-**accompanying self-study material**. Total length remains 5 days. Blocks are longer and
-fewer than in the original proposal — calibration from the first run showed that a denser
-programme comes at the expense of lab depth. Course focus: the **near surroundings of
-Microsoft 365** — custom vectorization, deep Azure, and general AI topics are side tracks,
-not the core.
+| Currently on the page | New | Reason |
+| --- | --- | --- |
+| Level **"Moderately advanced"** | **Advanced** | On day five participants write a middleware pipeline, validate writes to SharePoint through Graph, and defend a cost model. A moderately advanced attendee will not keep up and will leave disappointed. |
+| Prerequisites start with **C#** | **TypeScript first**, C# only as an advantage | The whole week is written in TypeScript. C# appears only in a mention of the Agent Framework. The current order deters the right audience and attracts the wrong one. |
+| "Next steps: **AI-102, AZ-204**" | **AI-103, AI-200** | Both exams are retired: AI-102 on 2026-06-30, AZ-204 on 2026-07-31. |
+
+### Content changes
+
+| Currently on the page | New | Reason |
+| --- | --- | --- |
+| "**Graph** connectors & metadata enrichment" | "**Copilot connectors** — synced and federated (MCP)" | Microsoft renamed the product and split it into two types with different architectures. |
+| "Channels and **Azure Bot Service** adapters" | "Channels, activities and turns in the Agents SDK" | The role of Bot Service narrowed to channel registration. |
+| "**Vectorization & RAG design**" as a required block (2.5 h) | accompanying material + a **measured retrieval block** on day 5 | The semantic index handles retrieval over tenant content. Instead of vectorization theory the course now shows a **measured comparison of three search APIs** and the decision of when to build retrieval yourself. |
+| "Output sanitization and **watermarking**" | "**Prompt injection / XPIA**, exfiltration prevention" | Watermarking an agent's text responses offers no robust defensive value; injection through content is the real threat model. |
+| "**Responsible AI & governance**" as a standalone block (2.5 h) | dissolved into **Security & middleware** + **Agent 365** | In a pro-code course a guardrail is code in a pipeline, not a separate lecture. |
+| "Security" and "Middleware" as two blocks | **one block: "attack and defence as code"** | Both taught the same thing from opposite sides. Together they have a dramaturgy: attack → why the prompt does not hold → middleware → scope. |
+| "Event-driven orchestration", "Deployment & lifecycle management" as blocks | **accompanying material** | Would require an Azure subscription per attendee. The substance ("where the endpoint runs vs. the orchestration around it") is folded into the Agent 365 block. |
+| — (missing) | **Skills — extending Copilot in SharePoint** | The lowest rung of extending Copilot: `SKILL.md`, no runtime, governed by file permissions. This audience manages SharePoint content. |
+| — (missing) | **SharePoint agents** as a full path | An agent created with one click over a library is the closest entry point for this audience — including its ceiling. |
+| — (missing) | **no-code/low-code showcase and the declarative ceiling** before pro-code | Developers first judge Agent Builder and Copilot Studio live and exhaust the declarative path — only where it ends do they reach for the SDK. |
+| — (missing) | **data hygiene in SharePoint Online and Exchange Online** | An agent does not break permissions, it makes them visible. Practice raises this question before grounding. |
+| — (missing) | **application identity** — app registrations, permissions, single/multi-tenant, tokens | The first delivery group asked for this as a dedicated session. Without it the agent's permission boundary cannot be defended. |
+| — (missing) | **Microsoft Agent Framework**, A2A and **Foundry Agent Service** | The orchestration layer above the Agents SDK and the PaaS branch of the map. |
+| — (missing) | **SharePoint Copilot Apps** (SPFx, Public Preview) — *optional block* | The shortest bridge between SPFx skills and the world of agents. |
+| — (missing) | **distribution through Microsoft Marketplace** incl. a case study | Publishing terms, Partner Center, validation process — on a real published listing, not a slide. |
+| — (missing) | **Agent 365, Entra Agent ID, instrumenting a pro-code agent** | GA on 2026-05-01. Low-code agents register automatically; pro-code agents must be instrumented. |
+| — (missing) | **a measured cost model and ROI** | Attendees leave with their own numbers from the week, not an estimate. |
+
+The structure changes from 15 blocks of 2.5 h each to **daily blocks of varying length**
+(3–6 per day) plus accompanying self-study material. The length stays at 5 days.
 
 ## URL
 
@@ -47,157 +56,179 @@ not the core.
 
 ## Course title
 
-Microsoft 365 Agents SDK, Copilot Extensions, and Agent 365
+Microsoft 365 Agents SDK, Copilot Extensions and Agent 365
 
 ## Short description (meta description / teaser)
 
-A pro-code course on building, securing, and operating agents in the near surroundings of
-Microsoft 365 — from the decision axis and the declarative maximum, through grounding,
-multi-agent orchestration, and middleware, to SharePoint Copilot Apps, hosting,
-Agent 365 instrumentation, evaluation, and cost modelling.
+A pro-code course on building, securing and operating agents in the near surroundings of
+Microsoft 365. One agent is built across the whole week — from deciding which path to take
+at all, through grounding over company content and actions over Microsoft Graph, to
+middleware, instrumentation into Agent 365, evaluation and a cost model backed by your own
+measurements.
 
 ## Course overview
 
-A five-day pro-code course for developers and architects building agents in the near
-surroundings of Microsoft 365. One agent is built across the whole week — from a live
-assessment of the no-code and low-code paths (Copilot agent builder, Copilot Studio) and
-the declarative maximum in Microsoft 365 Agents Toolkit, through the Agents SDK core and
-running locally in Agents Playground, grounding over enterprise content (Copilot connectors,
-semantic index, Copilot Retrieval API, MCP), actions over Microsoft Graph with correct
-permission boundaries and tenant data hygiene, multi-agent orchestration in Microsoft Agent
-Framework and middleware that enforces policy, to interactive UX in the Copilot canvas
-(SharePoint Copilot Apps), hosting and publishing to channels,
-**instrumentation into Agent 365** with Entra Agent ID, golden-set evaluation,
-prompt-injection defence, and a cost model.
+A five-day pro-code course for developers and architects who build agents in the near
+surroundings of Microsoft 365. **One agent is built across the whole week** — a Support
+Assistant over company runbooks — gaining one layer each day.
 
-The course is built around decision competence: when a declarative agent, when a custom
-engine agent, when Copilot Studio, and when Microsoft Foundry — and how to defend that choice
-to a customer and to an internal security team. Code is written in **TypeScript** (Node.js, Microsoft 365 Agents SDK).
+The course starts where a real project starts: **with the decision of which path to take**.
+Participants assess Skills, SharePoint agents, Copilot Agent Builder and Copilot Studio live,
+build a declarative agent in the Microsoft 365 Agents Toolkit and **hit its ceiling** — only
+there do they reach for the Agents SDK. They then defend that decision for the rest of the week.
+
+Next comes the core of the Agents SDK and local execution in the Agents Playground,
+application identity and permission boundaries, grounding over company content through
+Microsoft Graph, actions that write to SharePoint with parameter validation, the system
+prompt as a contract, and **an attack on your own agent** — after which it is obvious why a
+defence written into the prompt does not hold and what a defence in code looks like. The last
+day adds multi-agent orchestration and Foundry Agent Service, instrumentation into Agent 365
+with Entra Agent ID, evaluation with a golden set, and a defence of the numbers.
+
+**Everything is measured.** From Wednesday the agent logs its token consumption; on Friday
+each participant computes cost per query, monthly running cost and the return on their own
+solution. They leave with their own numbers rather than an estimate — and with what can be
+said to a customer on the strength of them.
+
+The course is built on decision-making competence: when a declarative agent, when a custom
+engine, when Copilot Studio and when Microsoft Foundry — and how to defend that choice to a
+customer and to an internal security team. Code is written in **TypeScript** (Node.js,
+Microsoft 365 Agents SDK).
 
 ## Who this course is for
 
 - Solution architects and AI engineers
 - Microsoft 365 developers extending Copilot
 - Technology consultants designing enterprise AI integrations
-- Platform engineers enabling secure AI adoption
+- Platform engineers enabling safe AI adoption
 
 ## Prerequisites
 
-- JavaScript (JS_PROG1) and TypeScript (JS_TS1) basics — **the course's primary language**
-- C# fundamentals (GOC2125 course level) — advantageous (instructor demos of Agent Framework)
+- **JavaScript (JS_PROG1) and TypeScript (JS_TS1) fundamentals** — the primary language of the course
 - REST and JSON
-- Azure and Microsoft 365 basics
-- Microsoft Graph experience (advantageous)
-- Prompt engineering experience (advantageous)
+- Azure and Microsoft 365 fundamentals
+- Experience with Microsoft Graph — an advantage
+- Experience with prompt engineering — an advantage
+- C# fundamentals (GOC2125 level) — an advantage, only for Agent Framework mentions
 
 ## Format and length
 
 - 5 days, instructor-led with hands-on labs
-- level: advanced
+- level: **advanced**
 - code in **TypeScript** (Node.js)
 
 > [!NOTE] Editor note
-> Price intentionally omitted — GOPAS sales fills it in directly in the CMS/price list.
+> Price intentionally omitted — the GOPAS sales department fills it in directly in the CMS.
 
 ## Course outline
 
-### Day 1 — Stack map and the no-code/low-code paths
+### Day 1 — Mapping the stack and the no-code/low-code paths
 
 - **Onboarding, environment & toolchain** — VS Code, Microsoft 365 Agents Toolkit, Node.js,
-  Agents Playground; the three billing models (Copilot licence, Copilot Credits, inference).
-- **Agent build paths & the decision axis** — Copilot architecture; declarative vs. custom
-  engine agents; Agents SDK, Agent Framework, Copilot Studio, Microsoft Foundry, Agent
-  Builder and **SharePoint agents** — when to use which, and how to defend the choice
-  in front of a customer.
-- **No-code and low-code paths — showcase** — Copilot agent builder and Copilot Studio live,
-  on the same assignment; for each path: who hosts, who pays for the model, who governs,
-  and what it cannot do.
+  Agents Playground; three billing models (Copilot licence, Copilot Credits, inference).
+- **Map of agent-building paths & the decision axis** — Copilot architecture; declarative vs.
+  custom engine agent; Agent Builder, SharePoint agents, the declarative agent from the
+  Toolkit, Copilot Studio, Agents SDK and Foundry Agent Service — when to use which and how
+  to defend the choice.
+- **No-code and low-code paths — showcase** — Agent Builder and Copilot Studio live on the
+  same brief; for each path: who hosts, who pays for the model, who governs and what is
+  out of reach.
 
-### Day 2 — The declarative ceiling, the first agent in code, and hygiene
+### Day 2 — Copilot in SharePoint and the declarative ceiling
 
-- **Declarative agents & Agents Toolkit** — scaffolding and provisioning a declarative agent,
-  instructions as orchestration without code, the instruction layers, capabilities of the
-  current manifest version, TypeSpec; the precisely named ceiling of the declarative path
-  as the motivation for a custom engine.
-- **Agents SDK core** — `AgentApplication`, `AgentApplicationOptions`, activities and turns,
-  `TurnState`, channels; a first running agent locally, including error-path handling.
+- **Skills — extending Copilot in SharePoint** — anatomy of `SKILL.md`, authoring in chat,
+  review and run; governance without an admin switch (governed by file permissions).
+- **SharePoint agents** — an agent over a library in one click, its ceiling, sharing to Teams.
+- **Declarative agents & the Agents Toolkit** — scaffolding and provisioning, instructions as
+  orchestration without code, manifest capabilities, ALM and repo-as-code; **a precisely named
+  ceiling** of the declarative path as the motivation for a custom engine.
 - **Data hygiene in SharePoint Online and Exchange Online** — oversharing and permission
   sprawl, SharePoint Advanced Management, Restricted Content Discovery, sensitivity labels;
   a hygiene checklist before deploying an agent.
+- **Agents in Microsoft Marketplace** — org catalogue vs. Marketplace, Partner Center,
+  the validation process and the most common rejection reasons; a case study of a real
+  published agent.
 
-### Day 3 — Knowledge, actions, and prompting
+### Day 3 — The first agent in code, and knowledge
 
-- **Grounding: Copilot connectors, semantic index, MCP** — indexing principles for SharePoint
-  and OneDrive content, synced vs. federated connectors, permission enforcement; wiring
-  knowledge into the agent via the **Copilot Retrieval API** — and when not to do retrieval
-  yourself.
-- **Action handlers & Microsoft Graph integration** — action routing, parameter validation,
-  permission boundaries (delegated vs. app-only), MCP as a tool.
-- **Prompt & system orchestration** — system/user/tool messages, few-shot, prompt chaining,
-  the tool-call loop, evaluation heuristics and a measured baseline for the rest of the week.
+- **Agents SDK — the core** — `AgentApplication`, activities and turns, `TurnState`, channels;
+  the first agent running locally including error handling; Microsoft Foundry in brief.
+- **Application identity** — app registrations, delegated vs. application permissions,
+  single/multi-tenant, Enterprise applications, tokens and scopes; the boundary no prompt
+  can talk its way past.
+- **Grounding over company content** — Copilot connectors (synced vs. federated), the semantic
+  index and permission enforcement, MCP; wiring knowledge into the agent **live over a company
+  library** — and when not to build retrieval yourself.
 
-### Day 4 — Copilot Apps, multi-agent, and security
+### Day 4 — Actions, prompt and security
 
-- **SharePoint Copilot Apps** *(Public Preview)* — interactive UX directly in the Copilot
-  canvas; SPFx 1.24, the MCP Apps model, Copilot Workbench, hosting automatically in the
-  tenant; the shortest bridge between SPFx skills and the agent world.
-- **Microsoft Agent Framework, workflows & multi-agent** — orchestration on top of the Agents
-  SDK, patterns (sequence, fan-out, handoff, supervisor), A2A — and when **not** to split
-  into multiple agents.
+- **Action handlers & Microsoft Graph integration** — routing actions, **parameter validation
+  before the write**, writing to SharePoint, the requester taken from the caller's identity;
+  delegated vs. app-only and what each boundary means for auditability.
+- **Prompt & system orchestration** — the system prompt as a contract, few-shot for format,
+  the tool-call loop and rounds within a turn, a measured baseline for the rest of the week.
 - **Security & middleware — attack and defence as code** — prompt injection and XPIA through
-  content, exfiltration prevention; the middleware pipeline, pre/post processing, redaction
-  and output filtering, safety filters and their ceiling, hallucination mitigation patterns;
-  scope minimization as the only boundary that cannot be talked around.
+  content, a ladder of attacks on your own agent; the middleware pipeline, pre/post
+  processing, PII redaction, link allow-listing and citation verification; scope minimisation
+  as the only boundary that cannot be talked around.
+- **SharePoint Copilot Apps** *(Public Preview, optional block)* — interactive UX directly in
+  the Copilot canvas; SPFx, the MCP Apps model, hosting automatic in the tenant.
 
-### Day 5 — Hosting, governance, quality, and capstone
+### Day 5 — Orchestration, governance, quality and capstone
 
-- **Hosting & publishing** — the agent endpoint (App Service / Azure Container Apps) vs. the
-  orchestration around it (Functions, Durable Functions, Logic Apps, Foundry Agent Service);
-  timeout and retry patterns, idempotency; the manifest as a versioned contract and
-  publishing to Microsoft 365 Copilot and Teams.
-- **Agent 365, Entra Agent ID & instrumenting a pro-code agent** — the agent control plane,
-  identity and lifecycle, Agent 365 SDK and CLI, registry and observability, compliance and
-  auditability, Foundry Control Plane vs. Agent 365; a comparison with third-party governance
-  (Orchestry) and a framework for "when first-party and when third-party".
-- **Evaluation & quality** — qualitative vs. quantitative metrics, golden sets, regression
-  tests, human-in-the-loop, evaluation and observability in Microsoft Foundry.
-- **Capstone architecture & roadmap** — end-to-end solution presentation, KPI and evaluation
-  matrix review, token budget and rollback plan; next steps: the **AI-103** and **AI-200**
-  certifications (current Microsoft Certification Poster; AI-500 Multi-Agent AI Solutions
-  Expert as the advanced path).
+- **Revisiting the decision map** — after four days of practice, this time as a decision tool:
+  what each path costs and what specifically would change the choice.
+- **Microsoft Agent Framework, A2A and Foundry Agent Service** — orchestration above the
+  Agents SDK, patterns and their price, when **not** to use more agents; the PaaS branch of
+  the map and two control planes.
+- **Agent 365, Entra Agent ID & instrumenting a pro-code agent** — the control plane for
+  agents, identity and lifecycle, registry and observability, compliance and auditability;
+  a comparison with third-party governance and a framework for "when first-party and when
+  third-party".
+- **Retrieval in practice — what can be measured** — three different Microsoft 365 search
+  interfaces and how they differ on the same content; why the content format decides the
+  quality of grounding; how to recognise a silent failure and why it costs more than a loud one.
+- **Evaluation & quality** — a golden set and regression tests, deterministic policies vs.
+  judging answers, variance between runs and release thresholds, human-in-the-loop.
+- **Capstone architecture & roadmap** — a blueprint of the end-to-end solution, KPIs and an
+  evaluation matrix, **a cost model and ROI from your own measured data**, a threat model and
+  a rollback plan; next steps: the **AI-103** and **AI-200** certifications.
 
 ### Accompanying self-study material
 
-Participants also receive complete modules that extend the taught content and are written
+Participants also receive complete modules that extend the taught material and are written
 to be worked through independently:
 
-- **Custom retrieval** — chunking, embeddings, hybrid semantic ranking, the latency vs.
-  relevance trade-off, and the cost of owning an ACL model.
-- **Agents in the Marketplace** — org catalog vs. Microsoft Marketplace / Agent Store,
-  Partner Center, validation policies, the review process and the most common rejection
-  reasons; case study of a real published agent (Normiqa Navigator).
-- **Performance, cost & lifecycle** — token economics, cache layers, retrieval optimization;
-  environment promotion, versioning, rollback, model-exchange governance.
-- **Agent build path comparison** — a capability-by-capability matrix of Agent Builder /
-  Copilot Studio / Agents Toolkit / SharePoint agents.
-- **Prompting fundamentals and agent anatomy** — prompt anatomy, the orchestrator, the
-  instruction layers (prompt, context, custom instructions, memory, Agent Instructions).
+- **Custom retrieval** — chunking, embeddings, hybrid ranking, security trimming and the
+  latency-versus-relevance trade-off.
+- **Hosting and publishing** — the agent endpoint vs. the orchestration around it, timeout and
+  retry patterns, idempotence, publishing to channels.
+- **Performance, cost & lifecycle** — token economics, cache layers, versioning, rollback,
+  governance of model swaps.
+- **Multi-agent lab** — hand-built triage + resolver orchestration over the Agents SDK and a
+  measurement of what the split cost.
+- **Comparison of agent-building paths** — a capability-by-capability difference matrix.
+- **Third-party governance** — a comparison framework alongside Agent 365.
+- **Prompting fundamentals and agent anatomy** — anatomy of a prompt, layers of instructions.
 
 ## Course outcome
 
-Participants leave with a working agent built on the Microsoft 365 Agents SDK and a deployment
-blueprint: architecture, decisions with rationale, a tenant hygiene checklist, threat model
-and defence layers, KPI and evaluation matrix, cost model, and rollback plan.
+Participants leave with **a working agent** built on the Microsoft 365 Agents SDK — grounding
+over company content, actions that write through Graph, middleware enforcing policies — and
+with **a blueprint for its deployment**: architecture, decisions including their rationale,
+a tenant hygiene checklist, a threat model and defence layers, KPIs and an evaluation matrix,
+**a cost model and ROI computed from their own measured data**, and a rollback plan.
 
 ## Before publishing — editor checklist
 
-- [ ] Set up a **301 redirect** from the current
-      `microsoft-365-agents-sdk-a-copilot-extensions_spo_copilot` to the new URL above.
-- [ ] Add the course price (GOPAS sales).
-- [ ] **Remove all mentions of AI-102 and AZ-204** from the page — both exams are retired.
+- [ ] Set up a **301 redirect** from the current `microsoft-365-agents-sdk-a-copilot-extensions_spo_copilot`
+      to the new URL above.
+- [ ] Change the level from "Moderately advanced" to **"Advanced"**.
+- [ ] Move **TypeScript ahead of C#** in the prerequisites.
+- [ ] **Remove the AI-102 and AZ-204 mentions** — both exams are retired.
+- [ ] Add the course price (GOPAS sales department).
 - [ ] Verify current product names (Microsoft Foundry, Copilot connectors, Agent 365) —
-      Microsoft changes these within months.
+      Microsoft changes them on a scale of months.
 - [ ] Verify, as of the publication date, the status of **SharePoint Copilot Apps**
-      (SPFx 1.24, Public Preview — even the working name may change) and the AI-500 exam
-      status (beta).
-- [ ] Check that no "Editor note" block or the delta table was copied into the published text.
+      (Public Preview) and of the AI-500 exam (beta).
+- [ ] Check that no "Editor note" block or delta table was copied into the published text.

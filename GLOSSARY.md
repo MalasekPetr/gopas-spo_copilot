@@ -212,6 +212,26 @@ aplikace) a kde běží **orchestrace okolo něj**.
 > Publikace **Foundry agentů do Microsoft 365 Copilotu a Teams** je GA od **06/2026** —
 > jedna governed publikační pipeline místo rebuildu per surface. Ověřit aktuální rozsah.
 
+## Zkratky, které v kurzu padnou bez vysvětlení
+
+| Zkratka | Rozepsáno | Co znamená u agentů |
+|---|---|---|
+| **ALM** | **Application Lifecycle Management** | Jak řešení vzniká, verzuje se, testuje a promuje do produkce — a jak se vrací zpět. U agentů: **manifest a kód v gitu**, PR review, CI/CD, oddělená prostředí dev/test/prod. „Bez ALM" znamená, že agent existuje jen jako stav v UI a nedá se ani zrevidovat, ani vrátit. |
+| **RAG** | Retrieval-Augmented Generation | Model dostane před odpovědí nalezené podklady. V kurzu jde o **sedm fází** — a většinu z nich dělá platforma, viz [`day-5/retrieval-reality/`](./day-5/retrieval-reality/README.md). |
+| **KQL** | Keyword Query Language | Dotazovací jazyk Microsoft Search. **Lexikální** — porovnává slova, ne význam. |
+| **ACL** | Access Control List | Oprávnění na obsahu. „ACL trimming" = vyhledávání vrátí jen to, na co má volající právo. |
+| **XPIA** | Cross-Prompt Injection Attack | Útok obsahem, který agent čte — na rozdíl od prompt injection není útočníkem uživatel, ale autor dokumentu. |
+| **PII** | Personally Identifiable Information | Osobní údaje. V kurzu se redigují **před** odesláním modelu — co model nedostal, nemůže uniknout. |
+| **A2A** | Agent-to-Agent | Protokol pro komunikaci mezi agenty. **Není to volání funkce** — má důsledky pro identitu a audit. |
+| **PAYG** | Pay-as-you-go | Spotřební účtování místo licence na uživatele. |
+| **RCD** | Restricted Content Discovery | Nastavení SharePointu, které vyřadí web z groundingu Copilotu. |
+| **DLP** | Data Loss Prevention | Politiky Power Platform, které omezují, co smí konektor s daty dělat. |
+| **SAM** | SharePoint Advanced Management | Placený add-on: reporty o oversharingu, RCD, politiky životního cyklu webů. |
+
+> [!NOTE] Proč tahle tabulka existuje
+> Zkratky se v materiálech používají volně, protože publikum je zná z praxe. Kdo si
+> některou nespojí, má ji tady — a nemusí se ptát uprostřed bloku.
+
 ## Zdroje (Microsoft)
 
 - [Microsoft 365 Agents SDK — overview](https://learn.microsoft.com/en-us/microsoft-365/agents-sdk/agents-sdk-overview)

@@ -39,7 +39,16 @@ Průřezově pro všechny: **permission trimming** (agent nikdy nepřekročí pr
 
 ## Rozhodovací osa (rozšíření tabulky z README)
 
-1. **Potřebuješ data z listů?** analytika → Copilot Studio (10 listů) · lookup → Agent Builder (1 list + jiné zdroje) · „agent nad jedním listem a ničím jiným" → SharePoint agent · Toolkit → ne (čekat na schema 1.8+, sledovat [manifest changelog](https://learn.microsoft.com/en-us/microsoft-365/copilot/extensibility/declarative-agent-manifest-1.7)).
+1. **Potřebuješ data z listů?** Tabulka výš srovnává jen **deklarativní** cesty, kde je
+   list *knowledge source* — indexovaná read-only kopie pro Q&A. V tom rozsahu:
+   analytika → Copilot Studio (10 listů) · lookup → Agent Builder (1 list + jiné zdroje) ·
+   „agent nad jedním listem a ničím jiným" → SharePoint agent · Toolkit → ne
+   (čekat na schema 1.8+, sledovat [manifest changelog](https://learn.microsoft.com/en-us/microsoft-365/copilot/extensibility/declarative-agent-manifest-1.7)).
+
+   **Pozor na zkratku „na listy je Studio".** Jakmile potřebuješ **zápis, podmíněné čtení,
+   validaci nebo spojení víc listů**, žádná deklarativní cesta to neudělá — je to
+   **Agents SDK + Microsoft Graph** (`/sites/{id}/lists/{id}/items`), případně
+   **SPFx / SharePoint Copilot Apps**, když má nad listem být interakce s UI.
 2. **Potřebuješ akce/automatizaci?** konektory/MCP/triggery → Copilot Studio · vlastní API s OpenAPI → Toolkit · žádné akce → Builder/SharePoint agent.
 3. **Potřebuješ source control a CI/CD?** → Toolkit, bez diskuze (repo-as-code přístup kurzu).
 4. **Kdo staví?** koncový uživatel → Builder · vlastník webu → SharePoint agent · maker → Studio · vývojář → Toolkit.

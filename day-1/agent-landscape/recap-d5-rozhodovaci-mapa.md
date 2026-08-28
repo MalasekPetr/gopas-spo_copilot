@@ -68,15 +68,37 @@ Nech dvojice odpovědět na každou za sebe a teprve pak komentuj. Zdroj:
 2. **Potřebuješ akce?**
    konektory / MCP / autonomní triggery → Studio · vlastní API přes OpenAPI → Toolkit · žádné → Builder nebo SharePoint agent
 
-3. **Potřebuješ data z listů?**
-   analytika a agregace → **jedině Studio** (až 10 listů) · lookup → Builder (1 list) ·
-   Toolkit **listy neumí** — manifest 1.7 zná `list_id` jako knihovnu, ne list
+3. **Potřebuješ data z listů? Nejdřív rozliš, co s nimi chceš dělat.**
+
+   - **Ptát se jich** (Q&A nad obsahem, read-only): Copilot Studio až 10 listů
+     včetně agregačních dotazů · Agent Builder 1 list · SharePoint agent 1 list
+     a nic jiného · deklarativní agent z Toolkitu **listy neumí** (manifest 1.7 zná
+     `list_id` jako knihovnu, ne list).
+   - **Pracovat s nimi** — číst filtrovaně, zapisovat, validovat, spojit víc listů:
+     **Agents SDK + Microsoft Graph**. Přesně to jste postavili v `actions-graph`.
+   - **Postavit nad nimi interakci** — formulář, tabulka, karta, schválení:
+     **SPFx / SharePoint Copilot Apps**.
 
 4. **Potřebuješ source control a CI/CD?**
    → Toolkit, bez diskuze
 
 5. **Potřebuješ vlastní model, vlastní orchestraci nebo běh mimo M365?**
    → teprve tady custom engine
+
+> [!WARNING] „Na listy je Copilot Studio" je zkratka, která tuhle skupinu poškodí
+> Tak to zní v produktových materiálech a pro maker publikum to sedí. Vy ale stavíte
+> v kódu — a pro vás platí něco jiného.
+>
+> **List jako knowledge source není list jako data.** Knowledge source je indexovaná,
+> read-only kopie pro odpovídání na otázky. Nikdy nezvaliduje zápis, nevynutí whitelist
+> priority ani nedosadí `Zadavatel` z identity volajícího. Jakmile má agent do listu
+> **něco zapsat nebo z něj číst podmíněně**, je to Graph z kódu.
+>
+> Důkaz máte vlastní: `create_ticket` zapisuje do SharePointu z Agents SDK,
+> s validací před voláním API. Žádná deklarativní cesta to neudělá.
+>
+> Studio je správná odpověď, když **vlastníkem řešení je maker** — ne proto, že by
+> pro-code cesta na listy nestačila.
 
 > [!NOTE] Věta, kterou si mají odnést
 > **Custom engine je poslední možnost, ne první.** Když na pátou otázku odpovíš „ne",
@@ -152,6 +174,8 @@ není rozhodnutí, ale zvyk.
 
 - [ ] Student umí vyjmenovat šest cest a říct, proč je Agent Framework řádek navíc, ne cesta.
 - [ ] Student umí říct, co má deklarativní agent z Toolkitu navíc proti Agent Builderu.
+- [ ] Student rozliší **list jako knowledge source** (read-only Q&A) od **listu jako dat**
+      (zápis, validace, podmíněné čtení) a ví, že to druhé je Graph z kódu.
 - [ ] Student umí říct, čím se liší Skills od cest tvorby.
 - [ ] Student odpoví na pátou otázku pro **vlastní** zadání z praxe, ne pro Support Asistenta.
 - [ ] Student umí jmenovat aspoň dvě podmínky, za kterých má smysl stavět vlastní retrieval.

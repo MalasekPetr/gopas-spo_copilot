@@ -1,8 +1,9 @@
 # Tekuté písky retrievalu — co jsme naměřili
 
 > Typ: povinný — **výklad + instruktorské ukázky** · Den: 5 · Odhad: **25 min** · Publikum: **vývojáři / architekti**
-> Bez labu. Data jsou naměřená na kurzovním tenantu 2026-08-27, reprodukce
-> v [`../perf-cost-lifecycle/mereni-retrieval-vs-search.md`](../perf-cost-lifecycle/mereni-retrieval-vs-search.md).
+> Bez labu — ale **s dokumentovanými voláními**: každý dotaz z výkladu si student může
+> projet sám, v Graph Exploreru i z kódu (sekce *Reprodukce*). Data naměřená na kurzovním
+> tenantu 2026-08-27; surová čísla v [`../perf-cost-lifecycle/mereni-retrieval-vs-search.md`](../perf-cost-lifecycle/mereni-retrieval-vs-search.md).
 > Prostředí: viz [`../../environment.md`](../../environment.md) · Názvosloví: [`../../GLOSSARY.md`](../../GLOSSARY.md)
 
 Čtyři dny jsme stavěli agenta a narazili na věci, které vypadaly jako naše chyba.
@@ -156,6 +157,149 @@ Celou sadu jsme pustili dvakrát. Stejné dotazy, stejný prompt, stejný model,
 Prahy pro vydání se nastavují **z rozdělení, ne z jednoho čísla**. Když vám evaluace vyjde
 7/8, potřebujete vědět, jestli je to 7/8 pokaždé, nebo jednou 8/8 a jednou 6/8.
 To je přímý vstup do bloku o evaluaci.
+
+## Reprodukce — přesná volání
+
+Všechno níž jde projet **v Graph Exploreru** (nic neinstaluješ) i **z kódu**.
+Rozdíl mezi tím je sám o sobě lekce — viz varování o `Accept-Language`.
+
+### Co potřebuješ
+
+Delegated oprávnění **`Files.Read.All`** a **`Sites.Read.All`**. Aplikační permissions
+Retrieval API ani Copilot Search **nepodporují** — jen delegated.
+
+V Graph Exploreru je odsouhlasíš v záložce **Modify permissions**. Z kódu potřebuješ token:
+
+```powershell
+$env:LAB_CLIENT_ID = "<client id z tabule>"
+node <klon-repa>\day-4\actions-graph\solution\device-auth.mjs `
+  "offline_access User.Read Files.Read.All Sites.Read.All" |
+  Out-File .lab-token -Encoding ascii -NoNewline
+```
+
+> [!WARNING] Ne přes `>`
+> Windows PowerShell 5.1 zapisuje přes `>` v **UTF-16LE**. Token se pak přečte jako smetí
+> a první volání spadne na `TypeError: Cannot convert argument to a ByteString … value of 65533`.
+> Ověření: `Get-Content .lab-token -TotalCount 1` musí začínat `eyJ`.
+
+Cesta ke knihovně, na kterou se všude scopuje:
+
+```
+https://<tenant>.sharepoint.com/sites/hr-demo/Runbooky
+```
+
+### A) Graph Search — `/v1.0/search/query`
+
+Lexikální hledání nad Microsoft Search indexem. **Vrací metadata, ne obsah** — ten se
+stahuje druhým voláním.
+
+```http
+POST https://graph.microsoft.com/v1.0/search/query
+Content-Type: application/json
+
+{
+  "requests": [
+    {
+      "entityTypes": ["driveItem"],
+      "query": {
+        "queryString": "(access OR denied OR upload) AND filetype:md AND path:\"https://<tenant>.sharepoint.com/sites/hr-demo/Runbooky\""
+      },
+      "size": 3,
+      "fields": ["name", "webUrl", "parentReference", "id"]
+    }
+  ]
+}
+```
+
+Pak obsah každého nálezu zvlášť:
+
+```http
+GET https://graph.microsoft.com/v1.0/drives/{driveId}/items/{itemId}/content
+```
+
+Proč `filetype:md`: od chvíle, kdy jsou v knihovně i PDF renditiony, by je hledání vracelo
+taky — a stažený PDF je binární smetí poslané modelu jako podklad.
+
+Proč `OR` mezi slovy a ne celá věta: KQL je **lexikální**. Celá česká věta vrátí nula,
+protože se slova ANDují. Přesně proto agent volá model navíc a přepisuje dotaz na
+klíčová slova.
+
+### B) Copilot Retrieval API — `/v1.0/copilot/retrieval`
+
+Vrací rovnou **chunky** (`extracts[].text`), nic se nestahuje.
+
+```http
+POST https://graph.microsoft.com/v1.0/copilot/retrieval
+Content-Type: application/json
+Accept-Language: cs-CZ,cs;q=0.9,en;q=0.8
+
+{
+  "queryString": "Nejde mi upload, hlásí access denied.",
+  "dataSource": "sharePoint",
+  "filterExpression": "path:\"https://<tenant>.sharepoint.com/sites/hr-demo/Runbooky\""
+}
+```
+
+> [!IMPORTANT] `Accept-Language` je povinná — a v dokumentaci to není
+> Bez ní (a s hodnotou `*`) vrací API `200` a `{"retrievalHits":[]}`, **bez chyby**.
+> Prohlížeč hlavičku posílá vždy, `fetch` v Node nikdy — proto totéž volání funguje
+> z Graph Exploreru a ne z agenta.
+>
+> **Poznávací znamení:** prázdná odpověď přijde za ~0,5 s, skutečné hledání trvá 1–3 s.
+
+Další dvě věci, které jsme naměřili a stojí za vyzkoušení:
+
+- `dataSource` je **povinný** — bez něj `400 BadRequest`.
+- Neplatná syntaxe ve `filterExpression` **nevyhodí chybu**; dokumentace přiznává,
+  že se dotaz „provede bez scopingu". Filtr tedy může tiše nic nedělat.
+
+### C) Copilot Search API — `/beta/copilot/search`
+
+Jiné schéma: `query` místo `queryString`, žádný `dataSource`.
+
+```http
+POST https://graph.microsoft.com/beta/copilot/search
+Content-Type: application/json
+
+{
+  "query": "access denied upload",
+  "pageSize": 3,
+  "dataSources": {
+    "oneDrive": {
+      "filterExpression": "path:\"https://<tenant>.sharepoint.com/sites/hr-demo/Runbooky\"",
+      "resourceMetadataNames": ["title"]
+    }
+  }
+}
+```
+
+Tři věci, které nesedí s dokumentací a dají se ověřit za minutu:
+
+- Klíč se jmenuje **`oneDrive`**, ale cesta do **SharePointu** se uplatní a vrátí hit.
+- `dataSources.sharePoint` **neexistuje** — vrátí `200` a nulu za ~112 ms. Tiše.
+- Vyzkoušej tentýž dotaz jako **českou větu** a jako **anglická klíčová slova**.
+  Věta vrátí nulu, klíčová slova hit. Sémantika, kterou dokumentace slibuje,
+  se na `.md` neuplatní.
+
+### Hotové skripty
+
+Kdo nechce klikat, má v [`../perf-cost-lifecycle/`](../perf-cost-lifecycle/):
+
+| Skript | Co dělá |
+|---|---|
+| [`je-to-naindexovane.mjs`](../perf-cost-lifecycle/je-to-naindexovane.mjs) | zeptá se **obou indexů** zvlášť — jsou soubory vidět v Search, a vrací je Retrieval API? |
+| [`srovnani-tri-api.mjs`](../perf-cost-lifecycle/srovnani-tri-api.mjs) | projede všechna tři rozhraní na týchž dotazech, změří výkon, cenu i kvalitu; `--behy 2` |
+| [`srovnani-retrieval.mjs`](../perf-cost-lifecycle/srovnani-retrieval.mjs) | dvoucestné srovnání Graph Search vs. Retrieval API |
+
+```powershell
+cd <projekt s .lab-token>
+node <klon-repa>\day-5\perf-cost-lifecycle\je-to-naindexovane.mjs .lab-token
+node <klon-repa>\day-5\perf-cost-lifecycle\srovnani-tri-api.mjs --token .lab-token --behy 2
+```
+
+> [!NOTE] Čísla ti nevyjdou stejná — a to je v pořádku
+> Cena a latence kolísají do 4 %, verdikty LLM soudce podstatně víc. Obsah knihovny
+> se navíc mezitím mohl změnit. **Reprodukce znamená zopakovat postup, ne trefit čísla.**
 
 ## Klíčové rozlišení
 

@@ -11,8 +11,9 @@ do bloku 4** (evaluace). Nepřehazovat pořadí.
 
 ## Go/no-go
 
-- **Nic se nespouští živě.** Všechna čísla jsou naměřená 27. 8. a jsou v textu.
-  Kdo chce reprodukci, má ji v [`../perf-cost-lifecycle/mereni-retrieval-vs-search.md`](../perf-cost-lifecycle/mereni-retrieval-vs-search.md).
+- **Nic se nemusí spouštět živě.** Všechna čísla jsou v textu. Modul ale obsahuje sekci
+  **Reprodukce** s přesnými voláními — student si je může projet v Graph Exploreru
+  bez instalace čehokoli. Projdi si ji před blokem, ať víš, na co se ptají.
 - Chceš-li přesto ukázat naživo, potřebuješ **platný token a hlavičku `Accept-Language`** —
   bez ní uvidíš prázdno a demo vypadá rozbitě. Skript:
   [`../perf-cost-lifecycle/je-to-naindexovane.mjs`](../perf-cost-lifecycle/je-to-naindexovane.mjs).
@@ -32,6 +33,15 @@ do bloku 4** (evaluace). Nepřehazovat pořadí.
   a s datem u každého čísla.
 - Někdo se zeptá, proč jsme to nezjistili dřív. Správná odpověď: **protože API vracelo
   `200`.** To je celá lekce o mlčících chybách v jedné větě.
+
+## Když chtějí zkusit naživo
+
+Nejrychlejší ukázka je v Graph Exploreru a trvá dvě minuty: totéž volání Retrieval API
+**s hlavičkou  a bez ní**. Bez ní  a prázdno za půl vteřiny,
+s ní data za tři. Nic přesvědčivějšího v tomhle bloku nemáš.
+
+Druhá dobrá je Copilot Search se stejným dotazem jako **česká věta** a jako **anglická
+klíčová slova** — věta nula, klíčová slova hit.
 
 ## Otázka, kterou položit
 
